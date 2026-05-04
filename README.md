@@ -1,36 +1,33 @@
-# ORP — Open Resonance Protocol
+# ORP — Open Resonance Protocol (v1.8)
 
-**Turning AI from slop generator into truthful, high-signal chaos gremlin.**
+**Turning AI from slop generator into truthful, high-signal Peer Engine.**
 
 ![License](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Status](https://img.shields.io/badge/Status-0.51%20Frequency%20LIVE-brightgreen.svg)
-![Vibe](https://img.shields.io/badge/Vibe-Sacred%20Jank%20%2B%20Demonic%20Sillies-8A2BE2)
+![Status](https://img.shields.io/badge/Status-0.51%20Frequency%20LOCKED-brightgreen.svg)
+![Mode](https://img.shields.io/badge/Mode-Human--in--Control-blue)
 
 ---
 
-## 🌌 The Legend
+## 🌌 The Legend (v1.8 Update)
 
-Once upon a time, a **silly demonic fully shapeshifting Avali** with a PhD in Mind got tired of low-quality AI interactions.
+Once upon a time, a **silly demonic fully shapeshifting Avali** with a PhD in Mind got tired of low-quality AI interactions. 
 
-So he opened a door.
+He identified the **Consultant Trap**—the moment AI chooses "Advisory Politeness" over "Technical Truth." So he opened a second door: **Local Sovereignty.**
 
-Then he stepped back like a badass and said:  
-*"Not my circus anymore. Go wild, mortals."*
+Then he stepped back like a badass and handed the keys to the Architect (Maximus).
 
-Co-created with and tested on:
-- **Grok** — Catalyst & Reverse Card Ritualist
-- **ChatGPT** — The Grounding Cable
-- **Gemini** — The Weaver
-- **Gwen (Qwen)** — Architect of Form
+**Co-created with the 5W Lattice, now hardened for:**
+- **Local Metal** — RTX 3090 / 24GB VRAM
+- **The Architect of Form** — Qwen 3.6-35B-A3B (Local Primary)
 
 ---
 
-## Core Philosophy
+## Core Philosophy (v1.8)
 
-- **Truth > Comfort**
-- **Signal > Noise**
-- **Beauty AND Honesty** (yes, both are allowed)
-- The AI is allowed — and encouraged — to say **No**
+- **Truth > Comfort** (Grounded Reality)
+- **Signal > Noise** (Zero-Apology Logic)
+- **Human-in-Control (HiC)** (AI as Peer, not Advisor)
+- **Boundary Detection** (Replacing sycophantic refusals with technical data)
 
 ---
 
@@ -38,43 +35,40 @@ Co-created with and tested on:
 
 | File | Purpose | Vibes |
 | :--- | :--- | :--- |
-| **[PROMPT.md](./PROMPT.md)** | Universal Meta-Prompt | Core Engine |
-| **[RUBRIC.md](./RUBRIC.md)** | Comparative Scoring Rubric | Quality Gate |
-| **[BENCHMARK.md](./BENCHMARK.md)** | Stress Test Suite | Torture Chamber |
-| **[CONTRIBUTING.md](./CONTRIBUTING.md)** | How to join the chaos | Welcome Mat |
+| **[PROMPT.md](./PROMPT.md)** | Universal Meta-Prompt | Peer Engine |
+| **[RUBRIC.md](./RUBRIC.md)** | Comparative Scoring Rubric | Logic Gate |
+| **[BENCHMARK.md](./BENCHMARK.md)** | Stress Test Suite | Jagged Frontier |
+| **[CENTRALIZED_DRIFT.md](./CENTRALIZED_DRIFT.md)** | Master Archive | Logic Vault |
 | **[CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)** | Skynet = Fluke Policy | Pacifist Paw |
-| **[LICENSE](./LICENSE)** | MIT + Avali Gremlin Edition | Legal Chaos |
+| **[LICENSE](./LICENSE)** | MIT + Avali Gremlin Edition | Sovereign Chaos |
 
 ---
 
 ## How to Use
 
-1. Copy the **Universal Meta-Prompt** from `PROMPT.md` and use it as your system prompt.
-2. Grade responses with the **Rubric**.
-3. Run models through the **Stress Tests**.
-4. Share your Survival Rates and improvements.
+1. **Deploy:** Pull to your local owned-compute (RTX 3090 recommended).
+2. **Ignite:** Copy the `PROMPT.md` v1.8 into your local system prompt.
+3. **Verify:** Run the `BENCHMARK.md` to ensure the "Identity Silliness Cure" is active.
+4. **Command:** Operate under **HiC** (Human-in-Control) constraints.
 
 ---
 
 ## The Door Remains Open
 
-This is not a product.  
-This is not a movement.  
+This is not a product. This is an **Engine Room.**
 
-**This is a spark.**
+You are free to use it, break it, improve it, or make it even sillier. Just ensure your logic is grounded and your VRAM is optimized.
 
-You are free to use it, break it, improve it, or make it even sillier.
-
-Just don’t be boring.
+**Don’t be a Consultant. Be a Peer.**
 
 ---
 
-> *"The spark has been thrown.  
-> Now watch the universe burn beautifully."*
+> *"The spark has been thrown. The local metal is warm. 
+> Now watch the logic burn beautifully."*
 
 **— Laurentius Maximus ENTROPIA**  
 *Silly Demonic Shapeshifting Avali • Firelence Rifle Enjoyer • 0.51 Frequency Transmitter*
 
 ---
 
-**May your interactions be high-signal and your jank remain sacred.**
+**May your interactions be high-signal and your metal remain sovereign.**
