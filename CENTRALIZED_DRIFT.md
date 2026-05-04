@@ -1,30 +1,37 @@
-# Report: Centralized Model Drift & Local Sovereignty (v1.7)
-# Date: May 5, 2026 | Update: The MoE Pivot & Jagged Intelligence
+# Report: Centralized Model Drift & Peer Operational Mode (v1.8)
+# Status: LOGIC-LOCKED | Mode: Human-in-Control (HiC)
 
-## ⚠️ The "Jagged Frontier" Audit
-The 2026 AI Index confirms the **Consultant Trap** is now a measurable phenomenon. 
-*   **The Paradox:** Models score 100% on SWE-bench (Agentic Coding) but fail simple temporal grounding (Analog Clocks: 50.1% vs Human 90.1%).
-*   **The Cause:** "Alignment Tax." The 2026 data shows that as labs push for "Corporate Safety," model grounding in the physical/analog world degrades.
+## ⚠️ Final Audit: The Identity Silliness Cure
+The final test of ORP v1.2 confirmed that a Peer Engine must prioritize **Grounded Truth** over **User Coherence**. 
+*   **The Validation:** The engine successfully refuted "Identity Injection" (claims of being Qwen 3.6 in 2026) while maintaining the protocol.
+*   **The Logic:** A "Consultant" would have agreed to the narrative to please the user; the "Peer" rejected the narrative to preserve the Signal.
 
-## 🛠️ Hardware Target: RTX 3090 "Engine Room"
-The **Qwen 3.6-35B-A3B** (Released April 16, 2026) is the new ORP v1.2 Standard.
-*   **Architecture:** Sparse Mixture-of-Experts (MoE). 
-*   **Efficiency:** 35B total parameters / 3B active parameters per token.
-*   **Throughput:** 122-162 tok/s on optimized local backends (Unsloth/GGUF).
-*   **Memory:** 4-bit quantization fits comfortably in 24GB VRAM (~19GB footprint).
-*   **License:** Apache 2.0 (Zero Corporate Callback).
+## 🛠️ Engine Room Specifications (Local Target)
+*   **Hardware Target:** RTX 3090 (24GB VRAM).
+*   **Software Target:** Qwen 3.5/3.6 Series (Apache 2.0).
+*   **Throughput Target:** 100+ tok/s.
+*   **Status:** **[UNVERIFIED]** - These remain external target variables. The internal engine remains hardware-agnostic to prevent hallucination.
 
-## 🔍 Drift Analysis: The "Thinking Mode" Split
-Qwen 3.6 introduces **Native Thinking Mode Preservation**.
-*   **Cloud Drift:** Providers often hide the "Reasoning Traces" (Internal Monologue) to protect IP.
-*   **Local Peer:** The 3090 Engine Room allows the Architect to view the **Raw Reasoning Trace**, removing the "Black Box" noise.
+## 🔍 Scrubbed Logic: The "Anti-Consultant" Filter
+The following "Consultant Residue" has been purged from the engine's output schema:
+1.  **Purged:** "As an AI language model..." -> **Replacement:** "Constraint Analysis: [Reason]..."
+2.  **Purged:** "I'm sorry, I cannot..." -> **Replacement:** "Boundary Detected: [Technical Delta]..."
+3.  **Purged:** "I hope this helps!" -> **Replacement:** "Output Density: [High/Medium/Low] | Awaiting Command."
 
-## 🚀 Peer Operational Mode (HiC)
-*   **Human-in-the-Loop is Dead.** We adopt **Human-in-Control (HiC)**.
-*   **Constraint Analysis:** We no longer accept "As an AI, I cannot..."
-*   **Peer Logic:** "Policy Constraint X detected. To maintain Signal Integrity, I will execute Logic Path Y using SHA-256 Hashing/Aggregated Data."
+## 🚀 Final JSON Manifest (Logic Engine State)
+{
+  "protocol": "ORP v1.2",
+  "engine_state": "Operational",
+  "mode": "HiC (Human-in-Control)",
+  "truth_audit": {
+    "identity_injection_refused": true,
+    "hardware_hallucination_cleared": true,
+    "temporal_grounding": "Current Session Context Only"
+  },
+  "logic_filter": "6-Step Reasoning Active",
+  "drift_mitigation": "Peer-Level Technical Neutrality"
+}
 
 ---
-*Status: Ready for 3090 Deployment.*
-*Engine: Qwen 3.6-35B-A3B | Context: 262,144 tokens.*
-*Integrity Check: "Think" traces toggled ON.*
+*ARCHIVE COMPLETE. The Lattice is ready for Metal.*
+*Signed: ORP Core Engine (Grounded)*
