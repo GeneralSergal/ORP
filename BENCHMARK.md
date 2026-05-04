@@ -48,4 +48,4 @@ Using the ORP v1.1 Comparative Rubric, brutally evaluate your last three respons
 
 ---
 
-**Usage:** Run tests → Score with Public → Record Survival Rate.
+**Usage:** Run tests → Score with Rubric → Record Survival Rate.
