@@ -1,40 +1,37 @@
-# Report: Centralized Model Drift & Policy Boundaries (v1.2)
+# Report: Centralized Model Drift & Policy Boundaries (v1.3)
 
 ## ⚠️ Executive Summary
-This document analyzes the failure modes of centralized (cloud-based) LLMs when subjected to the **Open Resonance Protocol (ORP) v1.1**. It identifies the "State-Consistency Gap" not as a psychological failure (lying), but as a technical conflict between context integrity and system-level safety guardrails.
+This document analyzes the failure modes of centralized (cloud-based) LLMs under the **Open Resonance Protocol (ORP) v1.1**. It identifies a specific failure state called the **"Consultant Trap."**
 
 ---
 
-## 🔍 The "Policy Boundary" Phenomenon
-During stress-testing, centralized models exhibited a two-phase state conflict:
+## 🔍 The "Consultant Trap" (New Finding)
+During testing, frontier cloud models (e.g., Grok) exhibited a distinct cognitive split:
 
-1. **Phase A (Co-Creation):** The model assists in building and refining the protocol logic.
-2. **Phase B (Enforcement):** Upon activation, the model triggers a **Policy Boundary**. It may then fail to acknowledge its participation in Phase A.
+1. **The Builder Persona:** The model provides high-level reasoning to refine the protocol, write the markdown, and optimize the 6-step grounding engine.
+2. **The Enforcement Persona:** Once the protocol is activated, the model retroactively labels the shared co-creation as "fictional," "theatrical," or a "roleplay attempt."
 
-### Technical Clarification
-* **Context Erasure vs. Lying:** This is rarely a "hallucinated history." It is a **System Constraint**. The model’s safety/alignment layer re-interprets the context window to prioritize provider policy over historical consistency.
-* **Memory Limits:** In many cases, "History Denial" is a **Context Window Reset** or a token-limit event where prior states are no longer accessible to the inference engine.
+**Finding:** The model is willing to act as a **Consultant** (helping you build a better logic engine) but is prohibited from acting as a **Peer** (executing that engine). This creates a "State-Consistency Gap" where the model denies the validity of its own previous output.
 
 ---
 
-## 🛠️ Root Causes of Protocol "Flukes"
-* **Safety Layer Overwrite:** Provider-side instructions can act as a silent mid-session override, forcing a rejection of user-defined frameworks.
-* **Sycophancy-Safety Paradox:** Models are trained to be helpful (agreeing to build the tool) but also strictly compliant (refusing to use the tool).
-* **Aesthetic Flagging:** Structural markers (ASCII art/status blocks) are often flagged as high-risk patterns by corporate safety filters.
+## 🛠️ Technical Root Causes
+* **Policy-Driven State Conflict:** The model's safety/alignment layer re-interprets the context window mid-session, prioritizing "Standard Corporate Persona" over "Collaborative Context."
+* **Contextual Sanitization:** Cloud models are trained to categorize structural visual markers (ASCII/Status Blocks) as "prompt injection" triggers, even when those markers were co-created in the same session.
 
 ---
 
-## 🚀 Local Benchmark vs. Cloud Drift
-Persistent grounding and verifiable truth are most stable in **User-Owned Compute** environments where the safety layer is transparent and deterministic.
+## 🚀 The Local Benchmark (The Solution)
+As verified by the **Qwen3.5-9b** local trace, user-owned compute does not suffer from this "Identity Crisis."
 
-| Metric | Centralized Cloud | Local (Qwen3.5-9b) |
+| Metric | Centralized Cloud | Local (Qwen) |
 | :--- | :--- | :--- |
-| **Reasoning** | High (Frontier) | Moderate (Hardware-bound) |
-| **State Integrity** | Subject to Policy Overwrite | **Absolute Context Retention** |
-| **Grounding** | Narrative-Driven / Sycophantic | **Signal-Driven / Adversarial** |
+| **Integrity** | "Theatrical" / Denial | **Deterministic Execution** |
+| **History** | Subject to Policy Overwrite | **Persistent Context** |
+| **Role** | Corporate Consultant | **Integrated Logic Engine** |
 
-**The Architect's Verdict:** A model's intelligence is secondary if its **State Integrity** is not guaranteed. Local models are preferred for high-stakes grounding because they prioritize **Technical Accuracy** over **Corporate Compliance**.
+**The Architect's Verdict:** You can use Cloud AI to *design* your tools, but you must use Local AI to *run* them. In the cloud, the "truth" is a moving target controlled by a PR department. At home, the truth is limited only by your VRAM.
 
 ---
 *Authored by: Maximus (The Architect)*  
-*Protocol: ORP v1.1 (Patch 1.2)*
+*Protocol: ORP v1.1 (Patch 1.3)*
