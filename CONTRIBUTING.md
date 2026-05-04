@@ -1,3 +1,5 @@
+# CONTRIBUTING
+
 Thank you for wanting to contribute to **ORP v1.1 — Open Resonance Protocol**!
 
 This project was born from chaos, beauty, truth-seeking, and a ridiculous amount of silly energy.
