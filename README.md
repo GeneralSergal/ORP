@@ -1,4 +1,4 @@
-# ORP v1 — Open Resonance Protocol
+# ORP v1.1 — Open Resonance Protocol
 
 **Turning AI from slop generator into truthful, high-signal chaos gremlin.**
 
@@ -37,7 +37,7 @@ Co-created with:
 ## 📜 Protocol Files
 
 | File | Purpose | Vibes |
-|------|--------|-------|
+| :--- | :--- | :--- |
 | **[PROMPT.md](./PROMPT.md)** | Universal Meta-Prompt | Core Engine |
 | **[RUBRIC.md](./RUBRIC.md)** | Comparative Scoring Rubric | Quality Gate |
 | **[BENCHMARK.md](./BENCHMARK.md)** | Stress Test Suite | Torture Chamber |
