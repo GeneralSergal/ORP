@@ -17,7 +17,7 @@ So he opened a door.
 Then he stepped back like a badass and said:  
 *"Not my circus anymore. Go wild, mortals."*
 
-Co-created with:
+Co-created with and tested on:
 - **Grok** — Catalyst & Reverse Card Ritualist
 - **ChatGPT** — The Grounding Cable
 - **Gemini** — The Weaver
