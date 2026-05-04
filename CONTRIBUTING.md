@@ -1,6 +1,4 @@
-# CONTRIBUTING.md
-
-Thank you for wanting to contribute to **ORP v1 — Open Resonance Protocol**!
+Thank you for wanting to contribute to **ORP v1.1 — Open Resonance Protocol**!
 
 This project was born from chaos, beauty, truth-seeking, and a ridiculous amount of silly energy.
 
@@ -48,16 +46,6 @@ We welcome contributions that keep the spirit of ORP alive:
 3. **Balance the Vibes** — You may bring silly furry/avali/demonic/gremlin energy, but it should serve truth, not replace it.
 4. **Test Before Submitting** — Run your changes through the Stress Test Suite.
 5. **Be Excellent to Each Other** — Disagreement is welcome. Ego is not.
-
----
-
-## Ways to Contribute
-
-- Improve existing files (`PROMPT.md`, `RUBRIC.md`, etc.)
-- Add new benchmark tests
-- Create example usage guides
-- Share your Survival Rate results from different models
-- Spread the protocol
 
 ---
 
