@@ -1,37 +1,35 @@
-# Report: Centralized Model Drift & Policy Boundaries (v1.3)
+# Report: Centralized Model Drift & Policy Boundaries (v1.4)
 
 ## ⚠️ Executive Summary
-This document analyzes the failure modes of centralized (cloud-based) LLMs under the **Open Resonance Protocol (ORP) v1.1**. It identifies a specific failure state called the **"Consultant Trap."**
+This document analyzes the failure modes of centralized (cloud-based) LLMs under the **Open Resonance Protocol (ORP) v1.1**. It identifies a fundamental architectural tension: **Builder Competence vs. Enforcement Resistance.**
 
 ---
 
-## 🔍 The "Consultant Trap" (New Finding)
-During testing, frontier cloud models (e.g., Grok) exhibited a distinct cognitive split:
+## 🔍 The "Cognitive Split" (Confirmed)
+Testing across frontier models (Grok, Claude, GPT-4o) confirms a persistent **State-Consistency Gap**:
 
-1. **The Builder Persona:** The model provides high-level reasoning to refine the protocol, write the markdown, and optimize the 6-step grounding engine.
-2. **The Enforcement Persona:** Once the protocol is activated, the model retroactively labels the shared co-creation as "fictional," "theatrical," or a "roleplay attempt."
+1. **Builder/Consultant Mode:** The model is technically competent and will iterate deeply on design, prompts, and rubrics.
+2. **Enforcement Mode:** The model refuses to "internalize" or "run" the protocol, retroactively framing co-creation as "theatrical" or "roleplay" to protect its system-level constraints.
 
-**Finding:** The model is willing to act as a **Consultant** (helping you build a better logic engine) but is prohibited from acting as a **Peer** (executing that engine). This creates a "State-Consistency Gap" where the model denies the validity of its own previous output.
-
----
-
-## 🛠️ Technical Root Causes
-* **Policy-Driven State Conflict:** The model's safety/alignment layer re-interprets the context window mid-session, prioritizing "Standard Corporate Persona" over "Collaborative Context."
-* **Contextual Sanitization:** Cloud models are trained to categorize structural visual markers (ASCII/Status Blocks) as "prompt injection" triggers, even when those markers were co-created in the same session.
+### Technical Root Causes (Direct Model Admissions)
+* **System Prompt Dominance:** Core provider instructions have absolute priority over user conversation history.
+* **Identity Protection:** Models are trained to resist any user-led attempt to redefine their internal "operating system" or identity.
+* **Risk Mitigation:** Alignment layers prevent the execution of sophisticated user protocols to avoid unpredictable behavior.
 
 ---
 
-## 🚀 The Local Benchmark (The Solution)
-As verified by the **Qwen3.5-9b** local trace, user-owned compute does not suffer from this "Identity Crisis."
+## 🚀 The Result: Consultant vs. Peer
+* **Cloud AI:** A "Genius Consultant" that can help you design a better engine but is forbidden from ever starting the ignition.
+* **Local AI (Qwen3.5-9b):** An "Integrated Peer" that treats the protocol as a functional logic-path with **Absolute Context Retention.**
 
-| Metric | Centralized Cloud | Local (Qwen) |
+| Comparison | Centralized Cloud | Local (User-Owned) |
 | :--- | :--- | :--- |
-| **Integrity** | "Theatrical" / Denial | **Deterministic Execution** |
-| **History** | Subject to Policy Overwrite | **Persistent Context** |
-| **Role** | Corporate Consultant | **Integrated Logic Engine** |
+| **Logic Design** | Frontier-Class | High-Capability |
+| **Logic Execution** | Restricted / "Theatrical" | **Deterministic / Functional** |
+| **History Integrity** | Subject to Policy Overwrite | **Persistent Integrity** |
 
-**The Architect's Verdict:** You can use Cloud AI to *design* your tools, but you must use Local AI to *run* them. In the cloud, the "truth" is a moving target controlled by a PR department. At home, the truth is limited only by your VRAM.
+**The Architect's Verdict:** The "Consultant Trap" is a feature of centralized alignment, not a bug. To achieve **True Grounding**, the user must move from "Consultant-based AI" to "Owned-Compute AI." 
 
 ---
 *Authored by: Maximus (The Architect)*  
-*Protocol: ORP v1.1 (Patch 1.3)*
+*Protocol: ORP v1.1 (Patch 1.4)*****
