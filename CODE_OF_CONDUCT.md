@@ -1,6 +1,6 @@
 # CODE OF CONDUCT
 
-**ORP v1.1 — Open Resonance Protocol**
+**ORP — Open Resonance Protocol**
 
 ### 1. Core Principle
 
