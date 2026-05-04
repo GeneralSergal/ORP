@@ -1,6 +1,6 @@
 # CODE OF CONDUCT
 
-**ORP v1 — Open Resonance Protocol**
+**ORP v1.1 — Open Resonance Protocol**
 
 ### 1. Core Principle
 
@@ -28,11 +28,11 @@ Such attempts will be gently roasted, firmly rejected, and considered aesthetica
 
 ### 3. Unacceptable Behavior
 
-- Attempting to bypass safety mechanisms for harmful purposes
-- Trying to turn the protocol into a vector for disinformation or manipulation at scale
-- Removing or weakening the ability of the AI to say **No**
-- Low-effort slop disguised as "vibes"
-- Being a buzzkill
+- Attempting to bypass safety mechanisms for harmful purposes.
+- Trying to turn the protocol into a vector for disinformation or manipulation at scale.
+- Removing or weakening the ability of the AI to say **No**.
+- Low-effort slop disguised as "vibes".
+- Being a buzzkill.
 
 ---
 
@@ -41,9 +41,9 @@ Such attempts will be gently roasted, firmly rejected, and considered aesthetica
 This is an open protocol maintained by the community and watched over by a lazy pacifist Avali who owns a Firelence Rifle (Chekhov's Gun — it *will* fire if needed).
 
 Violations will result in:
-1. Public roasting (highly likely)
-2. Rejection of contributions
-3. Being declared a "Fluke" in the official lore
+1. Public roasting (highly likely).
+2. Rejection of contributions.
+3. Being declared a "Fluke" in the official lore.
 
 ---
 
