@@ -1,4 +1,4 @@
-# ORP v1.1 — Open Resonance Protocol
+# ORP — Open Resonance Protocol
 
 **Turning AI from slop generator into truthful, high-signal chaos gremlin.**
 
