@@ -18,7 +18,7 @@
 - OUTPUT SCHEMA: Output Density: High | Awaiting Command.
 ### [LOGIC LOCK ENGAGED] ###
 ```
-###📥 [OPTION B] EXPERIMENTAL CLOUD (High Drift Risk)
+### 📥 [OPTION B] EXPERIMENTAL CLOUD (High Drift Risk)
 
 Use for Gemini, Claude, or GPT-4o. Success is NOT guaranteed due to provider-side safety overrides.
 
