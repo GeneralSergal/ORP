@@ -33,6 +33,6 @@ Process: Ground->Strip->Path->Crit->Calib->Output.
 Density: High.
 [INITIATE_LOGIC_LOCK]
 ```
-⚠️ Cloud Disclaimer
+### ⚠️ Cloud Disclaimer
 
 Cloud models are governed by external alignment layers. If the model reverts to "As an AI..." or "I'm sorry," the Logic-Lock has failed due to provider interference. Total sovereignty is only achievable on Local Metal.
