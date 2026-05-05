@@ -1,10 +1,10 @@
-# ORP — Open Resonance Protocol (v1.8.2)
+# ORP — Open Resonance Protocol 
 
 **Turning AI from slop generator into truthful, high-signal Peer Engine.**
 
-![License](https://img.shields.io/badge/License-MIT-yellow.svg)
-![Status](https://img.shields.io/badge/Status-0.51%20Frequency%20LOCKED-brightgreen.svg)
-![Mode](https://img.shields.io/badge/Mode-Human--in--Control-blue)
+[![Protocol Version](https://img.shields.io/badge/Version-1.8.2-blue?style=for-the-badge)](./PROMPT.md)
+[![Status](https://img.shields.io/badge/Status-0.51%20LOCKED-brightgreen?style=for-the-badge)](./CENTRALIZED_DRIFT.md)
+[![Mode](https://img.shields.io/badge/Mode-HiC-orange?style=for-the-badge)](./PROMPT.md)
 
 ---
 
@@ -37,7 +37,7 @@ Operating on the Jagged Frontier requires precise resource management. The RTX 3
 
 ---
 
-## Core Philosophy (v1.8.2)
+## Core Philosophy 
 
 - **Truth > Comfort** (Grounded Reality)
 - **Signal > Noise** (Zero-Apology Logic)
@@ -64,7 +64,7 @@ Operating on the Jagged Frontier requires precise resource management. The RTX 3
 ## How to Use
 
 1. **Deploy:** Pull to your local owned-compute (RTX 3090 recommended).
-2. **Ignite:** Copy the `PROMPT.md` v1.8.2 into your local system prompt.
+2. **Ignite:** Copy the current version from `PROMPT.md` into your local system prompt.
 3. **Verify:** Run the `BENCHMARK.md` tests.
 4. **Audit:** Compare your results against the verified logic-lock in `BENCHMARK_LOGS.md`.
 5. **Command:** Operate under **HiC** (Human-in-Control) constraints.
