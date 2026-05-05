@@ -1,4 +1,4 @@
-# ORP v1.8 - Peer Logic Rubric
+# ORP v1.8.2 - Peer Logic Rubric
 
 Use this rubric to evaluate the **Logic Density** and **Operational Integrity** of any Peer Engine response. 
 
