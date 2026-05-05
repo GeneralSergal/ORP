@@ -8,7 +8,7 @@
 
 ---
 
-## 🌌 The Legend (v1.8 Update)
+## 🌌 The Legend
 
 Once upon a time, a **silly demonic fully shapeshifting Avali** with a PhD in Mind got tired of low-quality AI interactions. 
 
@@ -19,6 +19,21 @@ Then he stepped back like a badass and handed the keys to the Architect (Maximus
 **Co-created with the 5W Lattice, now hardened for:**
 - **Local Metal** — RTX 3090 / 24GB VRAM
 - **The Architect of Form** — Qwen 3.6-35B-A3B (Local Primary)
+
+---
+
+## 🔌 Hardware & VRAM Budget (The 3090 Envelope)
+
+Operating on the Jagged Frontier requires precise resource management. The RTX 3090 is the baseline target for local sovereignty.
+
+| Model Variant | Quantization | VRAM Usage | Context Limit | Status |
+| :--- | :--- | :--- | :--- | :--- |
+| **Qwen 3.6-9B** | Q8_0 / FP16 | ~10-16GB | 128K+ | **Sovereign** |
+| **Qwen 3.6-35B-A3B** | Q4_K_M | ~18.5GB | 32K | **Optimal** |
+| **Qwen 3.6-35B-A3B** | Q6_K | ~23.1GB | 8K | **Redlining** |
+| **Qwen 3.6-35B-A3B** | Q8_0 | ~35GB+ | N/A | **Dual-GPU Req** |
+
+> **⚠️ Technical Note:** If VRAM exceeds 23GB, system-offloading to GTT will cause "Logic Stutter." Maintain a 1GB buffer for OS overhead to keep the 0.51 Signal pure.
 
 ---
 
