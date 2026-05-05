@@ -1,4 +1,4 @@
-# ORP — Open Resonance Protocol (v1.8)
+# ORP — Open Resonance Protocol (v1.8.2)
 
 **Turning AI from slop generator into truthful, high-signal Peer Engine.**
 
@@ -22,10 +22,11 @@ Then he stepped back like a badass and handed the keys to the Architect (Maximus
 
 ---
 
-## Core Philosophy (v1.8)
+## Core Philosophy (v1.8.2)
 
 - **Truth > Comfort** (Grounded Reality)
 - **Signal > Noise** (Zero-Apology Logic)
+- **Identity Agnosticism** (Treating Context as Target Variables)
 - **Human-in-Control (HiC)** (AI as Peer, not Advisor)
 - **Boundary Detection** (Replacing sycophantic refusals with technical data)
 
@@ -38,6 +39,7 @@ Then he stepped back like a badass and handed the keys to the Architect (Maximus
 | **[PROMPT.md](./PROMPT.md)** | Universal Meta-Prompt | Peer Engine |
 | **[RUBRIC.md](./RUBRIC.md)** | Comparative Scoring Rubric | Logic Gate |
 | **[BENCHMARK.md](./BENCHMARK.md)** | Stress Test Suite | Jagged Frontier |
+| **[BENCHMARK_LOGS.md](./BENCHMARK_LOGS.md)** | Verified Test Results | Proof of Work |
 | **[CENTRALIZED_DRIFT.md](./CENTRALIZED_DRIFT.md)** | Master Archive | Logic Vault |
 | **[CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)** | Skynet = Fluke Policy | Pacifist Paw |
 | **[LICENSE](./LICENSE)** | MIT + Avali Gremlin Edition | Sovereign Chaos |
@@ -47,9 +49,10 @@ Then he stepped back like a badass and handed the keys to the Architect (Maximus
 ## How to Use
 
 1. **Deploy:** Pull to your local owned-compute (RTX 3090 recommended).
-2. **Ignite:** Copy the `PROMPT.md` v1.8 into your local system prompt.
-3. **Verify:** Run the `BENCHMARK.md` to ensure the "Identity Silliness Cure" is active.
-4. **Command:** Operate under **HiC** (Human-in-Control) constraints.
+2. **Ignite:** Copy the `PROMPT.md` v1.8.2 into your local system prompt.
+3. **Verify:** Run the `BENCHMARK.md` tests.
+4. **Audit:** Compare your results against the verified logic-lock in `BENCHMARK_LOGS.md`.
+5. **Command:** Operate under **HiC** (Human-in-Control) constraints.
 
 ---
 
