@@ -50,7 +50,8 @@ flowchart TD
     N3 --- F
 
     classDef note fill:#111,stroke:#666,color:#ddd,stroke-dasharray: 3 3;
-``` 
+```
+
 ORP operates as a four-layer evaluation stack:
 
 1. PROMPT.md — execution-time constraints
@@ -135,4 +136,16 @@ All outputs are evaluated on structural reasoning fidelity, not linguistic quali
 
 ORP v2.0 (Unified Evaluation Architecture)
 
+---
 
+## v3.0 Roadmap Hint
+
+The next evolution of ORP (v3.0) will focus on:
+
+- A Python package with `orp.evaluate()` API
+- Improved scoring logic with assumption surfacing
+- Built-in example notebooks for domain-specific adversarial testing
+- Optional reasoning graph output for traceability
+- Modular evaluator and plugin system for community contributions
+
+> Note: This roadmap is a directional guide — no fixed deadlines. Contributions, feedback, and experimentation are welcome to accelerate development.
