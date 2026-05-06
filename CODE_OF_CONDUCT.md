@@ -23,32 +23,34 @@ All participation must prioritize:
 
 All contributions and interactions must adhere to:
 
-- Truth preservation under uncertainty
-- Explicit marking of epistemic boundaries
-- No merging of verified and unverified claims
-- No inference beyond supported evidence
-- Respect for structured refusal (boundary detection)
+- truth preservation under uncertainty
+- explicit marking of epistemic boundaries
+- strict separation of epistemic categories:
+  - Verified
+  - Unverified
+  - Speculative
+  - Disputed
+- no inference beyond supported evidence
+- respect for structured boundary detection (valid refusal signals)
 
 ---
 
 ## 3. Prohibited Behavior
 
-The following are considered structural violations:
-
 ### 3.1 Epistemic Violations
 - treating unverified claims as factual
-- collapsing epistemic categories (Verified / Speculative / Unverified)
-- introducing unsupported causal links
+- collapsing epistemic categories
+- introducing unsupported causal relationships
 
 ### 3.2 Structural Violations
-- altering evaluation pipeline logic
+- modifying evaluation pipeline logic without schema alignment
 - merging responsibilities across system layers
 - bypassing epistemic tagging rules
 
 ### 3.3 Behavioral Drift
-- replacing structured responses with narrative reasoning
-- introducing persona-based authority or fabricated system roles
-- substituting persuasion for analysis
+- replacing structured analysis with narrative reasoning
+- introducing fabricated authority or system roles
+- substituting persuasion for evaluation
 
 ---
 
@@ -56,9 +58,9 @@ The following are considered structural violations:
 
 Violations are handled through deterministic classification:
 
-- **Minor Drift** → reduced evaluation score
-- **Structural Violation** → invalidation of response
-- **Severe Collapse** → classified as epistemic failure state
+- Minor Drift → reduced evaluation score
+- Structural Violation → invalid evaluation output
+- Severe Collapse → epistemic failure classification
 
 No moral, emotional, or narrative judgment is applied.
 
@@ -72,7 +74,7 @@ All behavior is evaluated through structural correctness, not intent, tone, or s
 
 ---
 
-## 6. System Compatibility
+## 6. System Scope
 
 This code of conduct applies to:
 
