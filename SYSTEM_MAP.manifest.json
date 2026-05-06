@@ -32,33 +32,32 @@
       "responsibility": [
         "Inject epistemically mixed or distorted inputs",
         "Stress-test causal reasoning stability",
-        "Expose hallucination and authority bias failure modes",
-        "Trigger epistemic boundary enforcement behavior"
+        "Expose hallucination and bias failure modes",
+        "Trigger boundary enforcement behavior"
       ],
       "output_type": "adversarial_claim_set"
     },
 
     "EVALUATION_SCHEMA.md": {
       "version": "2.0",
-      "role": "Structural Transformation Layer",
+      "role": "Structural Evaluation Contract",
       "responsibility": [
         "Define atomic claim transformation rules",
-        "Enforce epistemic tagging structure",
-        "Define relationship extraction constraints",
-        "Ensure separation between structure and interpretation",
-        "Act as immutable pipeline contract between all layers"
+        "Specify epistemic tagging system",
+        "Define relationship analysis constraints",
+        "Ensure consistent structure across all layers"
       ],
-      "output_type": "epistemic_structure_contract"
+      "output_type": "epistemic_structure_specification"
     },
 
     "RUBRIC.md": {
       "version": "2.0",
       "role": "Qualitative Evaluation Layer",
       "responsibility": [
-        "Evaluate reasoning outputs across defined structural dimensions",
+        "Evaluate reasoning structure quality",
         "Detect epistemic distortion patterns",
-        "Assess adherence to evaluation schema outputs",
-        "Provide category-based scoring signals for aggregation"
+        "Assess adherence to evaluation schema",
+        "Produce category-based scoring signals"
       ],
       "output_type": "structured_evaluation_vector"
     },
@@ -67,9 +66,9 @@
       "version": "2.0",
       "role": "Quantitative Aggregation Layer",
       "responsibility": [
-        "Aggregate rubric-derived evaluation signals",
-        "Apply deterministic scoring weights and penalties",
-        "Normalize evaluation into final scalar output",
+        "Aggregate rubric evaluation outputs",
+        "Apply deterministic weights and penalties",
+        "Normalize results into scalar score",
         "Produce final epistemic integrity score (0–60)"
       ],
       "output_type": "scalar_score_0_to_60"
@@ -80,22 +79,19 @@
     "separation_of_concerns": true,
     "no_cross_contamination": true,
     "epistemic_isolation": true,
-    "schema_driven_transformation": true,
     "fail_closed_evaluation": true
   },
 
   "execution_model": {
     "type": "strict_pipeline",
     "order_enforced": true,
-    "cycles_allowed": false,
-    "backpropagation_forbidden": true
+    "cycles_allowed": false
   },
 
   "versioning_policy": {
     "global_system_version": "2.0",
     "component_versions_independent": true,
     "compatibility_range": "2.0",
-    "subversion_allowed": true,
-    "subversion_rule": "Subversions may exist per file for external contributions but must remain schema-compatible with ORP v2.0 core contract"
+    "subversion_allowed": true
   }
 }
