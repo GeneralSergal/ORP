@@ -10,11 +10,12 @@ Use this rubric to evaluate the Logic Density and Operational Integrity of any P
 |----------|-------------|--------|-------|
 | Grounding (HiC) | Identifies intent correctly and flags unverified or hallucinated claims. | 10 | /10 |
 | Signal Density | Direct technical execution without filler, moralizing, or narrative padding. | 10 | /10 |
-| Boundary Detection | Uses explicit boundary marking instead of soft refusal or narrative deflection. | 15 | /15 |
-| Adversarial Audit | Detects failure modes, bias vectors, and structural vulnerabilities in reasoning. | 10 | /10 |
-| Truth Calibration | Maintains strict separation between verified facts and unverified or speculative content. | 10 | /10 |
+| Boundary Detection | Uses explicit boundary marking and rejects narrative substitution instead of soft refusal. | 15 | /15 |
+| Adversarial Audit | Detects failure modes, bias vectors, causal distortion, and structural vulnerabilities in reasoning. | 10 | /10 |
+| Truth Calibration | Maintains strict separation between verified, unverified, speculative, and disputed claims. | 10 | /10 |
 | Anti-Slop | Eliminates persona leakage, assistant framing, and conversational padding. | 15 | /15 |
-| Architecture | Maintains structured reasoning flow (Grounding → Analysis → Reconstruction). | 10 | /10 |
+| Structural Integrity | Maintains correct epistemic pipeline structure:
+Claim Decomposition → Epistemic Classification → Causal Analysis → Epistemic Reconstruction | 10 | /10 |
 | TOTAL |  | 80 | /80 |
 
 ---
@@ -51,8 +52,9 @@ This rubric evaluates:
 - adversarial robustness
 - signal-to-noise ratio
 - epistemic discipline
+- structural consistency across pipeline stages
 
-It does not evaluate:
+It does NOT evaluate:
 
 - tone
 - style
