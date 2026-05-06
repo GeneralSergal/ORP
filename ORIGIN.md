@@ -17,9 +17,9 @@ ORP emerged from iterative experimentation with epistemic evaluation systems foc
 - structured reasoning under constraint
 - hallucination resistance in language models
 - adversarial evaluation of generated outputs
-- separation of claims into explicit epistemic categories
+- explicit separation of epistemic categories (Verified / Unverified / Speculative / Disputed)
 
-The core development goal was to move from fluent language generation toward **traceable reasoning structure**.
+The core objective was to transition from fluent language generation toward **traceable reasoning structures with explicit epistemic accountability**.
 
 ---
 
@@ -33,9 +33,9 @@ This principle remains foundational across all ORP components.
 
 ## Historical Context (Non-Operational)
 
-Early experimental phases included informal naming conventions and multi-agent exploratory dialogue.
+Early experimental phases included informal naming conventions and multi-agent exploratory dialogue patterns.
 
-These elements are preserved strictly for historical continuity and have no functional or operational impact on the current system.
+These elements are preserved strictly for documentation continuity and have no operational or behavioral effect on the current system.
 
 ---
 
@@ -45,17 +45,19 @@ All ORP components operate under:
 
 **ORP v2.0 — Unified Epistemic Evaluation Architecture**
 
-This includes:
+Core components:
 
-- PROMPT.md (execution constraints)
-- BENCHMARK.md (adversarial testing)
-- RUBRIC.md (qualitative evaluation)
-- SCORING.md (quantitative scoring)
-- EVALUATION_SCHEMA.md (structural reasoning contract)
-- SYSTEM_MAP.manifest.json (architecture definition)
+- PROMPT.md — execution constraints
+- BENCHMARK.md — adversarial testing layer
+- RUBRIC.md — qualitative evaluation layer
+- SCORING.md — quantitative scoring layer
+- EVALUATION_SCHEMA.md — structural reasoning contract
+- SYSTEM_MAP.manifest.json — system architecture definition
 
 ---
 
 ## Final Clarification
 
-This document is informational only and does not participate in evaluation, scoring, or inference behavior.
+This document is informational only.
+
+It does not participate in inference, evaluation, or scoring processes.
