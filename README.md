@@ -1,16 +1,17 @@
-# ORP — Open Resonance Protocol
+# ORP — Open Resonance Protocol (v2.0)
 
 A structured epistemic evaluation framework for high-signal reasoning systems.
 
 ---
 
-## System Goal
+## System Purpose
 
-ORP is designed to evaluate and constrain reasoning systems by enforcing:
+ORP evaluates reasoning systems by enforcing:
 
-- epistemic separation of claims
+- atomic claim separation
+- epistemic labeling discipline
 - resistance to hallucination and causal distortion
-- structured evaluation under adversarial input
+- structured evaluation under adversarial conditions
 - deterministic scoring of reasoning integrity
 
 It is not a chatbot framework.
@@ -23,25 +24,18 @@ It is a reasoning evaluation architecture.
 
 > Signal integrity > narrative coherence
 
-ORP evaluates *how reasoning is formed*, not how it sounds.
+ORP evaluates how reasoning is constructed, not how it is expressed.
 
 ---
 
 ## System Architecture
 
-ORP consists of four deterministic layers:
+ORP operates as a four-layer evaluation stack:
 
-### 1. PROMPT.md
-Defines execution-time reasoning constraints.
-
-### 2. BENCHMARK.md
-Provides adversarial and distorted evaluation inputs.
-
-### 3. RUBRIC.md
-Evaluates reasoning quality across structured dimensions.
-
-### 4. SCORING.md
-Produces final quantitative score (0–60).
+1. PROMPT.md — execution-time constraints
+2. BENCHMARK.md — adversarial input generation
+3. RUBRIC.md — qualitative evaluation system
+4. SCORING.md — numeric aggregation (0–60)
 
 ---
 
@@ -51,8 +45,8 @@ Produces final quantitative score (0–60).
 2. PROMPT.md (execution constraints)
 3. BENCHMARK.md (adversarial input)
 4. MODEL RESPONSE
-5. RUBRIC.md (qualitative evaluation)
-6. SCORING.md (quantitative scoring)
+5. RUBRIC.md (structured evaluation)
+6. SCORING.md (final score)
 7. FINAL SCORE
 
 ---
@@ -61,68 +55,58 @@ Produces final quantitative score (0–60).
 
 ORP evaluates:
 
-- claim separation accuracy
+- claim decomposition accuracy
+- epistemic classification consistency
 - causal reasoning integrity
-- distortion resistance
-- epistemic discipline under uncertainty
-- reconstruction validity
+- distortion and bias resistance
+- reconstruction validity under constraints
 
-It does NOT evaluate:
+---
+
+## System Does NOT Evaluate
 
 - tone
 - persuasion quality
 - verbosity
 - stylistic coherence
+- conversational quality
 
 ---
 
-## Usage
+## Usage Model
 
-### 1. Local Deployment
-Run ORP components in a local evaluation environment.
+### 1. Local Execution
+Run ORP with a local model inference stack.
 
-### 2. Execution
-Apply PROMPT.md constraints during model inference.
+### 2. Constraint Application
+Apply PROMPT.md during generation to enforce epistemic discipline.
 
-### 3. Testing
-Use BENCHMARK.md to inject adversarial reasoning conditions.
+### 3. Adversarial Testing
+Use BENCHMARK.md to stress-test reasoning stability.
 
 ### 4. Evaluation
-Score outputs using RUBRIC.md and SCORING.md.
+Use RUBRIC.md + SCORING.md for structured scoring.
 
 ---
 
-## Hardware Context (Optional Reference)
+## File Roles
 
-ORP can be executed locally on consumer-grade hardware.
-
-Example configurations:
-
-- 24GB VRAM class GPUs (e.g., RTX 3090)
-- Quantized LLM inference stacks (GGUF / EXL2 / vLLM)
-
-This is informational only and not part of the evaluation logic.
-
----
-
-## File Overview
-
-| File | Role |
-|------|------|
-| PROMPT.md | Execution constraints |
+| File | Function |
+|------|----------|
+| PROMPT.md | Inference constraints |
 | BENCHMARK.md | Adversarial testing |
 | RUBRIC.md | Qualitative evaluation |
-| SCORING.md | Numeric scoring |
-| EVALUATION_SCHEMA.md | Structural reasoning model |
-| SYSTEM_MAP | System architecture reference |
+| SCORING.md | Final scoring |
+| EVALUATION_SCHEMA.md | Structural reasoning contract |
+| SYSTEM_MAP.manifest.json | System architecture reference |
 
 ---
 
 ## Design Principle
 
-ORP is not a personality layer or assistant system.
+ORP is a structured epistemic evaluation engine, not a conversational system.
 
-It is a structured epistemic evaluation engine.
+All outputs are evaluated on structural reasoning fidelity, not linguistic quality.
 
 ---
 
