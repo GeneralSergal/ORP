@@ -1,4 +1,4 @@
-# ORP — Open Resonance Protocol (v2.0)
+# ORP – Open Resonance Protocol (v2.0)
 A structured epistemic evaluation framework for high-signal reasoning systems.
 
 > ⚠️ Quick Repo Note: Before contributing or running examples, please check `!REPO_CHECKLIST.md` for known issues, copy-paste guidelines, and safe handling of code/Mermaid blocks.
