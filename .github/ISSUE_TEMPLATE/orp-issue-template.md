@@ -8,14 +8,6 @@ assignees: ''
 
 ---
 
----
-name: ORP Contribution / Issue
-about: Report a bug, suggest a feature, or request clarification for ORP.
-title: "[ISSUE TYPE] Short descriptive title"
-labels: ''
-assignees: ''
----
-
 ## Issue Type
 <!-- Choose one: Bug / Feature Request / Question / Documentation / Other -->
 Type: 
