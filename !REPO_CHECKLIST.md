@@ -5,14 +5,14 @@
 ---
 
 ## 1. Core Files
-- [ ] `PROMPT.md` — execution-time constraints are complete
-- [ ] `BENCHMARK.md` — adversarial inputs are representative
-- [ ] `RUBRIC.md` — scoring categories and weights verified
-- [ ] `SCORING.md` — aggregation logic matches rubric
-- [ ] `EVALUATION_SCHEMA.md` — atomic claim structure intact
-- [ ] `SYSTEM_MAP.manifest.json` — versions aligned with v2.0/v3.0
-- [ ] `ROADMAP.md` — directional, non-deadline roadmap clear
-- [ ] `CONTRIBUTING.md` — copy-paste safe, guidelines updated
+- [ ] `PROMPT.md` – execution-time constraints are complete
+- [ ] `BENCHMARK.md` – adversarial inputs are representative
+- [ ] `RUBRIC.md` – scoring categories and weights verified
+- [ ] `SCORING.md` – aggregation logic matches rubric
+- [ ] `EVALUATION_SCHEMA.md` – atomic claim structure intact
+- [ ] `SYSTEM_MAP.manifest.json` – versions aligned with v2.0/v3.0
+- [ ] `ROADMAP.md` – directional, non-deadline roadmap clear
+- [ ] `CONTRIBUTING.md` – guidelines updated
 
 ---
 
