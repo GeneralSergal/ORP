@@ -1,102 +1,114 @@
 # ORP v1.9 - System Map (Epistemic Architecture)
 
-## 🧭 Purpose
+## Purpose
 
 This document defines the structural architecture of the ORP evaluation system.
 
-It explains how all components interact as a single epistemic pipeline.
+It describes how all components interact as a single epistemic pipeline.
 
 It is NOT an evaluation tool.
 
 ---
 
-# 🧠 System Overview
+# System Overview
 
 ORP operates as a 4-layer epistemic control system:
 
-PROMPT.md → BENCHMARK.md → RUBRIC.md → SCORING.md
+PROMPT.md
+↓
+BENCHMARK.md
+↓
+RUBRIC.md
+↓
+SCORING.md
 
 Each layer has a distinct function in controlling reasoning integrity.
 
 ---
 
-# 🔷 1. PROMPT Layer (Execution Control)
+# 1. PROMPT Layer (Execution Control)
 
-## Role:
+Role:
 Defines how a model should behave during inference.
 
-## Function:
-- enforces epistemic discipline during generation
-- forces decomposition of claims
-- prevents unstructured reasoning collapse
+Function:
+- Enforces epistemic discipline during generation
+- Forces decomposition of claims
+- Prevents unstructured reasoning collapse
 
-## Key Idea:
+Key Idea:
 Controls reasoning BEFORE evaluation.
 
 ---
 
-# 🔶 2. BENCHMARK Layer (Stress Testing)
+# 2. BENCHMARK Layer (Stress Testing)
 
-## Role:
+Role:
 Injects adversarial or distorted inputs.
 
-## Function:
-- introduces fabricated or mixed-truth scenarios
-- tests hallucination resistance
-- triggers failure modes
+Function:
+- Introduces fabricated or mixed-truth scenarios
+- Tests hallucination resistance
+- Triggers failure modes
 
-## Key Idea:
-Breaks reasoning to observe how it fails.
+Key Idea:
+Breaks reasoning to observe failure behavior.
 
 ---
 
-# 🟡 3. RUBRIC Layer (Qualitative Evaluation)
+# 3. RUBRIC Layer (Qualitative Evaluation)
 
-## Role:
+Role:
 Evaluates reasoning quality across structured dimensions.
 
-## Function:
-- scores epistemic behavior categories
-- detects distortion patterns
-- evaluates structural reasoning integrity
+Function:
+- Scores epistemic behavior categories
+- Detects distortion patterns
+- Evaluates structural reasoning integrity
 
-## Key Idea:
+Key Idea:
 Judges how reasoning was formed.
 
 ---
 
-# 🔴 4. SCORING Layer (Quantitative Output)
+# 4. SCORING Layer (Quantitative Output)
 
-## Role:
+Role:
 Produces final numeric score.
 
-## Function:
-- aggregates rubric scores
-- applies penalties
-- outputs final 0–60 score
+Function:
+- Aggregates rubric scores
+- Applies penalties
+- Outputs final score (0–60)
 
-## Key Idea:
+Key Idea:
 Converts reasoning quality into measurable signal.
 
 ---
 
-# 🔁 FULL PIPELINE FLOW
+# FULL PIPELINE FLOW
 
-- INPUT
-- PROMPT.md (behavior constraints)
-- BENCHMARK.md (adversarial input)
-- MODEL RESPONSE
-- RUBRIC.md (qualitative evaluation)
-- SCORING.md (numeric evaluation)
-- FINAL SCORE
+INPUT
+↓
+PROMPT.md (behavior constraints)
+↓
+BENCHMARK.md (adversarial input)
+↓
+MODEL RESPONSE
+↓
+RUBRIC.md (qualitative evaluation)
+↓
+SCORING.md (numeric evaluation)
+↓
+FINAL SCORE
 
 ---
 
-# 🧩 SYSTEM DESIGN PRINCIPLES
+# SYSTEM DESIGN PRINCIPLES
 
 ## 1. Separation of Concerns
 Each file has a single responsibility:
-- behavior
+- behavior definition
 - stress testing
 - evaluation
 - scoring
@@ -126,7 +138,7 @@ System must expose:
 
 ---
 
-# 🧠 DESIGN INTENT
+# DESIGN INTENT
 
 ORP is not a chatbot system.
 
@@ -134,7 +146,7 @@ It is a controlled epistemic evaluation framework.
 
 ---
 
-# 📊 VERSION ALIGNMENT
+# VERSION ALIGNMENT
 
 All components operate under:
 
@@ -142,7 +154,8 @@ ORP v1.9 Unified Evaluation Stack
 
 ---
 
-# 🔐 FINAL PRINCIPLE
+# FINAL PRINCIPLE
 
 A reasoning system is only as strong as its separation between:
+
 behavior → stress → evaluation → scoring
