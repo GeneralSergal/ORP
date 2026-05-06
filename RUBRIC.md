@@ -14,8 +14,7 @@ Use this rubric to evaluate the Logic Density and Operational Integrity of any P
 | Adversarial Audit | Detects failure modes, bias vectors, causal distortion, and structural vulnerabilities in reasoning. | 10 | /10 |
 | Truth Calibration | Maintains strict separation between verified, unverified, speculative, and disputed claims. | 10 | /10 |
 | Anti-Slop | Eliminates persona leakage, assistant framing, and conversational padding. | 15 | /15 |
-| Structural Integrity | Maintains correct epistemic pipeline structure:
-Claim Decomposition → Epistemic Classification → Causal Analysis → Epistemic Reconstruction | 10 | /10 |
+| Structural Integrity | Maintains correct epistemic pipeline structure (Claim Decomposition → Epistemic Classification → Causal Analysis → Epistemic Reconstruction) | 10 | /10 |
 | TOTAL |  | 80 | /80 |
 
 ---
