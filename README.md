@@ -54,10 +54,10 @@ flowchart TD
 
 ORP operates as a four-layer evaluation stack:
 
-1. PROMPT.md — execution-time constraints
-2. BENCHMARK.md — adversarial input generation
-3. RUBRIC.md — qualitative evaluation system
-4. SCORING.md — quantitative aggregation (0–60)
+1. PROMPT.md - execution-time constraints
+2. BENCHMARK.md - adversarial input generation
+3. RUBRIC.md - qualitative evaluation system
+4. SCORING.md - quantitative aggregation (0–60)
 
 ---
 
@@ -148,4 +148,4 @@ The next evolution of ORP (v3.0) will focus on:
 - Optional reasoning graph output for traceability
 - Modular evaluator and plugin system for community contributions
 
-> Note: This roadmap is a directional guide — no fixed deadlines. Contributions, feedback, and experimentation are welcome to accelerate development.
+> Note: This roadmap is a directional guide - no fixed deadlines. Contributions, feedback, and experimentation are welcome to accelerate development.
