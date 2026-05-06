@@ -32,29 +32,16 @@ ORP evaluates how reasoning is constructed, not how it is expressed.
 
 ```mermaid
 flowchart TD
-
-    A[INPUT] --> B[PROMPT.md<br/>Execution Constraints]
-
-    B --> C[BENCHMARK.md<br/>Adversarial Stress Input]
-
-    C --> D[MODEL RESPONSE<br/>Constrained Generation]
-
-    D --> E[EVALUATION_SCHEMA.md<br/>Structural Transformation<br/>Claim Atomization + Epistemic Tagging]
-
-    E --> F[RUBRIC.md<br/>Qualitative Evaluation<br/>Distortion + Integrity Scoring]
-
-    F --> G[SCORING.md<br/>Quantitative Aggregation<br/>0–60 Scalar Score]
-
+    A[INPUT] --> B[PROMPT.md: Execution]
+    B --> C[BENCHMARK.md: Stress Input]
+    C --> D[MODEL RESPONSE: Generation]
+    D --> E[EVALUATION_SCHEMA.md: Structure]
+    E --> F[RUBRIC.md: Evaluation]
+    F --> G[SCORING.md: Score]
     G --> H[FINAL SCORE]
 
-    %% Side Annotations (non-executing metadata layer)
-    B -. enforces .-> E
-    C -. stresses .-> D
-    E -. defines structure for .-> F
-    F -. feeds .-> G
-
-    %% Design Principle Note
-    N1[[Signal Integrity > Narrative Coherence]]:::note
+    %% Optional notes as side nodes
+    N1[[Signal > Narrative]]:::note
     N2[[Separation of Concerns]]:::note
     N3[[Epistemic Isolation]]:::note
 
@@ -62,9 +49,8 @@ flowchart TD
     N2 --- E
     N3 --- F
 
-classDef note fill:#111,stroke:#666,color:#ddd,stroke-dasharray: 3 3;
-
-```
+    classDef note fill:#111,stroke:#666,color:#ddd,stroke-dasharray: 3 3;
+``` 
 ORP operates as a four-layer evaluation stack:
 
 1. PROMPT.md — execution-time constraints
