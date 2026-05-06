@@ -1,4 +1,4 @@
-# REPO_CHECKLIST
+# REPO CHECKLIST
 
 > Quick sanity check for contributors and users of ORP v2/v3 repo.
 
