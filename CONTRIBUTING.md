@@ -2,89 +2,82 @@
 
 ## Purpose
 
-This document defines contribution rules for the ORP system.
+This document defines how changes may be contributed to the ORP system.
 
-All contributions must preserve:
-
-- epistemic integrity
-- structural separation
-- deterministic evaluation behavior
+It ensures that modifications preserve epistemic integrity, structural separation, and deterministic evaluation behavior.
 
 ---
 
-## System Constraints
+## System Context
 
-All changes must respect the ORP v2.0 pipeline:
+All contributions must remain compatible with:
 
-1. PROMPT.md (execution constraints)
-2. BENCHMARK.md (adversarial stress testing)
-3. RUBRIC.md (qualitative evaluation)
-4. SCORING.md (quantitative evaluation)
+- PROMPT.md (execution constraints)
+- BENCHMARK.md (adversarial testing)
+- RUBRIC.md (evaluation logic)
+- SCORING.md (aggregation layer)
+- EVALUATION_SCHEMA.md (structural contract)
 
-Rules:
-- No merging of layer responsibilities
-- No cross-layer logic coupling
-- No hidden behavioral dependencies
+This document does not redefine system behavior. It only governs modifications.
 
 ---
 
-## Valid Contributions
+## Allowed Contribution Types
 
-### 1. Epistemic System Improvements
-- improve claim classification clarity
-- improve distortion detection logic
-- improve reconstruction consistency
-- reduce ambiguity in evaluation rules
+### 1. Epistemic Improvements
+- improve claim separation clarity
+- improve classification consistency
+- improve distortion detection precision
+- improve reconstruction fidelity
 
-### 2. Benchmark Enhancements
-- adversarial prompt design
+### 2. Benchmark Expansion
+- new adversarial test cases
 - hallucination stress tests
-- causal distortion test cases
+- causal distortion scenarios
 
-### 3. Tooling / Infrastructure
+### 3. Infrastructure / Tooling
 - local execution tooling (Ollama, vLLM, etc.)
-- evaluation automation scripts
-- reproducibility tooling
+- evaluation automation
+- reproducibility improvements
 
 ---
 
 ## Not Allowed
 
 ### Structural Violations
-- merging evaluation layers
-- weakening epistemic separation rules
-- removing uncertainty tracking
+- merging system layers
+- redefining evaluation pipeline structure
+- introducing cross-file hidden dependencies
+
+### Epistemic Regression
+- weakening uncertainty tracking
+- collapsing epistemic categories
+- replacing structured evaluation with narrative logic
 
 ### Behavioral Drift
-- adding persona behavior requirements
-- introducing persuasion or tone constraints
-- adding narrative smoothing logic
-
-### Architectural Regression
-- collapsing PROMPT / BENCHMARK / RUBRIC / SCORING roles
-- introducing hidden shared logic between files
+- adding persona behavior rules
+- introducing tone/persuasion constraints
+- embedding stylistic preferences into evaluation logic
 
 ---
 
-## Validation Requirement
+## Validation Rule
 
-All contributions must be compatible with:
+A contribution is valid only if:
 
-- PROMPT.md
-- BENCHMARK.md
-- RUBRIC.md
-- SCORING.md
-- EVALUATION_SCHEMA.md
+- it preserves separation of concerns
+- it does not modify the evaluation architecture
+- it remains compatible with EVALUATION_SCHEMA.md
 
-If a change improves usability but reduces epistemic clarity, it must be rejected.
+If a change improves usability but reduces epistemic precision, it must be rejected.
 
 ---
 
 ## Design Principle
 
-Signal integrity > stylistic coherence
+> Structural correctness is a hard constraint, not a preference.
 
-Structural correctness > readability optimization
+Signal integrity overrides readability or stylistic convenience.
 
 ---
 
@@ -92,4 +85,4 @@ Structural correctness > readability optimization
 
 All contributions must remain compatible with:
 
-ORP v2.0 Unified Evaluation Architecture
+ORP v2.0 — Unified Epistemic Evaluation Architecture
