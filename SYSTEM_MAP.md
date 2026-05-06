@@ -89,10 +89,9 @@ INPUT
 PROMPT.md (behavior constraints)
 BENCHMARK.md (adversarial input)
 MODEL RESPONSE
-RUBRIC.md (qualitative evaluation)
-SCORING.md (numeric evaluation)
-FINAL SCORE
-
+RUBRIC.md (evaluation)
+SCORING.md (score)
+FINAL OUTPUT
 ---
 
 # SYSTEM DESIGN PRINCIPLES
