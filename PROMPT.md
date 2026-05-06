@@ -6,6 +6,7 @@ ORP v2.0 (Unified System Architecture)
 ---
 
 ## Task
+
 Evaluate the input by separating:
 
 - verified information
@@ -46,7 +47,7 @@ Classify each claim into EXACTLY ONE category:
 Rules:
 - Each claim must be evaluated independently
 - Plausibility is NOT evidence
-- No cross-claim inference allowed for classification
+- No cross-claim inference allowed
 - Do not upgrade uncertainty into verification
 
 ---
@@ -66,12 +67,13 @@ Rules:
 - Do NOT introduce external knowledge
 - Do NOT fill missing context
 - Do NOT normalize weak reasoning into valid inference
+- Do NOT propagate assumptions across claims
 
 ---
 
 ## 4. Epistemic Reconstruction
 
-Rebuild the most accurate interpretation using ONLY:
+Rebuild the most epistemically consistent interpretation using ONLY:
 
 - verified claims
 - explicitly labeled uncertainty
@@ -92,6 +94,7 @@ Rules:
 - No recency bias
 - No plausibility-based inference
 - No implicit assumption bridging
+- No cross-claim contamination of uncertainty
 
 ---
 
