@@ -52,12 +52,12 @@ Right now, the primary effort is on:
 
 - **Python Package MVP**
 
-\```python
+```python
 from orp import evaluate
 
 result = evaluate(response, context=context, mode="strict")
 print(result.score, result.report, result.graph)
-\```
+```
 
 - Optional LangChain / LlamaIndex integration
 - Web UI (Streamlit / Gradio) for quick testing
