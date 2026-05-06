@@ -16,7 +16,7 @@ ORP evaluates reasoning systems by enforcing:
 
 It is not a chatbot framework.
 
-It is a reasoning evaluation architecture.
+It is a structured epistemic evaluation system.
 
 ---
 
@@ -35,7 +35,7 @@ ORP operates as a four-layer evaluation stack:
 1. PROMPT.md — execution-time constraints
 2. BENCHMARK.md — adversarial input generation
 3. RUBRIC.md — qualitative evaluation system
-4. SCORING.md — numeric aggregation (0–60)
+4. SCORING.md — quantitative aggregation (0–60)
 
 ---
 
@@ -46,7 +46,7 @@ ORP operates as a four-layer evaluation stack:
 3. BENCHMARK.md (adversarial input)
 4. MODEL RESPONSE
 5. RUBRIC.md (structured evaluation)
-6. SCORING.md (final score)
+6. SCORING.md (final scoring)
 7. FINAL SCORE
 
 ---
@@ -59,7 +59,7 @@ ORP evaluates:
 - epistemic classification consistency
 - causal reasoning integrity
 - distortion and bias resistance
-- reconstruction validity under constraints
+- reconstruction validity under constraint
 
 ---
 
@@ -76,7 +76,7 @@ ORP evaluates:
 ## Usage Model
 
 ### 1. Local Execution
-Run ORP with a local model inference stack.
+Run ORP with a local inference stack.
 
 ### 2. Constraint Application
 Apply PROMPT.md during generation to enforce epistemic discipline.
@@ -85,7 +85,7 @@ Apply PROMPT.md during generation to enforce epistemic discipline.
 Use BENCHMARK.md to stress-test reasoning stability.
 
 ### 4. Evaluation
-Use RUBRIC.md + SCORING.md for structured scoring.
+Use RUBRIC.md and SCORING.md for structured scoring.
 
 ---
 
@@ -104,7 +104,7 @@ Use RUBRIC.md + SCORING.md for structured scoring.
 
 ## Design Principle
 
-ORP is a structured epistemic evaluation engine, not a conversational system.
+ORP is a structured epistemic evaluation system, not a conversational system.
 
 All outputs are evaluated on structural reasoning fidelity, not linguistic quality.
 
