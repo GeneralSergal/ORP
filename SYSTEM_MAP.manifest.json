@@ -31,7 +31,7 @@
       "role": "Adversarial Input Layer",
       "responsibility": [
         "Inject epistemically mixed or distorted inputs",
-        "Stress-test causal reasoning stability",
+        "Stress-test causal reasoning stability under pressure",
         "Expose hallucination and bias failure modes",
         "Trigger boundary enforcement behavior"
       ],
@@ -40,12 +40,12 @@
 
     "EVALUATION_SCHEMA.md": {
       "version": "2.0",
-      "role": "Structural Evaluation Contract",
+      "role": "Structural Contract Layer",
       "responsibility": [
         "Define atomic claim transformation rules",
         "Specify epistemic tagging system",
         "Define relationship analysis constraints",
-        "Ensure consistent structure across all layers"
+        "Ensure consistent structural evaluation across pipeline"
       ],
       "output_type": "epistemic_structure_specification"
     },
@@ -56,7 +56,7 @@
       "responsibility": [
         "Evaluate reasoning structure quality",
         "Detect epistemic distortion patterns",
-        "Assess adherence to evaluation schema",
+        "Assess adherence to evaluation schema contract",
         "Produce category-based scoring signals"
       ],
       "output_type": "structured_evaluation_vector"
@@ -79,19 +79,22 @@
     "separation_of_concerns": true,
     "no_cross_contamination": true,
     "epistemic_isolation": true,
+    "schema_contract_enforcement": true,
     "fail_closed_evaluation": true
   },
 
   "execution_model": {
     "type": "strict_pipeline",
     "order_enforced": true,
-    "cycles_allowed": false
+    "cycles_allowed": false,
+    "backpropagation_forbidden": true
   },
 
   "versioning_policy": {
     "global_system_version": "2.0",
     "component_versions_independent": true,
     "compatibility_range": "2.0",
-    "subversion_allowed": true
+    "subversion_allowed": true,
+    "subversion_rule": "Subversions may exist per component for external contributions but must remain compatible with ORP v2.0 structural contract"
   }
 }
