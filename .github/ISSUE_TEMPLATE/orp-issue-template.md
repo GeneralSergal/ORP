@@ -1,11 +1,9 @@
 ---
-name: ORP Issue Template
-about: 'Structured template for ORP issues: bug reports, feature requests, or questions.
-  Ensures contributors provide necessary context for faster resolution.'
-title: ''
+name: ORP Contribution / Issue
+about: Report a bug, suggest a feature, or request clarification for ORP.
+title: "[ISSUE TYPE] Short descriptive title"
 labels: ''
 assignees: ''
-
 ---
 
 ## Issue Type
