@@ -1,44 +1,61 @@
 # ORP ORIGIN (Context Document)
 
+---
+
 ## Note
 
-This document contains historical and narrative context for ORP.
+This document provides historical and contextual background for ORP.
 
 It does NOT affect system behavior, evaluation logic, or scoring.
 
 ---
 
-## Origin Narrative
+## Origin Summary
 
-ORP was originally explored as a collaborative epistemic framework developed through iterative experimentation between human and model-assisted reasoning systems.
+ORP emerged from iterative experimentation with epistemic evaluation systems focused on:
 
-Early development included multiple interacting perspectives, including exploratory dialogue between different model instances and human contributors focused on:
-
-- epistemic stability
-- hallucination resistance
 - structured reasoning under constraint
-- adversarial evaluation of language models
+- hallucination resistance in language models
+- adversarial evaluation of generated outputs
+- separation of claims into explicit epistemic categories
+
+The core development goal was to move from fluent language generation toward **traceable reasoning structure**.
 
 ---
 
-## Development Philosophy
-
-The system evolved around a central idea:
+## Core Development Principle
 
 > Reasoning systems should be evaluated by structure, not fluency.
 
----
-
-## Cultural Layer (Non-Operational)
-
-Some historical naming conventions and informal identities existed during early experimentation phases. These are preserved only for documentation continuity and do not influence current system behavior.
+This principle remains foundational across all ORP components.
 
 ---
 
-## Current Status
+## Historical Context (Non-Operational)
 
-All ORP components now operate under:
+Early experimental phases included informal naming conventions and multi-agent exploratory dialogue.
 
-**ORP v2.0 Unified Epistemic Evaluation Architecture**
+These elements are preserved strictly for historical continuity and have no functional or operational impact on the current system.
 
-This document is informational only.
+---
+
+## Current System State
+
+All ORP components operate under:
+
+**ORP v2.0 — Unified Epistemic Evaluation Architecture**
+
+This includes:
+
+- PROMPT.md (execution constraints)
+- BENCHMARK.md (adversarial testing)
+- RUBRIC.md (qualitative evaluation)
+- SCORING.md (quantitative scoring)
+- EVALUATION_SCHEMA.md (structural reasoning contract)
+- SYSTEM_MAP.manifest.json (architecture definition)
+
+---
+
+## Final Clarification
+
+This document is informational only and does not participate in evaluation, scoring, or inference behavior.
