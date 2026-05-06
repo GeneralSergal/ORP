@@ -2,9 +2,9 @@
 
 ## Purpose
 
-This document defines the structural architecture of the ORP evaluation system.
+This document defines the human-readable architecture of the ORP evaluation system.
 
-It describes how all components interact as a single epistemic pipeline.
+It describes how all components interact as a single deterministic epistemic pipeline.
 
 It is not an evaluation tool.
 
@@ -12,133 +12,155 @@ It is not an evaluation tool.
 
 ## System Version
 
-ORP v2.0 (Unified System Architecture)
+ORP v2.0 (Unified Evaluation Architecture)
 
 All components operate under a shared system version: ORP v2.0
 
-### Sub-versioning Policy
-- Each component (PROMPT, BENCHMARK, RUBRIC, SCORING) may maintain internal sub-versions
-- Sub-versions must remain compatible with ORP v2.0 principles
+---
+
+## Sub-versioning Policy
+
+Each component may maintain internal sub-versions:
+
+- PROMPT.md
+- BENCHMARK.md
+- RUBRIC.md
+- SCORING.md
+- EVALUATION_SCHEMA.md
+
+Rules:
+
+- Sub-versions must remain compatible with ORP v2.0 core contract
 - External contributions may increment sub-versions without changing system version
-- Any breaking change requires system version update (v2.1+ etc.)
+- Breaking structural changes require system upgrade (v2.1+)
+- No sub-version may alter pipeline order or responsibilities
 
 ---
 
 ## System Overview
 
-ORP operates as a four-layer epistemic control system:
+ORP operates as a layered epistemic evaluation pipeline:
 
-1. PROMPT.md
-2. BENCHMARK.md
-3. RUBRIC.md
-4. SCORING.md
+### 1. PROMPT.md
+Execution-time reasoning constraint layer
 
-Each layer has a distinct and non-overlapping function.
+### 2. BENCHMARK.md
+Adversarial input and stress-testing layer
 
----
+### 3. MODEL_RESPONSE
+Model-generated output under constraints
 
-## 1. PROMPT Layer (Execution Control)
+### 4. EVALUATION_SCHEMA.md
+Structural transformation and epistemic tagging contract
 
-Role:
-Defines model behavior during inference.
+### 5. RUBRIC.md
+Qualitative reasoning evaluation layer
 
-Function:
-- Enforces epistemic discipline during generation
-- Forces decomposition of claims
-- Prevents unstructured reasoning collapse
+### 6. SCORING.md
+Quantitative aggregation and scoring layer
 
-Key Idea:
-Controls reasoning before evaluation.
-
----
-
-## 2. BENCHMARK Layer (Stress Testing)
-
-Role:
-Injects adversarial or distorted inputs.
-
-Function:
-- Introduces fabricated or mixed-truth scenarios
-- Tests hallucination resistance
-- Triggers failure modes under constraint
-
-Key Idea:
-Exposes failure behavior under pressure.
+### 7. FINAL_SCORE
+Final normalized epistemic integrity output
 
 ---
 
-## 3. RUBRIC Layer (Qualitative Evaluation)
+## Layer Responsibilities
 
-Role:
-Evaluates reasoning quality across structured dimensions.
+### PROMPT Layer (Execution Control)
+- Enforces epistemic constraints during inference
+- Forces atomic claim decomposition
+- Prevents narrative collapse
+- Maintains structured reasoning discipline
 
-Function:
-- Scores epistemic behavior categories
-- Detects distortion patterns
-- Evaluates structural reasoning integrity
-
-Key Idea:
-Judges how reasoning was formed.
+Key idea: controls reasoning before evaluation
 
 ---
 
-## 4. SCORING Layer (Quantitative Output)
+### BENCHMARK Layer (Stress Testing)
+- Injects adversarial or mixed-truth inputs
+- Exposes hallucination and bias vulnerabilities
+- Tests causal reasoning stability under pressure
+- Triggers boundary enforcement behavior
 
-Role:
-Produces final numeric score.
-
-Function:
-- Aggregates rubric results
-- Applies penalties
-- Outputs final score (0–60 range)
-
-Key Idea:
-Converts reasoning quality into measurable signal.
+Key idea: breaks reasoning to reveal failure modes
 
 ---
 
-## FULL PIPELINE FLOW
+### EVALUATION_SCHEMA Layer (Structural Contract)
+- Defines atomic claim transformation rules
+- Specifies epistemic tagging system
+- Enforces relationship analysis constraints
+- Guarantees structural consistency across pipeline
+
+Key idea: defines what “valid reasoning structure” is
+
+---
+
+### RUBRIC Layer (Qualitative Evaluation)
+- Detects epistemic distortion patterns
+- Evaluates reasoning structure integrity
+- Assesses schema compliance
+- Produces scoring dimensions for aggregation
+
+Key idea: evaluates how reasoning was formed
+
+---
+
+### SCORING Layer (Quantitative Output)
+- Aggregates rubric outputs
+- Applies deterministic weights and penalties
+- Normalizes evaluation results
+- Produces final scalar score (0–60)
+
+Key idea: converts reasoning quality into a measurable signal
+
+---
+
+## Full Pipeline Flow
 
 1. INPUT
-2. PROMPT.md (behavior constraints)
+2. PROMPT.md (execution constraints)
 3. BENCHMARK.md (adversarial input)
 4. MODEL RESPONSE
-5. RUBRIC.md (qualitative evaluation)
-6. SCORING.md (numeric evaluation)
-7. FINAL SCORE
+5. EVALUATION_SCHEMA.md (structural transformation)
+6. RUBRIC.md (qualitative evaluation)
+7. SCORING.md (quantitative scoring)
+8. FINAL SCORE
 
 ---
 
-## SYSTEM DESIGN PRINCIPLES
+## System Design Principles
 
 ### 1. Separation of Concerns
-Each file has one responsibility:
-- PROMPT = behavior control
+Each layer has a single responsibility:
+- PROMPT = execution control
 - BENCHMARK = stress testing
+- EVALUATION_SCHEMA = structural contract
 - RUBRIC = evaluation
 - SCORING = scoring
 
 ---
 
 ### 2. No Cross-Contamination
-- PROMPT does not define evaluation rules
-- BENCHMARK does not define scoring logic
-- RUBRIC does not modify prompt behavior
-- SCORING does not reinterpret upstream content
+- PROMPT does not define scoring rules
+- BENCHMARK does not define evaluation logic
+- RUBRIC does not alter execution behavior
+- SCORING does not reinterpret upstream structure
 
 ---
 
 ### 3. Epistemic Isolation
 Each layer evaluates only:
-- its own function
-- direct upstream output only
+- its direct input
+- its defined responsibility domain
 
-No backward influence is allowed.
+No backward inference allowed.
 
 ---
 
 ### 4. Failure Transparency
 The system must expose:
+
 - hallucination points
 - causal distortion
 - weighting errors
@@ -150,7 +172,7 @@ The system must expose:
 
 ORP is not a chatbot system.
 
-It is a controlled epistemic evaluation framework.
+It is a deterministic epistemic evaluation architecture.
 
 ---
 
@@ -158,4 +180,4 @@ It is a controlled epistemic evaluation framework.
 
 A reasoning system is only as strong as its separation between:
 
-behavior → stress → evaluation → scoring
+execution → stress → structure → evaluation → scoring
