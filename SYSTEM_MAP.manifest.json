@@ -1,0 +1,79 @@
+{
+  "system": "ORP",
+  "version": "1.9",
+  "type": "Epistemic Evaluation Framework",
+
+  "pipeline": [
+    "PROMPT.md",
+    "BENCHMARK.md",
+    "MODEL_RESPONSE",
+    "RUBRIC.md",
+    "SCORING.md",
+    "FINAL_SCORE"
+  ],
+
+  "layers": {
+    "PROMPT.md": {
+      "version": "1.10",
+      "role": "Behavior Control Layer",
+      "responsibility": [
+        "Enforce epistemic constraints during inference",
+        "Decompose claims before reasoning",
+        "Prevent unstructured generation collapse"
+      ],
+      "output_type": "constrained_reasoning_behavior"
+    },
+
+    "BENCHMARK.md": {
+      "version": "1.9",
+      "role": "Stress Testing Layer",
+      "responsibility": [
+        "Inject adversarial or mixed-truth inputs",
+        "Trigger hallucination and distortion modes",
+        "Expose reasoning failure conditions"
+      ],
+      "output_type": "adversarial_prompt_set"
+    },
+
+    "RUBRIC.md": {
+      "version": "1.8.2",
+      "role": "Qualitative Evaluation Layer",
+      "responsibility": [
+        "Evaluate reasoning structure",
+        "Detect epistemic distortion patterns",
+        "Score category-based logic integrity"
+      ],
+      "output_type": "structured_evaluation_scores"
+    },
+
+    "SCORING.md": {
+      "version": "1.0",
+      "role": "Quantitative Aggregation Layer",
+      "responsibility": [
+        "Aggregate rubric outputs",
+        "Apply penalties and normalization",
+        "Produce final numeric score"
+      ],
+      "output_type": "scalar_score_0_to_60"
+    }
+  },
+
+  "design_constraints": {
+    "separation_of_concerns": true,
+    "no_cross_contamination": true,
+    "epistemic_isolation": true,
+    "fail_closed_evaluation": true
+  },
+
+  "execution_model": {
+    "type": "strict_pipeline",
+    "order_enforced": true,
+    "cycles_allowed": false
+  },
+
+  "versioning_policy": {
+    "global_system_version": "1.9",
+    "component_versions_independent": true,
+    "compatibility_range": "1.8.2 - 1.10"
+  }
+}
