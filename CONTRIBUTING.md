@@ -42,6 +42,14 @@ print(result.graph)
 
 ---
 
+## Pull Request Guidelines
+
+- For **substantial changes** affecting reasoning, evaluation, or benchmarks, use the **full PR template**: `.github/PULL_REQUEST_TEMPLATE/orp-pr-full.md`.
+- For **minor changes** (typos, docs, small examples), use the **trivial PR template**: `.github/PULL_REQUEST_TEMPLATE/orp-pr-trivial.md`.
+- GitHub will automatically suggest the appropriate template when creating a PR.
+
+---
+
 ## Purpose
 
 This document defines how changes may be contributed to the ORP system.
@@ -49,6 +57,7 @@ This document defines how changes may be contributed to the ORP system.
 It ensures that modifications preserve epistemic integrity, structural separation, and deterministic evaluation behavior.
 
 ---
+
 
 ## System Context
 
