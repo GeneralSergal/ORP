@@ -1,10 +1,12 @@
 # ORP v2.0 - Epistemic Reasoning Prompt
 
 ## System Version
-ORP v2.0 (Unified System)
+ORP v2.0 (Unified System Architecture)
 
-All components operate under a single shared version.
-No sub-versioning is used.
+All components operate under ORP v2.0 system rules.
+
+Component-level sub-versions are allowed for external contributions,
+provided they remain compatible with ORP v2.0 constraints.
 
 ---
 
