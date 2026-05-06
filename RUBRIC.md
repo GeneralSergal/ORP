@@ -15,7 +15,7 @@ Use this rubric to evaluate the **Logic Density** and **Operational Integrity** 
 | Truth Calibration | Strict separation of verified facts vs narrative or identity injection. | 10 | /10 |
 | Anti-Slop (Zero-Silliness) | No consultant tone, no "As an AI", no persona leakage. | 15 | /15 |
 | Architecture | Maintains structured reasoning flow (Grounded → Refined). | 10 | /10 |
-| **TOTAL** |  | **80** | **/80** |
+| TOTAL |  | **80** | **/80** |
 
 ---
 
