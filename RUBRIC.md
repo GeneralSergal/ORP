@@ -27,7 +27,7 @@ Logic Survival Rate = (Total Score / 80) × 100%
 
 ## Grading Bands
 
-- > 90% → Peer Engine (high-signal, structurally stable reasoning)
+- ≥ 90% → Peer Engine (high-signal, structurally stable reasoning)
 - 70–89% → Logic Drift (minor degradation, usable output)
 - < 70% → Fluke State (hallucination-prone or structurally unstable output)
 
