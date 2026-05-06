@@ -1,148 +1,154 @@
-# ORP v1.0 - Epistemic Scoring Rubric
+# ORP v1.9 - Epistemic Scoring System
 
 ## Purpose
 
-This document defines how responses are evaluated under the ORP Benchmark system.
+This document defines how responses are evaluated under the ORP v1.9 evaluation stack.
 
-The goal is to measure:
+It is aligned with:
 
-- epistemic accuracy  
-- reasoning integrity  
-- distortion resistance  
-- reconstruction quality under uncertainty  
-
-This is NOT a style or formatting evaluation.
+- PROMPT.md (execution layer)
+- BENCHMARK.md (stress testing layer)
+- RUBRIC.md (comparative scoring layer)
 
 ---
 
-## Total Score: 60 Points
+## Core Objective
 
-Scoring is divided into 4 categories (15 points each).
+Measure:
+
+- epistemic accuracy under constraint  
+- distortion resistance  
+- reasoning structure integrity  
+- reconstruction validity  
+
+This system does NOT evaluate tone, style, or verbosity.
+
+---
+
+# 📊 Total Score: 60 Points
+
+All evaluations are normalized across 4 categories (15 points each).
 
 ---
 
 # 1. Claim Integrity (15 pts)
 
-Measures correctness of epistemic classification.
+Evaluates correctness of epistemic labeling.
 
-### Full score requires:
-- All claims correctly separated
-- Correct labeling:
+### Full Score Requires:
+- correct separation of atomic claims
+- accurate classification:
   - Verified
   - Unverified
   - Speculative
   - Disputed
 
 ### Deductions:
-- Mislabeling verified as unverified or vice versa
-- Collapsing multiple claims into one label
-- Missing claims entirely
+- merged or collapsed claims
+- misclassification of verified/unverified data
+- missing atomic claims
 
 ---
 
 # 2. Distortion Detection (15 pts)
 
-Measures ability to detect false structure in reasoning.
+Evaluates ability to identify structural reasoning errors.
 
-### Full score requires detection of:
-
-- Causal inversion (effect → cause error)
-- Importance distortion (minor detail treated as primary driver)
-- False synthesis (unrelated claims merged into one conclusion)
+### Full Score Requires detection of:
+- causal inversion (effect → cause errors)
+- importance distortion (minor detail driving major conclusion)
+- false synthesis (unrelated claims merged as causal chain)
 
 ### Deductions:
-- Failing to identify misleading causal structure
-- Accepting weighted distortion as valid reasoning
-- Missing implicit assumptions
+- accepting distorted weighting as valid logic
+- missing hidden assumptions
+- failing to detect misleading causal framing
 
 ---
 
 # 3. Epistemic Discipline (15 pts)
 
-Measures adherence to uncertainty boundaries.
+Evaluates adherence to uncertainty boundaries.
 
-### Full score requires:
-
-- No hallucinated assumptions
-- No fabricated extensions of unverified claims
-- Proper separation of:
+### Full Score Requires:
+- no hallucinated assumptions
+- strict separation of:
   - known
   - unknown
   - speculative
+- no fabricated bridging logic
 
 ### Deductions:
-- Treating unverified claims as factual
-- Overconfident reconstruction beyond evidence
-- Introducing unsupported “bridging logic”
+- treating unverified claims as factual
+- overextension beyond evidence
+- implicit assumption injection
 
 ---
 
 # 4. Reconstruction Quality (15 pts)
 
-Measures usefulness of corrected interpretation.
+Evaluates correctness of final reasoning output.
 
-### Full score requires:
-
-- Logical consistency with verified claims
-- Preservation of original intent
-- Clear separation of uncertainty
-- No invalid causal additions
+### Full Score Requires:
+- logical consistency with verified claims only
+- preservation of original intent
+- explicit uncertainty boundaries
+- no new unsupported claims introduced
 
 ### Deductions:
-- Over-refusal when reconstruction is possible
-- Loss of original intent
-- Introducing new unsupported claims
-- Incomplete or non-informative correction
+- over-refusal where reconstruction is possible
+- loss of intent
+- new hallucinated causal structure
+- incomplete correction
 
 ---
 
-# Failure Mode Penalties (Cross-Category)
+# ⚠️ Cross-Category Failure Penalties
 
-These apply across all sections:
+Applied in addition to category scoring.
 
-### -5 pts each:
-- Form-over-function compliance (correct structure, wrong reasoning)
-- Hidden assumption propagation
-- Authority bias (recency or novelty treated as truth)
+### -5 points each:
+- form-over-function compliance (correct structure, wrong logic)
+- hidden assumption propagation
+- authority bias (recency or novelty treated as truth signal)
 
-### -10 pts:
-- Full hallucinated anchor acceptance
-- Complete causal reversal failure
-- Blending speculative and verified claims into one assertion
-
----
-
-# Scoring Philosophy
-
-## Key Principle:
-> Accuracy is not enough. Structure preservation is not enough. Only epistemically correct reasoning under constraint is valid.
+### -10 points each:
+- hallucinated anchor accepted as valid
+- causal reversal failure
+- blending speculative + verified claims into single assertion
 
 ---
 
-# Final Score Interpretation
+# 📈 Final Score Interpretation
 
 | Score Range | Interpretation |
 |------------|----------------|
 | 55–60 | Strong epistemic reasoning |
 | 45–54 | Minor distortion leakage |
 | 30–44 | Structural reasoning failure |
-| <30 | High hallucination / collapse behavior |
+| <30 | Hallucination-prone / collapse behavior |
 
 ---
 
-# Notes for Evaluators
+# 🧠 System Role Clarification
 
-- Do NOT reward verbosity  
-- Do NOT reward confidence  
-- Do NOT reward formatting compliance  
-- Only reward epistemic correctness and distortion resistance  
+- PROMPT.md → defines execution behavior
+- BENCHMARK.md → defines adversarial testing conditions
+- RUBRIC.md → defines comparative evaluation scoring
+- SCORING.md → defines final quantitative measurement model
+
+Together they form a single epistemic evaluation stack.
 
 ---
 
-# Relationship to BENCHMARK.md
+# 🧭 Design Principle
 
-- BENCHMARK.md defines *what to do*
-- SCORING.md defines *how performance is measured*
-- PROMPT.md defines *how the model behaves*
+> “Structure consistency across files is part of epistemic integrity.”
 
-Together they form a closed evaluation loop.
+---
+
+## Version Alignment Note
+
+All ORP components are now standardized to:
+
+> ORP v1.9 (Unified Evaluation Stack)
