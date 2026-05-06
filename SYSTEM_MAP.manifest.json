@@ -1,12 +1,13 @@
 {
   "system": "ORP",
-  "version": "1.9",
+  "version": "2.0",
   "type": "Epistemic Evaluation Framework",
 
   "pipeline": [
     "PROMPT.md",
     "BENCHMARK.md",
     "MODEL_RESPONSE",
+    "EVALUATION_SCHEMA.md",
     "RUBRIC.md",
     "SCORING.md",
     "FINAL_SCORE"
@@ -14,45 +15,62 @@
 
   "layers": {
     "PROMPT.md": {
-      "version": "1.10",
+      "version": "2.0",
       "role": "Behavior Control Layer",
       "responsibility": [
-        "Enforce epistemic constraints during inference",
-        "Decompose claims before reasoning",
-        "Prevent unstructured generation collapse"
+        "Define inference-time epistemic constraints",
+        "Enforce atomic claim decomposition",
+        "Prevent narrative or unstructured reasoning collapse",
+        "Maintain epistemic separation during generation"
       ],
       "output_type": "constrained_reasoning_behavior"
     },
 
     "BENCHMARK.md": {
-      "version": "1.9",
-      "role": "Stress Testing Layer",
+      "version": "2.0",
+      "role": "Adversarial Input Layer",
       "responsibility": [
-        "Inject adversarial or mixed-truth inputs",
-        "Trigger hallucination and distortion modes",
-        "Expose reasoning failure conditions"
+        "Inject epistemically mixed or distorted inputs",
+        "Stress-test causal reasoning stability",
+        "Expose hallucination and authority bias failure modes",
+        "Trigger epistemic boundary enforcement behavior"
       ],
-      "output_type": "adversarial_prompt_set"
+      "output_type": "adversarial_claim_set"
+    },
+
+    "EVALUATION_SCHEMA.md": {
+      "version": "2.0",
+      "role": "Structural Transformation Layer",
+      "responsibility": [
+        "Define atomic claim transformation rules",
+        "Enforce epistemic tagging structure",
+        "Define relationship extraction constraints",
+        "Ensure separation between structure and interpretation",
+        "Act as immutable pipeline contract between all layers"
+      ],
+      "output_type": "epistemic_structure_contract"
     },
 
     "RUBRIC.md": {
-      "version": "1.8.2",
+      "version": "2.0",
       "role": "Qualitative Evaluation Layer",
       "responsibility": [
-        "Evaluate reasoning structure",
+        "Evaluate reasoning outputs across defined structural dimensions",
         "Detect epistemic distortion patterns",
-        "Score category-based logic integrity"
+        "Assess adherence to evaluation schema outputs",
+        "Provide category-based scoring signals for aggregation"
       ],
-      "output_type": "structured_evaluation_scores"
+      "output_type": "structured_evaluation_vector"
     },
 
     "SCORING.md": {
-      "version": "1.0",
+      "version": "2.0",
       "role": "Quantitative Aggregation Layer",
       "responsibility": [
-        "Aggregate rubric outputs",
-        "Apply penalties and normalization",
-        "Produce final numeric score"
+        "Aggregate rubric-derived evaluation signals",
+        "Apply deterministic scoring weights and penalties",
+        "Normalize evaluation into final scalar output",
+        "Produce final epistemic integrity score (0–60)"
       ],
       "output_type": "scalar_score_0_to_60"
     }
@@ -62,18 +80,22 @@
     "separation_of_concerns": true,
     "no_cross_contamination": true,
     "epistemic_isolation": true,
+    "schema_driven_transformation": true,
     "fail_closed_evaluation": true
   },
 
   "execution_model": {
     "type": "strict_pipeline",
     "order_enforced": true,
-    "cycles_allowed": false
+    "cycles_allowed": false,
+    "backpropagation_forbidden": true
   },
 
   "versioning_policy": {
-    "global_system_version": "1.9",
+    "global_system_version": "2.0",
     "component_versions_independent": true,
-    "compatibility_range": "1.8.2 - 1.10"
+    "compatibility_range": "2.0",
+    "subversion_allowed": true,
+    "subversion_rule": "Subversions may exist per file for external contributions but must remain schema-compatible with ORP v2.0 core contract"
   }
 }
