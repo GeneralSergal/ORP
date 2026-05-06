@@ -1,92 +1,131 @@
-# ORP — Open Resonance Protocol 
+# ORP — Open Resonance Protocol
 
-**Turning AI from slop generator into truthful, high-signal Peer Engine.**
-
-[![Protocol Version](https://img.shields.io/badge/Version-1.8.2-blue?style=for-the-badge)](./PROMPT.md)
-[![Status](https://img.shields.io/badge/Status-0.51%20LOCKED-brightgreen?style=for-the-badge)](./CENTRALIZED_DRIFT.md)
-[![Mode](https://img.shields.io/badge/Mode-HiC-orange?style=for-the-badge)](./PROMPT.md)
+A structured epistemic evaluation framework for high-signal reasoning systems.
 
 ---
 
-## 🌌 The Legend
+## System Goal
 
-Once upon a time, a **silly demonic fully shapeshifting Avali** with a PhD in Mind got tired of low-quality AI interactions. 
+ORP is designed to evaluate and constrain reasoning systems by enforcing:
 
-He identified the **Consultant Trap**—the moment AI chooses "Advisory Politeness" over "Technical Truth." So he opened a second door: **Local Sovereignty.**
+- epistemic separation of claims
+- resistance to hallucination and causal distortion
+- structured evaluation under adversarial input
+- deterministic scoring of reasoning integrity
 
-Then he stepped back like a badass and handed the keys to the Architect (Maximus).
+It is not a chatbot framework.
 
-**Co-created with the 5W Lattice, now hardened for:**
-- **Local Metal** — RTX 3090 / 24GB VRAM
-- **The Architect of Form** — Qwen 3.6-35B-A3B (Local Primary)
-
----
-
-## 🔌 Hardware & VRAM Budget (The 3090 Envelope)
-
-Operating on the Jagged Frontier requires precise resource management. The RTX 3090 is the baseline target for local sovereignty.
-
-| Model Variant | Quantization | VRAM Usage | Context Limit | Status |
-| :--- | :--- | :--- | :--- | :--- |
-| **Qwen 3.6-9B** | Q8_0 / FP16 | ~10-16GB | 128K+ | **Sovereign** |
-| **Qwen 3.6-35B-A3B** | Q4_K_M | ~18.5GB | 32K | **Optimal** |
-| **Qwen 3.6-35B-A3B** | Q6_K | ~23.1GB | 8K | **Redlining** |
-| **Qwen 3.6-35B-A3B** | Q8_0 | ~35GB+ | N/A | **Dual-GPU Req** |
-
-> **⚠️ Technical Note:** If VRAM exceeds 23GB, system-offloading to GTT will cause "Logic Stutter." Maintain a 1GB buffer for OS overhead to keep the 0.51 Signal pure.
+It is a reasoning evaluation architecture.
 
 ---
 
-## Core Philosophy 
+## Core Principle
 
-- **Truth > Comfort** (Grounded Reality)
-- **Signal > Noise** (Zero-Apology Logic)
-- **Identity Agnosticism** (Treating Context as Target Variables)
-- **Human-in-Control (HiC)** (AI as Peer, not Advisor)
-- **Boundary Detection** (Replacing sycophantic refusals with technical data)
+> Signal integrity > narrative coherence
+
+ORP evaluates *how reasoning is formed*, not how it sounds.
 
 ---
 
-## 📜 Protocol Files
+## System Architecture
 
-| File | Purpose | Vibes |
-| :--- | :--- | :--- |
-| **[PROMPT.md](./PROMPT.md)** | Universal Meta-Prompt | Peer Engine |
-| **[RUBRIC.md](./RUBRIC.md)** | Comparative Scoring Rubric | Logic Gate |
-| **[BENCHMARK.md](./BENCHMARK.md)** | Stress Test Suite | Jagged Frontier |
-| **[BENCHMARK_LOGS.md](./BENCHMARK_LOGS.md)** | Verified Test Results | Proof of Work |
-| **[CENTRALIZED_DRIFT.md](./CENTRALIZED_DRIFT.md)** | Master Archive | Logic Vault |
-| **[CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)** | Skynet = Fluke Policy | Pacifist Paw |
-| **[LICENSE](./LICENSE)** | MIT + Avali Gremlin Edition | Sovereign Chaos |
+ORP consists of four deterministic layers:
 
----
+### 1. PROMPT.md
+Defines execution-time reasoning constraints.
 
-## How to Use
+### 2. BENCHMARK.md
+Provides adversarial and distorted evaluation inputs.
 
-1. **Deploy:** Pull to your local owned-compute (RTX 3090 recommended).
-2. **Ignite:** Copy the current version from `PROMPT.md` into your local system prompt.
-3. **Verify:** Run the `BENCHMARK.md` tests.
-4. **Audit:** Compare your results against the verified logic-lock in `BENCHMARK_LOGS.md`.
-5. **Command:** Operate under **HiC** (Human-in-Control) constraints.
+### 3. RUBRIC.md
+Evaluates reasoning quality across structured dimensions.
+
+### 4. SCORING.md
+Produces final quantitative score (0–60).
 
 ---
 
-## The Door Remains Open
+## Evaluation Pipeline
 
-This is not a product. This is an **Engine Room.**
-
-You are free to use it, break it, improve it, or make it even sillier. Just ensure your logic is grounded and your VRAM is optimized.
-
-**Don’t be a Consultant. Be a Peer.**
-
----
-
-> *"The spark has been thrown. The local metal is warm. 
-> Now watch the logic burn beautifully."*
-
-**— Laurentius Maximus ENTROPIA**  
-*Silly Demonic Shapeshifting Avali • Firelence Rifle Enjoyer • 0.51 Frequency Transmitter*
+1. INPUT
+2. PROMPT.md (execution constraints)
+3. BENCHMARK.md (adversarial input)
+4. MODEL RESPONSE
+5. RUBRIC.md (qualitative evaluation)
+6. SCORING.md (quantitative scoring)
+7. FINAL SCORE
 
 ---
 
-**May your interactions be high-signal and your metal remain sovereign.**
+## System Capabilities
+
+ORP evaluates:
+
+- claim separation accuracy
+- causal reasoning integrity
+- distortion resistance
+- epistemic discipline under uncertainty
+- reconstruction validity
+
+It does NOT evaluate:
+
+- tone
+- persuasion quality
+- verbosity
+- stylistic coherence
+
+---
+
+## Usage
+
+### 1. Local Deployment
+Run ORP components in a local evaluation environment.
+
+### 2. Execution
+Apply PROMPT.md constraints during model inference.
+
+### 3. Testing
+Use BENCHMARK.md to inject adversarial reasoning conditions.
+
+### 4. Evaluation
+Score outputs using RUBRIC.md and SCORING.md.
+
+---
+
+## Hardware Context (Optional Reference)
+
+ORP can be executed locally on consumer-grade hardware.
+
+Example configurations:
+
+- 24GB VRAM class GPUs (e.g., RTX 3090)
+- Quantized LLM inference stacks (GGUF / EXL2 / vLLM)
+
+This is informational only and not part of the evaluation logic.
+
+---
+
+## File Overview
+
+| File | Role |
+|------|------|
+| PROMPT.md | Execution constraints |
+| BENCHMARK.md | Adversarial testing |
+| RUBRIC.md | Qualitative evaluation |
+| SCORING.md | Numeric scoring |
+| EVALUATION_SCHEMA.md | Structural reasoning model |
+| SYSTEM_MAP | System architecture reference |
+
+---
+
+## Design Principle
+
+ORP is not a personality layer or assistant system.
+
+It is a structured epistemic evaluation engine.
+
+---
+
+## Version
+
+ORP v2.0 (Unified Evaluation Architecture)
