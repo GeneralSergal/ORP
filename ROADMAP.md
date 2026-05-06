@@ -18,6 +18,8 @@ Items are prioritized in three tiers:
 
 This approach emphasizes practical small wins without committing to strict dates.
 
+---
+
 ## Core Philosophy & Branding
 
 - **Signal Integrity Engine** — Emphasize ORP as prioritizing truth over narrative coherence.
@@ -26,6 +28,9 @@ This approach emphasizes practical small wins without committing to strict dates
   - Balanced (default)
   - Exploratory (controlled speculation with explicit flags)
 - **Confidence Decay** — Track how model confidence declines when leaving its knowledge boundary.
+
+---
+
 ## Architectural / Structural Ideas
 
 - **Multi-Stage Pipeline**:
@@ -40,7 +45,10 @@ This approach emphasizes practical small wins without committing to strict dates
 
 - **Traceability Layer**:
   - Full audit trail for each score (claims failed, why, adversarial tests revealed)
-  ## New Capabilities
+
+---
+
+## New Capabilities
 
 - **Automated Benchmark Generator**:
   - Domain-specific (history, medicine, code)
@@ -63,17 +71,25 @@ This approach emphasizes practical small wins without committing to strict dates
   - Detect hallucinations
   - Suggest corrected claims
   - Regenerate higher-fidelity response
-  ## Implementation / Usability
+
+---
+
+## Implementation / Usability
 
 - **Python Package**  
-  Example usage:
 
-    result = orp.evaluate(response, context=context, mode="strict")
-    print(result.score, result.report, result.graph)
+Example usage:
+
+~~~python
+result = orp.evaluate(response, context=context, mode="strict")
+print(result.score, result.report, result.graph)
+~~~
 
 - Optional LangChain / LlamaIndex integration
 - Web UI (Streamlit / Gradio) for quick testing
 - CLI tool for batch dataset evaluation
+
+---
 
 ## Evaluation & Validation
 
@@ -91,12 +107,16 @@ This approach emphasizes practical small wins without committing to strict dates
   - JSON
   - Markdown
   - Hugging Face dataset style
-  
-  ## Community & Extensibility
+
+---
+
+## Community & Extensibility
 
 - Plugin system for custom rubrics or domain-specific evaluators (medical, legal, scientific)
 - ORP Hub → share adversarial tests and configs
 - Versioned prompt library for transparent and reversible improvements
+
+---
 
 ## Prioritization Suggestion for v3.0 (MVP)
 
