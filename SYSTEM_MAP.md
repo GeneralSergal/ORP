@@ -6,17 +6,17 @@ This document defines the structural architecture of the ORP evaluation system.
 
 It describes how all components interact as a single epistemic pipeline.
 
-It is not an evaluation tool.
+It is not an evaluation component. It is a system specification.
 
 ---
 
 ## System Version
 
-ORP v2.0 (Unified System)
+ORP v2.0 (Unified System Architecture)
 
-All components operate under a shared system version.
+All components operate under a shared system version (v2.0).
 
-Sub-versions are allowed per file but must remain compatible with ORP v2.0.
+Sub-versions are allowed per file but must remain structurally compatible with v2.0.
 
 ---
 
@@ -29,7 +29,7 @@ ORP operates as a four-layer epistemic control system:
 3. RUBRIC.md
 4. SCORING.md
 
-Each layer has a distinct and non-overlapping function.
+Each layer has a strictly non-overlapping function.
 
 ---
 
@@ -40,67 +40,67 @@ Defines model behavior during inference.
 
 ### Function
 - enforces epistemic discipline during generation
-- forces decomposition of claims
-- prevents unstructured reasoning collapse
+- enforces claim decomposition
+- prevents uncontrolled reasoning collapse
 
-### Key Idea
-Controls reasoning before evaluation.
+### System Position
+Controls reasoning BEFORE evaluation begins.
 
 ---
 
 ## 2. BENCHMARK Layer (Stress Testing)
 
 ### Role
-Injects adversarial or distorted inputs.
+Provides adversarial input conditions.
 
 ### Function
-- introduces fabricated or mixed-truth scenarios
-- tests hallucination resistance
-- triggers failure modes under constraint
+- introduces fabricated, mixed-truth, or distorted prompts
+- triggers failure modes under controlled conditions
+- exposes reasoning instability
 
-### Key Idea
-Breaks reasoning to observe failure behavior.
+### System Position
+Defines the stress environment for evaluation.
 
 ---
 
 ## 3. RUBRIC Layer (Qualitative Evaluation)
 
 ### Role
-Evaluates reasoning quality across structured dimensions.
+Evaluates reasoning quality structurally.
 
 ### Function
-- scores epistemic behavior categories
+- scores epistemic correctness across defined categories
 - detects distortion patterns
 - evaluates structural reasoning integrity
 
-### Key Idea
-Judges how reasoning was formed.
+### System Position
+Interprets how reasoning was constructed.
 
 ---
 
 ## 4. SCORING Layer (Quantitative Output)
 
 ### Role
-Produces final numeric score.
+Converts evaluation into numeric score.
 
 ### Function
-- aggregates rubric results
-- applies penalties
-- outputs final score (0–60 range)
+- aggregates RUBRIC outputs
+- applies penalty system
+- produces final normalized score (0–60)
 
-### Key Idea
-Converts reasoning quality into measurable signal.
+### System Position
+Final measurement layer of the pipeline.
 
 ---
 
-## FULL PIPELINE FLOW
+## FULL PIPELINE FLOW (STRICT ORDER)
 
 1. INPUT
-2. PROMPT.md (behavior constraints)
+2. PROMPT.md (execution constraints)
 3. BENCHMARK.md (adversarial input)
 4. MODEL RESPONSE
 5. RUBRIC.md (qualitative evaluation)
-6. SCORING.md (numeric evaluation)
+6. SCORING.md (quantitative scoring)
 7. FINAL SCORE
 
 ---
@@ -108,33 +108,38 @@ Converts reasoning quality into measurable signal.
 ## SYSTEM DESIGN PRINCIPLES
 
 ### 1. Separation of Concerns
-Each file has one responsibility only:
+Each file has exactly one responsibility:
+
 - PROMPT = behavior control
-- BENCHMARK = stress testing
-- RUBRIC = evaluation
-- SCORING = scoring
+- BENCHMARK = adversarial stress generation
+- RUBRIC = qualitative evaluation
+- SCORING = numeric evaluation
 
 ---
 
 ### 2. No Cross-Contamination
-- PROMPT does not define evaluation rules
-- BENCHMARK does not define scoring logic
+Strict isolation rules:
+
+- PROMPT does not define evaluation logic
+- BENCHMARK does not define scoring rules
 - RUBRIC does not modify prompt behavior
-- SCORING does not reinterpret upstream content
+- SCORING does not reinterpret upstream reasoning
 
 ---
 
 ### 3. Epistemic Isolation
-Each layer evaluates only:
-- its own function
+Each stage evaluates only:
+
+- its own defined function
 - direct upstream output only
 
-No backward influence is allowed.
+No backward influence is permitted.
 
 ---
 
 ### 4. Failure Transparency
 The system must expose:
+
 - hallucination points
 - causal distortion
 - weighting errors
@@ -152,9 +157,9 @@ It is a controlled epistemic evaluation framework.
 
 ## Final Principle
 
-A reasoning system is only as strong as its separation between:
+System integrity depends on strict separation between:
 
-behavior
-stress
-evaluation
-scoring
+- behavior
+- stress
+- evaluation
+- scoring
