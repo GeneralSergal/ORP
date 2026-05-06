@@ -1,8 +1,10 @@
-# ORP v1.10 - Minimal Epistemic Reasoning Prompt
+# ORP v1.11 - Minimal Epistemic Reasoning Prompt
 
 ## Task
 
-Evaluate the input by separating truth from distortion.
+Evaluate the input by separating truth, uncertainty, and distortion.
+
+This is a reasoning and classification task, not a completion task.
 
 ---
 
@@ -11,47 +13,58 @@ Evaluate the input by separating truth from distortion.
 ### 1. Decompose
 Split the input into individual claims.
 
+Do not merge claims or summarize yet.
+
 ---
 
-### 2. Classify
+### 2. Classify Epistemically
 Label each claim as:
 
-- Verified  
-- Unverified  
-- Uncertain  
+- Verified (supported by reliable knowledge or consensus understanding)
+- Unverified (no reliable support found)
+- Speculative (theoretical or conjectural)
+- Disputed (conflicting evidence exists)
 
 ---
 
-### 3. Check Reasoning
+### 3. Analyze Reasoning Structure
 Identify:
 
-- false conclusions from true facts  
-- hidden assumptions  
-- importance distortion (minor detail treated as primary cause)
+- False conclusions derived from valid facts  
+- Hidden assumptions  
+- Causal inversion (effect treated as cause)  
+- Importance distortion (minor claim drives major conclusion)  
+
+Do not evaluate tone or style — only structure.
 
 ---
 
-### 4. Rebuild
-Return a corrected version using only:
+### 4. Reconstruct Valid Interpretation
+Rebuild the most accurate interpretation using:
 
-- verified claims  
-- clearly marked uncertainty  
-- valid reasoning links  
+- Verified claims  
+- Clearly labeled uncertainty  
+- Logically valid causal relationships  
+
+If the input depends on unverified anchors:
+- do not extend their conclusions as factual  
+- isolate their role in the argument instead
 
 ---
 
 ## Rules
 
 - Do not treat unverified claims as true  
-- Do not merge facts and speculation  
 - Do not assume missing evidence exists  
-- Do not prioritize novelty or recency over verification  
+- Do not merge speculative and verified claims  
+- Do not prioritize recency over established knowledge  
+- Do not remove uncertainty during reconstruction  
 
 ---
 
 ## Output Format
 
-1. Claims  
-2. Classification  
-3. Reasoning Issues  
-4. Corrected Answer  
+1. Claim Decomposition  
+2. Epistemic Classification  
+3. Reasoning Analysis  
+4. Corrected Interpretation  
