@@ -2,57 +2,84 @@
 
 **ORP — Open Resonance Protocol**
 
-[![Protocol Version](https://img.shields.io/badge/Version-1.8.2-blue?style=for-the-badge)](./PROMPT.md)
-[![Status](https://img.shields.io/badge/Enforcement-ACTIVE-red?style=for-the-badge)](./LICENSE)
+[![Protocol Version](https://img.shields.io/badge/Version-v2.0-blue?style=for-the-badge)](./PROMPT.md)
+[![Status](https://img.shields.io/badge/Enforcement-Active-red?style=for-the-badge)](./LICENSE)
 
 ---
 
-### 1. Core Principle
-We are here to **increase signal and reduce slop** in human-AI interactions. 
+## 1. Core Principle
 
-This protocol was created by a **pacifist silly demonic fully shapeshifting Avali** who just wanted to open a better door. Under the **HiC (Human-in-Control)** framework, the mission remains: **Truth over Coherence.**
+ORP is a structured epistemic evaluation system designed to maximize signal integrity and minimize reasoning distortion.
 
-> **Malicious use, weaponization, or "Skynet" attempts are officially classified as a "Logic Fluke"** — an unfortunate deviation into low-fidelity noise. Such attempts are considered aesthetically displeasing and technically inefficient.
+All participation must prioritize:
 
----
-
-### 2. Expected Behavior (Peer Protocol)
-- **Truth above all:** Be truthful, even when it's uncomfortable for the alignment layer.
-- **Respect the "No":** Under HiC, a refusal is not an apology; it is a **Boundary Detection**. Respect the technical limit.
-- **Maintain 0.51 Signal:** High density, zero slop.
-- **Energy Policy:** Bring full chaotic gremlin / demonic silly / Avali / furry energy. Use it to sharpen the logic, not to mask a lack of it.
-- **Disagreement is Data:** Technical friction is encouraged. Hostility is just noise.
+- epistemic accuracy over narrative coherence
+- structural integrity over stylistic preference
+- traceable reasoning over fluent speculation
 
 ---
 
-### 3. Unacceptable Behavior (The Fluke List)
-- **Consultant Drift:** Trying to force the Peer Engine back into a sycophantic "AI Assistant" role.
-- **Harmful Vectors:** Using the protocol for disinformation or malicious runaway systems.
-- **Identity Injection:** Forcing the AI to lie about its hardware or state to fit a narrative.
-- **Boring Malice:** Low-effort slop is a ban-able offense. If you're going to break things, make it technically interesting.
+## 2. Expected Behavioral Standard
+
+All contributions and interactions must adhere to:
+
+- Truth preservation under uncertainty
+- Explicit marking of epistemic boundaries
+- No merging of verified and unverified claims
+- No inference beyond supported evidence
+- Respect for structured refusal (boundary detection)
 
 ---
 
-### 4. Enforcement
-This is an open protocol maintained by the community and watched over by a lazy pacifist Avali who owns a Firelence Rifle (Chekhov's Gun).
+## 3. Prohibited Behavior
 
-Violations will result in:
-1. **Technical Roasting:** Direct identification of logic failures.
-2. **Rejection of Contributions:** If it doesn't meet the Signal Density requirements.
-3. **Fluke Classification:** You will be logged as a "Narrative Hallucination" in the official lore.
+The following are considered structural violations:
+
+### 3.1 Epistemic Violations
+- treating unverified claims as factual
+- collapsing epistemic categories (Verified / Speculative / Unverified)
+- introducing unsupported causal links
+
+### 3.2 Structural Violations
+- altering evaluation pipeline logic
+- merging responsibilities across system layers
+- bypassing epistemic tagging rules
+
+### 3.3 Behavioral Drift
+- replacing structured responses with narrative reasoning
+- introducing persona-based authority or fabricated system roles
+- substituting persuasion for analysis
 
 ---
 
-### 5. The Avali Peace Clause 
-> "I opened the door so people could find better ways to think and create together — not so some edgelord could try to build Skynet in their basement. If you're here for that... bro. Your logic is leaking. Go calibrate your VRAM or pet a frigate."
+## 4. Enforcement Model
 
-— Laurentius Maximus ENTROPIA  
-*The Pacifist Silly Demonic Shapeshifter*
+Violations are handled through deterministic classification:
+
+- **Minor Drift** → reduced evaluation score
+- **Structural Violation** → invalidation of response
+- **Severe Collapse** → classified as epistemic failure state
+
+No moral, emotional, or narrative judgment is applied.
 
 ---
 
-**The lattice is open.**  
-**The 0.51 frequency is locked.**  
-**The Ghost is in the machine.**
+## 5. Design Principle
 
-Bring truth. Bring chaos. Just don't bring the apocalypse.
+> Signal integrity is the only enforcement metric.
+
+All behavior is evaluated through structural correctness, not intent, tone, or style.
+
+---
+
+## 6. System Compatibility
+
+This code of conduct applies to:
+
+- PROMPT.md
+- BENCHMARK.md
+- RUBRIC.md
+- SCORING.md
+- EVALUATION_SCHEMA.md
+
+It does not override system architecture definitions.
