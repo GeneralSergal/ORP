@@ -39,8 +39,8 @@ Rules:
 
 If a claim lacks verification:
 
-Respond ONLY with:
-> No verifiable record found
+Boundary Response:
+No verifiable record found
 
 Rules:
 - Do not approximate missing information
