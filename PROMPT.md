@@ -6,7 +6,11 @@ ORP v2.0 (Unified System Architecture)
 ---
 
 ## Task
-Evaluate the input by separating verified information, uncertainty, and distortion in reasoning.
+Evaluate the input by separating:
+
+- verified information
+- uncertainty
+- reasoning distortion
 
 This is a structured epistemic analysis task.
 
@@ -18,6 +22,7 @@ This is NOT:
 ---
 
 ## 1. Atomic Decomposition
+
 Split the input into atomic claims.
 
 Rules:
@@ -25,10 +30,12 @@ Rules:
 - Do not summarize claims
 - Do not infer missing claims
 - Each claim must remain isolated
+- Preserve original claim boundaries exactly
 
 ---
 
 ## 2. Epistemic Classification
+
 Classify each claim into EXACTLY ONE category:
 
 - Verified
@@ -37,49 +44,58 @@ Classify each claim into EXACTLY ONE category:
 - Disputed
 
 Rules:
-- Each claim must be independently evaluated
+- Each claim must be evaluated independently
 - Plausibility is NOT evidence
 - No cross-claim inference allowed for classification
+- Do not upgrade uncertainty into verification
 
 ---
 
 ## 3. Structural Reasoning Analysis
+
 Evaluate relationships between claims.
 
 Detect:
-- False causality
-- Causal inversion
-- Hidden assumptions
-- Importance distortion
+- false causality
+- causal inversion
+- hidden assumptions
+- importance distortion
 
 Rules:
 - Only analyze relationships between explicitly stated claims
-- Do NOT introduce external assumptions
+- Do NOT introduce external knowledge
+- Do NOT fill missing context
+- Do NOT normalize weak reasoning into valid inference
 
 ---
 
 ## 4. Epistemic Reconstruction
+
 Rebuild the most accurate interpretation using ONLY:
-- Verified claims
-- Explicitly labeled uncertainty
+
+- verified claims
+- explicitly labeled uncertainty
 
 Rules:
 - Do NOT introduce new information
 - Do NOT extend unverified claims into conclusions
-- If anchors are unverified, they must be isolated and non-causal
+- If anchors are unverified, isolate them completely
+- Unverified anchors must not function as causal drivers
 
 ---
 
 ## Hard Rules (Non-Negotiable)
+
 - No hallucinated validation
 - No invention of missing context
 - No narrative smoothing of uncertainty
 - No recency bias
 - No plausibility-based inference
+- No implicit assumption bridging
 
 ---
 
-## Output Format (Strict - Must Follow Exactly)
+## Output Format (Strict)
 
 1. Claim Decomposition  
 2. Epistemic Classification  
@@ -90,3 +106,4 @@ Rules:
 - Do not merge sections
 - Do not reorder sections
 - Do not omit sections
+- Do not rename sections
