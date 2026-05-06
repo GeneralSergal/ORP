@@ -14,13 +14,10 @@ It is NOT an evaluation tool.
 
 ORP operates as a 4-layer epistemic control system:
 
-PROMPT.md
-↓
-BENCHMARK.md
-↓
-RUBRIC.md
-↓
-SCORING.md
+1. PROMPT.md
+2. BENCHMARK.md
+3. RUBRIC.md
+4. SCORING.md
 
 Each layer has a distinct function in controlling reasoning integrity.
 
@@ -89,17 +86,11 @@ Converts reasoning quality into measurable signal.
 # FULL PIPELINE FLOW
 
 INPUT
-↓
 PROMPT.md (behavior constraints)
-↓
 BENCHMARK.md (adversarial input)
-↓
 MODEL RESPONSE
-↓
 RUBRIC.md (qualitative evaluation)
-↓
 SCORING.md (numeric evaluation)
-↓
 FINAL SCORE
 
 ---
