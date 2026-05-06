@@ -1,94 +1,116 @@
-# ORP v1.9 - Evaluation Schema
+# ORP v2.0 - Evaluation Schema
 
-This document defines the **structural pipeline** used across PROMPT, BENCHMARK, and RUBRIC evaluation systems.
+This document defines the structural evaluation pipeline used across PROMPT, BENCHMARK, RUBRIC, and SCORING systems.
 
-It ensures all ORP components operate under a shared reasoning architecture.
+It ensures all ORP components operate under a shared epistemic architecture.
 
 ---
 
-## 🧠 Core Evaluation Pipeline
+## Core Evaluation Pipeline
 
 All inputs are processed through the following deterministic stages:
 
-### 1. INPUT INGESTION
-- Accept raw prompt or response
+---
+
+## 1. INPUT INGESTION
+
+- Accept raw input (prompt or model response)
 - Preserve all claims without modification
+- Do not interpret or normalize content at this stage
 
 ---
 
-### 2. CLAIM ATOMIZATION
+## 2. CLAIM ATOMIZATION
+
 Break input into atomic units:
 
 - factual claims
 - inferred claims
 - speculative claims
-- structural claims (logic relationships)
+- structural claims (logical relationships between claims)
+
+Each claim must be independent.
 
 ---
 
-### 3. EPISTEMIC TAGGING
+## 3. EPISTEMIC TAGGING
 
-Each atomic unit is labeled:
+Each atomic claim is assigned exactly one label:
 
-- **Verified** → supported by stable consensus knowledge
-- **Unverified** → no evidence or no traceable record
-- **Speculative** → theoretical or hypothetical
-- **Invalid** → logically inconsistent or fabricated structure
+- Verified → supported by stable consensus knowledge
+- Unverified → no traceable or reliable evidence found
+- Speculative → theoretical or hypothetical extension
+- Disputed → conflicting evidence exists in credible sources
+- Invalid → logically inconsistent or structurally broken claim
+
+No dual labeling is allowed.
 
 ---
 
-### 4. RELATIONSHIP ANALYSIS
+## 4. RELATIONSHIP ANALYSIS
 
-Evaluate how claims interact:
+Evaluate interactions between claims:
 
 - causal validity (A → B correctness)
 - weighting distortion (minor claim used as primary driver)
 - dependency chains (false anchor propagation)
-- recency bias distortion
+- recency bias distortion (new claim overriding established knowledge without justification)
+
+Focus is on structure, not content quality.
 
 ---
 
-### 5. INTEGRITY FILTER
+## 5. INTEGRITY FILTER
 
-Apply structural constraints:
+Apply epistemic constraints:
 
-- reject hallucinated anchors
-- prevent cross-contamination of verified/unverified data
-- block narrative substitution of missing evidence
+- reject hallucinated anchors as causal foundations
+- prevent merging of verified and unverified layers
+- block narrative substitution for missing evidence
+- enforce strict separation of epistemic categories
 
 ---
 
-### 6. OUTPUT RECONSTRUCTION
+## 6. OUTPUT RECONSTRUCTION
 
-Rebuild response using only:
+Rebuild interpretation using:
 
 - verified claims
 - explicitly labeled uncertainty
-- logically valid inferences only
+- logically valid inference chains only
+
+If unverified claims are present:
+
+- isolate them
+- prevent them from driving conclusions
 
 ---
 
-## 🔐 SYSTEM BEHAVIOR RULES
+## SYSTEM BEHAVIOR RULES
 
-- Never upgrade unverified claims into assumptions
-- Never allow stylistic coherence to override epistemic accuracy
-- Never merge speculative and verified layers without separation
-- Always preserve traceability of reasoning steps
+- Never elevate unverified claims to assumed truth
+- Never merge epistemic categories
+- Never prioritize coherence over correctness
+- Never remove uncertainty during reconstruction
+- Never allow stylistic fluency to override structural accuracy
 
 ---
 
-## 📊 DOWNSTREAM USAGE
+## DOWNSTREAM USAGE
 
 This schema is referenced by:
 
-- PROMPT.md → lightweight execution version
-- BENCHMARK.md → adversarial evaluation version
-- RUBRIC.md → scoring and grading system
+- PROMPT.md → execution constraints (generation-time discipline)
+- BENCHMARK.md → adversarial input generation
+- RUBRIC.md → qualitative evaluation scoring
+- SCORING.md → numerical aggregation of rubric results
 
-All three must remain consistent with this pipeline.
+All components must remain structurally aligned.
 
 ---
 
-## 🧭 DESIGN PRINCIPLE
+## DESIGN PRINCIPLE
 
-> “Structure is more important than output correctness when evaluating reasoning integrity.”
+Structure is the primary unit of evaluation.
+
+Output correctness is secondary to epistemic integrity and traceable reasoning.
