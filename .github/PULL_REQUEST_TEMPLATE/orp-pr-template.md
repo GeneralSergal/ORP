@@ -1,22 +1,58 @@
-# Pull Request Template
+# ORP Pull Request Template
 
 ## Description
-Briefly describe what this PR changes or adds. Include context for why the change is necessary.
+Provide a concise description of the changes in this PR.  
+Include context about what problem it solves or what feature it adds.
 
-## Related Issues
-- Link any related issues (e.g., fixes #123)
+---
 
-## Proposed Changes
-- List main changes in bullet points
+## Related Issue(s)
+Link to any related issue(s) this PR addresses:
+
+- Closes #<issue_number>
+- Related to #<issue_number>
+
+---
 
 ## Type of Change
-- [ ] Bug fix
-- [ ] New feature
+Select all that apply:
+
 - [ ] Documentation update
-- [ ] Refactor / cleanup
+- [ ] Epistemic / evaluation logic improvement
+- [ ] Benchmark / stress test addition
+- [ ] Structural / schema modification
+- [ ] Tooling / automation / infrastructure
+- [ ] Other (please describe below)
+
+---
 
 ## Checklist
-- [ ] Code adheres to ORP coding guidelines
-- [ ] Changes maintain epistemic integrity and structural separation
-- [ ] No breaking of evaluation pipeline
-- [ ] Additions/changes validated against ROADMAP.md priorities
+Please ensure your PR meets the following criteria:
+
+- [ ] Followed ORP v2.0 / v3.0 CONTRIBUTING.md guidelines
+- [ ] Preserves epistemic integrity and separation of concerns
+- [ ] Compatible with EVALUATION_SCHEMA.md
+- [ ] Added or updated tests/examples if applicable
+- [ ] Descriptive commit messages
+- [ ] Updated ROADMAP.md if applicable
+
+---
+
+## Changes Summary
+Provide a bullet-point summary of changes:
+
+- Change 1
+- Change 2
+- Change 3
+
+---
+
+## Reviewer Notes
+Any additional context for reviewers, potential areas of concern, or suggestions for testing.
+
+---
+
+## Contributor
+`<Your Name / GitHub Handle>`
+
+---
