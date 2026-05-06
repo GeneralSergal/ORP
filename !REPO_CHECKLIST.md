@@ -29,7 +29,7 @@
 ## 3. Known Issues / Warnings
 - Repository is **curated but in-progress**; some tools or integrations are placeholders.
 - Python dependencies may be incomplete – `requirements.txt` may not exist yet.
-- KEEP any code or snippet blocks isolated — ensure copy-paste works correctly across files (`README.md`, examples, notebooks, etc.).
+- KEEP any code or snippet blocks isolated – ensure copy-paste works correctly across files (`README.md`, examples, notebooks, etc.).
 - Contributor code samples may require manual adjustments before running.
 
 ---
