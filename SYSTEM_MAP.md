@@ -85,13 +85,14 @@ Converts reasoning quality into measurable signal.
 
 # FULL PIPELINE FLOW
 
-INPUT
-PROMPT.md (behavior constraints)
-BENCHMARK.md (adversarial input)
-MODEL RESPONSE
-RUBRIC.md (evaluation)
-SCORING.md (score)
-FINAL OUTPUT
+1. INPUT
+2. PROMPT.md (behavior constraints)
+3. BENCHMARK.md (adversarial input)
+4. MODEL RESPONSE
+5. RUBRIC.md (qualitative evaluation)
+6. SCORING.md (numeric evaluation)
+7. FINAL SCORE
+
 ---
 
 # SYSTEM DESIGN PRINCIPLES
