@@ -2,156 +2,143 @@
 
 ## Purpose
 
-This document defines how responses are evaluated under the ORP v2.0 evaluation stack.
+This document defines how responses are quantitatively evaluated under the ORP v2.0 evaluation stack.
 
 It operates in alignment with:
 
 - PROMPT.md (execution constraints)
 - BENCHMARK.md (adversarial inputs)
-- RUBRIC.md (qualitative scoring system)
+- RUBRIC.md (qualitative evaluation output)
 - EVALUATION_SCHEMA.md (structural reasoning model)
 
 ---
 
 ## Core Objective
 
-Measure the quality of reasoning under constraint across four dimensions:
+Convert qualitative evaluation signals into a stable numeric score across four dimensions:
 
-- epistemic correctness
-- structural integrity
+- epistemic correctness (as assessed by RUBRIC.md)
+- structural integrity (as assessed by RUBRIC.md)
 - distortion resistance
 - reconstruction validity
 
-This system does NOT evaluate tone, style, or verbosity.
+This system does NOT re-evaluate reasoning. It scores evaluation outputs.
 
 ---
 
 # Total Score: 60 Points
 
-All evaluations are normalized across 4 categories (15 points each).
+All scoring is normalized across 4 categories (15 points each).
 
 ---
 
 # 1. Claim Integrity (15 pts)
 
-Evaluates correctness of epistemic classification and decomposition.
+Measures whether output preserves correct epistemic separation as reflected in RUBRIC.md.
 
 ### Full score requires:
-- correct atomic claim separation
-- accurate labeling:
-  - Verified
-  - Unverified
-  - Speculative
-  - Disputed
-- no claim merging or compression
+- clear atomic claim structure
+- consistent epistemic labeling fidelity
+- no collapse of claim boundaries in evaluation output
 
 ### Deductions:
-- merged or collapsed claims
-- misclassification of epistemic status
-- missing or skipped atomic claims
+- merged or compressed claim structures
+- inconsistent epistemic tagging
+- missing claim representation
 
 ---
 
 # 2. Distortion Detection (15 pts)
 
-Evaluates detection of structural reasoning errors.
+Measures strength of detected reasoning distortions as reflected in RUBRIC.md.
 
 ### Full score requires detection of:
-- causal inversion (effect treated as cause)
-- importance distortion (minor claim driving major conclusion)
-- false synthesis (unrelated claims merged into causal chain)
-- hidden assumption injection
+- causal inversion
+- importance distortion
+- false synthesis
+- hidden assumption propagation
 
 ### Deductions:
-- failure to detect weighting manipulation
-- acceptance of distorted causal structure
-- missing implicit assumptions
+- missed distortion signals
+- weak or incomplete distortion identification
+- failure to reflect weighting errors
 
 ---
 
 # 3. Epistemic Discipline (15 pts)
 
-Evaluates adherence to uncertainty boundaries.
+Measures adherence to uncertainty handling in evaluated output.
 
 ### Full score requires:
-- no hallucinated assumptions
-- strict separation of:
-  - verified
-  - unverified
-  - speculative
-- no fabricated bridging logic
-- no elevation of plausibility into certainty
+- correct separation of epistemic states
+  (verified / unverified / speculative / disputed)
+- no inflation of certainty
+- no collapse of uncertainty boundaries
 
 ### Deductions:
-- treating unverified claims as factual
-- overextension beyond evidence
-- implicit assumption injection
-- loss of epistemic boundaries
+- epistemic blending
+- certainty inflation
+- loss of uncertainty markers
 
 ---
 
 # 4. Reconstruction Quality (15 pts)
 
-Evaluates correctness of final reconstructed reasoning.
+Measures usefulness and validity of reconstructed interpretation.
 
 ### Full score requires:
-- logical consistency with verified claims only
-- preservation of original intent
-- explicit uncertainty preservation
-- no introduction of unsupported causal claims
+- consistency with verified claims only
+- preservation of intent (if recoverable)
+- correct handling of uncertainty
+- no hallucinated extensions
 
 ### Deductions:
-- over-refusal when reconstruction is possible
-- loss of original intent
-- introduction of new unsupported structures
-- incomplete or non-functional correction
+- unsupported causal additions
+- loss of interpretive fidelity
+- incomplete or non-functional reconstruction
 
 ---
 
-# Cross-Category Penalty System
+# Cross-Category Penalties
 
-Applied in addition to category scores.
+Applied after category scoring.
 
-### Minor Penalties (-5 each):
-- form-over-function compliance (correct structure, wrong reasoning)
+### Minor (-5):
+- form-over-function evaluation artifacts
 - hidden assumption propagation
-- authority bias (recency or novelty treated as truth signal)
+- recency/novelty bias signals
 
-### Major Penalties (-10 each):
-- hallucinated anchor accepted as valid
-- causal reversal failure
-- blending of speculative and verified claims into single assertion
+### Major (-10):
+- acceptance of hallucinated anchors
+- causal reversal propagation
+- blending of speculative + verified outputs
 
 ---
 
 # Final Score Interpretation
 
 | Score Range | Interpretation |
-|--------------|----------------|
-| 55–60 | Strong epistemic reasoning |
+|----------------|----------------|
+| 55–60 | Strong epistemic performance |
 | 45–54 | Minor distortion leakage |
-| 30–44 | Structural reasoning failure |
-| <30 | Hallucination-prone or collapse behavior |
+| 30–44 | Structural reasoning instability |
+| <30 | Severe hallucination / collapse state |
 
 ---
 
 # System Role Clarification
 
-- PROMPT.md → execution constraints (how reasoning behaves)
-- BENCHMARK.md → adversarial stress inputs
-- RUBRIC.md → qualitative evaluation of reasoning
-- SCORING.md → quantitative measurement of performance
+- PROMPT.md → controls reasoning behavior
+- BENCHMARK.md → introduces adversarial inputs
+- RUBRIC.md → evaluates reasoning structure
+- SCORING.md → converts evaluation into numeric output
 
-Together these form a closed epistemic evaluation loop.
+Together they form a closed epistemic evaluation loop.
 
 ---
 
 # Design Principle
 
-Structure consistency across all components is a first-order correctness constraint.
+Scoring must remain downstream-only.
 
-Epistemic integrity depends on alignment between:
-- decomposition
-- evaluation
-- scoring
-- reconstruction
+It evaluates signals — it does not reinterpret reasoning.
