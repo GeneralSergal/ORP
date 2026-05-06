@@ -1,6 +1,6 @@
 # CODE OF CONDUCT
 
-**ORP — Open Resonance Protocol**
+**ORP – Open Resonance Protocol**
 
 [![Protocol Version](https://img.shields.io/badge/Version-v2.0-blue?style=for-the-badge)](./PROMPT.md)
 [![Status](https://img.shields.io/badge/Enforcement-Active-red?style=for-the-badge)](./LICENSE)
