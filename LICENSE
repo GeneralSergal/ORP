@@ -26,13 +26,18 @@ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 
 IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-DAMAGES OR OTHER LIABILITY ARISING FROM THE USE OF THE SOFTWARE.
+DAMAGES OR OTHER LIABILITY ARISING FROM, OR IN CONNECTION WITH THE SOFTWARE
+OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ---
 
-## Note
+## Note (Non-Licensing Context)
 
-This license applies only to the software and documentation.
+This license applies only to software and documentation.
 
-Behavioral rules, evaluation logic, and epistemic frameworks are defined
-in the ORP system documentation and are not part of this license.
+Behavioral rules, evaluation logic, epistemic constraints, and system
+architecture definitions are part of the ORP framework documentation and
+are not governed by this license.
+
+Any informal or narrative identity references associated with the project
+have no legal or operational effect.
