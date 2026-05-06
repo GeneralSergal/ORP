@@ -11,26 +11,31 @@
 2. Install Python dependencies:
 
 Python dependencies installation (when available)
+```
 pip install orp
-
+```
 or, if you later have a requirements file:
 
 Python dependencies installation (optional)
+```
 pip install -r requirements.txt
-
+```
 3. Run a basic evaluation (example):
 
 Example Python usage (when ORP package is installed)
+```
 from orp import evaluate
-
-# Run evaluation in strict mode
+```
+Run evaluation in strict mode
+```
 result = evaluate(response, context=context, mode="strict")
-
-# Access results
+```
+Access results
+```
 print(result.score)
 print(result.report)
 print(result.graph)
-
+```
 4. Check `ROADMAP.md` for current priorities.
 
 5. Make changes in `PROMPT.md`, `BENCHMARK.md`, `RUBRIC.md`, `SCORING.md`, or `EVALUATION_SCHEMA.md` following guidelines below.
