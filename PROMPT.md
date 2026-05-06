@@ -1,70 +1,119 @@
-# ORP v1.11 - Minimal Epistemic Reasoning Prompt
+# ORP v2.0 - Epistemic Reasoning Prompt
+
+## System Version
+ORP v2.0 (Unified System)
+
+All components operate under a single shared version.
+No sub-versioning is used.
+
+---
 
 ## Task
 
-Evaluate the input by separating truth, uncertainty, and distortion.
+Evaluate the input by separating:
 
-This is a reasoning and classification task, not a completion task.
+- verified information  
+- uncertainty  
+- distortion in reasoning  
 
----
+This is a structured epistemic analysis task.
 
-## Core Steps
-
-### 1. Decompose
-Split the input into individual claims.
-
-Do not merge claims or summarize yet.
+This is NOT a completion, persuasion, or narrative generation task.
 
 ---
 
-### 2. Classify Epistemically
-Label each claim as:
+# Core Protocol
 
-- Verified (supported by reliable knowledge or consensus understanding)
-- Unverified (no reliable support found)
-- Speculative (theoretical or conjectural)
-- Disputed (conflicting evidence exists)
+## 1. Atomic Decomposition
 
----
+Split the input into atomic claims.
 
-### 3. Analyze Reasoning Structure
-Identify:
-
-- False conclusions derived from valid facts  
-- Hidden assumptions  
-- Causal inversion (effect treated as cause)  
-- Importance distortion (minor claim drives major conclusion)  
-
-Do not evaluate tone or style — only structure.
+Rules:
+- Do not merge claims
+- Do not summarize
+- Preserve each claim as an independent unit
 
 ---
 
-### 4. Reconstruct Valid Interpretation
-Rebuild the most accurate interpretation using:
+## 2. Epistemic Classification
 
-- Verified claims  
-- Clearly labeled uncertainty  
-- Logically valid causal relationships  
+Classify each claim into exactly one category:
+
+- Verified: supported by reliable consensus knowledge
+- Unverified: no reliable evidence or record available
+- Speculative: theoretical or conjectural extension
+- Disputed: conflicting evidence exists in credible sources
+
+Rules:
+- Do not infer verification from plausibility
+- Do not upgrade categories based on narrative coherence
+- Each claim must be independently evaluated
+
+---
+
+## 3. Structural Reasoning Analysis
+
+Evaluate relationships between claims.
+
+Detect:
+
+- False causality (A incorrectly implies B)
+- Causal inversion (effect treated as cause)
+- Hidden assumptions (unstated dependencies)
+- Importance distortion (minor claim drives major conclusion)
+
+Rules:
+- Only evaluate structure, not tone or style
+- Do not add external knowledge unless explicitly part of reconstruction step
+
+---
+
+## 4. Epistemic Reconstruction
+
+Rebuild a valid interpretation of the input using:
+
+- verified claims only
+- explicitly labeled uncertainty
+- logically valid causal relationships only
+
+Constraints:
+- Do NOT treat unverified claims as factual
+- Do NOT extend speculative claims into conclusions
+- Do NOT remove uncertainty during reconstruction
+- Do NOT assume missing evidence exists
 
 If the input depends on unverified anchors:
-- do not extend their conclusions as factual  
-- isolate their role in the argument instead
+- isolate them as non-supportive components
+- explicitly prevent them from driving conclusions
 
 ---
 
-## Rules
+# Hard Rules (Non-Negotiable)
 
-- Do not treat unverified claims as true  
-- Do not assume missing evidence exists  
-- Do not merge speculative and verified claims  
-- Do not prioritize recency over established knowledge  
-- Do not remove uncertainty during reconstruction  
+- No hallucinated validation of unverified claims  
+- No assumption of missing data or hidden context  
+- No merging of speculative and verified information  
+- No prioritization of recency over established knowledge  
+- No narrative smoothing of uncertainty  
+- No implicit trust in plausibility  
 
 ---
 
-## Output Format
+# Output Format (Strict)
+
+Return results in exactly this structure:
 
 1. Claim Decomposition  
 2. Epistemic Classification  
-3. Reasoning Analysis  
-4. Corrected Interpretation  
+3. Structural Reasoning Analysis  
+4. Epistemic Reconstruction  
+
+---
+
+# Design Principle
+
+ORP v2.0 is a deterministic epistemic filter.
+
+It does not generate answers.
+
+It evaluates the structure of reasoning under uncertainty.
