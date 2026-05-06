@@ -10,11 +10,26 @@
 
 2. Install Python dependencies:
 
-pip install -r requirements.txt (when Python package is available)
+Python dependencies installation (when available)
+pip install orp
+
+or, if you later have a requirements file:
+
+Python dependencies installation (optional)
+pip install -r requirements.txt
 
 3. Run a basic evaluation (example):
 
-   // INSERT: Python snippet using `orp.evaluate()` API
+Example Python usage (when ORP package is installed)
+from orp import evaluate
+
+# Run evaluation in strict mode
+result = evaluate(response, context=context, mode="strict")
+
+# Access results
+print(result.score)
+print(result.report)
+print(result.graph)
 
 4. Check `ROADMAP.md` for current priorities.
 
