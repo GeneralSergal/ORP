@@ -83,12 +83,12 @@ Converts reasoning quality into measurable signal.
 # 🔁 FULL PIPELINE FLOW
 
 INPUT
-→ PROMPT.md (behavior constraints)
-→ BENCHMARK.md (adversarial input)
-→ MODEL RESPONSE
-→ RUBRIC.md (qualitative evaluation)
-→ SCORING.md (numeric evaluation)
-→ FINAL SCORE
+PROMPT.md (behavior constraints)
+BENCHMARK.md (adversarial input)
+MODEL RESPONSE
+RUBRIC.md (qualitative evaluation)
+SCORING.md (numeric evaluation)
+FINAL SCORE
 
 ---
 
