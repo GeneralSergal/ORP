@@ -1,3 +1,23 @@
+# ORP v3.0 Roadmap
+
+> Note on timelines: ORP is a solo, curiosity-driven project. There are no fixed deadlines. Progress depends on available time and community interest. This roadmap reflects direction and priorities rather than promises. Contributions and feedback are very welcome to accelerate development.
+
+## Current Focus
+Right now, the primary effort is on:
+- Building the Python package foundation (`orp.evaluate()` API)
+- Improving scoring logic and assumption surfacing
+- Preparing example notebooks for demonstration and testing
+
+---
+
+## How to Read This Roadmap
+Items are prioritized in three tiers:
+- **Must-have** — Core functionality required for v3.0 MVP
+- **Nice-to-have** — Enhancements that increase usability or clarity
+- **Ambitious** — Advanced features for future iterations
+
+This approach emphasizes practical small wins without committing to strict dates.
+
 ## Core Philosophy & Branding
 
 - **Signal Integrity Engine** — Emphasize ORP as prioritizing truth over narrative coherence.
