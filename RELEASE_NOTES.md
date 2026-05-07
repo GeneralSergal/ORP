@@ -1,11 +1,5 @@
 # ORP — Release Notes
 
-## System Version
-
-ORP v2.5 (Current Stable Architecture)
-
----
-
 ## Release Tag
 
 ORP v2.5-stable
@@ -14,7 +8,7 @@ ORP v2.5-stable
 
 ## Overview
 
-This release represents the first fully synchronized ORP v2.5 architecture.
+This release introduces synchronized runtime governance, drift observability, provenance preservation rules, and fail-closed reasoning behavior across the ORP architecture.
 
 The system now includes:
 
