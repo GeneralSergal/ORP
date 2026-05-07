@@ -1,45 +1,111 @@
-# REPO CHECKLIST
+# ORP — Repository Checklist
 
-> Quick sanity check for contributors and users of ORP v2/v3 repo.
+## System Version
 
----
-
-## 1. Core Files
-- [ ] `PROMPT.md` – execution-time constraints are complete
-- [ ] `BENCHMARK.md` – adversarial inputs are representative
-- [ ] `RUBRIC.md` – scoring categories and weights verified
-- [ ] `SCORING.md` – aggregation logic matches rubric
-- [ ] `EVALUATION_SCHEMA.md` – atomic claim structure intact
-- [ ] `SYSTEM_MAP.manifest.json` – versions aligned with v2.0/v3.0
-- [ ] `ROADMAP.md` – directional, non-deadline roadmap clear
-- [ ] `CONTRIBUTING.md` – guidelines updated
+ORP v2.5 (Unified System Architecture)
 
 ---
 
-## 2. Optional / Work-in-Progress
-- [ ] Python package (`orp.evaluate()`) – currently placeholder/API skeleton
-- [ ] Example notebooks for demonstration/testing
-- [ ] Reasoning graph output and visualization
-- [ ] Automated benchmark generator
-- [ ] LangChain / LlamaIndex integration (optional)
-- [ ] Repair mode / comparative evaluation features
+## Purpose
+
+This checklist provides a final synchronization and sanity-validation layer for the ORP repository.
+
+It is intended for:
+
+- contributors
+- maintainers
+- release validation
+- architecture synchronization checks
+
+This document is informational only.
+
+It does not define runtime behavior or evaluation logic.
 
 ---
 
-## 3. Known Issues / Warnings
-- Repository is **curated but in-progress**; some tools or integrations are placeholders.
-- Python dependencies may be incomplete – `requirements.txt` may not exist yet.
-- KEEP any code or snippet blocks isolated – ensure copy-paste works correctly across files (`README.md`, examples, notebooks, etc.).
-- Contributor code samples may require manual adjustments before running.
+# 1. Core Architecture Consistency
+
+- [ ] PROMPT.md aligned with ORP v2.5 constraints
+- [ ] BENCHMARK.md aligned with fail-closed epistemic behavior
+- [ ] EVALUATION_SCHEMA.md treated as structural authority layer
+- [ ] RUBRIC.md synchronized with schema terminology
+- [ ] SCORING.md synchronized with rubric dimensions
+- [ ] ORP_CORE_SPEC.md aligned with current pipeline structure
+- [ ] SYSTEM_MAP.md synchronized with manifest contract
+- [ ] SYSTEM_MAP.manifest.json version-aligned with repository state
+- [ ] ORP_SYSTEM_ARCHITECTURE.md reflects current evaluation flow
+- [ ] README.md synchronized with architecture documentation
 
 ---
 
-## 4. Contributor Guidance
-- Always check `ROADMAP.md` before making changes.
-- Follow separation-of-concerns rules in `CONTRIBUTING.md`.
-- Prioritize structural correctness over stylistic preferences.
-- Use this checklist to confirm core files are consistent.
+# 2. Version Consistency
+
+- [ ] All core files reference ORP v2.5
+- [ ] Header formatting is consistent across documents
+- [ ] No residual v2.0-only architecture references remain
+- [ ] Release notes match current repository structure
+- [ ] Sub-version terminology remains structurally compatible
 
 ---
 
-> This checklist is informational and advisory. It reflects the current development status of ORP.
+# 3. Structural Integrity Validation
+
+- [ ] Pipeline order remains deterministic
+- [ ] No cross-layer responsibility merging introduced
+- [ ] No backward evaluation influence introduced
+- [ ] No hidden schema reinterpretation added
+- [ ] No epistemic category blending introduced
+- [ ] Fail-closed behavior preserved across evaluation chain
+
+---
+
+# 4. Documentation Integrity
+
+- [ ] Mermaid diagrams isolated safely from surrounding markdown
+- [ ] Code blocks remain copy-paste safe
+- [ ] File references remain valid
+- [ ] Internal terminology remains synchronized
+- [ ] README examples reflect current architecture
+
+---
+
+# 5. Contributor Synchronization
+
+- [ ] CONTRIBUTING.md reflects current repository structure
+- [ ] ROADMAP.md separated from stable architecture documents
+- [ ] CODE_OF_CONDUCT.md aligned with epistemic enforcement model
+- [ ] ORIGIN.md preserved as non-operational historical context
+
+---
+
+# 6. Optional / Future Components
+
+These components are directional and may remain incomplete:
+
+- [ ] Python package (`orp.evaluate()`)
+- [ ] Example notebooks
+- [ ] Reasoning graph output
+- [ ] Automated benchmark generation
+- [ ] Comparative evaluation mode
+- [ ] Repair / correction pipeline
+- [ ] Plugin evaluation architecture
+
+---
+
+# Final Validation Rule
+
+Before release or merge:
+
+- structure must remain deterministic
+- schema authority must remain preserved
+- evaluation layers must remain isolated
+- terminology must remain synchronized
+- no architectural ambiguity may be introduced
+
+---
+
+# Design Principle
+
+Repository clarity is part of epistemic integrity.
+
+A structurally correct system must also remain structurally understandable.
