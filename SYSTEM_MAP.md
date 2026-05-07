@@ -1,4 +1,4 @@
-# ORP v2.5 — System Map (Epistemic Governance Architecture)
+# ORP — System Map (Epistemic Governance Architecture)
 
 ## Purpose
 
