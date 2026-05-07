@@ -1,4 +1,8 @@
-# ORP v2.5 — Epistemic Scoring System
+# ORP — Epistemic Scoring System
+
+## System Version
+
+ORP v2.5 (Unified System Architecture)
 
 ## Purpose
 
