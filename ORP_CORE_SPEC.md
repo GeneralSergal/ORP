@@ -1,4 +1,8 @@
-# ORP v2.5 — Core System Specification
+# ORP — Core System Specification
+
+## System Version
+
+ORP v2.5 (Unified System Architecture)
 
 ## Purpose
 
