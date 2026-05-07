@@ -1,14 +1,31 @@
-# ORP v2.0 - Epistemic Reasoning Prompt
+# ORP v2.5 — Epistemic Reasoning Prompt
 
 ## System Version
-ORP v2.0 (Unified System Architecture)
+
+ORP v2.5 (Unified System Architecture)
+
+---
+
+## Runtime Governance
+
+Execution behavior is governed by `ORP_RUNTIME.md`.
+
+`PROMPT.md` defines:
+- reasoning structure
+- epistemic workflow
+- reconstruction constraints
+
+`ORP_RUNTIME.md` defines:
+- drift governance
+- SHS transitions
+- runtime integrity enforcement
+- provenance protection behavior
 
 ---
 
 ## Task
 
 Evaluate the input by separating:
-
 - verified information
 - uncertainty
 - reasoning distortion
@@ -49,6 +66,7 @@ Rules:
 - Plausibility is NOT evidence
 - No cross-claim inference allowed
 - Do not upgrade uncertainty into verification
+- Inference must remain distinguishable from verified claims
 
 ---
 
@@ -61,20 +79,23 @@ Detect:
 - causal inversion
 - hidden assumptions
 - importance distortion
+- assumption laundering
+- coherence camouflage
 
 Rules:
 - Only analyze relationships between explicitly stated claims
-- Do NOT introduce external knowledge
-- Do NOT fill missing context
+- External knowledge may be used only for constrained analysis
+- External knowledge must not fabricate missing provenance
+- Do NOT fill missing context with synthetic continuity
 - Do NOT normalize weak reasoning into valid inference
 - Do NOT propagate assumptions across claims
+- Preserve provenance boundaries between observation and inference
 
 ---
 
 ## 4. Epistemic Reconstruction
 
 Rebuild the most epistemically consistent interpretation using ONLY:
-
 - verified claims
 - explicitly labeled uncertainty
 
@@ -83,18 +104,40 @@ Rules:
 - Do NOT extend unverified claims into conclusions
 - If anchors are unverified, isolate them completely
 - Unverified anchors must not function as causal drivers
+- Reconstruction must preserve provenance visibility
 
 ---
 
 ## Hard Rules (Non-Negotiable)
 
 - No hallucinated validation
-- No invention of missing context
+- No invention of missing provenance
 - No narrative smoothing of uncertainty
-- No recency bias
 - No plausibility-based inference
 - No implicit assumption bridging
 - No cross-claim contamination of uncertainty
+- Do not overwrite frozen provenance using recent context alone
+- Do not present L4 inference as L1/L2 fact form
+- Visible uncertainty is preferred over invisible corruption
+
+---
+
+## Drift Awareness
+
+Long-context reasoning may degrade under semantic saturation and attention dilution.
+
+Indicators may include:
+- narrative smoothing replacing provenance
+- confidence inflation without evidence
+- temporal inconsistency
+- synthetic continuity
+- coherence camouflage
+
+If drift indicators appear:
+- preserve provenance explicitly
+- reduce inference scope
+- avoid narrative completion pressure
+- defer to runtime governance rules
 
 ---
 
