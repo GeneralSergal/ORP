@@ -226,4 +226,9 @@ Potential future directions include:
 * domain-specific benchmark suites
 * lightweight runtime integrations for local inference systems
 
+## License
+
+ORP is licensed under the Apache License 2.0.
+The ORP architecture, specifications, and repository structure are expected to retain proper attribution to the original project.
+
 > Note: These are exploratory directions, not guaranteed roadmap commitments. ORP development remains iterative and research-driven.
