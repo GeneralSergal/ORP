@@ -2,7 +2,7 @@
 
 **ORP v2.5 (Unified System Architecture)**
 
-A structured epistemic evaluation and runtime governance framework for reasoning systems operating under uncertainty.
+A structured epistemic evaluation and **runtime governance** framework for high-signal reasoning systems.
 
 > ⚠️ **Important**: Before using or contributing, please read `!REPO_CHECKLIST.md` for known issues, copy-paste guidelines, and safe handling of code/Mermaid blocks.
 
