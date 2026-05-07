@@ -1,6 +1,10 @@
 # ORP — Release Notes
 
-# ORP v2.5 (Current Stable Architecture)
+## System Version
+
+ORP v2.5 (Current Stable Architecture)
+
+---
 
 ## Release Tag
 
@@ -10,21 +14,20 @@ ORP v2.5-stable
 
 ## Overview
 
-ORP v2.5 represents a major architectural evolution of the Open Resonance Protocol.
+This release represents the first fully synchronized ORP v2.5 architecture.
 
-The system transitioned from:
-- a deterministic epistemic evaluation pipeline
+The system now includes:
 
-toward:
-- a governance-aware reasoning and evaluation architecture
-
-This release introduces:
-- runtime governance
-- provenance-preservation mechanics
-- drift observability
-- coherence camouflage detection
+- runtime governance via ORP_RUNTIME.md
+- synchronized epistemic pipeline contracts
+- explicit provenance preservation rules
+- drift detection and containment semantics
 - fail-closed reasoning behavior
-- explicit runtime integrity concepts
+- aligned human-readable and machine-readable architecture maps
+
+ORP v2.5 stabilizes the transition from:
+structured evaluation pipeline
+→ fault-observable epistemic runtime architecture.
 
 ---
 
