@@ -1,7 +1,5 @@
 # ORP — Release Notes
 
----
-
 # ORP v2.5 (Current Stable Architecture)
 
 ## Release Tag
