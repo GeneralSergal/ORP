@@ -1,4 +1,4 @@
-# ORP v2.5 - Evaluation Schema
+# ORP - Evaluation Schema
 
 ## System Version
 
