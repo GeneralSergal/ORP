@@ -1,4 +1,4 @@
-# ORP v2.5 — Epistemic Reasoning Prompt
+# ORP — Epistemic Reasoning Prompt
 
 ## System Version
 
