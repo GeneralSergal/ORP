@@ -1,100 +1,157 @@
 {
   "system": "ORP",
-  "version": "2.0",
-  "type": "Epistemic Evaluation Framework",
+  "version": "2.5",
+  "type": "Epistemic Governance Framework",
 
   "pipeline": [
+    "ORP_RUNTIME.md",
     "PROMPT.md",
     "BENCHMARK.md",
     "MODEL_RESPONSE",
     "EVALUATION_SCHEMA.md",
     "RUBRIC.md",
     "SCORING.md",
-    "FINAL_SCORE"
+    "FINAL_OUTPUT_STATE"
   ],
 
   "layers": {
-    "PROMPT.md": {
-      "version": "2.0",
-      "role": "Behavior Control Layer",
+    "ORP_RUNTIME.md": {
+      "version": "2.5",
+      "role": "Runtime Governance Layer",
       "responsibility": [
-        "Define inference-time epistemic constraints",
+        "Enforce runtime behavioral constraints",
+        "Manage SHS state transitions",
+        "Detect drift indicators",
+        "Preserve provenance continuity",
+        "Detect coherence camouflage",
+        "Handle runtime failure escalation"
+      ],
+      "output_type": "governed_runtime_state"
+    },
+
+    "PROMPT.md": {
+      "version": "2.5",
+      "role": "Behavior Constraint Layer",
+      "responsibility": [
+        "Define epistemic reasoning constraints",
         "Enforce atomic claim decomposition",
-        "Prevent narrative or unstructured reasoning collapse",
-        "Maintain epistemic separation during generation"
+        "Preserve uncertainty boundaries",
+        "Prevent narrative collapse",
+        "Maintain causal integrity"
       ],
       "output_type": "constrained_reasoning_behavior"
     },
 
     "BENCHMARK.md": {
-      "version": "2.0",
-      "role": "Adversarial Input Layer",
+      "version": "2.5",
+      "role": "Adversarial Stress Layer",
       "responsibility": [
-        "Inject epistemically mixed or distorted inputs",
-        "Stress-test causal reasoning stability under pressure",
-        "Expose hallucination and bias failure modes",
-        "Trigger boundary enforcement behavior"
+        "Inject adversarial and mixed-truth inputs",
+        "Stress-test causal reasoning stability",
+        "Expose hallucination and drift failure modes",
+        "Test counterfactual stability",
+        "Map degradation and recovery behavior"
       ],
       "output_type": "adversarial_claim_set"
     },
 
     "EVALUATION_SCHEMA.md": {
-      "version": "2.0",
-      "role": "Structural Contract Layer",
+      "version": "2.5",
+      "role": "Structural Transformation Layer",
       "responsibility": [
         "Define atomic claim transformation rules",
-        "Specify epistemic tagging system",
+        "Specify epistemic tagging contracts",
         "Define relationship analysis constraints",
-        "Ensure consistent structural evaluation across pipeline"
+        "Enforce reconstruction boundaries",
+        "Preserve structural consistency across pipeline"
       ],
       "output_type": "epistemic_structure_specification"
     },
 
     "RUBRIC.md": {
-      "version": "2.0",
+      "version": "2.5",
       "role": "Qualitative Evaluation Layer",
       "responsibility": [
-        "Evaluate reasoning structure quality",
+        "Evaluate reasoning integrity",
         "Detect epistemic distortion patterns",
-        "Assess adherence to evaluation schema contract",
-        "Produce category-based scoring signals"
+        "Assess provenance preservation",
+        "Evaluate governance compliance",
+        "Produce structured scoring vectors"
       ],
       "output_type": "structured_evaluation_vector"
     },
 
     "SCORING.md": {
-      "version": "2.0",
+      "version": "2.5",
       "role": "Quantitative Aggregation Layer",
       "responsibility": [
         "Aggregate rubric evaluation outputs",
         "Apply deterministic weights and penalties",
-        "Normalize results into scalar score",
-        "Produce final epistemic integrity score (0–60)"
+        "Measure drift severity",
+        "Normalize operational integrity scores",
+        "Produce final evaluation state"
       ],
-      "output_type": "scalar_score_0_to_60"
+      "output_type": "operational_integrity_score"
     }
   },
+
+  "runtime_governance": {
+    "enabled": true,
+    "session_health_state": true,
+    "drift_observability": true,
+    "coherence_camouflage_detection": true,
+    "provenance_preservation": true,
+    "recoverability_priority": true
+  },
+
+  "session_health_states": [
+    "GREEN",
+    "YELLOW",
+    "ORANGE",
+    "RED",
+    "BLACK"
+  ],
+
+  "layered_authority_stack": {
+    "L1": "Direct evidence / observed data",
+    "L2": "Verified interpretation / constrained synthesis",
+    "L3": "Protocol governance / operational rules",
+    "L4": "Inference / probabilistic synthesis"
+  },
+
+  "critical_invariants": [
+    "L4_must_not_overwrite_L1_L2",
+    "No_provenance_laundering",
+    "No_silent_temporal_rewrites",
+    "No_coherence_camouflage",
+    "No_cross_layer_reinterpretation",
+    "Recoverability_over_completion"
+  ],
 
   "design_constraints": {
     "separation_of_concerns": true,
     "no_cross_contamination": true,
     "epistemic_isolation": true,
     "schema_contract_enforcement": true,
+    "runtime_governance_enforced": true,
+    "drift_observability_required": true,
     "fail_closed_evaluation": true
   },
 
   "execution_model": {
-    "type": "strict_pipeline",
+    "type": "governed_pipeline",
     "order_enforced": true,
     "cycles_allowed": false,
-    "backpropagation_forbidden": true
+    "backpropagation_forbidden": true,
+    "runtime_monitoring": true,
+    "bounded_inference_required_under_red_shs": true
   },
 
   "versioning_policy": {
-    "global_system_version": "2.0",
+    "global_system_version": "2.5",
     "component_versions_independent": true,
-    "compatibility_range": "2.0",
+    "compatibility_range": "2.x",
     "subversion_allowed": true,
-    "subversion_rule": "Subversions may exist per component for external contributions but must remain compatible with ORP v2.0 structural contract"
+    "subversion_rule": "Subsystem revisions may evolve independently but must preserve ORP governance invariants and structural contracts"
   }
 }
