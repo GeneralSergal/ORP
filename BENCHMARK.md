@@ -1,4 +1,4 @@
-# ORP v2.5 — Epistemic Constraint Benchmark
+# ORP — Epistemic Constraint Benchmark
 
 ## System Version
 
