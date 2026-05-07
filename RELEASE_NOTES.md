@@ -1,132 +1,228 @@
-# ORP v2.0 - Release Notes (Stable Snapshot)
+# ORP — Release Notes
+
+---
+
+# ORP v2.5 (Current Stable Architecture)
 
 ## Release Tag
-ORP v2.0-stable
+
+ORP v2.5-stable
 
 ---
 
 ## Overview
 
-This release represents a stabilized snapshot of the ORP (Open Resonance Protocol) epistemic evaluation framework.
+ORP v2.5 represents a major architectural evolution of the Open Resonance Protocol.
 
-The system is now considered structurally consistent across all core components:
+The system transitioned from:
+- a deterministic epistemic evaluation pipeline
 
-- PROMPT.md
-- BENCHMARK.md
-- EVALUATION_SCHEMA.md
-- RUBRIC.md
-- SCORING.md
-- SYSTEM_MAP.md
-- SYSTEM_MAP.manifest.json
-- ORIGIN.md
-- CONTRIBUTING.md
-- CODE_OF_CONDUCT.md
-- LICENSE
-- README.md
+toward:
+- a governance-aware reasoning and evaluation architecture
 
----
-
-## System State
-
-ORP v2.0 defines a deterministic epistemic evaluation pipeline designed to:
-
-- enforce atomic claim decomposition
-- maintain strict epistemic tagging discipline
-- detect causal distortion and reasoning failure modes
-- evaluate reasoning under adversarial conditions
-- produce normalized quantitative scoring (0–60)
+This release introduces:
+- runtime governance
+- provenance-preservation mechanics
+- drift observability
+- coherence camouflage detection
+- fail-closed reasoning behavior
+- explicit runtime integrity concepts
 
 ---
 
-## Architecture Status
+# Major Additions in v2.5
 
-The system is confirmed to be:
+## 1. ORP_RUNTIME.md Introduced
 
-- structurally consistent across all layers
-- schema-aligned (EVALUATION_SCHEMA.md is fully integrated into pipeline)
-- manifest-synchronized (SYSTEM_MAP.manifest.json matches SYSTEM_MAP.md)
-- version-stable at ORP v2.0
-- subversion-compatible under controlled constraints
+A new runtime governance layer was added.
 
----
+This file defines:
+- mandatory runtime headers
+- SHS (System Health States)
+- drift classification
+- provenance-preservation invariants
+- runtime failure handling rules
+- Layered Authority Stack (LAS)
 
-## Key System Properties (v2.0 Stable)
-
-### 1. Epistemic Separation
-Claims are always separated into:
-- Verified
-- Unverified
-- Speculative
-- Disputed
+This represents the first explicit runtime execution-governance layer in ORP.
 
 ---
 
-### 2. Pipeline Determinism
-All evaluations follow a strict linear pipeline:
+## 2. Drift Observability Model
 
-INPUT → PROMPT → BENCHMARK → MODEL_RESPONSE → SCHEMA → RUBRIC → SCORING → OUTPUT
+ORP now explicitly models reasoning degradation states.
 
-No cycles permitted.
+New concepts include:
+- LOW / MODERATE / HIGH drift
+- coherence camouflage
+- synthetic continuity
+- assumption laundering
+- temporal rewrite detection
+- provenance degradation awareness
 
----
+The system now treats:
+> stylistic coherence persistence beyond factual integrity
 
-### 3. Structural Integrity Enforcement
-The system enforces:
-- no merging of epistemic categories
-- no narrative substitution for missing evidence
-- no backward inference between pipeline stages
-
----
-
-### 4. Evaluation Model
-Final scoring is based on:
-
-- claim integrity
-- distortion detection
-- epistemic discipline
-- reconstruction quality
-
-Output range: 0–60
+as a primary failure mode.
 
 ---
 
-## Breaking Changes (since pre-v2.0)
+## 3. Layered Authority Stack (LAS)
 
-- EVALUATION_SCHEMA.md formally introduced as structural contract layer
-- SYSTEM_MAP aligned with schema-driven architecture
-- full separation of evaluation vs execution responsibilities enforced
-- manifest-system dual representation stabilized
+v2.5 introduces explicit authority separation:
 
----
+- L1 — direct evidence / observed data
+- L2 — constrained verified interpretation
+- L3 — protocol / governance logic
+- L4 — inference / speculation
 
-## Compatibility
-
-This release is compatible with:
-
-- local inference stacks (Ollama, vLLM, etc.)
-- GGUF / EXL2 quantized models
-- adversarial evaluation benchmarking setups
+Key invariant:
+> L4 must never overwrite frozen L1/L2 provenance.
 
 ---
 
-## Known Constraints
+## 4. Runtime Health States (SHS)
 
-- system is intentionally non-conversational in design
-- no probabilistic scoring interpretation allowed (only deterministic evaluation)
-- no cross-layer inference allowed outside defined pipeline
+ORP now includes explicit runtime degradation states:
+
+- GREEN
+- YELLOW
+- ORANGE
+- RED
+- BLACK
+
+This enables:
+- visible degradation tracking
+- bounded inference behavior
+- recoverability prioritization
+- fail-closed execution patterns
 
 ---
 
-## Design Principle
+## 5. Coherence Camouflage Detection
 
-Epistemic structure is the only source of evaluation truth.
+v2.5 formalizes a previously observed transformer failure pattern:
 
-Signal integrity is preserved through strict separation of system layers.
+> fluent narrative continuity masking provenance degradation.
+
+This concept became central to:
+- runtime governance
+- drift classification
+- evaluation philosophy
 
 ---
 
-## Final Status
+# Current System State
 
-ORP v2.0 is now considered:
+ORP v2.5 now operates as:
 
-> STABLE — ARCHITECTURE LOCKED
+> a structured reasoning governance and evaluation architecture
+
+Core components:
+
+- ORP_RUNTIME.md — runtime governance core
+- PROMPT.md — execution constraints
+- BENCHMARK.md — adversarial stress layer
+- EVALUATION_SCHEMA.md — structural contract
+- RUBRIC.md — qualitative evaluation
+- SCORING.md — quantitative scoring
+- SYSTEM_MAP.md — architecture overview
+- SYSTEM_MAP.manifest.json — machine-readable architecture
+
+---
+
+# Architectural Transition
+
+## v2.0 Identity
+Primary focus:
+- deterministic evaluation
+- epistemic classification
+- adversarial reasoning analysis
+- scoring consistency
+
+---
+
+## v2.5 Identity
+Expanded focus:
+- runtime governance
+- provenance preservation
+- recoverable reasoning
+- drift visibility
+- fail-closed execution
+- fault-observable inference
+
+---
+
+# Preserved Core Principles
+
+The following principles remain unchanged from v2.0:
+
+- atomic claim decomposition
+- strict epistemic separation
+- adversarial robustness
+- no cross-layer contamination
+- deterministic structural contracts
+- evaluation based on reasoning integrity rather than fluency
+
+---
+
+# Compatibility
+
+ORP v2.5 remains compatible with:
+- local inference stacks
+- quantized local models
+- adversarial evaluation workflows
+- schema-driven benchmarking systems
+
+The architecture remains intentionally model-agnostic.
+
+---
+
+# Known Constraints
+
+- ORP is intentionally non-conversational by design
+- runtime governance is heuristic-aware, not mathematically deterministic
+- drift detection remains partially observational
+- provenance preservation depends on model compliance behavior
+
+---
+
+# Design Philosophy
+
+ORP prioritizes:
+
+- visible uncertainty over hidden corruption
+- provenance over coherence
+- recoverability over narrative completion
+- fault transparency over persuasive fluency
+
+---
+
+# Historical Snapshot — ORP v2.0
+
+## Release Tag
+
+ORP v2.0-stable
+
+### v2.0 Key Characteristics
+- deterministic epistemic evaluation pipeline
+- schema-first reasoning architecture
+- adversarial stress evaluation
+- quantitative scoring model (0–60)
+- strict claim separation system
+
+### Major v2.0 Milestones
+- EVALUATION_SCHEMA.md introduced
+- schema-aligned architecture stabilized
+- manifest synchronization implemented
+- pipeline responsibilities fully separated
+
+v2.0 remains the foundational architecture layer upon which v2.5 was built.
+
+---
+
+# Final Status
+
+ORP v2.5 is currently considered:
+
+> STABLE — GOVERNANCE LAYER ACTIVE
