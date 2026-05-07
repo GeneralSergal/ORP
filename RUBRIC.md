@@ -1,4 +1,9 @@
-# ORP v2.5 — Peer Logic Rubric
+# ORP — Peer Logic Rubric
+
+## System Version
+ORP v2.5 (Unified System Architecture)
+
+---
 
 Use this rubric to evaluate the Logic Density, Drift Integrity, and Operational Reliability of any ORP-compliant reasoning output.
 
