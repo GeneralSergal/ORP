@@ -1,96 +1,304 @@
-# ORP v3.0 Roadmap
+# ORP — Roadmap
 
-> Note on timelines: ORP is a solo, curiosity-driven project. There are no fixed deadlines. Progress depends on available time and community interest. This roadmap reflects direction and priorities rather than promises. Contributions and feedback are very welcome to accelerate development.
+## System Version Context
 
-## One-Sentence Vision
-ORP aims to become the standard open quality gate for reliable AI reasoning — prioritizing signal integrity over polished hallucinations.
+Current Stable Architecture:
+ORP v2.5 (Unified System Architecture)
 
-## Current Focus
-Right now, the primary effort is on:
-- Building the Python package foundation (`orp.evaluate()` API)
-- Improving scoring logic and assumption surfacing
-- Preparing example notebooks for demonstration and testing
-## Core Philosophy & Branding
-- **Signal Integrity Engine** — Emphasize ORP as prioritizing truth over narrative coherence.
-- **Epistemic Modes**:
-  - Strict (zero tolerance for uncertainty)
-  - Balanced (default)
-  - Exploratory (controlled speculation with explicit flags)
-- **Confidence Decay** — Track how model confidence declines when leaving its knowledge boundary.
+This roadmap reflects long-term architectural direction rather than fixed delivery commitments.
 
-## Architectural / Structural Ideas
-- **Multi-Stage Pipeline**:
-  - Decomposition → atomic claims
-  - Assumption surfacing → list explicit model assumptions
-  - Adversarial perturbation → auto-generated stress inputs
-  - Cross-verification → self-consistency + optional external tools
-  - Epistemic scoring → human-readable report
-- **Modular Evaluators**:
-  - Plug-in different scoring modules (rubric-based, LLM-as-judge, embedding similarity)
-- **Traceability Layer**:
-  - Full audit trail for each score (claims failed, why, adversarial tests revealed)
+---
 
-## New Capabilities
-- **Automated Benchmark Generator**:
-  - Domain-specific (history, medicine, code)
-  - Generates fresh adversarial test cases
-- **Reasoning Graph Output**:
-  - Nodes = claims
-  - Edges = supports / contradicts / depends
-  - Graph visualization
-- **Comparative Mode**:
-  - Run same query across multiple models or temperatures
-  - Highlight epistemic differences
-- **Uncertainty Quantification**:
-  - From scalar score to confidence distribution
-  - Example: "70% ± 15% confidence on core claims"
-- **Repair Mode**:
-  - Detect hallucinations
-  - Suggest corrected claims
-  - Regenerate higher-fidelity response
-  ## Implementation / Usability
+## Development Philosophy
 
-- **Python Package MVP**
+ORP is a curiosity-driven and research-oriented project.
+
+There are:
+- no fixed deadlines
+- no guaranteed milestones
+- no commercial delivery constraints
+
+Development follows:
+- observed reasoning failure modes
+- architectural coherence
+- contributor experimentation
+- practical utility
+
+Contributions and external experimentation are welcome.
+
+---
+
+# One-Sentence Vision
+
+ORP aims to become an open reasoning governance and evaluation framework focused on:
+
+> signal integrity over coherent hallucination.
+
+---
+
+# Current Direction (v2.5 Era)
+
+Current development priorities focus on:
+
+- runtime governance
+- provenance preservation
+- drift observability
+- recoverable reasoning systems
+- fault-transparent inference behavior
+- structured epistemic evaluation
+
+This represents a transition from:
+- pure evaluation pipelines
+toward:
+- governance-aware reasoning infrastructure.
+
+---
+
+# Active Priorities
+
+## 1. Python Package Foundation
+
+Initial target:
 
 ```python
 from orp import evaluate
 
 result = evaluate(response, context=context, mode="strict")
-print(result.score, result.report, result.graph)
-```
+print(result.score)
+````
 
-- Optional LangChain / LlamaIndex integration
-- Web UI (Streamlit / Gradio) for quick testing
-- CLI tool for batch dataset evaluation
-## Evaluation & Validation
-- Built-in test suites for multiple domains:
-  - Reasoning
-  - Factuality
-  - Coding
-  - Creative
-- Self-improvement loop:
-  - ORP evaluates its own outputs
-  - Iteratively improves prompts and rubrics
-- Export results:
-  - JSON
-  - Markdown
-  - Hugging Face dataset style
+Potential expansion:
 
-## Community & Extensibility
-- Plugin system for custom rubrics or domain-specific evaluators (medical, legal, scientific)
-- ORP Hub → share adversarial tests and configs
-- Versioned prompt library for transparent and reversible improvements
+* runtime governance hooks
+* drift telemetry
+* provenance tracing
+* evaluation reports
+* reasoning graph export
 
-## Prioritization Suggestion for v3.0 (MVP)
-- **Must-have**:
-  - Runnable Python package (API stub ready)
-  - Improved scoring with assumption surfacing
-  - Better documentation and examples
-  - One strong demo (e.g., auditing RAG outputs)
-- **Nice-to-have**:
-  - Reasoning graph
-  - Automated attack generator
-  - LangChain integration
-- **Ambitious**:
-  - Multi-model comparison dashboard
-  - Repair mode
+---
+
+## 2. Runtime Governance Layer
+
+Expansion of:
+
+* ORP_RUNTIME.md
+* SHS (System Health States)
+* LAS (Layered Authority Stack)
+* drift observability systems
+
+Potential goals:
+
+* runtime integrity enforcement
+* explicit uncertainty serialization
+* provenance-aware execution
+* fail-closed reasoning behaviors
+
+---
+
+## 3. Drift & Coherence Research
+
+Ongoing investigation into:
+
+* coherence camouflage
+* narrative smoothing
+* synthetic continuity generation
+* temporal rewrite behavior
+* assumption laundering
+* style persistence vs truth persistence
+
+Potential outputs:
+
+* drift benchmarks
+* runtime probes
+* degradation detection metrics
+* context integrity stress tests
+
+---
+
+# Architectural Expansion Ideas
+
+## Multi-Stage Reasoning Pipeline
+
+Potential extended flow:
+
+Input
+→ Claim Atomization
+→ Assumption Surfacing
+→ Provenance Mapping
+→ Adversarial Perturbation
+→ Drift Detection
+→ Reconstruction
+→ Evaluation
+→ Scoring
+→ Runtime Health Report
+
+---
+
+## Traceability Layer
+
+Potential features:
+
+* explicit provenance trails
+* claim lineage tracking
+* drift event serialization
+* uncertainty propagation maps
+* reconstruction audit logs
+
+---
+
+## Comparative Evaluation Mode
+
+Potential capabilities:
+
+* compare models under identical constraints
+* compare temperatures/prompts
+* compare runtime governance strategies
+* detect divergence patterns across systems
+
+---
+
+## Reasoning Graph Output
+
+Potential graph structure:
+
+* nodes = claims
+* edges = causal / dependency / contradiction relationships
+* uncertainty-weighted paths
+* provenance lineage overlays
+
+---
+
+# Runtime & Governance Research
+
+## SHS Expansion
+
+Potential future SHS capabilities:
+
+* automatic degradation detection
+* branch quarantine logic
+* context integrity scoring
+* recoverability estimation
+* bounded inference states
+
+---
+
+## CRA / State Snapshot Research
+
+Potential future ideas:
+
+* externalized context snapshots
+* state reload systems
+* reasoning continuity checkpoints
+* provenance recovery after degradation
+
+---
+
+# Evaluation System Expansion
+
+## Automated Benchmark Generation
+
+Potential features:
+
+* domain-specific adversarial tests
+* dynamic distortion injection
+* hallucination stress scenarios
+* synthetic ambiguity generation
+
+---
+
+## Modular Evaluators
+
+Possible evaluator plugins:
+
+* rubric-based scoring
+* LLM-as-judge
+* embedding consistency checks
+* provenance validators
+* drift analyzers
+
+---
+
+## Repair / Recovery Mode
+
+Potential future capability:
+
+* isolate hallucinated claims
+* reconstruct stable subsets
+* preserve verified structure
+* regenerate bounded outputs
+
+---
+
+# Usability & Tooling
+
+Potential tooling:
+
+* CLI interface
+* local dashboard
+* Streamlit / Gradio interface
+* notebook examples
+* dataset export support
+* JSON / Markdown reporting
+
+Potential integrations:
+
+* LangChain
+* LlamaIndex
+* local inference stacks
+* RAG evaluation workflows
+
+---
+
+# Community Direction
+
+Potential ecosystem goals:
+
+* shared benchmark repository
+* versioned prompt/runtime libraries
+* community evaluator plugins
+* transparent scoring evolution
+* reproducible adversarial test sets
+
+---
+
+# Near-Term Priorities
+
+## Must-Have
+
+* stable v2.5 documentation
+* Python package foundation
+* runtime governance integration
+* better benchmark coverage
+* improved evaluation examples
+
+---
+
+## Important
+
+* drift observability tooling
+* provenance tracing support
+* reasoning graph experiments
+* comparative evaluation mode
+
+---
+
+## Experimental
+
+* automated repair systems
+* state checkpointing
+* recursive self-evaluation
+* bounded self-correction loops
+
+---
+
+# Final Principle
+
+ORP prioritizes:
+
+* visible uncertainty over hidden corruption
+* recoverability over narrative completion
+* provenance integrity over stylistic fluency
+
+The long-term objective is not to produce more convincing outputs.
+
+The objective is to produce more trustworthy reasoning systems.
