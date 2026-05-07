@@ -221,3 +221,9 @@ v2.0 remains the foundational architecture layer upon which v2.5 was built.
 ORP v2.5 is currently considered:
 
 > STABLE — GOVERNANCE LAYER ACTIVE
+
+## Licensing Update
+
+ORP transitioned from MIT licensing to Apache License 2.0
+to improve attribution preservation, contribution clarity,
+and long-term project governance.
