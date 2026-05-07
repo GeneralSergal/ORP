@@ -1,5 +1,12 @@
 # ORP — System Map (Epistemic Governance Architecture)
 
+## System Version
+
+ORP v2.5 (Unified System Architecture)
+
+---
+
+
 ## Purpose
 
 This document defines the human-readable architecture of the ORP system.
@@ -19,13 +26,6 @@ It is NOT:
 * a scoring document
 * a benchmark specification
 
----
-
-# System Version
-
-ORP v2.5
-
-All components operate under the shared ORP v2.5 governance contract.
 
 ---
 
