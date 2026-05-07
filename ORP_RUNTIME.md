@@ -1,7 +1,11 @@
 # ORP RUNTIME — Compact Execution Core
 
-This file defines the enforceable execution core of ORP v2.5.
-All ORP-compliant responses must follow this execution layer.
+## System Version
+
+ORP v2.5 (Unified System Architecture)
+
+>This file defines the enforceable execution core of ORP v2.5.
+>All ORP-compliant responses must follow this execution layer.
 
 ---
 
