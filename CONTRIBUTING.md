@@ -1,153 +1,185 @@
-# ORP v2.0 - CONTRIBUTING
+# ORP — CONTRIBUTING
 
-> ROADMAP HINT: ORP v3.0 focuses on Python package MVP, improved scoring, and example notebooks. See ROADMAP.md for details.
+## System Version
 
----
-
-## Quick Start for Contributors
-
-1. Clone the repo locally.
-
-2. Install Python dependencies:
-
-Python dependencies installation (when available)
-```
-pip install orp
-```
-or, if you later have a requirements file:
-
-Python dependencies installation (optional)
-```
-pip install -r requirements.txt
-```
-3. Run a basic evaluation (example):
-
-Example Python usage (when ORP package is installed)
-```
-from orp import evaluate
-```
-Run evaluation in strict mode
-```
-result = evaluate(response, context=context, mode="strict")
-```
-Access results
-```
-print(result.score)
-print(result.report)
-print(result.graph)
-```
-4. Check `ROADMAP.md` for current priorities.
-
-5. Make changes in `PROMPT.md`, `BENCHMARK.md`, `RUBRIC.md`, `SCORING.md`, or `EVALUATION_SCHEMA.md` following guidelines below.
-
----
-
-## Pull Request Guidelines
-
-- For **substantial changes** affecting reasoning, evaluation, or benchmarks, use the **full PR template**: `.github/PULL_REQUEST_TEMPLATE/orp-pr-full.md`.
-- For **minor changes** (typos, docs, small examples), use the **trivial PR template**: `.github/PULL_REQUEST_TEMPLATE/orp-pr-trivial.md`.
-- GitHub will automatically suggest the appropriate template when creating a PR.
+ORP v2.5 (Unified System Architecture)
 
 ---
 
 ## Purpose
 
-This document defines how changes may be contributed to the ORP system.
+This document defines contribution rules and architectural expectations for the ORP repository.
 
-It ensures that modifications preserve epistemic integrity, structural separation, and deterministic evaluation behavior.
+Its purpose is to preserve:
 
----
+- epistemic integrity
+- provenance preservation
+- structural consistency
+- deterministic evaluation behavior
+- runtime/schema synchronization
 
-
-## System Context
-
-All contributions must remain compatible with:
-
-- PROMPT.md (execution constraints)  
-- BENCHMARK.md (adversarial testing)  
-- RUBRIC.md (evaluation logic)  
-- SCORING.md (aggregation layer)  
-- EVALUATION_SCHEMA.md (structural contract)  
-
-This document does not redefine system behavior. It only governs modifications.
+This document governs repository modifications only.
+It does not redefine system behavior.
 
 ---
 
-## Roadmap Reference (v3.0)
+## Before Contributing
 
-To guide contributions for the next evolution of ORP:
+Please review:
 
-- Focus on building a **Python package** with `orp.evaluate()` API.  
-- Improve **scoring logic** with assumption surfacing.  
-- Prepare **example notebooks** for domain-specific adversarial testing.  
-- Optional features: **reasoning graph output**, **modular evaluators**, **plugin system**.  
-- The roadmap is **directional**, not deadline-bound. Contributions accelerate progress.
+- README.md
+- ORP_RUNTIME.md
+- EVALUATION_SCHEMA.md
+- SYSTEM_MAP.md
+- ROADMAP.md
+- !REPO_CHECKLIST.md
 
-> See `ROADMAP.md` for the full prioritized plan and feature tiers (Must-have / Nice-to-have / Ambitious).
+Contributors should understand the separation between:
+- runtime governance
+- structural contracts
+- evaluation logic
+- scoring behavior
+- benchmark stress-testing
+
+before modifying core files.
 
 ---
 
-## Allowed Contribution Types
+## Contribution Areas
 
 ### 1. Epistemic Improvements
-- Improve claim separation clarity  
-- Improve classification consistency  
-- Improve distortion detection precision  
-- Improve reconstruction fidelity  
-
-### 2. Benchmark Expansion
-- New adversarial test cases  
-- Hallucination stress tests  
-- Causal distortion scenarios  
-
-### 3. Infrastructure / Tooling
-- Local execution tooling (Ollama, vLLM, etc.)  
-- Evaluation automation  
-- Reproducibility improvements  
+Examples:
+- improved claim decomposition logic
+- stronger uncertainty isolation
+- provenance preservation enhancements
+- better distortion detection rules
+- recoverability improvements
 
 ---
 
-## Not Allowed
+### 2. Benchmark Expansion
+Examples:
+- adversarial reasoning tests
+- hallucination stress cases
+- causal distortion scenarios
+- provenance corruption tests
+- drift-observability benchmarks
 
-### Structural Violations
-- Merging system layers  
-- Redefining evaluation pipeline structure  
-- Introducing cross-file hidden dependencies  
+---
 
-### Epistemic Regression
-- Weakening uncertainty tracking  
-- Collapsing epistemic categories  
-- Replacing structured evaluation with narrative logic  
+### 3. Infrastructure & Tooling
+Examples:
+- local execution tooling
+- evaluation automation
+- reproducibility improvements
+- future Python package support
+- visualization or traceability tooling
 
-### Behavioral Drift
-- Adding persona behavior rules  
-- Introducing tone/persuasion constraints  
-- Embedding stylistic preferences into evaluation logic  
+---
+
+## Architectural Constraints
+
+Contributions must preserve:
+
+- separation of concerns
+- deterministic pipeline flow
+- schema/runtime compatibility
+- provenance boundaries
+- fail-closed reasoning behavior
+
+No contribution may:
+- merge architecture layer responsibilities
+- introduce hidden cross-file dependencies
+- bypass runtime or schema constraints
+- reinterpret upstream outputs
+- weaken epistemic separation rules
+
+---
+
+## Runtime Alignment Requirement
+
+Changes affecting:
+- reasoning behavior
+- provenance handling
+- uncertainty representation
+- drift semantics
+- evaluation structure
+
+must remain aligned with:
+
+- ORP_RUNTIME.md
+- EVALUATION_SCHEMA.md
+- SYSTEM_MAP.manifest.json
+
+Architecture drift between documents is considered a structural regression.
+
+---
+
+## Pull Request Guidance
+
+### Use the Full PR Template for:
+- runtime changes
+- schema modifications
+- scoring changes
+- benchmark architecture updates
+- evaluation logic changes
+
+Template:
+`.github/PULL_REQUEST_TEMPLATE/orp-pr-full.md`
+
+---
+
+### Use the Trivial PR Template for:
+- typo fixes
+- formatting cleanup
+- documentation clarification
+- non-structural examples
+
+Template:
+`.github/PULL_REQUEST_TEMPLATE/orp-pr-trivial.md`
 
 ---
 
 ## Validation Rule
 
-A contribution is valid only if:
+A contribution is valid only if it:
 
-- It preserves separation of concerns  
-- It does not modify the evaluation architecture  
-- It remains compatible with EVALUATION_SCHEMA.md  
+- preserves architectural consistency
+- maintains epistemic separation
+- avoids provenance corruption
+- remains schema-compatible
+- does not reduce recoverability
 
-If a change improves usability but reduces epistemic precision, it must be rejected.
+Usability improvements must not weaken structural integrity.
+
+---
+
+## Roadmap Note
+
+ORP v3.0 development is exploratory and community-driven.
+
+Current areas of interest include:
+- Python package infrastructure
+- assumption surfacing
+- traceability tooling
+- reasoning graph outputs
+- modular evaluators
+- benchmark generation systems
+
+See ROADMAP.md for directional planning.
 
 ---
 
 ## Design Principle
 
-> Structural correctness is a hard constraint, not a preference.
+> Visible uncertainty is preferable to invisible corruption.
 
-Signal integrity overrides readability or stylistic convenience.
+Signal integrity overrides stylistic convenience.
 
 ---
 
-## Version Alignment
+## Final Note
 
-All contributions must remain compatible with:
+ORP is an epistemic evaluation architecture, not a conversational framework.
 
-ORP v2.0 — Unified Epistemic Evaluation Architecture
+Contributions should improve structural reliability rather than narrative sophistication.
