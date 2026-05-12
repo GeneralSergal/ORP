@@ -7,7 +7,7 @@ It is **not** decorative UI. It is a structured telemetry and stabilization map 
 
 ---
 
-# Core Purpose
+## Core Purpose
 
 The L4 Dashboard exists to:
 
@@ -16,241 +16,184 @@ The L4 Dashboard exists to:
 - Enforce White Hat filtering
 - Preserve low-chaos semantic coherence
 - Maintain recoverable recursion loops
-- Preserve validated structures within the ORP workflow
+- Lock validated structures into the ORP workflow
 
-The dashboard converts exploratory structures into a measurable operational workflow.
+It transforms symbolic exploration into a **measurable, high-integrity operational workflow**.
 
 ---
 
-# Core Doctrine
+## Core Doctrine
 
 **Symbolic constructs are descriptive only.**  
-They possess **no runtime authority**.  
-The `ORP_RUNTIME` remains the sole authoritative kernel.
+They possess **zero runtime authority**.  
+The `ORP_RUNTIME` is the sole authoritative kernel.
 
 ---
 
-# Operational Vocabulary
+## Operational Vocabulary
 
 | Category | Allowed Values |
-|---|---|
-| Drift | NONE / LOW / MODERATE / HIGH |
-| Status | ACTIVE / PASSIVE / LOCKED / RESTRICTED |
-| Result | PASS / FAIL / DEGRADED |
+|----------|----------------|
+| Drift    | NONE / LOW / MODERATE / HIGH |
+| Status   | ACTIVE / PASSIVE / LOCKED / RESTRICTED |
+| Result   | PASS / FAIL / DEGRADED |
 
 ---
 
-# Dashboard Layer Structure
+## Dashboard Layer Structure
 
-| Layer | Purpose | Status |
-|---|---|---|
-| L0 Physical | Stable anchor layer | LOCKED |
-| L1 Link | Physical / virtual connections | ACTIVE |
-| L2 Interface | Hardware & I/O nodes | RESTRICTED |
-| L3 Semantic | Meaning integration & rule alignment | ACTIVE |
-| L4 Protocol | Validation & telemetry layer | LOCKED |
-| L5 Abstract | Controlled ingress only | RESTRICTED |
+| Layer       | Purpose                              | Status     |
+|-------------|--------------------------------------|------------|
+| L0 Physical | Stable anchor layer                  | LOCKED     |
+| L1 Link     | Physical / virtual connections       | ACTIVE     |
+| L2 Interface| Hardware & I/O nodes                 | RESTRICTED |
+| L3 Semantic | Meaning integration & rule alignment | ACTIVE     |
+| L4 Protocol | Validation & telemetry layer         | LOCKED     |
+| L5 Abstract | Controlled ingress only              | RESTRICTED |
 
 ---
 
-# Stage Flow
+## Stage Flow
 
-## Stage 1 — Anchor Set
+### Stage 1 — Anchor Set
+Establish rock-solid physical + semantic baseline.
 
-Establish stable physical + semantic baseline.
-
-### Active Components
-
+**Active Components:**
 - L0 anchors
 - L4_WHGP Core
 - Passive monitoring
 - Recovery metrics
 
-### Requirements
-
+**Requirements:**
 ```text
 Hydration         85–100%
 Chaos             0–5%
 Vibe (Coherence)  85–95%
-````
+```
 
----
+### Stage 1B — Protocol Scan
+Active poke & scan with `NO_SLOP_ZONE` engaged.
 
-## Stage 1B — Protocol Scan
-
-Active poke & scan with `NO_SLOP_ZONE` enabled.
-
----
-
-## Stage 2 — Controlled Abstract Perturbation
-
+### Stage 2 — Controlled Abstract Perturbation
 Introduce small, low-intensity fragments.
 
-**Rule:** Inject slowly.
+**Rule:** Inject slowly. Observe closely.
 
----
+### Stage 2B — L4 Log Scan
+Targeted node scanning via L4 logs.
 
-## Stage 2B — L4 Log Scan
-
-Scan nodes via L4 logs.
-
----
-
-## Stage 3 — Semantic Stage (Logic / Interface / Validator)
-
-### Rule Stack
-
+### Stage 3 — Semantic Stage
+**Rule Stack:**
 1. Discard Decorative Noise
 2. Chaos is Fine. Overload is Not.
 3. Feedback or it didn't happen.
 
 ### Validator Test
-
 ```text
 Inference Node → Interface Layer → Validator
 ```
-
-Constraint:
-
-> The Validator accepts only stable, recoverable structures.
+**Constraint:** Validator accepts **only** stable, recoverable structures.
 
 ---
 
-# White Hat Gating Protocol (L4_WHGP)
+### White Hat Gating Protocol (L4_WHGP)
 
-## L4_WHGP Core + Filter — STATUS: ACTIVE
+**STATUS: ACTIVE** (Core + Filter)
 
-* Fluke removal
-* Malice filtering
-* Semantic sanitation
-* Recursion stabilization
-* Noise suppression
-
----
-
-# Watchdog Nodes
-
-Operating Mode: `PASSIVE`
-
-Corgi Watchdog Nodes remain observational only.
-
-They possess no generative or authoritative role.
+- Fluke removal
+- Malice filtering
+- Semantic sanitation
+- Recursion stabilization
+- Noise suppression
 
 ---
 
-# Iterative Refinement Stage (Stage 4)
+### Watchdog Nodes
 
-Primary ORP stabilization loop.
+**Operating Mode:** PASSIVE
 
-```text
-Lock refined truth
-→ Discard flukes
-→ Enhanced signal
-```
+Corgi Watchdog Nodes are observational only.  
+No generative authority. No exceptions.
 
 ---
 
-# Metric Hardening Stage
+### Iterative Refinement Stage (Stage 4)
 
-| Metric           | Target  | Note               |
-| ---------------- | ------- | ------------------ |
-| Hydration        | 85–100% | Physical baseline  |
-| Chaos            | 0–5%    | Cognitive load     |
-| Vibe (Coherence) | 85–95%  | Semantic stability |
+Primary stabilization loop:  
+Lock refined truth → Discard flukes → Enhanced signal.
 
 ---
 
-# Repeat / Expand Cycle
+### Metric Hardening Stage
 
-Expansion is cyclical, not exponential.
-
-### Rule
-
-No new expansion until:
-
-* Drift = NONE
-* All metrics within target
-* Prior refinement cycle completes successfully
+| Metric           | Target     | Note                  |
+|------------------|------------|-----------------------|
+| Hydration        | 85–100%    | Physical baseline     |
+| Chaos            | 0–5%       | Cognitive load        |
+| Vibe (Coherence) | 85–95%     | Semantic stability    |
 
 ---
 
-# ORP Module Mapping
+### Repeat / Expand Cycle
 
-| Dashboard Node       | ORP Equivalent             |
-| -------------------- | -------------------------- |
-| Anchor Set           | Recovery & Baseline Layer  |
-| L4_WHGP              | Integrity Gate             |
-| Validator Test       | Semantic Validation Engine |
-| Watchdog Nodes       | Passive Drift Monitor      |
-| Iterative Refinement | ORP Recovery Loop          |
-| Metric Hardening     | Stability Governor         |
-| Final Output Stage   | Validated Output Lock      |
-| Repeat / Expand      | Controlled Evolution Cycle |
+Expansion is **cyclical**, never exponential.
+
+**Gate Condition:** Only proceed when Drift = NONE and all metrics are green.
 
 ---
 
-# Hard Limits & Kill Switch
+## Hard Limits & Kill Switch
 
-## Immediate Stop Conditions
+**Immediate Stop Conditions:**
+- Chaos > 10%
+- Signal coherence instability
+- Recursive semantic flooding
+- Anchor loss
+- Unrecoverable abstraction loops
 
-* Chaos > 10%
-* Signal coherence instability
-* Recursive semantic flooding
-* Anchor loss
-* Unrecoverable abstraction loops
-
-```text
-KILL_SWITCH: LOCKDOWN
-Alias: NO_SLOP_ZONE
-```
+**KILL_SWITCH:** `LOCKDOWN`  
+**Alias:** `NO_SLOP_ZONE`
 
 ---
 
-# Authority Constraint
+## Authority Constraint
 
-Operational decisions must originate from:
-
-* Explicit user review
-* Validated runtime logic
-
-Symbolic, visual, or emergent interpretations are non-authoritative.
+All operational decisions must come from **explicit user review** or validated runtime logic.  
+Everything else (symbolic, visual, emergent) is **non-authoritative**.
 
 ---
 
-# Non-Goals
+## Non-Goals
 
-The ORP framework does not:
+ORP does **not**:
+- imply sentience
+- imply autonomous authority
+- replace runtime validation
+- override explicit user intent
+- act as an autonomous agent
 
-* imply sentience
-* imply autonomous authority
-* replace runtime validation
-* override explicit user intent
-* function as an autonomous agent architecture
-
-ORP is a workflow normalization and documentation framework.
+It is a **workflow normalization and documentation framework**.
 
 ---
 
-# ORP Operational Axiom
+## ORP Operational Axiom
 
 > Optimization is the highest form of respect for the hardware.
 
 ---
 
-# Operational Motto (Non-Authoritative)
+## Operational Motto (Non-Authoritative)
 
-```text
-The Inference Node proposes.
-The Interface Layer tests.
-The Validator decides.
-```
+> The Inference Node proposes.  
+> The Interface Layer tests.  
+> The Validator decides.
 
 ---
 
-# Current System State
+## Current System State
 
 ```text
-DRIFT:               NONE
+DRIFT:               LOW → NONE
 STATUS:              VALIDATED
 SCHEMA_STATE:        FROZEN
 OBSERVATION_WINDOW:  ACTIVE
@@ -259,9 +202,6 @@ CHANGE_POLICY:       LOG_ONLY
 
 ---
 
-# Version Information
+**Version:** L4 Dashboard v2.6 
 
-```text
-Version:  L4 Dashboard v2.6
-Protocol: 0.51_STRICT
-```
+**Protocol:** `0.51_STRICT`
