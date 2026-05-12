@@ -1,8 +1,8 @@
 # ORP v2.6 — L4 Dashboard Integration
 
-![L4 Dashboard v2.6](../assets/L4_Dashboard_v2.6.png)
+![L4 Dashboard v2.6](./L4_Dashboard_v2.6.png)
 
-**L4_Dashboard_v2.6.png** is the operational visualization layer for the ORP v2.6 refinement pipeline.  
+**L4.Dashboard v2.6.png** is the operational visualization layer for the ORP v2.6 refinement pipeline.  
 It is **not** decorative UI. It is a structured telemetry and stabilization map for controlled semantic expansion under `0.51_STRICT`.
 
 ---
@@ -183,6 +183,3 @@ STATUS: READY_FOR_EMBEDDING
 **Version:** L4 Dashboard v2.6  
 **Protocol:** 0.51_STRICT
 ```
-
----
-
