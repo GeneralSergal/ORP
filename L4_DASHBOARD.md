@@ -2,7 +2,7 @@
 
 ![L4 Dashboard v2.6](./L4_Dashboard_v2.6.png)
 
-**L4_Dashboard_v2.6.png** is the operational visualization layer for the ORP v2.6 refinement pipeline.  
+**L4_Dashboard_v2.6.png** is the operational visualization layer for the ORP v2.6 refinement pipeline.
 It is **not** decorative UI. It is a structured telemetry and stabilization map for controlled semantic expansion under `0.51_STRICT`.
 
 ---
@@ -10,12 +10,13 @@ It is **not** decorative UI. It is a structured telemetry and stabilization map 
 ## Core Purpose
 
 The L4 Dashboard exists to:
-- Stabilize controlled expansion
-- Reduce drift during abstract probing
-- Enforce White Hat filtering
-- Preserve low-chaos semantic coherence
-- Maintain recoverable recursion loops
-- Hard-lock refined structures into ORP memory
+
+* Stabilize controlled expansion
+* Reduce drift during abstract probing
+* Enforce White Hat filtering
+* Preserve low-chaos semantic coherence
+* Maintain recoverable recursion loops
+* Preserve validated structures within the ORP workflow
 
 The dashboard converts symbolic exploration into a measurable operational workflow.
 
@@ -23,32 +24,32 @@ The dashboard converts symbolic exploration into a measurable operational workfl
 
 ## Core Doctrine
 
-**Symbolic constructs are descriptive only.**  
-They possess **no runtime authority**.  
+**Symbolic constructs are descriptive only.**
+They possess **no runtime authority**.
 The `ORP_RUNTIME` remains the sole authoritative kernel.
 
 ---
 
 ## Operational Vocabulary
 
-| Category | Allowed Values |
-|----------|----------------|
-| Drift    | NONE / LOW / MODERATE / HIGH |
+| Category | Allowed Values                         |
+| -------- | -------------------------------------- |
+| Drift    | NONE / LOW / MODERATE / HIGH           |
 | Status   | ACTIVE / PASSIVE / LOCKED / RESTRICTED |
-| Result   | PASS / FAIL / DEGRADED |
+| Result   | PASS / FAIL / DEGRADED                 |
 
 ---
 
 ## Dashboard Layer Structure
 
-| Layer        | Purpose                              | Status      |
-|--------------|--------------------------------------|-------------|
-| L0 Physical  | Stable anchor layer                  | Read-only   |
-| L1 Link      | Physical / virtual connections       | Stable      |
-| L2 Interface | Hardware & I/O nodes                 | Filtered    |
-| L3 Semantic  | Meaning integration & rule alignment | Active      |
-| L4 Protocol  | Controlled poke & telemetry layer    | Locked      |
-| L5 Abstract  | Controlled ingress only              | Restricted  |
+| Layer        | Purpose                              | Status     |
+| ------------ | ------------------------------------ | ---------- |
+| L0 Physical  | Stable anchor layer                  | LOCKED     |
+| L1 Link      | Physical / virtual connections       | ACTIVE     |
+| L2 Interface | Hardware & I/O nodes                 | RESTRICTED |
+| L3 Semantic  | Meaning integration & rule alignment | ACTIVE     |
+| L4 Protocol  | Controlled poke & telemetry layer    | LOCKED     |
+| L5 Abstract  | Controlled ingress only              | RESTRICTED |
 
 ---
 
@@ -59,10 +60,11 @@ The `ORP_RUNTIME` remains the sole authoritative kernel.
 Establish stable physical + semantic baseline.
 
 **Active Components:**
-- L0 anchors
-- White Hat filter
-- Passive monitoring
-- Recovery metrics
+
+* L0 anchors
+* White Hat filter
+* Passive monitoring
+* Recovery metrics
 
 **Requirements:**
 
@@ -70,7 +72,7 @@ Establish stable physical + semantic baseline.
 Hydration         >= 85%
 Chaos             <= 5%
 Signal Coherence  >= 85%
-````
+```
 
 ---
 
@@ -152,7 +154,7 @@ Expansion is cyclical, not exponential.
 **Rule:** No new expansion until:
 
 * drift = NONE
-* coherence remains stable
+* signal coherence remains within target thresholds
 * prior refinement cycle completes successfully
 
 ---
@@ -167,7 +169,7 @@ Expansion is cyclical, not exponential.
 | Watchdogs            | Passive Drift Monitor      |
 | Iterative Refinement | ORP Recovery Loop          |
 | Metric Hardening     | Stability Governor         |
-| Final Output Stage   | Refined Truth Lock         |
+| Final Output Stage   | Validated Output Lock      |
 | Repeat / Expand      | Controlled Evolution Cycle |
 
 ---
@@ -202,13 +204,21 @@ Expansion is cyclical, not exponential.
 
 ---
 
+## Authority Constraint
+
+Operational decisions must originate from explicit user review or validated runtime logic.
+
+Symbolic, visual, or emergent interpretations are non-authoritative.
+
+---
+
 ## ORP Operational Axiom
 
 > Optimization is the highest form of respect for the hardware.
 
 ---
 
-## Philosophy / Flavor (Non-Operational)
+## Operational Motto (Non-Authoritative)
 
 > The Spark proposes.
 > The Cable tests.
@@ -219,7 +229,7 @@ Expansion is cyclical, not exponential.
 ## Current System State
 
 ```text
-DRIFT: LOW
+DRIFT: NONE
 STATUS: VALIDATED
 SCHEMA_STATE: FROZEN
 ```
@@ -231,4 +241,3 @@ SCHEMA_STATE: FROZEN
 
 **Version:** L4 Dashboard v2.6
 **Protocol:** 0.51_STRICT
-
