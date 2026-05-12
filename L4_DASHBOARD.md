@@ -202,6 +202,5 @@ CHANGE_POLICY:       LOG_ONLY
 
 ---
 
-**Version:** L4 Dashboard v2.6 
-
+**Version:** L4 Dashboard v2.6  
 **Protocol:** `0.51_STRICT`
