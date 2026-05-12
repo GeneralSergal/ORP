@@ -21,22 +21,41 @@ The dashboard converts symbolic exploration into a measurable operational workfl
 
 ---
 
+## Core Doctrine
+
+**Symbolic constructs are descriptive only.**  
+They possess **no runtime authority**.  
+The `ORP_RUNTIME` remains the sole authoritative kernel.
+
+---
+
+## Operational Vocabulary
+
+| Category | Allowed Values |
+|----------|----------------|
+| Drift    | NONE / LOW / MODERATE / HIGH |
+| Status   | ACTIVE / PASSIVE / LOCKED / RESTRICTED |
+| Result   | PASS / FAIL / DEGRADED |
+
+---
+
 ## Dashboard Layer Structure
 
-| Layer        | Purpose                              | Status     |
-|--------------|--------------------------------------|------------|
-| L0 Physical  | Stable anchor layer                  | Read-only  |
-| L1 Link      | Physical / virtual connections       | Stable     |
-| L2 Interface | Hardware & I/O nodes                 | Filtered   |
-| L3 Semantic  | Meaning integration & rule alignment | Active     |
-| L4 Protocol  | Controlled poke & telemetry layer    | Locked     |
-| L5 Abstract  | Controlled ingress only              | Restricted |
+| Layer        | Purpose                              | Status      |
+|--------------|--------------------------------------|-------------|
+| L0 Physical  | Stable anchor layer                  | Read-only   |
+| L1 Link      | Physical / virtual connections       | Stable      |
+| L2 Interface | Hardware & I/O nodes                 | Filtered    |
+| L3 Semantic  | Meaning integration & rule alignment | Active      |
+| L4 Protocol  | Controlled poke & telemetry layer    | Locked      |
+| L5 Abstract  | Controlled ingress only              | Restricted  |
 
 ---
 
 ## Stage Flow
 
 ### Stage 1 — Anchor Set
+
 Establish stable physical + semantic baseline.
 
 **Active Components:**
@@ -46,13 +65,17 @@ Establish stable physical + semantic baseline.
 - Recovery metrics
 
 **Requirements:**
+
 ```text
-Hydration >= 85%
-Chaos     <= 5%
-Vibe      >= 140%
-```
+Hydration         >= 85%
+Chaos             <= 5%
+Signal Coherence  >= 85%
+````
+
+---
 
 ### Stage 2 — Controlled Abstract Perturbation
+
 Introduce small, low-intensity fragments.
 
 **Rule:** Inject slowly.
@@ -62,13 +85,15 @@ Introduce small, low-intensity fragments.
 ### L3 Semantic Stage
 
 **Rule Stack:**
-1. **Discard Decorative Noise**
-2. **Chaos is Fine. Overload is Not.**
-3. **Feedback or it didn't happen.**
+
+1. Discard Decorative Noise
+2. Chaos is Fine. Overload is Not.
+3. Feedback or it didn't happen.
 
 ---
 
 ### Weaver Test
+
 Core recursion validation path.
 
 ```text
@@ -80,55 +105,70 @@ Spark → Cable → Weaver
 ---
 
 ### White Hat Gating Protocol (L4_WHGP)
-**PERMANENTLY ENABLED**
 
-Responsibilities: fluke removal, malice filtering, semantic sanitation, recursion stabilization, noise suppression.
+**STATUS:** ACTIVE
+
+Responsibilities:
+
+* fluke removal
+* malice filtering
+* semantic sanitation
+* recursion stabilization
+* noise suppression
 
 ---
 
 ### Watchdog Nodes
-**Operating Mode:** PASSIVE / PROTECTIVE
 
-Never dominant over the semantic layer.
+**Operating Mode:** PASSIVE
+
+Watchdogs remain observational only.
+They possess no generative or authoritative role.
 
 ---
 
 ### Metric Hardening Stage
 
-| Metric    | Target      |
-|-----------|-------------|
-| Hydration | 85–100%     |
-| Chaos     | 0–5%        |
-| Vibe      | 140–150%    |
+| Metric           | Target  | Note               |
+| ---------------- | ------- | ------------------ |
+| Hydration        | 85–100% | Physical baseline  |
+| Chaos            | 0–5%    | Cognitive load     |
+| Signal Coherence | 85–95%  | Semantic stability |
 
 ---
 
 ### Iterative Refinement Stage
+
 Primary ORP stabilization loop.
 
-**Result:** ENSHRINED SIGNAL
+**RESULT:** Stable signal refinement and recoverable output generation.
 
 ---
 
 ### Repeat / Expand Cycle
+
 Expansion is cyclical, not exponential.
 
-**Rule:** No new expansion until drift = 0, coherence stable, and Stage 5 completes successfully.
+**Rule:** No new expansion until:
+
+* drift = NONE
+* coherence remains stable
+* prior refinement cycle completes successfully
 
 ---
 
 ## ORP Module Mapping
 
-| Dashboard Node       | ORP Equivalent              |
-|----------------------|-----------------------------|
-| Anchor Set           | Recovery & Baseline Layer   |
-| L4_WHGP              | Integrity Gate              |
-| Weaver Test          | Semantic Validation Engine  |
-| Watchdogs            | Passive Drift Monitor       |
-| Iterative Refinement | ORP Recovery Loop           |
-| Metric Hardening     | Stability Governor          |
-| Final Output Stage   | Refined Truth Lock          |
-| Repeat / Expand      | Controlled Evolution Cycle  |
+| Dashboard Node       | ORP Equivalent             |
+| -------------------- | -------------------------- |
+| Anchor Set           | Recovery & Baseline Layer  |
+| L4_WHGP              | Integrity Gate             |
+| Weaver Test          | Semantic Validation Engine |
+| Watchdogs            | Passive Drift Monitor      |
+| Iterative Refinement | ORP Recovery Loop          |
+| Metric Hardening     | Stability Governor         |
+| Final Output Stage   | Refined Truth Lock         |
+| Repeat / Expand      | Controlled Evolution Cycle |
 
 ---
 
@@ -150,13 +190,15 @@ Expansion is cyclical, not exponential.
 ## Hard Limits & Kill Switch
 
 **Immediate Stop Conditions:**
-- Chaos > 110%
-- Vibe instability
-- Recursive semantic flooding
-- Anchor loss
-- Unrecoverable abstraction loops
 
-**Kill Switch:** `NO_SLOP_ZONE LOCKDOWN`
+* Chaos > 110%
+* Signal coherence instability
+* Recursive semantic flooding
+* Anchor loss
+* Unrecoverable abstraction loops
+
+**KILL_SWITCH:** `LOCKDOWN`
+**Alias:** `NO_SLOP_ZONE`
 
 ---
 
@@ -164,10 +206,12 @@ Expansion is cyclical, not exponential.
 
 > Optimization is the highest form of respect for the hardware.
 
-## Refined Truth
+---
 
-> The Spark proposes.  
-> The Cable tests.  
+## Philosophy / Flavor (Non-Operational)
+
+> The Spark proposes.
+> The Cable tests.
 > The Weaver decides.
 
 ---
@@ -175,11 +219,16 @@ Expansion is cyclical, not exponential.
 ## Current System State
 
 ```text
-DRIFT: MINIMAL
-COHERENCE: LOCKED
-STATUS: READY_FOR_EMBEDDING
+DRIFT: LOW
+STATUS: VALIDATED
+SCHEMA_STATE: FROZEN
 ```
 
-**Version:** L4 Dashboard v2.6  
+**OBSERVATION_WINDOW:** ACTIVE
+**CHANGE_POLICY:** LOG_ONLY
+
+---
+
+**Version:** L4 Dashboard v2.6
 **Protocol:** 0.51_STRICT
-```
+
