@@ -165,3 +165,27 @@ The protocol exists to:
 - and maintain recoverable reasoning states under context degradation.
 
 Visible uncertainty is preferred over invisible corruption.
+
+
+## OPTIONAL OPERATIONAL EXTENSION — L4 DASHBOARD
+
+ORP v2.6 may optionally utilize the **L4 Dashboard** as an operational visualization and telemetry layer for:
+
+- Drift visualization
+- Recovery-state monitoring  
+- Semantic stabilization
+- Controlled expansion governance
+- White Hat filtering feedback
+
+**The L4 Dashboard is an aid only.**
+
+It MUST NOT:
+- Override L1/L2 provenance
+- Replace runtime invariants
+- Introduce symbolic authority
+- Weaken SHS/CRA/LAS enforcement
+- Bypass core execution law
+
+The ORP_RUNTIME remains the sole authoritative kernel.
+
+**Reference:** [L4_DASHBOARD.md](./L4_DASHBOARD.md)
