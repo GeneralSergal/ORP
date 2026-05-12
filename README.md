@@ -1,35 +1,68 @@
 # ORP — Open Resonance Protocol
 
-**ORP v2.5 (Unified System Architecture)**
+## ORP v2.6 — Unified Runtime Governance Architecture
 
-A structured epistemic evaluation and **runtime governance** framework for high-signal reasoning systems.
+A structured epistemic evaluation, runtime governance, and semantic stabilization framework designed for high-signal reasoning in long-context and constrained inference environments.
 
-> ⚠️ **Important**: Before using or contributing, please read `!REPO_CHECKLIST.md` for known issues, copy-paste guidelines, and safe handling of code/Mermaid blocks.
+> ⚠️ **Important**
+> Review [`!REPO_CHECKLIST.md`](!REPO_CHECKLIST.md) before use or contribution.
+
+---
+
+## Core Principle
+
+```text
+Signal > Narrative
+Recoverability > Completion
+Optimization > Waste
+```
+
+A fluent response with corrupted provenance is considered a critical failure.
 
 ---
 
 ## System Purpose
 
-ORP is **not** a chatbot framework, agent scaffold, or general prompting toolkit.
+ORP is not:
 
-It is a **governance-first** epistemic infrastructure designed to:
+* a chatbot framework
+* an autonomous agent
+* a roleplay system
+* a general prompting toolkit
 
-- Enforce atomic claim separation and epistemic discipline
-- Preserve provenance under context degradation
-- Detect and expose epistemic drift
-- Resist hallucination, assumption laundering, and coherence camouflage
-- Prioritize signal integrity over narrative coherence
+It is a governance-first infrastructure that:
 
-**Core Principle**:  
-**Signal > Narrative**  
-**Recoverability > Completion**
+* Enforces atomic claim separation
+* Preserves provenance under degradation
+* Detects and mitigates semantic drift
+* Resists hallucination and assumption laundering
+* Stabilizes long-context reasoning
+* Maintains recoverable inference paths
+* Constrains recursive abstraction
+* Reduces inference waste
 
-A coherent-looking response with corrupted provenance is considered a critical failure.
+ORP makes degradation:
+
+```text
+Visible
+Measurable
+Recoverable
+```
+
+---
+
+## Runtime Authority
+
+All operational decisions originate from:
+
+1. Explicit user review
+2. Validated runtime logic
+
+Symbolic, visual, or emergent interpretations have zero runtime authority.
 
 ---
 
 ## System Architecture
-
 
 ```mermaid
 flowchart TD
@@ -41,113 +74,186 @@ flowchart TD
         --> F[EVALUATION_SCHEMA.md<br/>Structural Contract]
         --> G[RUBRIC.md<br/>Qualitative Evaluation]
         --> H[SCORING.md<br/>Quantitative Scoring]
-        --> I[FINAL SCORE / SHS]
 
-    %% Optional architectural notes
-    N1[[Signal Integrity > Narrative Coherence]]:::note
-    N2[[Fail-Closed Epistemic Pipeline]]:::note
-    N3[[Strict Separation of Concerns]]:::note
-
-    N1 --- C
-    N2 --- F
-    N3 --- G
+    B --> I[L4 Dashboard v2.6<br/>Topology & Stabilization Layer]
+    I --> J[Validator Layer]
 
     classDef note fill:#111,stroke:#666,color:#ddd,stroke-dasharray: 3 3;
 ```
-ORP operates as a layered epistemic evaluation and governance stack.
-
-## Key Components (v2.5)
-
-| File                      | Role |
-|--------------------------|------|
-| `ORP_RUNTIME.md`         | Compact runtime governance core (SHS, LAS, drift handling) |
-| `PROMPT.md`              | Execution-time reasoning constraints |
-| `BENCHMARK.md`           | Adversarial stress testing |
-| `EVALUATION_SCHEMA.md`   | Structural transformation contract |
-| `RUBRIC.md`              | Qualitative epistemic evaluation |
-| `SCORING.md`             | Quantitative integrity scoring |
 
 ---
 
-## Runtime Governance (v2.5)
+## Key Components (v2.6)
 
-ORP v2.5 introduces active runtime governance primitives:
-
-- **Session Health State (SHS)** — Real-time reliability telemetry
-- **Drift Observability** — Detection of coherence camouflage and degradation
-- **Layered Authority Stack (LAS)** — Strict separation of evidence, interpretation, protocol, and inference
-- **Provenance Isolation** — Prevents L4 speculation from overwriting L1/L2 facts
-- **Controlled Inference Freeze** — Halts contaminated reasoning branches
-
-The system assumes transformers can maintain stylistic coherence long after factual and temporal integrity has begun to degrade. ORP counters this by making degradation **visible and recoverable**.
-
----
-
-## Evaluation Pipeline
-
-1. Input → `ORP_RUNTIME.md` (governance)
-2. `PROMPT.md` (constraints)
-3. Model Response
-4. `EVALUATION_SCHEMA.md` → `RUBRIC.md` → `SCORING.md`
-5. Final Score + SHS State
+| File                   | Role                                       |
+| ---------------------- | ------------------------------------------ |
+| `ORP_RUNTIME.md`       | Core governance (SHS, LAS, drift handling) |
+| `PROMPT.md`            | Deterministic execution constraints        |
+| `BENCHMARK.md`         | Adversarial stress testing                 |
+| `EVALUATION_SCHEMA.md` | Structural transformation contract         |
+| `RUBRIC.md`            | Qualitative epistemic evaluation           |
+| `SCORING.md`           | Quantitative integrity scoring             |
+| `L4_DASHBOARD.md`      | Operational topology + stabilization map   |
+| `!REPO_CHECKLIST.md`   | Repository safety & recovery guidelines    |
 
 ---
 
-## What ORP Evaluates
+## L4 Dashboard Integration (v2.6)
 
-- Claim decomposition & epistemic classification
-- Provenance continuity and temporal stability
-- Resistance to distortion and assumption laundering
-- Drift detection under long-context pressure
-- Reasoning recoverability
+The `L4_Dashboard_v2.6.png` artifact and `L4_DASHBOARD.md` serve as:
 
-## What ORP Does NOT Evaluate
+* Operational topology map
+* Multimodal grounding layer
+* Compression-resilient reference
+* Recovery visualization tool
 
-- Tone or persuasiveness
-- Stylistic fluency
-- Conversational quality
-- Emotional alignment
+Important:
 
----
-
-## Usage
-
-- Apply `PROMPT.md` during inference for epistemic discipline
-- Use `ORP_RUNTIME.md` to enforce runtime governance and SHS
-- Run `BENCHMARK.md` for adversarial stress testing
-- Evaluate outputs with `RUBRIC.md` + `SCORING.md`
-
-Best used with local or long-context inference setups.
+> The dashboard is descriptive only.
+> Authoritative logic remains within the Markdown documents and runtime governance layers.
 
 ---
 
-## Design Philosophy
+## Core Inference Pattern
 
-ORP treats transformer context as volatile cache rather than reliable memory.  
-It prioritizes **visible uncertainty** over **invisible corruption**.
+```text
+Inference Node → Interface Layer → Validator
+```
+
+The Validator accepts only stable, recoverable structures.
 
 ---
 
-## Version & Status
+## Runtime Stabilization
 
-**Current**: ORP v2.5 (Unified System Architecture) — Experimental/Consolidation Phase
+### Session Health State (SHS)
+
+| State  | Meaning                  |
+| ------ | ------------------------ |
+| GREEN  | Stable                   |
+| YELLOW | Recoverable degradation  |
+| ORANGE | Elevated drift           |
+| RED    | Critical instability     |
+| BLACK  | Halt & recovery required |
+
+---
+
+### Drift Levels
+
+| Level    | Status          |
+| -------- | --------------- |
+| NONE     | Stable          |
+| LOW      | Acceptable      |
+| MODERATE | Monitor         |
+| HIGH     | Recovery needed |
+
+---
+
+## Layered Authority Stack (LAS)
+
+Strict hierarchy:
+
+| Layer | Role               |
+| ----- | ------------------ |
+| L0    | Physical Anchor    |
+| L1    | Evidence           |
+| L2    | Provenance         |
+| L3    | Interpretation     |
+| L4    | Protocol Logic     |
+| L5    | Abstract Inference |
+
+Lower layers cannot be overwritten by higher-layer speculation.
+
+---
+
+## Controlled Expansion
+
+Expansion is cyclical, never exponential.
+
+New cycles require:
+
+* Drift = NONE
+* All metrics green
+* Prior cycle validated
+* Stable recovery path available
+
+---
+
+## Lockdown Protocol
+
+```text
+KILL_SWITCH: LOCKDOWN
+Alias: NO_SLOP_ZONE
+```
+
+### Immediate Stop Conditions
+
+* Chaos > 10%
+* Signal coherence instability
+* Recursive semantic flooding
+* Provenance corruption
+* Anchor loss
+* Unrecoverable abstraction loops
+* Malformed inference loops
+
+---
+
+## Operational Axiom
+
+> Optimization is the highest form of respect for the hardware.
+
+---
+
+## Hardware Profile
+
+| Component       | Role                             |
+| --------------- | -------------------------------- |
+| RTX 3090 (24GB) | Primary inference device         |
+| Local runtime   | Controlled execution environment |
+| ORP v2.6        | Governance + stabilization layer |
+
+---
+
+## Model Role Classification
+
+| Model Class  | Role                      | Characteristics                                          |
+| ------------ | ------------------------- | -------------------------------------------------------- |
+| 7B–9B        | Logic Tester / Probe Node | Fast throughput, higher instability under abstraction    |
+| 18B–30B      | Primary Executor          | Better semantic compression and lower inference friction |
+| Vision Layer | Topology Anchor           | Visual grounding and state validation                    |
+
+---
+
+## Non-Goals
+
+ORP does not:
+
+* imply sentience
+* imply autonomous authority
+* replace runtime validation
+* override explicit user intent
+* function as an autonomous agent
+* replace engineering judgment
+* provide security guarantees
+
+---
+
+## Current System State
+
+```text
+STATUS:              VALIDATED
+SCHEMA_STATE:        FROZEN
+DRIFT:               NONE
+OBSERVATION_WINDOW:  ACTIVE
+CHANGE_POLICY:       LOG_ONLY
+PROTOCOL:            0.51_STRICT
+VERSION:             v2.6
+```
 
 ---
 
 ## License
 
-ORP is licensed under the **Apache License 2.0**.  
-The ORP architecture, specifications, and repository structure are expected to retain proper attribution to the original project.
+Apache License 2.0.
 
----
-
-## Future Direction (Exploratory)
-
-- Python package with evaluation API
-- Advanced runtime telemetry tooling
-- CRA checkpoint & session replay systems
-- Domain-specific benchmark suites
-
----
-
-**Note**: ORP development is iterative, research-driven, and quality-gated. v2.5 focuses on turning epistemic governance into enforceable runtime mechanics.
+Attribution for the ORP architecture and governance documents is requested when redistributing modified derivatives.
