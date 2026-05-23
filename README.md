@@ -254,6 +254,6 @@ VERSION:             v2.6
 
 ## License
 
-Apache License 2.0.
+GPL3
 
 Attribution for the ORP architecture and governance documents is requested when redistributing modified derivatives.
