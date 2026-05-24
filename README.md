@@ -254,6 +254,10 @@ VERSION:             v2.6
 
 ## License
 
-GPL3
+GNU General Public License v3.0 (GPL-3.0)
+
+This project is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
+
+This project is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the [GNU General Public License](LICENSE) for more details.
 
 Attribution for the ORP architecture and governance documents is requested when redistributing modified derivatives.
