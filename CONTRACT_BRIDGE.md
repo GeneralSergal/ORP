@@ -8,8 +8,8 @@
 
 This document defines the strict boundary between:
 
-- ORP Spec Repository (`orp`)
-- ORP Execution Repository (`ORP-Reference-kit`)
+- ORP Spec Repository ([`ORP`](https://github.com/GeneralSergal/ORP))
+- ORP Execution Repository ([`ORP-Reference-kit`](https://github.com/GeneralSergal/ORP-Reference-kit))
 - ORP VRChat OSC Runtime ([`ORP-VRC-OSC`](https://github.com/GeneralSergal/ORP-VRC-OSC))
 
 It prevents implicit coupling between:
@@ -22,7 +22,7 @@ It prevents implicit coupling between:
 
 ## 2. LAYER OWNERSHIP MODEL
 
-### L3 — SPECIFICATION (orp repo)
+### L3 — SPECIFICATION ([`ORP`](https://github.com/GeneralSergal/ORP))
 - Defines system invariants
 - Defines governance semantics
 - Defines conceptual architecture
@@ -31,7 +31,7 @@ It prevents implicit coupling between:
 
 ---
 
-### L2 — EXECUTION (ORP-Reference-kit repo)
+### L2 — EXECUTION ([`ORP-Reference-kit`](https://github.com/GeneralSergal/ORP-Reference-kit))
 - Implements deterministic runtime behavior
 - Owns execution logic
 - Owns CTS harness implementation
@@ -57,7 +57,7 @@ It prevents implicit coupling between:
 
 The CTS (Compliance Test Suite):
 
-- is defined in ORP-Reference-kit ONLY
+- is defined in [`ORP-Reference-kit`](https://github.com/GeneralSergal/ORP-Reference-kit) ONLY
 - is NOT a spec authority
 - is a validation tool, not a truth source
 
@@ -73,11 +73,11 @@ NOT spec invalidity.
 
 Any change MUST follow:
 
-1. Spec change (orp repo)
+1. Spec change ([`ORP`](https://github.com/GeneralSergal/ORP))
    ↓
 2. Manual review / translation step
    ↓
-3. Implementation update (reference-kit)
+3. Implementation update ([`ORP-Reference-kit`](https://github.com/GeneralSergal/ORP-Reference-kit))
    ↓
 4. CTS update ONLY if behavior contract changes
    ↓
@@ -112,9 +112,9 @@ Resolution must explicitly declare which category applies.
 
 ## 7. VERSIONING RULE
 
-- ORP Spec versioning is independent of reference-kit versioning
-- ORP-Reference-kit may lag spec by one major version
-- CTS version must match reference-kit version exactly
+- [`ORP`](https://github.com/GeneralSergal/ORP) spec versioning is independent of reference-kit versioning
+- [`ORP-Reference-kit`](https://github.com/GeneralSergal/ORP-Reference-kit) may lag spec by one major version
+- CTS version must match [`ORP-Reference-kit`](https://github.com/GeneralSergal/ORP-Reference-kit) version exactly
 
 ---
 
