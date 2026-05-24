@@ -1,7 +1,6 @@
 # ORP Cross-Repository Contract Bridge
 
-## Version
-ORP Bridge Contract v1.0
+## Version ORP Bridge Contract v1.0
 
 ---
 
@@ -11,11 +10,13 @@ This document defines the strict boundary between:
 
 - ORP Spec Repository (`orp`)
 - ORP Execution Repository (`ORP-Reference-kit`)
+- ORP VRChat OSC Runtime ([`ORP-VRC-OSC`](https://github.com/GeneralSergal/ORP-VRC-OSC))
 
 It prevents implicit coupling between:
 - governance specification
 - runtime implementation
 - CTS validation expectations
+- live deployment behavior
 
 ---
 
@@ -38,7 +39,13 @@ It prevents implicit coupling between:
 
 ---
 
-### L1 — RUNTIME OUTPUT
+### L1 — RUNTIME ([`ORP-VRC-OSC`](https://github.com/GeneralSergal/ORP-VRC-OSC))
+- Live deployment of ORP governance in VRChat via OSC
+- Consumes L2 reference implementation as its execution contract
+- Produces observed execution traces and session telemetry
+- MUST NOT redefine spec invariants or CTS expectations
+
+#### L1 Runtime Output
 - Observed execution traces
 - Golden runs
 - Regression artifacts
@@ -121,3 +128,14 @@ Authority is partitioned:
 - Implementation defines behavior
 - CTS verifies consistency between them
 - Runtime defines observed truth
+
+---
+
+## License
+
+GNU General Public License v3.0 (GPL-3.0)
+
+Copyright 2026 Laurentius Maximus ENTROPIA
+
+This file is part of ORP — Open Resonance Protocol, licensed under the GNU General Public License v3.0.
+See the [LICENSE](LICENSE) file for full terms.
