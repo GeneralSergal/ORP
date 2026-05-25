@@ -75,7 +75,8 @@ Runtime governance and execution enforcement layer (L3 Authority Kernel).
 **Responsibilities**:
 - Mandatory runtime headers
 - SHS state management
-- Numeric drift detection (σ² model)
+- Numeric drift detection (σ
+² model)
 - Provenance preservation
 - Coherence camouflage detection
 - Runtime failure handling
