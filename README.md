@@ -29,11 +29,21 @@ No preamble may precede the header.
 
 ---
 
-## System Architecture (v3.0)
+# System Architecture (v3.0)
 
-L1 → L2 → L3 → SYSTEM OUTPUT  
-              ↓  
-              L4 (Internal Inference Subsystem)
+## Core Authority Chain (L1 → L2 → L3)
+
+```mermaid
+flowchart TD
+    IN[INPUT]
+
+    L1[L1: Observed Data<br/>Typed Signals Only]
+    L2[L2: Verified Interpretation<br/>Deterministic Validation]
+    L3[L3: Governance Core<br/>State Authority]
+    OUT[OUTPUT]
+
+    IN --> L1 --> L2 --> L3 --> OUT
+```
 
 ### Layer Definitions
 
@@ -53,7 +63,24 @@ Cannot modify L3. Cannot access raw L1.
 
 ---
 
-## Invariants
+## L4 Non‑Authoritative Side‑Channel
+
+```mermaid
+flowchart TD
+    L3[L3: Governance Core]
+    L4[L4: Internal Inference<br/>Non‑Authoritative]
+    OUT[System Output]
+
+    L3 --> OUT
+    L4 --> OUT
+
+    L4 -. cannot modify .-> L3
+    L4 -. no access .-> L1[L1: Observed Data]
+```
+
+---
+
+# Invariants
 
 - L1 accepts only typed signals: Float ∈ [0.0,1.0], bounded Integer, Boolean  
 - L1 states are immutable once committed  
@@ -66,7 +93,7 @@ Cannot modify L3. Cannot access raw L1.
 
 ---
 
-## Drift Model (Numeric Core)
+# Drift Model (Numeric Core)
 
 σ² = variance(L1_signal_vector over time)
 
@@ -83,17 +110,24 @@ Supporting signals:
 
 ---
 
-## Execution Pipeline
+# Execution Pipeline
 
-1. L1 — Typed signal ingestion  
-2. L2 — Verification and validation  
-3. L3 — Governance enforcement  
-4. L4 — Internal inference (non‑authoritative)  
-5. System output assembly  
+```mermaid
+flowchart TD
+    A[INPUT]
+    B[L1 Typed Signals]
+    C[L2 Validation]
+    D[L3 Governance]
+    E[L4 Inference]
+    F[OUTPUT]
+
+    A --> B --> C --> D --> F
+    D --> E --> F
+```
 
 ---
 
-## Failure Conditions
+# Failure Conditions
 
 - L4 influencing L3  
 - Untyped L1 data  
@@ -103,7 +137,7 @@ Supporting signals:
 
 ---
 
-## Failure Response Protocol
+# Failure Response Protocol
 
 1. Downgrade SHS  
 2. Freeze L1 stream  
@@ -113,7 +147,7 @@ Supporting signals:
 
 ---
 
-## Controlled Expansion
+# Controlled Expansion
 
 Expansion is cyclical.  
 Requirements:
@@ -125,7 +159,7 @@ Requirements:
 
 ---
 
-## Repository Structure (v3.0)
+# Repository Structure (v3.0)
 
 ```
 /README.md
@@ -172,7 +206,7 @@ Requirements:
 
 ---
 
-## Compliance Requirements
+# Compliance Requirements
 
 A runtime is ORP v3.0‑compliant only if:
 
@@ -186,7 +220,7 @@ A runtime is ORP v3.0‑compliant only if:
 
 ---
 
-## Operational Philosophy
+# Operational Philosophy
 
 Typed signals over narrative  
 Drift visibility over coherence  
@@ -195,7 +229,7 @@ Recoverability over completion
 
 ---
 
-## Current System State
+# Current System State
 
 ORP_VERSION: 3.0 (FROZEN)  
 L1: STRICT_TYPED_TIME_SERIES  
@@ -208,7 +242,82 @@ STATUS: FROZEN
 
 ---
 
-## License
+# License
 
 GNU General Public License v3.0 (GPL‑3.0).  
 No warranty. Attribution requested for derivative governance documents.
+
+---
+
+# Supplemental Diagrams (Collapsible)
+
+<details>
+<summary><strong>Full Governance + Drift Control Loop</strong></summary>
+
+```mermaid
+flowchart TD
+    L1[L1 Signal Stream]
+    L2[L2 Validation Layer]
+    L3[L3 Governance Core]
+    SIGMA[σ² Drift Computation]
+    SHS[SHS State Engine]
+
+    L1 --> L2 --> L3 --> SIGMA --> SHS --> L3
+```
+</details>
+
+<details>
+<summary><strong>Drift Classification Model</strong></summary>
+
+```mermaid
+flowchart TD
+    S[L1 Signal Variance σ²]
+
+    S --> N[NONE < 0.01]
+    S --> L[LOW 0.01–0.05]
+    S --> M[MODERATE 0.05–0.15]
+    S --> H[HIGH ≥ 0.15]
+
+    N --> OK[Stable Operation]
+    L --> OK
+    M --> MON[Monitoring Mode]
+    H --> LOCK[Governance Intervention]
+```
+</details>
+
+<details>
+<summary><strong>Session Health State (SHS) Chain</strong></summary>
+
+```mermaid
+stateDiagram-v2
+    GREEN --> YELLOW
+    YELLOW --> ORANGE
+    ORANGE --> RED
+    RED --> BLACK
+
+    GREEN: Stable
+    YELLOW: Early Drift
+    ORANGE: Degraded
+    RED: Restricted Inference
+    BLACK: System Halt
+```
+</details>
+
+<details>
+<summary><strong>Layered Authority Stack (LAS)</strong></summary>
+
+```mermaid
+flowchart TD
+    L1[L1: Evidence]
+    L2[L2: Interpretation]
+    L3[L3: Governance Authority]
+    L4[L4: Inference Only]
+
+    L1 --> L2 --> L3 --> OUTPUT[System Output]
+    L4 --> OUTPUT
+
+    L4 -. cannot override .-> L3
+    L3 -. controls .-> L2
+    L2 -. validates .-> L1
+```
+</details>
