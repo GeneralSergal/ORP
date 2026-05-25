@@ -30,9 +30,9 @@ No preamble may precede the header.
 
 ---
 
-## System Architecture (v3.0)
+# System Architecture (v3.0)
 
-### Core Authority Chain (L1 → L2 → L3)
+## Core Authority Chain (L1 → L2 → L3)
 
 ```mermaid
 flowchart TD
@@ -51,10 +51,12 @@ flowchart TD
   Deterministic validation of L1. Schema enforcement, anomaly tagging, consistency checks.
 
 - **L3 — Governance Layer (Authority Core)**  
-  Sole authority for state transitions, invariants, and conflict resolution. L4 cannot influence L3.
+  Sole authority for state transitions, invariants, and conflict resolution.  
+  L4 cannot influence L3.
 
 - **L4 — Internal Inference Subsystem**  
-  Probabilistic interpretation only. No truth authority. Cannot access raw L1 or modify L2/L3.
+  Probabilistic interpretation only. No truth authority.  
+  Cannot access raw L1 or modify L2/L3.
 
 ---
 
@@ -70,34 +72,37 @@ flowchart TD
 
 ---
 
-## Invariants
+# Invariants
 
-- L1 accepts only typed signals: `Float ∈ [0.0,1.0]`, bounded Integer, Boolean
-- L1 states are immutable once committed
-- L2 operates exclusively on validated L1 data
-- L3 is the sole authority layer
-- L4 cannot promote inference into factual form
-- Provenance must be preserved across L1→L2 transitions
-- Drift must be computed numerically and deterministically
-- No external dependencies in runtime governance
+- L1 accepts only typed signals: `Float ∈ [0.0,1.0]`, bounded Integer, Boolean  
+- L1 states are immutable once committed  
+- L2 operates exclusively on validated L1 data  
+- L3 is the sole authority layer  
+- L4 cannot promote inference into factual form  
+- Provenance must be preserved across L1→L2 transitions  
+- Drift must be computed numerically and deterministically  
+- No external dependencies in runtime governance  
 
 ---
 
-## Drift Model (Numeric Core)
+# Drift Model (Numeric Core)
 
 **σ² = variance(L1_signal_vector over time)**
 
 ### Drift Levels
+
 - **NONE**: σ² < 0.01  
 - **LOW**: 0.01 ≤ σ² < 0.05  
 - **MODERATE**: 0.05 ≤ σ² < 0.15  
 - **HIGH**: σ² ≥ 0.15  
 
-Supporting signals: hash(L1→L2 transition delta), temporal stability gradient.
+Supporting signals:  
+- hash(L1→L2 transition delta)  
+- temporal stability gradient  
 
 ---
 
-## Execution Pipeline
+# Execution Pipeline
 
 ```mermaid
 flowchart TD
@@ -107,32 +112,37 @@ flowchart TD
 
 ---
 
-## Failure Conditions & Response
+# Failure Conditions & Response
 
-**Failure Conditions:**
-- L4 influencing L3
-- Untyped L1 data
-- Silent schema mutation
-- Invalid state promotion
-- Drift concealment via narrative smoothing
+### **Failure Conditions**
+- L4 influencing L3  
+- Untyped L1 data  
+- Silent schema mutation  
+- Invalid state promotion  
+- Drift concealment via narrative smoothing  
 
-**Response Protocol:**
-1. Downgrade SHS
-2. Freeze L1 stream
-3. Recompute L2 snapshot
-4. Halt L4 inference
-5. Restore last valid L3 state
+### **Response Protocol**
+1. Downgrade SHS  
+2. Freeze L1 stream  
+3. Recompute L2 snapshot  
+4. Halt L4 inference  
+5. Restore last valid L3 state  
 
 ---
 
-## Controlled Expansion
+# Controlled Expansion
 
 Expansion is **cyclical only**.  
-Requires: Drift = NONE, L3 validation success, intact provenance, and stable recovery path.
+Requires:
+
+- Drift = NONE  
+- L3 validation success  
+- Provenance intact  
+- Stable recovery path  
 
 ---
 
-## Repository Structure (v3.0)
+# Repository Structure (v3.0)
 
 ```
 /README.md
@@ -144,7 +154,13 @@ Requires: Drift = NONE, L3 validation success, intact provenance, and stable rec
     ORP_CORE_SPEC.md
     ORP_SYSTEM_ARCHITECTURE.md
     ORP_ARCHITECTURE.md
-    ...
+    ORP_SYSTEM_MAP.md
+    ORP_SYSTEM_MAP.manifest.json
+    ORP_ORIGIN.md
+    ORP_COHERENCE_CAMOUFLAGE.md
+    ORP_EPISTEMIC_ISOLATION.md
+    ORP_META_MAP.md
+    ORP_SHS_TRANSITION_TRIGGERS.md
 
 /constraints/
     ORP_PROMPT.md
@@ -157,38 +173,45 @@ Requires: Drift = NONE, L3 validation success, intact provenance, and stable rec
 /evaluation/
     ORP_BENCHMARK.md
     ORP_EVALUATION_SCHEMA.md
-    ...
+    ORP_RUBRIC.md
+    ORP_SCORING.md
 
 /docs/
-    ORP_ROADMAP.md
     !REPO_CHECKLIST.md
-    ...
+    CHANGELOG.md
+    CODE_OF_CONDUCT.md
+    CONTRACT_BRIDGE.md
+    CONTRIBUTING.md
+    NOTICE
+    ORP_ROADMAP.md
+    RELEASE_NOTES.md
 ```
 
 ---
 
-## Compliance Requirements
+# Compliance Requirements
 
 A system is ORP v3.0-compliant only if it enforces:
-- Strict L1 typing
-- Deterministic L2 validation
-- Isolated L3 authority
-- Numeric drift computation
-- Mandatory header
-- End-to-end provenance preservation
+
+- Strict L1 typing  
+- Deterministic L2 validation  
+- Isolated L3 authority  
+- Numeric drift computation  
+- Mandatory header  
+- End-to-end provenance preservation  
 
 ---
 
-## Operational Philosophy
+# Operational Philosophy
 
-- Typed signals over narrative
-- Drift visibility over coherence
-- Governance correctness over fluency
-- Recoverability over completion
+- Typed signals over narrative  
+- Drift visibility over coherence  
+- Governance correctness over fluency  
+- Recoverability over completion  
 
 ---
 
-## Current System State
+# Current System State
 
 **ORP_VERSION: 3.0 (FROZEN)**  
 L1: STRICT_TYPED_TIME_SERIES  
@@ -196,24 +219,24 @@ L2: VALIDATION_LAYER
 L3: AUTHORITY_LAYER  
 L4: INTERNAL_INFERENCE_ONLY  
 DRIFT_MODEL: NUMERIC  
-STATUS: FROZEN
+STATUS: FROZEN  
 
 ---
 
-## License
+# License
 
 GNU General Public License v3.0 (GPL-3.0)
 
 ---
 
-## Supplemental Diagrams
+# Supplemental Diagrams
 
 <details>
 <summary><strong>Full Governance + Drift Control Loop</strong></summary>
 
 ```mermaid
 flowchart TD
-    L1[L1 Signal Stream] --> L2[L2 Validation] --> L3[L3 Governance] 
+    L1[L1 Signal Stream] --> L2[L2 Validation] --> L3[L3 Governance]
     L3 --> SIGMA[σ² Drift] --> SHS[SHS State] --> L3
 ```
 </details>
@@ -276,6 +299,5 @@ flowchart TD
 
 ---
 
-**Repository**: [https://github.com/GeneralSergal/ORP](https://github.com/GeneralSergal/ORP)
-
+**Repository:** https://github.com/GeneralSergal/ORP  
 ORP v3.0 is **frozen** and actively maintained.
