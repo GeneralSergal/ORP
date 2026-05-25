@@ -1,3 +1,5 @@
+[![ORP v3.0 Integrity Suite](https://github.com/GeneralSergal/ORP/actions/workflows/orp-ci.yml/badge.svg)](https://github.com/GeneralSergal/ORP/actions/workflows/orp-ci.yml)
+
 # ORP — Open Resonance Protocol
 ## ORP v3.0 — Type-Safe Unified Runtime Governance Architecture
 
