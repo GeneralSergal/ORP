@@ -19,7 +19,7 @@
     content="ORP, Open Resonance Protocol, epistemic governance, drift observability, provenance preservation, reasoning framework"
   />
 
-  <meta name="theme-color" content="#ff4b4b" />
+  <meta name="theme-color" content="#dd1111" />
 
   <meta property="og:title" content="ORP v3.0 — Open Resonance Protocol" />
   <meta
@@ -31,7 +31,7 @@
   <link
     rel="icon"
     type="image/svg+xml"
-    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230d1117'/%3E%3Cpath d='M50 15 L85 50 L50 85 L15 50 Z' fill='%2358a6ff'/%3E%3C/svg%3E"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230d1117'/%3E%3Cpath d='M50 15 L85 50 L50 85 L15 50 Z' fill='%23dd1111'/%3E%3C/svg%3E"
   />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,33 +40,34 @@
 
   <style>
     :root {
-      --bg: #070b12;
+      --bg: #0a0d10;
+      --panel: #0f1318;
+      --panel-2: #131a22;
 
-      --panel: #0f1722;
-      --panel-2: #151f2d;
-
-      --border: rgba(255,255,255,0.08);
-      --border-strong: rgba(255,255,255,0.12);
+      --border: rgba(255,255,255,0.06);
+      --border-strong: rgba(255,255,255,0.1);
 
       --text: #d7dde7;
       --muted: #8f9bb0;
       --heading: #f3f6fb;
 
-      --primary: #58a6ff;
-      --primary-bright: #7db3ff;
-      --cyan: #69f0ff;
-
-      --accent-red: #ff4b4b;
-      --accent-red-dark: #c92f2f;
-      --accent-red-soft: rgba(255, 75, 75, 0.12);
-
-      --accent-magenta: #ff5ea8;
+      --primary: #dd1111;
+      --primary-bright: #ff3333;
+      --primary-dark: #aa0000;
+      
+      --accent-orange: #ff6600;
+      --accent-orange-bright: #ff8833;
+      
+      --accent-purple: #6a3a8a;
+      --accent-purple-bright: #8a5aaa;
+      
+      --accent-cyan: #00d4ff;
 
       --success: #3fb950;
-      --danger: #ff5c5c;
-      --warning: #ffb347;
+      --danger: #ff3333;
+      --warning: #ff8833;
 
-      --shadow: rgba(0,0,0,0.45);
+      --shadow: rgba(0,0,0,0.5);
 
       --radius: 24px;
       --radius-sm: 16px;
@@ -87,8 +88,9 @@
       overflow-x: hidden;
 
       background:
-        radial-gradient(circle at top right, rgba(88,166,255,0.12), transparent 30%),
-        radial-gradient(circle at bottom left, rgba(255,75,75,0.08), transparent 30%),
+        radial-gradient(circle at top right, rgba(255,102,0,0.08), transparent 35%),
+        radial-gradient(circle at bottom left, rgba(221,17,17,0.06), transparent 40%),
+        radial-gradient(circle at 20% 80%, rgba(106,58,138,0.04), transparent 45%),
         var(--bg);
 
       color: var(--text);
@@ -120,8 +122,8 @@
       z-index: -4;
 
       background-image:
-        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
 
       background-size: 36px 36px;
 
@@ -129,6 +131,81 @@
         radial-gradient(circle at center, black 40%, transparent 85%);
 
       pointer-events: none;
+    }
+
+    .ember {
+      position: fixed;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: -1;
+      animation: emberFloat linear infinite;
+    }
+
+    .ember:nth-child(1) {
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 102, 0, 0.6);
+      top: 20%;
+      left: 15%;
+      animation-duration: 8s;
+      animation-delay: 0s;
+    }
+
+    .ember:nth-child(2) {
+      width: 3px;
+      height: 3px;
+      background: rgba(255, 51, 51, 0.7);
+      top: 35%;
+      right: 12%;
+      animation-duration: 10s;
+      animation-delay: 2s;
+    }
+
+    .ember:nth-child(3) {
+      width: 5px;
+      height: 5px;
+      background: rgba(255, 136, 51, 0.5);
+      bottom: 30%;
+      left: 8%;
+      animation-duration: 12s;
+      animation-delay: 4s;
+    }
+
+    .ember:nth-child(4) {
+      width: 3px;
+      height: 3px;
+      background: rgba(221, 17, 17, 0.6);
+      bottom: 15%;
+      right: 20%;
+      animation-duration: 9s;
+      animation-delay: 1s;
+    }
+
+    .ember:nth-child(5) {
+      width: 4px;
+      height: 4px;
+      background: rgba(106, 58, 138, 0.4);
+      top: 60%;
+      right: 8%;
+      animation-duration: 11s;
+      animation-delay: 3s;
+    }
+
+    @keyframes emberFloat {
+      0% {
+        transform: translateY(0px) translateX(0px);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-60px) translateX(20px);
+        opacity: 0;
+      }
     }
 
     .glow {
@@ -139,10 +216,10 @@
 
       background:
         radial-gradient(circle,
-          rgba(255,75,75,0.18) 0%,
-          rgba(255,75,75,0.08) 25%,
-          rgba(88,166,255,0.08) 50%,
-          transparent 75%
+          rgba(255,102,0,0.16) 0%,
+          rgba(221,17,17,0.12) 30%,
+          rgba(106,58,138,0.06) 50%,
+          transparent 70%
         );
 
       top: -320px;
@@ -150,7 +227,7 @@
 
       z-index: -1;
       pointer-events: none;
-      filter: blur(10px);
+      filter: blur(12px);
     }
 
     .resonance-ring {
@@ -158,7 +235,7 @@
       width: 900px;
       height: 900px;
       border-radius: 50%;
-      border: 1px solid rgba(88,166,255,0.06);
+      border: 1px solid rgba(221,17,17,0.08);
       top: -300px;
       right: -240px;
       z-index: -3;
@@ -171,12 +248,12 @@
       position: absolute;
       inset: 70px;
       border-radius: inherit;
-      border: 1px dashed rgba(105,240,255,0.08);
+      border: 1px dashed rgba(255,102,0,0.06);
     }
 
     .resonance-ring::after {
       inset: 140px;
-      border-color: rgba(255,75,75,0.08);
+      border-color: rgba(106,58,138,0.06);
     }
 
     @keyframes rotateSlow {
@@ -190,7 +267,7 @@
       z-index: -2;
       pointer-events: none;
       overflow: hidden;
-      opacity: 0.08;
+      opacity: 0.06;
     }
 
     .glyph {
@@ -243,9 +320,8 @@
       z-index: 1000;
 
       backdrop-filter: blur(18px);
-      background: rgba(8, 11, 17, 0.82);
-
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      background: rgba(10, 13, 16, 0.88);
+      border-bottom: 1px solid rgba(221,17,17,0.12);
     }
 
     .nav-inner {
@@ -277,11 +353,12 @@
 
       background:
         linear-gradient(135deg,
-          var(--accent-red),
-          var(--accent-magenta));
+          var(--primary),
+          var(--accent-orange));
 
       box-shadow:
-        0 0 26px rgba(255,75,75,0.55);
+        0 0 20px rgba(221,17,17,0.6),
+        0 0 40px rgba(255,102,0,0.3);
     }
 
     .logo-mark::before {
@@ -313,7 +390,7 @@
       bottom: -7px;
       width: 0;
       height: 2px;
-      background: linear-gradient(90deg, var(--accent-red), var(--accent-magenta));
+      background: linear-gradient(90deg, var(--primary), var(--accent-orange));
       transition: width var(--transition);
     }
 
@@ -347,14 +424,14 @@
 
       border-radius: 999px;
 
-      border: 1px solid var(--accent-red-soft);
+      border: 1px solid rgba(221,17,17,0.24);
 
       background:
         linear-gradient(180deg,
-          var(--accent-red-soft),
-          rgba(255,75,75,0.04));
+          rgba(221,17,17,0.12),
+          rgba(255,102,0,0.04));
 
-      color: #ffb0b0;
+      color: #ffb0a0;
 
       font-size: 0.9rem;
       font-weight: 700;
@@ -365,8 +442,8 @@
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background: var(--accent-red);
-      box-shadow: 0 0 16px rgba(255,75,75,0.8);
+      background: var(--primary);
+      box-shadow: 0 0 16px rgba(221,17,17,0.9);
       animation: pulse 2.5s infinite;
     }
 
@@ -429,29 +506,31 @@
     .btn-primary {
       background:
         linear-gradient(135deg,
-          var(--accent-red),
-          var(--accent-magenta));
+          var(--primary),
+          var(--accent-orange));
 
       color: #ffffff;
 
       box-shadow:
-        0 12px 30px rgba(255,75,75,0.24);
+        0 12px 30px rgba(221,17,17,0.3);
     }
 
     .btn-primary:hover {
       transform: translateY(-2px);
+      box-shadow:
+        0 16px 40px rgba(255,102,0,0.35);
     }
 
     .btn-secondary {
       border: 1px solid var(--border-strong);
-      background: rgba(18,24,33,0.72);
+      background: rgba(15,19,24,0.6);
       color: var(--text);
     }
 
     .btn-secondary:hover {
       transform: translateY(-2px);
-      background: rgba(24,32,43,0.92);
-      border-color: rgba(255,75,75,0.3);
+      background: rgba(19,26,34,0.8);
+      border-color: rgba(221,17,17,0.3);
     }
 
     .hero-panel {
@@ -465,9 +544,9 @@
       border-radius: 30px;
       background:
         linear-gradient(135deg,
-          rgba(255,75,75,0.08),
-          rgba(88,166,255,0.05));
-      filter: blur(18px);
+          rgba(221,17,17,0.1),
+          rgba(255,102,0,0.06));
+      filter: blur(20px);
       z-index: -1;
     }
 
@@ -478,7 +557,7 @@
       width: 540px;
       max-width: 48vw;
       opacity: 0.16;
-      filter: drop-shadow(0 0 40px rgba(255,75,75,0.25));
+      filter: drop-shadow(0 0 40px rgba(221,17,17,0.3)) drop-shadow(0 0 20px rgba(255,102,0,0.2));
       pointer-events: none;
       user-select: none;
     }
@@ -488,15 +567,16 @@
       overflow: hidden;
 
       border-radius: 28px;
-      border: 1px solid rgba(255,255,255,0.06);
+      border: 1px solid rgba(221,17,17,0.2);
 
       background:
         linear-gradient(180deg,
-          rgba(11,16,22,0.98),
-          rgba(9,13,19,0.98));
+          rgba(11,13,18,0.98),
+          rgba(9,11,15,0.98));
 
       box-shadow:
-        0 24px 70px rgba(0,0,0,0.52);
+        0 24px 70px rgba(0,0,0,0.52),
+        inset 0 0 40px rgba(221,17,17,0.08);
     }
 
     .terminal::before {
@@ -506,7 +586,7 @@
 
       background:
         linear-gradient(180deg,
-          rgba(255,75,75,0.03),
+          rgba(255,102,0,0.02),
           transparent 40%);
 
       pointer-events: none;
@@ -519,9 +599,9 @@
       gap: 8px;
       padding: 0 18px;
 
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(221,17,17,0.12);
 
-      background: rgba(255,255,255,0.02);
+      background: rgba(255,255,255,0.01);
     }
 
     .dot {
@@ -530,8 +610,8 @@
       border-radius: 50%;
     }
 
-    .red { background: var(--danger); }
-    .yellow { background: var(--warning); }
+    .red { background: var(--primary); }
+    .yellow { background: var(--accent-orange); }
     .green { background: var(--success); }
 
     .terminal-body {
@@ -553,16 +633,16 @@
       padding: 18px;
 
       border-radius: 16px;
-      border: 1px solid rgba(88,166,255,0.12);
+      border: 1px solid rgba(221,17,17,0.2);
 
       background:
         linear-gradient(180deg,
-          rgba(88,166,255,0.05),
-          rgba(88,166,255,0.015));
+          rgba(221,17,17,0.08),
+          rgba(221,17,17,0.02));
     }
 
     .entity-title {
-      color: var(--accent-red);
+      color: var(--accent-orange);
       font-family: Oxanium, sans-serif;
       font-size: 0.86rem;
       letter-spacing: 0.14em;
@@ -576,14 +656,19 @@
 
     .section-divider {
       width: 100%;
-      height: 1px;
+      height: 2px;
       margin-top: 100px;
 
       background:
         linear-gradient(90deg,
           transparent,
-          rgba(255,75,75,0.2),
+          rgba(221,17,17,0.3),
+          rgba(255,102,0,0.2),
           transparent);
+
+      box-shadow:
+        0 0 20px rgba(221,17,17,0.2),
+        0 0 40px rgba(255,102,0,0.1);
     }
 
     .section-header {
@@ -592,12 +677,13 @@
     }
 
     .section-eyebrow {
-      color: var(--accent-red);
+      color: var(--accent-orange);
       text-transform: uppercase;
       letter-spacing: 0.14em;
       font-size: 0.8rem;
       font-weight: 800;
       margin-bottom: 14px;
+      text-shadow: 0 0 12px rgba(255,102,0,0.3);
     }
 
     .section-title {
@@ -635,17 +721,18 @@
       overflow: hidden;
 
       border-radius: var(--radius);
-      border: 1px solid var(--border);
+      border: 1px solid rgba(221,17,17,0.16);
 
       background:
         linear-gradient(180deg,
-          rgba(255,255,255,0.025),
+          rgba(255,255,255,0.03),
           rgba(255,255,255,0.01));
 
       transition:
         transform var(--transition),
         border-color var(--transition),
-        box-shadow var(--transition);
+        box-shadow var(--transition),
+        background var(--transition);
     }
 
     .pipeline-card::before,
@@ -658,7 +745,7 @@
       background:
         linear-gradient(
           135deg,
-          rgba(255,75,75,0.06),
+          rgba(255,102,0,0.08),
           transparent 35%
         );
 
@@ -671,8 +758,12 @@
     .doc-card:hover,
     .principle:hover {
       transform: translateY(-4px);
-      border-color: rgba(255,75,75,0.28);
-      box-shadow: 0 18px 40px rgba(0,0,0,0.25);
+      border-color: rgba(221,17,17,0.32);
+      box-shadow: 0 18px 40px rgba(221,17,17,0.15);
+      background:
+        linear-gradient(180deg,
+          rgba(255,102,0,0.04),
+          rgba(255,255,255,0.01));
     }
 
     .pipeline-card:hover::before,
@@ -686,12 +777,13 @@
     }
 
     .pipeline-step {
-      color: var(--accent-red);
+      color: var(--accent-orange);
       text-transform: uppercase;
       letter-spacing: 0.14em;
       font-size: 0.78rem;
       font-weight: 800;
       margin-bottom: 14px;
+      text-shadow: 0 0 8px rgba(255,102,0,0.2);
     }
 
     .pipeline-card h3,
@@ -714,8 +806,11 @@
 
     .doc-card {
       padding: 28px;
-      background: var(--panel);
-      backdrop-filter: blur(14px);
+      background:
+        linear-gradient(180deg,
+          rgba(15,19,24,0.8),
+          rgba(15,19,24,0.6));
+      backdrop-filter: blur(8px);
       position: relative;
       overflow: hidden;
     }
@@ -734,11 +829,11 @@
     }
 
     .doc-card a {
-      color: var(--primary);
+      color: var(--accent-orange);
     }
 
     .doc-card a:hover {
-      color: var(--primary-bright);
+      color: var(--accent-orange-bright);
     }
 
     .principles {
@@ -752,12 +847,12 @@
     footer {
       padding: 90px 0;
 
-      border-top: 1px solid rgba(255,255,255,0.05);
+      border-top: 1px solid rgba(221,17,17,0.12);
 
       background:
         linear-gradient(180deg,
           rgba(255,255,255,0.01),
-          rgba(255,255,255,0.02));
+          rgba(255,102,0,0.02));
     }
 
     .footer-grid {
@@ -783,7 +878,7 @@
       margin-top: 54px;
       padding-top: 28px;
 
-      border-top: 1px solid rgba(255,255,255,0.05);
+      border-top: 1px solid rgba(221,17,17,0.1);
 
       color: var(--muted);
       text-align: center;
@@ -861,6 +956,12 @@
   <div class="grid-bg"></div>
   <div class="glow"></div>
   <div class="resonance-ring"></div>
+
+  <div class="ember"></div>
+  <div class="ember"></div>
+  <div class="ember"></div>
+  <div class="ember"></div>
+  <div class="ember"></div>
 
   <div class="glyph-layer">
     <div class="glyph">σ²</div>
@@ -940,14 +1041,14 @@
 
           <div class="terminal-body">
 
-            <span style="color:#ff4b4b">[SHS: ACTIVE]</span><br>
-            <span style="color:#58a6ff">[DRIFT: NOMINAL]</span><br>
-            <span style="color:#ffb347">[CRA: VALID]</span><br><br>
+            <span style="color:#dd1111">[SHS: ACTIVE]</span><br>
+            <span style="color:#ff6600">[DRIFT: CRITICAL]</span><br>
+            <span style="color:#ffb347">[CRA: LOCKED]</span><br><br>
 
             ORP Runtime Kernel Initialized<br>
-            σ² Drift Observability: ACTIVE<br>
-            Epistemic Isolation: ENFORCED<br>
-            Coherence Camouflage Detection: ACTIVE<br><br>
+            σ² Drift Observability: ESCALATING<br>
+            Epistemic Isolation: FORTIFIED<br>
+            Coherence Camouflage Detection: SCANNING<br><br>
 
             <div class="entity-box">
               <div class="entity-title">
@@ -955,9 +1056,9 @@
               </div>
 
               ENTITY: OBSERVER_NODE<br>
-              STATE: STABLE<br>
+              STATE: RESONANT<br>
               PACK_SIGNAL: SYNCHRONIZED<br>
-              RESONANCE: NOMINAL
+              RESONANCE: ASCENDANT
             </div>
 
           </div>
