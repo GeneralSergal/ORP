@@ -173,12 +173,18 @@ Requires:
 
 ## Repository Structure
 
-```
-/core/                  → Runtime & Architecture
-/constraints/           → Prompts & Anti-Degradation
-/observability/         → Drift & Decay Tracking
-/evaluation/            → Schemas, Rubrics & Scoring
-/docs/                  → Roadmap, Checklists, etc.
+```text
+/
+├── core/           # Runtime, Core Spec & Architecture
+├── constraints/    # Prompts & Governance Constraints
+├── conceptual/     # Non-authoritative conceptual models
+├── docs/           # Documentation & Roadmap
+├── drift/          # Drift, Decay & Anti-Degradation
+├── evaluation/     # Evaluation schemas, rubrics & scoring
+├── layers/         # Layer-specific schemas (L1, L2, L4)
+├── recovery/       # Recovery & CRA specifications
+├── LICENSE
+└── README.md
 ```
 
 ---
