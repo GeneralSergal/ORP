@@ -1,115 +1,109 @@
 # ORP — CONTRIBUTING
+## ORP v3.0 — Governance‑Aligned Contribution Protocol
 
-## System Version
-
-ORP v2.5 (Unified System Architecture)
-
----
-
-## Purpose
-
-This document defines contribution rules and architectural expectations for the ORP repository.
-
+This document defines contribution rules and architectural expectations for the ORP repository.  
 Its purpose is to preserve:
 
-- epistemic integrity
-- provenance preservation
-- structural consistency
-- deterministic evaluation behavior
-- runtime/schema synchronization
+- epistemic integrity  
+- provenance preservation  
+- structural consistency  
+- isolation‑safe modification  
+- drift‑resistant behavior  
+- alignment with the ORP v3.0 governance model  
 
-This document governs repository modifications only.
+This document governs repository modifications only.  
 It does not redefine system behavior.
 
 ---
 
 ## Before Contributing
 
-Please review:
+Review the following core documents:
 
-- README.md
-- ORP_RUNTIME.md
-- EVALUATION_SCHEMA.md
-- SYSTEM_MAP.md
-- ROADMAP.md
-- !REPO_CHECKLIST.md
+- core/ORP_RUNTIME.md  
+- core/ORP_CORE_SPEC.md  
+- core/ORP_SYSTEM_MAP.md  
+- core/ORP_SYSTEM_ARCHITECTURE.md  
+- constraints/ORP_PROMPT.md  
+- docs/!REPO_CHECKLIST.md  
+- docs/RELEASE_NOTES.md  
 
-Contributors should understand the separation between:
-- runtime governance
-- structural contracts
-- evaluation logic
-- scoring behavior
-- benchmark stress-testing
+Contributors must understand the separation between:
 
-before modifying core files.
+- runtime governance (L3 authority)  
+- structural contracts (evaluation schema)  
+- epistemic isolation (L1–L4 boundaries)  
+- drift observability (σ² model)  
+- anti‑degradation constraints  
+
+before modifying any core subsystem.
 
 ---
 
 ## Contribution Areas
 
-### 1. Epistemic Improvements
+### 1. Governance‑Aligned Improvements
 Examples:
-- improved claim decomposition logic
-- stronger uncertainty isolation
-- provenance preservation enhancements
-- better distortion detection rules
-- recoverability improvements
+- stronger provenance preservation  
+- improved uncertainty surfacing  
+- enhanced epistemic separation  
+- refined drift‑detection logic  
+- improved fail‑closed behavior  
 
----
-
-### 2. Benchmark Expansion
+### 2. Evaluation & Benchmark Expansion
 Examples:
-- adversarial reasoning tests
-- hallucination stress cases
-- causal distortion scenarios
-- provenance corruption tests
-- drift-observability benchmarks
-
----
+- adversarial reasoning tests  
+- drift‑induction scenarios  
+- coherence‑camouflage detection cases  
+- provenance‑corruption stress tests  
 
 ### 3. Infrastructure & Tooling
 Examples:
-- local execution tooling
-- evaluation automation
-- reproducibility improvements
-- future Python package support
-- visualization or traceability tooling
+- reproducibility tooling  
+- traceability utilities  
+- local evaluation helpers  
+- documentation automation  
 
 ---
 
 ## Architectural Constraints
 
-Contributions must preserve:
+All contributions must preserve:
 
-- separation of concerns
-- deterministic pipeline flow
-- schema/runtime compatibility
-- provenance boundaries
-- fail-closed reasoning behavior
+- strict L1–L4 isolation  
+- deterministic governance flow  
+- schema/runtime compatibility  
+- provenance boundaries  
+- numeric drift observability  
+- fail‑closed execution behavior  
 
 No contribution may:
-- merge architecture layer responsibilities
-- introduce hidden cross-file dependencies
-- bypass runtime or schema constraints
-- reinterpret upstream outputs
-- weaken epistemic separation rules
+
+- merge responsibilities across architecture layers  
+- introduce hidden cross‑file dependencies  
+- bypass runtime or schema constraints  
+- reinterpret upstream outputs  
+- weaken epistemic separation rules  
+- obscure drift or provenance signals  
 
 ---
 
 ## Runtime Alignment Requirement
 
 Changes affecting:
-- reasoning behavior
-- provenance handling
-- uncertainty representation
-- drift semantics
-- evaluation structure
+
+- reasoning behavior  
+- provenance handling  
+- uncertainty representation  
+- drift semantics  
+- governance logic  
+- evaluation structure  
 
 must remain aligned with:
 
-- ORP_RUNTIME.md
-- EVALUATION_SCHEMA.md
-- SYSTEM_MAP.manifest.json
+- core/ORP_RUNTIME.md  
+- core/ORP_CORE_SPEC.md  
+- core/ORP_SYSTEM_MAP.manifest.json  
 
 Architecture drift between documents is considered a structural regression.
 
@@ -118,24 +112,22 @@ Architecture drift between documents is considered a structural regression.
 ## Pull Request Guidance
 
 ### Use the Full PR Template for:
-- runtime changes
-- schema modifications
-- scoring changes
-- benchmark architecture updates
-- evaluation logic changes
+- runtime changes  
+- schema modifications  
+- governance logic updates  
+- evaluation pipeline changes  
+- drift or provenance rule adjustments  
 
-Template:
+Template:  
 `.github/PULL_REQUEST_TEMPLATE/orp-pr-full.md`
 
----
-
 ### Use the Trivial PR Template for:
-- typo fixes
-- formatting cleanup
-- documentation clarification
-- non-structural examples
+- typo fixes  
+- formatting cleanup  
+- documentation clarification  
+- non‑structural examples  
 
-Template:
+Template:  
 `.github/PULL_REQUEST_TEMPLATE/orp-pr-trivial.md`
 
 ---
@@ -144,29 +136,30 @@ Template:
 
 A contribution is valid only if it:
 
-- preserves architectural consistency
-- maintains epistemic separation
-- avoids provenance corruption
-- remains schema-compatible
-- does not reduce recoverability
+- preserves architectural consistency  
+- maintains epistemic separation  
+- avoids provenance corruption  
+- remains schema‑compatible  
+- does not reduce recoverability  
+- does not weaken drift observability  
 
-Usability improvements must not weaken structural integrity.
+Usability improvements must not compromise structural integrity.
 
 ---
 
 ## Roadmap Note
 
-ORP v3.0 development is exploratory and community-driven.
+ORP v3.0 development is governance‑driven and community‑guided.
 
 Current areas of interest include:
-- Python package infrastructure
-- assumption surfacing
-- traceability tooling
-- reasoning graph outputs
-- modular evaluators
-- benchmark generation systems
 
-See ROADMAP.md for directional planning.
+- traceability tooling  
+- reasoning‑graph outputs  
+- modular evaluators  
+- benchmark generation systems  
+- future Python package infrastructure  
+
+See `docs/ORP_ROADMAP.md` for directional planning.
 
 ---
 
@@ -180,6 +173,5 @@ Signal integrity overrides stylistic convenience.
 
 ## Final Note
 
-ORP is an epistemic evaluation architecture, not a conversational framework.
-
-Contributions should improve structural reliability rather than narrative sophistication.
+ORP is a governance‑first epistemic architecture, not a conversational framework.  
+Contributions should strengthen structural reliability, not narrative fluency.
