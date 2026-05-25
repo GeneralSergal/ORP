@@ -17,70 +17,70 @@ jobs:
       - name: Validate folder structure
         run: |
           echo "Checking canonical ORP directory layout..."
-          test -d ORP/core
-          test -d ORP/evaluation
-          test -d ORP/drift
-          test -d ORP/layers
-          test -d ORP/conceptual
-          test -d ORP/recovery
+          test -d core
+          test -d evaluation
+          test -d drift
+          test -d layers
+          test -d conceptual
+          test -d recovery
 
       - name: Validate required core files
         run: |
           echo "Checking core files..."
-          test -f ORP/core/ORP_RUNTIME.md
-          test -f ORP/core/ORP_PROMPT.md
-          test -f ORP/core/ORP_CORE_SPEC.md
-          test -f ORP/core/ORP_SYSTEM_ARCHITECTURE.md
-          test -f ORP/core/ORP_META_MAP.md
-          test -f ORP/core/ORP_SYSTEM_MAP.md
-          test -f ORP/core/ORP_SYSTEM_MAP.manifest.json
-          test -f ORP/core/ORP_ORIGIN.md
+          test -f core/ORP_RUNTIME.md
+          test -f core/ORP_PROMPT.md
+          test -f core/ORP_CORE_SPEC.md
+          test -f core/ORP_SYSTEM_ARCHITECTURE.md
+          test -f core/ORP_META_MAP.md
+          test -f core/ORP_SYSTEM_MAP.md
+          test -f core/ORP_SYSTEM_MAP.manifest.json
+          test -f core/ORP_ORIGIN.md
 
       - name: Validate evaluation files
         run: |
           echo "Checking evaluation files..."
-          test -f ORP/evaluation/ORP_EVALUATION_SCHEMA.md
-          test -f ORP/evaluation/ORP_RUBRIC.md
-          test -f ORP/evaluation/ORP_SCORING.md
-          test -f ORP/evaluation/ORP_SHS_TRANSITION_TRIGGERS.md
-          test -f ORP/evaluation/ORP_EPISTEMIC_ISOLATION.md
-          test -f ORP/evaluation/ORP_COHERENCE_CAMOUFLAGE.md
+          test -f evaluation/ORP_EVALUATION_SCHEMA.md
+          test -f evaluation/ORP_RUBRIC.md
+          test -f evaluation/ORP_SCORING.md
+          test -f evaluation/ORP_SHS_TRANSITION_TRIGGERS.md
+          test -f evaluation/ORP_EPISTEMIC_ISOLATION.md
+          test -f evaluation/ORP_COHERENCE_CAMOUFLAGE.md
 
       - name: Validate drift subsystem
         run: |
           echo "Checking drift files..."
-          test -f ORP/drift/ORP_SIGMA_SQUARED_DRIFT.md
-          test -f ORP/drift/ORP_MODEL_DECAY_TRACKER.md
-          test -f ORP/drift/ORP_ANTI_DEGRADATION.md
-          test -f ORP/drift/ORP_DRIFT_RECOVERY_PROTOCOL.md
-          test -f ORP/drift/ORP_FAILURE_MODES_CATALOG.md
+          test -f drift/ORP_SIGMA_SQUARED_DRIFT.md
+          test -f drift/ORP_MODEL_DECAY_TRACKER.md
+          test -f drift/ORP_ANTI_DEGRADATION.md
+          test -f drift/ORP_DRIFT_RECOVERY_PROTOCOL.md
+          test -f drift/ORP_FAILURE_MODES_CATALOG.md
 
       - name: Validate layer definitions
         run: |
           echo "Checking layer files..."
-          test -f ORP/layers/ORP_L1_SIGNAL_SCHEMA.md
-          test -f ORP/layers/ORP_L2_VALIDATION_RULES.md
-          test -f ORP/layers/ORP_L4_INFERENCE_GUIDE.md
+          test -f layers/ORP_L1_SIGNAL_SCHEMA.md
+          test -f layers/ORP_L2_VALIDATION_RULES.md
+          test -f layers/ORP_L4_INFERENCE_GUIDE.md
 
       - name: Validate recovery subsystem
         run: |
           echo "Checking recovery files..."
-          test -f ORP/recovery/ORP_CRA_SPEC.md
+          test -f recovery/ORP_CRA_SPEC.md
 
       - name: Validate mandatory header presence in ORP_RUNTIME.md
         run: |
           echo "Checking mandatory header markers in ORP_RUNTIME.md..."
-          head -n 20 ORP/core/ORP_RUNTIME.md | grep "SHS:" >/dev/null
-          head -n 20 ORP/core/ORP_RUNTIME.md | grep "DRIFT:" >/dev/null
-          head -n 20 ORP/core/ORP_RUNTIME.md | grep "CRA:" >/dev/null
-          head -n 20 ORP/core/ORP_RUNTIME.md | grep "LAS:" >/dev/null
+          head -n 20 core/ORP_RUNTIME.md | grep "SHS:" >/dev/null
+          head -n 20 core/ORP_RUNTIME.md | grep "DRIFT:" >/dev/null
+          head -n 20 core/ORP_RUNTIME.md | grep "CRA:" >/dev/null
+          head -n 20 core/ORP_RUNTIME.md | grep "LAS:" >/dev/null
 
       - name: Validate σ² drift thresholds presence
         run: |
           echo "Checking σ² thresholds in ORP_SIGMA_SQUARED_DRIFT.md..."
-          grep "0.01" ORP/drift/ORP_SIGMA_SQUARED_DRIFT.md >/dev/null
-          grep "0.05" ORP/drift/ORP_SIGMA_SQUARED_DRIFT.md >/dev/null
-          grep "0.15" ORP/drift/ORP_SIGMA_SQUARED_DRIFT.md >/dev/null
+          grep "0.01" drift/ORP_SIGMA_SQUARED_DRIFT.md >/dev/null
+          grep "0.05" drift/ORP_SIGMA_SQUARED_DRIFT.md >/dev/null
+          grep "0.15" drift/ORP_SIGMA_SQUARED_DRIFT.md >/dev/null
 
       - name: Final status
         run: echo "ORP v3.0 integrity validation PASSED."
