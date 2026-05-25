@@ -115,4 +115,3 @@ This document serves as **non-authoritative reference** for L4 diagnostics.
 All enforcement, state transitions, and governance decisions remain the **exclusive domain of L3** as defined in the frozen `ORP_RUNTIME.md`.
 
 END OF ANTI-DEGRADATION SPEC
-```
