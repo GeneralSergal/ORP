@@ -1,421 +1,499 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content="ORP - Structured epistemic evaluation framework for reasoning systems." />
-    <meta name="keywords" content="ORP, reasoning systems, evaluation, epistemic, framework" />
-    <meta name="author" content="GeneralSergal" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#90caf9" />
-    <meta property="og:title" content="ORP Documentation" />
-    <meta property="og:description" content="Structured epistemic evaluation framework for reasoning systems." />
-    <meta property="og:type" content="website" />
-    
-    <title>ORP Documentation - Epistemic Evaluation Framework</title>
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%2390caf9'>◆</text></svg>">
+<head>
+  <meta charset="UTF-8" />
 
-    <!-- Docsify Core -->
-    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+  <!-- Primary Meta -->
+  <title>ORP Documentation — Open Resonance Protocol</title>
 
-    <!-- Dark Material Theme -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
-    
-    <!-- Syntax Highlighting -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.css" />
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-javascript.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <meta
+    name="description"
+    content="ORP v3.0 — Type-Safe Epistemic Governance Framework for runtime governance, drift observability, provenance preservation, and structured reasoning evaluation."
+  />
 
-    <!-- Custom ORP Styling -->
-    <style>
-      * {
-        box-sizing: border-box;
-      }
+  <meta
+    name="keywords"
+    content="ORP, Open Resonance Protocol, epistemic governance, reasoning framework, drift observability, provenance preservation, SHS, LAS, coherence camouflage"
+  />
 
-      :root {
-        /* Primary Colors */
-        --theme-color: #90caf9;
-        --primary-color: #64b5f6;
-        --secondary-color: #42a5f5;
-        
-        /* Background Colors */
-        --base-background-color: #0d1117;
-        --sidebar-background: #161b22;
-        --sidebar-border-color: #30363d;
-        --content-background: #0d1117;
-        
-        /* Text Colors */
-        --heading-color: #f0f6fc;
-        --text-color: #c9d1d9;
-        --secondary-text: #8b949e;
-        --sidebar-nav-link-color: #d0d0d0;
-        --sidebar-nav-link-hover-color: #90caf9;
-        --sidebar-nav-link-active-color: #64b5f6;
-        
-        /* Code Colors */
-        --code-background: #161b22;
-        --code-color: #e6edf3;
-        --code-border: #30363d;
-        
-        /* UI Elements */
-        --link-color: #90caf9;
-        --link-hover-color: #64b5f6;
-        --border-color: #30363d;
-        --shadow-color: rgba(0, 0, 0, 0.3);
-      }
+  <meta name="author" content="GeneralSergal" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#58a6ff" />
+  <meta name="color-scheme" content="dark" />
 
-      html, body {
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-      }
+  <!-- Open Graph -->
+  <meta property="og:title" content="ORP Documentation — Open Resonance Protocol" />
+  <meta
+    property="og:description"
+    content="Type-Safe Epistemic Governance Framework for recoverable reasoning and drift-observable inference."
+  />
+  <meta property="og:type" content="website" />
 
-      body {
-        background-color: var(--base-background-color);
-        color: var(--text-color);
-      }
+  <!-- Favicon -->
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 128 128'%3E%3Crect width='128' height='128' rx='24' fill='%230d1117'/%3E%3Cpath d='M64 16 L112 64 L64 112 L16 64 Z' fill='%2358a6ff'/%3E%3C/svg%3E"
+  />
 
-      /* App Header */
-      .app-name {
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        color: var(--heading-color);
-        font-size: 1.2rem;
-      }
+  <!-- Docsify Theme -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css"
+  />
 
-      .app-name:hover {
-        color: var(--theme-color);
-        transition: color 0.3s ease;
-      }
+  <!-- Prism -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.min.css"
+  />
 
-      /* Sidebar Styling */
-      .sidebar {
-        background-color: var(--sidebar-background);
-        border-right: 1px solid var(--sidebar-border-color);
-      }
+  <style>
+    :root {
+      /* Core Palette */
+      --theme-color: #58a6ff;
+      --theme-color-secondary: #79c0ff;
 
-      .sidebar nav a {
-        color: var(--sidebar-nav-link-color);
-        transition: color 0.2s ease;
-      }
+      /* Backgrounds */
+      --base-background-color: #0d1117;
+      --content-max-width: 1100px;
+      --content-background-color: #0d1117;
+      --sidebar-background: #161b22;
+      --code-background: #161b22;
 
-      .sidebar nav a:hover {
-        color: var(--sidebar-nav-link-hover-color);
-      }
+      /* Borders */
+      --border-color: #30363d;
+      --sidebar-border-color: #30363d;
 
-      .sidebar nav li.active > a {
-        color: var(--sidebar-nav-link-active-color);
-        font-weight: 600;
-        border-right: 3px solid var(--primary-color);
-      }
-
-      /* Main Content */
-      .content {
-        background-color: var(--content-background);
-      }
-
-      h1, h2, h3, h4, h5, h6 {
-        color: var(--heading-color);
-        font-weight: 600;
-        letter-spacing: -0.5px;
-      }
-
-      h1 {
-        border-bottom: 2px solid var(--theme-color);
-        padding-bottom: 0.5rem;
-        margin-bottom: 1.5rem;
-      }
-
-      h2 {
-        margin-top: 2rem;
-        margin-bottom: 1rem;
-        border-bottom: 1px solid var(--border-color);
-        padding-bottom: 0.5rem;
-      }
+      /* Text */
+      --text-color-base: #c9d1d9;
+      --text-color-secondary: #8b949e;
+      --heading-color: #f0f6fc;
 
       /* Links */
-      a {
-        color: var(--link-color);
-        text-decoration: none;
-        transition: color 0.2s ease;
-      }
+      --link-color: #79c0ff;
+      --link-color-hover: #a5d6ff;
 
-      a:hover {
-        color: var(--link-hover-color);
-        text-decoration: underline;
-      }
-
-      /* Code Blocks */
-      code, pre {
-        background-color: var(--code-background);
-        color: var(--code-color);
-        border: 1px solid var(--code-border);
-        border-radius: 4px;
-      }
-
-      code {
-        padding: 0.2rem 0.4rem;
-        margin: 0 0.25rem;
-        font-size: 0.9em;
-      }
-
-      pre {
-        padding: 1rem;
-        overflow-x: auto;
-        margin: 1rem 0;
-      }
-
-      pre code {
-        background-color: transparent;
-        border: none;
-        padding: 0;
-        margin: 0;
-      }
-
-      /* Blockquotes */
-      blockquote {
-        border-left: 4px solid var(--theme-color);
-        background-color: rgba(144, 202, 249, 0.1);
-        padding: 0.5rem 1rem;
-        margin: 1rem 0;
-        border-radius: 0 4px 4px 0;
-      }
-
-      blockquote p {
-        margin: 0.5rem 0;
-        color: var(--text-color);
-      }
+      /* Sidebar */
+      --sidebar-nav-link-color: #c9d1d9;
+      --sidebar-nav-link-color--active: #58a6ff;
+      --sidebar-nav-link-border-color--active: #58a6ff;
 
       /* Tables */
-      table {
-        border-collapse: collapse;
-        width: 100%;
-        margin: 1rem 0;
-      }
-
-      table th {
-        background-color: var(--code-background);
-        color: var(--heading-color);
-        font-weight: 600;
-        padding: 0.75rem;
-        text-align: left;
-        border: 1px solid var(--border-color);
-      }
-
-      table td {
-        padding: 0.75rem;
-        border: 1px solid var(--border-color);
-        color: var(--text-color);
-      }
-
-      table tr:nth-child(even) {
-        background-color: rgba(144, 202, 249, 0.05);
-      }
+      --table-head-background: #161b22;
+      --table-row-odd-background: rgba(88, 166, 255, 0.03);
 
       /* Search */
-      .search {
-        margin: 1rem;
+      --search-input-background-color: #0d1117;
+      --search-input-border-color: #30363d;
+      --search-input-color: #c9d1d9;
+
+      /* Misc */
+      --selection-color: rgba(88, 166, 255, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0d1117;
+      color: #c9d1d9;
+      font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    ::selection {
+      background: var(--selection-color);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #0d1117;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #30363d;
+      border-radius: 999px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #484f58;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: var(--sidebar-background);
+      border-right: 1px solid var(--sidebar-border-color);
+    }
+
+    .sidebar-toggle {
+      background: #161b22;
+      border-right: 1px solid #30363d;
+    }
+
+    .app-name {
+      color: #f0f6fc;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      font-size: 1.1rem;
+      padding-top: 0.3rem;
+      padding-bottom: 0.3rem;
+    }
+
+    .app-name-link {
+      color: inherit !important;
+    }
+
+    .sidebar nav li.active > a {
+      font-weight: 600;
+    }
+
+    .sidebar ul li a {
+      transition:
+        color 0.15s ease,
+        transform 0.15s ease;
+    }
+
+    .sidebar ul li a:hover {
+      color: #79c0ff;
+      transform: translateX(2px);
+    }
+
+    /* Main */
+    .content {
+      padding-top: 2rem;
+    }
+
+    .markdown-section {
+      max-width: 1100px;
+      padding: 2rem 3rem;
+    }
+
+    /* Typography */
+    .markdown-section h1,
+    .markdown-section h2,
+    .markdown-section h3,
+    .markdown-section h4 {
+      color: var(--heading-color);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .markdown-section h1 {
+      font-size: 2.4rem;
+      border-bottom: 2px solid #30363d;
+      padding-bottom: 0.8rem;
+      margin-bottom: 2rem;
+    }
+
+    .markdown-section h2 {
+      margin-top: 3rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid #30363d;
+    }
+
+    .markdown-section p,
+    .markdown-section li {
+      line-height: 1.75;
+    }
+
+    /* Links */
+    .markdown-section a {
+      color: var(--link-color);
+      font-weight: 500;
+    }
+
+    .markdown-section a:hover {
+      color: var(--link-color-hover);
+      text-decoration: none;
+    }
+
+    /* Code */
+    .markdown-section code {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 6px;
+      color: #79c0ff;
+      padding: 0.15rem 0.45rem;
+      font-size: 0.9em;
+    }
+
+    .markdown-section pre {
+      background: #161b22 !important;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 1rem;
+      overflow: auto;
+      box-shadow: 0 0 0 1px rgba(255,255,255,0.02);
+    }
+
+    .markdown-section pre code {
+      border: none;
+      padding: 0;
+      color: #c9d1d9;
+    }
+
+    /* Blockquotes */
+    .markdown-section blockquote {
+      border-left: 4px solid #58a6ff;
+      background: rgba(88, 166, 255, 0.06);
+      border-radius: 0 8px 8px 0;
+      padding: 0.8rem 1rem;
+      color: #c9d1d9;
+    }
+
+    /* Tables */
+    .markdown-section table {
+      display: table;
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 10px;
+      border: 1px solid #30363d;
+    }
+
+    .markdown-section table th {
+      background: #161b22;
+      color: #f0f6fc;
+      font-weight: 700;
+    }
+
+    .markdown-section table th,
+    .markdown-section table td {
+      border: 1px solid #30363d;
+      padding: 0.8rem 1rem;
+    }
+
+    .markdown-section table tr:nth-child(odd) {
+      background: rgba(88, 166, 255, 0.03);
+    }
+
+    /* Search */
+    .search {
+      margin-bottom: 1rem;
+      padding: 0 1rem;
+    }
+
+    .search input {
+      width: 100%;
+      background: #0d1117;
+      border: 1px solid #30363d;
+      color: #c9d1d9;
+      border-radius: 10px;
+      padding: 0.75rem 1rem;
+      font-size: 0.95rem;
+      transition:
+        border-color 0.15s ease,
+        box-shadow 0.15s ease;
+    }
+
+    .search input:focus {
+      outline: none;
+      border-color: #58a6ff;
+      box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15);
+    }
+
+    .search input::placeholder {
+      color: #8b949e;
+    }
+
+    .results-panel {
+      background: #161b22 !important;
+      border: 1px solid #30363d !important;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .matching-post {
+      border-bottom: 1px solid #30363d !important;
+    }
+
+    /* Copy button */
+    .docsify-copy-code-button {
+      background: #21262d !important;
+      border: 1px solid #30363d !important;
+      color: #c9d1d9 !important;
+      border-radius: 6px !important;
+    }
+
+    .docsify-copy-code-button:hover {
+      background: #30363d !important;
+    }
+
+    /* Pagination */
+    .pagination-item-label,
+    .pagination-item-title {
+      color: #c9d1d9 !important;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid #30363d;
+      color: #8b949e;
+    }
+
+    /* Mermaid */
+    .mermaid {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      padding: 1rem;
+      overflow: auto;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .markdown-section {
+        padding: 1.25rem;
       }
 
-      .search input {
-        background-color: var(--code-background);
-        border: 1px solid var(--border-color);
-        color: var(--text-color);
-        border-radius: 4px;
-        padding: 0.5rem 0.75rem;
+      .markdown-section h1 {
+        font-size: 2rem;
       }
 
-      .search input::placeholder {
-        color: var(--secondary-text);
+      .markdown-section h2 {
+        font-size: 1.4rem;
       }
+    }
 
-      .search input:focus {
-        outline: none;
-        border-color: var(--theme-color);
-        box-shadow: 0 0 0 3px rgba(144, 202, 249, 0.1);
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
       }
+    }
+  </style>
+</head>
 
-      /* Search Results */
-      .search .results-panel {
-        background-color: var(--sidebar-background);
-        border: 1px solid var(--border-color);
-        border-radius: 4px;
-      }
+<body>
+  <div id="app">Loading ORP Documentation...</div>
 
-      .search .results-panel .result-item {
-        border-bottom: 1px solid var(--border-color);
-        padding: 0.5rem;
-      }
+  <script>
+    window.$docsify = {
+      name: "ORP",
+      repo: "https://github.com/GeneralSergal/ORP",
 
-      .search .results-panel .result-item:last-child {
-        border-bottom: none;
-      }
+      homepage: "README.md",
 
-      /* Buttons and Interactive Elements */
-      button, .btn {
-        background-color: var(--primary-color);
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        padding: 0.5rem 1rem;
-        cursor: pointer;
-        transition: background-color 0.2s ease;
-        font-weight: 500;
-      }
+      loadSidebar: true,
+      loadNavbar: false,
 
-      button:hover, .btn:hover {
-        background-color: var(--secondary-color);
-      }
+      auto2top: true,
+      subMaxLevel: 3,
+      maxLevel: 4,
 
-      /* Inline Lists */
-      ul, ol {
-        color: var(--text-color);
-        line-height: 1.6;
-      }
+      coverpage: false,
+      mergeNavbar: true,
 
-      li {
-        margin: 0.5rem 0;
-      }
+      themeColor: "#58a6ff",
 
-      /* Scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
-        height: 8px;
-      }
+      alias: {
+        "/.*/_sidebar.md": "/_sidebar.md"
+      },
 
-      ::-webkit-scrollbar-track {
-        background: var(--sidebar-background);
-      }
+      search: {
+        maxAge: 86400000,
+        paths: "auto",
+        placeholder: "Search ORP documentation...",
+        noData: "No matching documents found.",
+        depth: 6,
+        hideOtherSidebarContent: false
+      },
 
-      ::-webkit-scrollbar-thumb {
-        background: var(--primary-color);
-        border-radius: 4px;
-      }
+      pagination: {
+        previousText: "Previous",
+        nextText: "Next",
+        crossChapter: true,
+        crossChapterText: true
+      },
 
-      ::-webkit-scrollbar-thumb:hover {
-        background: var(--theme-color);
-      }
+      copyCode: {
+        buttonText: "Copy",
+        errorText: "Error",
+        successText: "Copied"
+      },
 
-      /* Responsive Design */
-      @media (max-width: 768px) {
-        .sidebar {
-          width: 100% !important;
-          position: relative;
+      markdown: {
+        smartypants: true,
+        breaks: false
+      },
+
+      externalLinkTarget: "_blank",
+
+      executeScript: true,
+
+      notFoundPage: true,
+
+      formatUpdated: "{MM}/{DD}/{YYYY} {HH}:{mm}",
+
+      plugins: [
+        function(hook) {
+          hook.doneEach(function() {
+            document.title =
+              document.title.includes("ORP")
+                ? document.title
+                : document.title + " — ORP";
+          });
         }
+      ]
+    };
+  </script>
 
-        .sidebar-toggle {
-          background-color: var(--primary-color);
-        }
+  <!-- Docsify -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
 
-        .content {
-          padding: 1rem;
-        }
+  <!-- Search -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
 
-        h1 {
-          font-size: 1.5rem;
-        }
+  <!-- Zoom -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
 
-        h2 {
-          font-size: 1.25rem;
-        }
-      }
+  <!-- Copy Code -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code@2/dist/docsify-copy-code.min.js"></script>
 
-      /* Accessibility */
-      @media (prefers-reduced-motion: reduce) {
-        * {
-          animation-duration: 0.01ms !important;
-          animation-iteration-count: 1 !important;
-          transition-duration: 0.01ms !important;
-        }
-      }
+  <!-- Pagination -->
+  <script src="https://cdn.jsdelivr.net/npm/docsify-pagination@2/dist/docsify-pagination.min.js"></script>
 
-      /* Dark mode indicator */
-      @media (prefers-color-scheme: dark) {
-        body {
-          color-scheme: dark;
-        }
-      }
-    </style>
-  </head>
+  <!-- Prism -->
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-markdown.min.js"></script>
 
-  <body>
-    <div id="app"></div>
+  <!-- Mermaid -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
 
-    <script>
-      window.$docsify = {
-        // Basic Configuration
-        name: "ORP Documentation",
-        repo: "https://github.com/GeneralSergal/ORP",
-        homepage: "README.md",
-        
-        // Navigation
-        loadSidebar: true,
-        loadNavbar: false,
-        subMaxLevel: 3,
-        auto2top: true,
-        coverpage: false,
-        
-        // Theme
-        themeColor: "#90caf9",
-        
-        // Search Configuration
-        search: {
-          maxAge: 86400000,
-          paths: "auto",
-          placeholder: "🔍 Search ORP documentation...",
-          noData: "❌ No results found",
-          depth: 3,
-          hideOtherSidebarContent: false
-        },
-        
-        // Formatting
-        formatUpdated: "{docsify-updated}",
-        
-        // Plugins Configuration
-        tabs: {
-          persist: true,
-          sync: true,
-          theme: "classic",
-          tabComments: true,
-          tabHeadings: true
-        },
-        
-        // Markdown Configuration
-        markdown: {
-          smartypants: true,
-          breaks: false
-        },
-        
-        // External Links
-        externalLinkTarget: "_blank",
-        
-        // Navigation Bar
-        navAutoLoadSidebar: true
-      };
-
-      // Custom plugin for analytics and tracking (optional)
-      if (window.location.hostname !== 'localhost') {
-        // Analytics can be added here
-      }
-    </script>
-
-    <!-- Plugins - Core Features -->
-    <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
-
-    <!-- Copy Code Plugin -->
-    <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code@2/dist/docsify-copy-code.min.js"></script>
-
-    <!-- Pagination Plugin -->
-    <script src="https://cdn.jsdelivr.net/npm/docsify-pagination@2/dist/docsify-pagination.min.js"></script>
-
-    <!-- Last Updated Plugin -->
-    <script src="https://cdn.jsdelivr.net/npm/@alertbox/docsify-footer@1/dist/docsify-footer.min.js"></script>
-
-  </body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: "dark",
+      securityLevel: "loose"
+    });
+  </script>
+</body>
 </html>
