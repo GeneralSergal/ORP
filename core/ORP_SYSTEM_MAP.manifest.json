@@ -1,9 +1,11 @@
 {
   "system": "ORP",
   "version": "3.0",
-  "type": "Type-Safe Epistemic Governance Framework (Extended Graph Model)",
-  "architecture_model": "layered_dag_with_epistemic_isolation",
-  "pipeline": [
+  "model": "Type-Safe Unified Architecture",
+  "type": "canonical_manifest",
+  "description": "Authoritative dependency and layer mapping for ORP v3.0",
+
+  "pipeline_order": [
     "ORP_RUNTIME.md",
     "ORP_PROMPT.md",
     "ORP_BENCHMARK.md",
@@ -13,223 +15,131 @@
     "ORP_SCORING.md",
     "FINAL_OUTPUT_STATE"
   ],
+
   "layers": {
-    "ORP_RUNTIME.md": {
-      "version": "3.0",
-      "role": "Runtime Governance Kernel",
-      "authority": "L3",
-      "responsibility": [
-        "Enforce runtime behavioral constraints",
-        "Manage SHS state transitions",
-        "Compute sigma squared drift (σ²)",
-        "Preserve immutable L1/L2 provenance",
-        "Detect coherence camouflage",
-        "Execute failure recovery protocols",
-        "Enforce LAS authority hierarchy"
-      ],
-      "output_type": "governed_runtime_state"
+    "L1": {
+      "description": "Observed typed signals (immutable)",
+      "authority": "evidence_layer"
     },
-    "ORP_PROMPT.md": {
-      "version": "3.0",
-      "role": "Epistemic Constraint Layer",
-      "authority": "L2-L3 boundary",
-      "responsibility": [
-        "Atomic claim decomposition",
-        "Epistemic labeling enforcement",
-        "Uncertainty preservation",
-        "Causal structure enforcement",
-        "Anti-narrative transformation rules"
-      ],
-      "output_type": "constrained_reasoning_behavior"
+    "L2": {
+      "description": "Verified interpretation constrained to L1",
+      "authority": "interpretation_layer"
     },
-    "ORP_BENCHMARK.md": {
-      "version": "3.0",
-      "role": "Adversarial Stress Layer",
-      "authority": "L2 synthetic input",
-      "responsibility": [
-        "Inject adversarial reasoning cases",
-        "Stress hallucination boundaries",
-        "Trigger drift conditions",
-        "Evaluate counterfactual stability",
-        "Expose coherence camouflage risk"
-      ],
-      "output_type": "adversarial_claim_set"
+    "L3": {
+      "description": "Governance and runtime authority",
+      "authority": "control_layer"
     },
-    "ORP_EVALUATION_SCHEMA.md": {
-      "version": "3.0",
-      "role": "Structural Transformation Contract Layer",
-      "authority": "L3-aligned",
-      "responsibility": [
-        "Define atomic claim transformations",
-        "Enforce epistemic tagging contracts",
-        "Structure relationship graphs",
-        "Prevent reconstruction drift",
-        "Maintain evaluation invariants"
-      ],
-      "output_type": "epistemic_structure_specification"
-    },
-    "ORP_RUBRIC.md": {
-      "version": "3.0",
-      "role": "Qualitative Integrity Layer",
-      "authority": "L3-aligned",
-      "responsibility": [
-        "Detect epistemic distortions",
-        "Score provenance integrity",
-        "Evaluate governance compliance",
-        "Assess structural consistency",
-        "Generate evaluation vectors"
-      ],
-      "output_type": "structured_evaluation_vector"
-    },
-    "ORP_SCORING.md": {
-      "version": "3.0",
-      "role": "Quantitative Aggregation Layer",
-      "authority": "L3-aligned",
-      "responsibility": [
-        "Aggregate rubric outputs",
-        "Apply deterministic weighting",
-        "Compute drift penalties using σ²",
-        "Normalize integrity scores",
-        "Generate final system score"
-      ],
-      "output_type": "operational_integrity_score"
+    "L4": {
+      "description": "Probabilistic inference (non-authoritative)",
+      "authority": "isolated_inference_layer"
     }
   },
-  "epistemic_layers": {
-    "L1": "Direct observed typed signals (immutable after commit)",
-    "L2": "Verified interpretation constrained to L1 provenance",
-    "L3": "Governance and runtime authority layer (system control)",
-    "L4": "Probabilistic inference layer (non-authoritative, isolated)"
+
+  "files": {
+    "ORP_RUNTIME.md": {
+      "layer": "L3",
+      "type": "runtime_kernel",
+      "depends_on": [],
+      "outputs": ["governed_runtime_state"],
+      "edges": ["ORP_PROMPT.md", "ORP_EVALUATION_SCHEMA.md", "ORP_RUBRIC.md"]
+    },
+
+    "ORP_PROMPT.md": {
+      "layer": "L2-L3",
+      "type": "constraint_layer",
+      "depends_on": ["ORP_RUNTIME.md"],
+      "outputs": ["constrained_reasoning_behavior"],
+      "edges": ["MODEL_RESPONSE"]
+    },
+
+    "ORP_BENCHMARK.md": {
+      "layer": "L2",
+      "type": "stress_layer",
+      "depends_on": ["ORP_RUNTIME.md"],
+      "outputs": ["adversarial_claim_set"],
+      "edges": ["MODEL_RESPONSE"]
+    },
+
+    "MODEL_RESPONSE": {
+      "layer": "runtime_event",
+      "type": "execution_output",
+      "depends_on": ["ORP_PROMPT.md", "ORP_BENCHMARK.md"],
+      "outputs": ["raw_governed_output"],
+      "edges": ["ORP_EVALUATION_SCHEMA.md"]
+    },
+
+    "ORP_EVALUATION_SCHEMA.md": {
+      "layer": "L3",
+      "type": "structural_contract",
+      "depends_on": ["MODEL_RESPONSE"],
+      "outputs": ["epistemic_structure_specification"],
+      "edges": ["ORP_RUBRIC.md"]
+    },
+
+    "ORP_RUBRIC.md": {
+      "layer": "L3",
+      "type": "evaluation_layer",
+      "depends_on": ["ORP_EVALUATION_SCHEMA.md"],
+      "outputs": ["structured_evaluation_vector"],
+      "edges": ["ORP_SCORING.md"]
+    },
+
+    "ORP_SCORING.md": {
+      "layer": "L3",
+      "type": "aggregation_layer",
+      "depends_on": ["ORP_RUBRIC.md"],
+      "outputs": ["operational_integrity_score"],
+      "edges": ["FINAL_OUTPUT_STATE"]
+    },
+
+    "FINAL_OUTPUT_STATE": {
+      "layer": "L3",
+      "type": "terminal_state",
+      "depends_on": ["ORP_SCORING.md"],
+      "outputs": ["final_score", "shs_state", "drift_classification"]
+    }
   },
+
+  "observability": {
+    "ORP_SIGMA_SQUARED_DRIFT.md": {
+      "type": "numeric_drift_model",
+      "layer": "observational",
+      "feeds": ["ORP_RUNTIME.md"],
+      "definition": "variance(L1_signal_vector_over_time)"
+    },
+    "ORP_MODEL_DECAY_TRACKER.md": {
+      "type": "degradation_observer",
+      "layer": "observational",
+      "feeds": ["ORP_ANTI_DEGRADATION.md"]
+    }
+  },
+
+  "governance_documents": [
+    "ORP_CORE_SPEC.md",
+    "ORP_SYSTEM_ARCHITECTURE.md",
+    "ORP_SYSTEM_MAP.md",
+    "ORP_SYSTEM_MAP.manifest.json",
+    "ORP_META_MAP.md"
+  ],
+
+  "conceptual_modules": [
+    "ORP_ARCHITECTURE.md",
+    "ORP_EPISTEMIC_ISOLATION.md",
+    "ORP_COHERENCE_CAMOUFLAGE.md",
+    "ORP_ANTI_DEGRADATION.md"
+  ],
+
   "critical_invariants": [
     "L4_must_not_modify_L1_or_L2",
-    "No_provenance_overwrite",
-    "No_silent_temporal_rewrite",
-    "No_cross_layer_leakage",
-    "Recoverability_over_completion",
-    "Sigma_squared_must_be_deterministic",
-    "Coherence_camouflage_is_failure_state",
-    "Epistemic_isolation_must_be_preserved"
+    "no_provenance_overwrite",
+    "no_temporal_rewrite",
+    "no_cross_layer_leakage",
+    "recoverability_over_completion",
+    "sigma_squared_deterministic",
+    "coherence_camouflage_is_failure",
+    "epistemic_isolation_required"
   ],
-  "runtime_governance": {
-    "enabled": true,
-    "shs_states": [
-      "GREEN",
-      "YELLOW",
-      "ORANGE",
-      "RED",
-      "BLACK"
-    ],
-    "sigma_squared_drift_model": {
-      "enabled": true,
-      "definition": "variance(L1_signal_vector_over_time)",
-      "thresholds": {
-        "GREEN": "<0.01",
-        "YELLOW": "0.01-0.05",
-        "ORANGE": "0.05-0.15",
-        "RED": "0.15-0.30",
-        "BLACK": ">0.30"
-      }
-    },
-    "coherence_camouflage_detection": true,
-    "provenance_preservation": true,
-    "recoverability_priority": true,
-    "fail_closed_mode": true
-  },
-  "meta_map": {
-    "file_graph": {
-      "ORP_RUNTIME.md": {
-        "type": "runtime_kernel",
-        "layer": "L3",
-        "edges": ["ORP_PROMPT.md", "ORP_EVALUATION_SCHEMA.md", "ORP_RUBRIC.md"]
-      },
-      "ORP_PROMPT.md": {
-        "type": "constraint_layer",
-        "layer": "L2-L3",
-        "edges": ["MODEL_RESPONSE"]
-      },
-      "ORP_BENCHMARK.md": {
-        "type": "stress_layer",
-        "layer": "L2",
-        "edges": ["MODEL_RESPONSE"]
-      },
-      "MODEL_RESPONSE": {
-        "type": "execution_output",
-        "layer": "runtime",
-        "edges": ["ORP_EVALUATION_SCHEMA.md"]
-      },
-      "ORP_EVALUATION_SCHEMA.md": {
-        "type": "structural_contract",
-        "layer": "L3",
-        "edges": ["ORP_RUBRIC.md"]
-      },
-      "ORP_RUBRIC.md": {
-        "type": "evaluation_layer",
-        "layer": "L3",
-        "edges": ["ORP_SCORING.md"]
-      },
-      "ORP_SCORING.md": {
-        "type": "aggregation_layer",
-        "layer": "L3",
-        "edges": ["FINAL_OUTPUT_STATE"]
-      }
-    },
-    "conceptual_modules": [
-      "ORP_ARCHITECTURE.md",
-      "ORP_EPISTEMIC_ISOLATION.md",
-      "ORP_COHERENCE_CAMOUFLAGE.md",
-      "ORP_ANTI_DEGRADATION.md",
-      "ORP_MODEL_DECAY_TRACKER.md"
-    ],
-    "observational_layers": [
-      "ORP_MODEL_DECAY_TRACKER.md",
-      "ORP_SIGMA_SQUARED_DRIFT.md"
-    ],
-    "conceptual_only": [
-      "ORP_ARCHITECTURE.md"
-    ]
-  },
-  "anti_degradation_model": {
-    "enabled": true,
-    "detected_patterns": [
-      "instruction_override",
-      "style_drift",
-      "provenance_loss",
-      "coherence_camouflage",
-      "confidence_inflation"
-    ],
-    "response_rules": [
-      "prefer_visible_uncertainty",
-      "reject_narrative_smoothing",
-      "enforce_structural_formatting",
-      "flag_epistemic_violations",
-      "downgrade_on_repeated_drift"
-    ]
-  },
-  "system_identity": {
-    "description": "Governance-first epistemic reasoning architecture",
-    "not": [
-      "chatbot personality system",
-      "creative writing engine",
-      "persuasion system",
-      "autonomous agent"
-    ],
-    "properties": [
-      "drift_observable",
-      "provenance_preserving",
-      "layer_isolated",
-      "recoverable",
-      "type_safe_L1_L2_boundary"
-    ]
-  },
-  "design_constraints": {
-    "separation_of_concerns": true,
-    "epistemic_isolation": true,
-    "no_cross_contamination": true,
-    "deterministic_evaluation_pipeline": true,
-    "backpropagation_forbidden": true,
-    "fail_closed_evaluation": true
-  },
+
   "versioning_policy": {
     "global_system_version": "3.0",
     "compatibility": "3.x",
