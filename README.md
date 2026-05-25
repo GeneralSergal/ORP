@@ -176,7 +176,6 @@ Requires:
 ```text
 /
 ├── core/           # Runtime, Core Spec & Architecture
-├── constraints/    # Prompts & Governance Constraints
 ├── conceptual/     # Non-authoritative conceptual models
 ├── docs/           # Documentation & Roadmap
 ├── drift/          # Drift, Decay & Anti-Degradation
