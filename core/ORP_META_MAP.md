@@ -11,118 +11,147 @@ This document defines the structural dependency graph of the ORP system.
 It is a static architecture index only.
 
 It does NOT:
-- execute logic
-- enforce rules
-- define runtime behavior
-- override `ORP_RUNTIME.md`
+
+- execute logic  
+- enforce rules  
+- define runtime behavior  
+- override `ORP_RUNTIME.md`  
 
 ---
 
-## Core Principle
+# Core Principle
 
 ORP is a directed acyclic document graph (DAG) with strict separation of:
 
-- execution authority (L3)
-- evaluation contracts (L3-aligned)
-- observational systems (L4)
-- conceptual models (L4)
+- **Execution authority (L3)**  
+- **Evaluation contracts (L3‑aligned)**  
+- **Observational systems (L4)**  
+- **Conceptual models (L4)**  
 
-Only one node has enforcement authority:  
-**ORP_RUNTIME.md (L3 Kernel)**
+Only one node has enforcement authority:
 
----
+**`ORP_RUNTIME.md` (L3 Kernel)**
 
-## System Graph Model
-
-### 1. CORE RUNTIME LAYER (AUTHORITY KERNEL)
-
-**ORP_RUNTIME.md**
-- **Authority**: L3 (exclusive execution authority)
-- **Role**: System governance kernel
-- **Responsibilities**:
-  - SHS state management
-  - Drift computation (σ² model)
-  - LAS enforcement (L1–L4)
-  - Failure handling
-  - Provenance integrity enforcement
-  - System invariants
-- **Dependency Type**: NONE (root node)
-- **Impact**: All system behavior is downstream-constrained by this file.
+All other documents are descriptive, contractual, or observational.
 
 ---
 
-### 2. ARCHITECTURE DESCRIPTION LAYER (STRUCTURAL OVERVIEW)
+# 1. CORE RUNTIME LAYER (L3 AUTHORITY KERNEL)
 
-**ORP_SYSTEM_ARCHITECTURE.md**
-- **Authority**: L3-descriptive (non-executing)
-- **Role**: System pipeline explanation layer
-- **Responsibilities**:
-  - Describe system structure
-  - Define evaluation pipeline flow
-  - Document layer separation
-  - Explain system principles
-- **Dependency Type**: CONCEPTUAL → `ORP_RUNTIME.md`
-- **Dependents**: Evaluation pipeline specification layer
+## `ORP_RUNTIME.md`
 
----
+- **Authority:** L3 (exclusive execution authority)  
+- **Role:** System governance kernel  
+- **Responsibilities:**  
+  - SHS state management  
+  - Drift computation (σ² model)  
+  - LAS enforcement (L1–L4)  
+  - Failure handling  
+  - Provenance integrity enforcement  
+  - System invariants  
+- **Dependencies:** NONE (root node)  
+- **Dependents:** All downstream layers  
 
-### 3. CONCEPTUAL MODEL LAYER (NON-AUTHORITATIVE)
-
-**ORP_ARCHITECTURE.md**
-- **Authority**: L4 (non-authoritative)
-- **Role**: Metaphorical / cognitive modeling layer
-- **Responsibilities**:
-  - M ↔ L duality model
-  - ACS subsystem abstraction
-  - Entropic stabilization model
-  - Symbolic architecture representations
-- **Dependency Type**: REFERENCE ONLY (no structural influence)
-- **Dependents**: NONE (isolated conceptual layer)
+This file defines the **only authoritative runtime behavior**.
 
 ---
 
-### 4. OBSERVATIONAL LAYER (DIAGNOSTIC ONLY)
+# 2. ARCHITECTURE DESCRIPTION LAYER (L3-DESCRIPTIVE)
 
-**ORP_MODEL_DECAY_TRACKER.md**
-- **Authority**: L4 (diagnostic only)
-- **Role**: Behavioral drift observation system
-- **Responsibilities**:
-  - Track degradation patterns
-  - Log instruction failures
-  - Record structural drift signals
-  - Maintain longitudinal anomaly history
-- **Dependency Type**: READ-ONLY reference to `ORP_RUNTIME.md`
-- **Dependents**: Indirect use by L3 evaluation logic (via interpreted signals only)
+## `ORP_SYSTEM_ARCHITECTURE.md`
+
+- **Authority:** L3-descriptive  
+- **Role:** System pipeline explanation  
+- **Responsibilities:**  
+  - Describe system structure  
+  - Define evaluation pipeline flow  
+  - Document layer separation  
+  - Explain system principles  
+- **Dependencies:** `ORP_RUNTIME.md`  
+- **Dependents:** Evaluation pipeline  
 
 ---
 
-### 5. EVALUATION PIPELINE LAYER (L3-ALIGNED CONTRACT SYSTEM)
+# 3. CONCEPTUAL MODEL LAYER (L4 — NON-AUTHORITATIVE)
 
-**Components**:
-- `EVALUATION_SCHEMA.md`
-- `RUBRIC.md`
-- `SCORING.md`
+## `ORP_ARCHITECTURE.md`
 
-**Pipeline Flow (Strict Order)**:
+- **Authority:** L4  
+- **Role:** Conceptual / metaphorical modeling  
+- **Responsibilities:**  
+  - Symbolic architecture representations  
+  - Cognitive/entropic abstractions  
+  - Non-governance conceptual framing  
+- **Dependencies:** NONE  
+- **Dependents:** NONE  
+
+This layer has **no structural influence** on the system.
+
+---
+
+# 4. OBSERVATIONAL LAYER (L4 — DIAGNOSTIC ONLY)
+
+## `ORP_MODEL_DECAY_TRACKER.md`
+
+- **Authority:** L4  
+- **Role:** Drift observation system  
+- **Responsibilities:**  
+  - Track degradation patterns  
+  - Log instruction failures  
+  - Record drift signals  
+  - Maintain anomaly history  
+- **Dependencies:** `ORP_RUNTIME.md` (read-only)  
+- **Dependents:** L3 (indirect, via structured signals only)  
+
+## `ORP_SIGMA_SQUARED_DRIFT.md`
+
+- **Authority:** L4  
+- **Role:** Numeric drift model definition  
+- **Responsibilities:**  
+  - Define σ² variance model  
+  - Provide drift thresholds  
+  - Support L3 drift classification  
+- **Dependencies:** NONE  
+- **Dependents:** `ORP_RUNTIME.md` (drift computation)  
+
+Observational layers **cannot influence L3 decisions**.
+
+---
+
+# 5. EVALUATION PIPELINE LAYER (L3-ALIGNED CONTRACT SYSTEM)
+
+## Components
+
+- `ORP_EVALUATION_SCHEMA.md`  
+- `ORP_RUBRIC.md`  
+- `ORP_SCORING.md`  
+
+These files form a **post-hoc evaluation pipeline**.
+
+### Pipeline Flow (Strict Order)
 
 ```mermaid
 flowchart TD
-    A[MODEL OUTPUT] --> B[EVALUATION_SCHEMA.md]
+    A[MODEL RESPONSE] --> B[EVALUATION_SCHEMA.md]
     B --> C[RUBRIC.md]
     C --> D[SCORING.md]
     D --> E[FINAL SCORE]
 ```
 
-- **EVALUATION_SCHEMA.md**: L3-aligned contract — Defines valid structural transformations
-- **RUBRIC.md**: L3-aligned evaluation logic — Performs qualitative assessment
-- **SCORING.md**: L3-aligned aggregation layer — Produces normalized quantitative outputs
+### Roles
 
-**Important Constraint**:  
-The evaluation pipeline is strictly post-hoc analysis. It does NOT influence runtime behavior or modify `ORP_RUNTIME.md`.
+- **`ORP_EVALUATION_SCHEMA.md`** — L3-aligned structural contract  
+- **`ORP_RUBRIC.md`** — L3-aligned qualitative evaluation  
+- **`ORP_SCORING.md`** — L3-aligned quantitative aggregation  
+
+### Constraint
+
+Evaluation is **post-hoc only**.  
+It does **NOT** modify runtime behavior or influence `ORP_RUNTIME.md`.
 
 ---
 
-## Layer Classification Matrix
+# Layer Classification Matrix
 
 | File                        | Layer       | Authority Type      | Role                          |
 |-----------------------------|-------------|---------------------|-------------------------------|
@@ -130,13 +159,33 @@ The evaluation pipeline is strictly post-hoc analysis. It does NOT influence run
 | ORP_SYSTEM_ARCHITECTURE.md | L3          | Descriptive Layer   | System structure explanation  |
 | ORP_ARCHITECTURE.md        | L4          | Conceptual Model    | Metaphorical system design    |
 | ORP_MODEL_DECAY_TRACKER.md | L4          | Observational       | Drift diagnostics             |
-| EVALUATION_SCHEMA.md       | L3-aligned  | Contract Layer      | Structural rules              |
-| RUBRIC.md                  | L3-aligned  | Evaluation Layer    | Qualitative assessment        |
-| SCORING.md                 | L3-aligned  | Aggregation Layer   | Quantitative scoring          |
+| ORP_SIGMA_SQUARED_DRIFT.md | L4          | Observational       | Numeric drift model           |
+| ORP_EVALUATION_SCHEMA.md   | L3-aligned  | Contract Layer      | Structural rules              |
+| ORP_RUBRIC.md              | L3-aligned  | Evaluation Layer    | Qualitative assessment        |
+| ORP_SCORING.md             | L3-aligned  | Aggregation Layer   | Quantitative scoring          |
 
 ---
 
-## Global Design Constraints
+# 6. MANIFEST CONTRACT (v3.0 Requirement)
+
+The ORP system must expose a machine-readable manifest:
+
+- `ORP_SYSTEM_MAP.manifest.json`
+
+This manifest defines:
+
+- DAG structure  
+- File dependencies  
+- Layer authority  
+- Evaluation pipeline order  
+- Observational boundaries  
+- L3 root kernel identity  
+
+The manifest is **canonical** and must remain synchronized with this meta-map.
+
+---
+
+# Global Design Constraints
 
 1. **Authority Isolation**  
    L4 systems cannot influence L3 decisions.
@@ -145,36 +194,41 @@ The evaluation pipeline is strictly post-hoc analysis. It does NOT influence run
    Only `ORP_RUNTIME.md` defines execution behavior.
 
 3. **DAG Integrity**  
-   No cyclic dependencies allowed between layers.
+   No cyclic dependencies allowed.
 
 4. **Observational Non-Interference**  
-   Tracking systems are passive only.
+   L4 diagnostics are passive only.
 
 5. **Evaluation Non-Governance**  
    Scoring systems cannot modify runtime state.
 
+6. **Manifest Synchronization**  
+   All structural changes must update the manifest.
+
 ---
 
-## System Graph (Simplified)
+# System Graph (Simplified)
 
 ```mermaid
 flowchart TD
     Root[ORP_RUNTIME.md<br/>L3 ROOT KERNEL] --> Arch[ORP_SYSTEM_ARCHITECTURE.md<br/>STRUCTURAL VIEW]
-    Arch --> EvalPipeline[Evaluation Pipeline<br/>EVALUATION_SCHEMA → RUBRIC → SCORING]
-    Arch --> Obs[ORP_MODEL_DECAY_TRACKER.md<br/>L4 OBSERVATION]
-    EvalPipeline --> Final[FINAL SCORE]
-    Obs -.->|indirect| EvalPipeline
-    Arch -.->|reference| Concept[ORP_ARCHITECTURE.md<br/>L4 CONCEPTUAL - ISOLATED]
+    Arch --> Eval[EVALUATION_SCHEMA → RUBRIC → SCORING<br/>L3-ALIGNED PIPELINE]
+    Arch --> Obs1[ORP_MODEL_DECAY_TRACKER.md<br/>L4 OBSERVATION]
+    Arch --> Obs2[ORP_SIGMA_SQUARED_DRIFT.md<br/>L4 NUMERIC DRIFT]
+    Eval --> Final[FINAL SCORE]
+    Obs1 -.->|structured signals| Root
+    Obs2 -.->|numeric drift| Root
+    Arch -.->|reference| Concept[ORP_ARCHITECTURE.md<br/>L4 CONCEPTUAL]
     
     classDef l3 fill:#1e3a8a,stroke:#60a5fa,color:#fff
     classDef l4 fill:#4338ca,stroke:#a5b4fc,color:#fff
-    class Root,Arch l3
-    class Obs,Concept l4
+    class Root,Arch,Eval l3
+    class Obs1,Obs2,Concept l4
 ```
 
 ---
 
-## Final System State
+# Final System State
 
 ```yaml
 ORP_VERSION: 3.0
@@ -182,6 +236,7 @@ GRAPH_MODEL: DIRECTED_ACYCLIC_GRAPH
 AUTHORITY_MODEL: L3_SINGLE_ROOT_KERNEL
 OBSERVATION_MODEL: L4_PASSIVE
 EVALUATION_MODEL: POST_HOC_L3_ALIGNED
+MANIFEST: SYNCHRONIZED
 INTEGRITY_CONSTRAINT: STRICT_ISOLATION
 STATUS: FROZEN
 ```
