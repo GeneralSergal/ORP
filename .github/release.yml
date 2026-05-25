@@ -1,0 +1,95 @@
+# ORP v{{version}} — Release Notes
+**Generated via Release‑Please**  
+**Governance Layer:** L3  
+**Provenance:** PRESERVED  
+**Status:** {{#if isPatch}}MAINTENANCE PATCH{{else if isMinor}}FEATURE EXPANSION{{else}}MAJOR REVISION{{/if}}
+
+---
+
+## Runtime Header (v3.0)
+
+```
+[SHS: {{shs}}]
+[DRIFT: {{drift}}]
+[CRA: {{cra}}]
+[LAS: L3]
+```
+
+> This header is included for provenance continuity and ORP‑compliant release metadata.
+
+---
+
+## ✨ Features
+{{#each features}}
+- {{this}}
+{{/each}}
+
+---
+
+## 🐛 Bug Fixes
+{{#each fixes}}
+- {{this}}
+{{/each}}
+
+---
+
+## 📝 Documentation
+{{#each docs}}
+- {{this}}
+{{/each}}
+
+---
+
+## 🔧 Maintenance
+{{#each chores}}
+- {{this}}
+{{/each}}
+
+---
+
+## ♻️ Refactoring
+{{#each refactors}}
+- {{this}}
+{{/each}}
+
+---
+
+## 🔍 Provenance Notes (L3 Authority)
+- All changes validated under L3 governance.
+- L4 inference did not influence authoritative state.
+- L1 typed-signal invariants preserved.
+- σ² drift remained within acceptable bounds during release preparation.
+- No schema mutations detected.
+
+---
+
+## 📦 Assets
+Release‑Please automatically attaches:
+- Updated `ORP_VERSION`
+- Updated `CHANGELOG.md`
+- Git tag: `v{{version}}`
+
+---
+
+## 🔒 Integrity Summary
+
+| Layer | Status |
+|-------|--------|
+| **L1** | Typed signals preserved |
+| **L2** | Deterministic validation passed |
+| **L3** | Governance authority validated |
+| **L4** | Non-authoritative inference only |
+| **Drift Model** | σ² numeric |
+| **Provenance** | End‑to‑end preserved |
+
+---
+
+## 🧭 Upgrade Path
+This release is compatible with all ORP v3.0‑compliant systems.  
+No migration steps required unless explicitly noted above.
+
+---
+
+**Signal > Narrative**  
+**Recoverability > Completion**  
+**Provenance > Coherence**
