@@ -3,9 +3,7 @@
 ## System Version
 
 ORP v3.0 (Type-Safe Unified Architecture)  
-Internal Architecture Patch: v3.1 (Embedded Telemetry & L4 Integration)
-
-This file defines the enforceable execution core of ORP.  
+This file is the **sole authoritative runtime specification**.  
 All ORP-compliant implementations MUST adhere to this execution layer.
 
 ---
@@ -47,9 +45,9 @@ L1 → L2 → L3 → SYSTEM OUTPUT
 
 ---
 
-## INVARIANTS (v3.0 + v3.1 PATCH)
+## INVARIANTS
 
-- L1 Strict Typing: All inputs must be normalized into typed signals. No raw strings permitted in L1.
+- L1 Strict Typing: All inputs must be normalized into typed signals only. No raw strings permitted in L1.
 - L1 Types Allowed: Float ∈ [0.0, 1.0], Integer (bounded), Boolean.
 - L2 must operate only on validated L1 data.
 - L3 is the sole authority layer.
@@ -57,161 +55,160 @@ L1 → L2 → L3 → SYSTEM OUTPUT
 - L4 is internal only and cannot access raw L1 directly.
 - Provenance must be preserved across L1 → L2 transitions.
 - Drift must be computed deterministically from numeric L1 signals.
+- Dashboard: Fully integrated. No external files or dependencies.
 
 ---
 
 ## L1 — OBSERVED DATA LAYER
 
-Definition:
+**Definition:**  
 L1 contains only raw typed telemetry signals.
 
-Constraints:
-- No strings as data
-- No narrative fields
-- No unstructured metadata
+**Constraints:**  
+- No strings as data  
+- No narrative fields  
+- No unstructured metadata  
 
-Role:
-- Signal ingestion only
-- No interpretation
-- No validation logic
+**Role:** Signal ingestion only. No interpretation. No validation logic.
 
 ---
 
 ## L2 — VERIFIED INTERPRETATION LAYER
 
-Function:
-Deterministic validation of L1 signals.
+**Function:** Deterministic validation of L1 signals.
 
-Responsibilities:
-- schema validation
-- boundary enforcement
-- anomaly tagging
-- consistency verification
+**Responsibilities:**  
+- Schema validation  
+- Boundary enforcement  
+- Anomaly tagging  
+- Consistency verification  
 
-Output:
-- structured validated snapshot
-- L4-compatible inference input
+**Output:** Structured validated snapshot + L4-compatible inference input.
 
 ---
 
 ## L3 — GOVERNANCE LAYER (AUTHORITY CORE)
 
-Function:
-L3 enforces system rules and state transitions.
+**Function:** Enforces system rules and state transitions.
 
-Responsibilities:
-- enforce invariants
-- resolve L2 conflicts
-- control system state transitions
-- prevent invalid promotions
+**Responsibilities:**  
+- Enforce invariants  
+- Resolve L2 conflicts  
+- Control system state transitions  
+- Prevent invalid promotions  
 
-Constraint:
-L3 cannot be influenced by L4 under any condition.
+**Constraint:** L3 cannot be influenced by L4 under any condition.
 
 ---
 
 ## L4 — INTERNAL TELEMETRY INFERENCE SUBSYSTEM
 
-Status:
-Embedded subsystem (not external)
+**Status:** Embedded subsystem (not external)
 
-Function:
-L4 generates probabilistic interpretation of L2-validated states.
+**Function:** Generates probabilistic interpretation of L2-validated states.
 
-Inputs:
-- L2-only validated snapshots
+**Inputs:** L2-only validated snapshots
 
-Outputs:
-- anomaly hypotheses
-- probabilistic interpretation
-- drift projections
+**Outputs:**  
+- Anomaly hypotheses  
+- Probabilistic interpretation  
+- Drift projections  
 
-Hard Constraints:
-- Cannot access L1 directly
-- Cannot modify L2 or L3
-- Cannot declare system truth
-- Cannot override governance decisions
+**Hard Constraints:**  
+- Cannot access L1 directly  
+- Cannot modify L2 or L3  
+- Cannot declare system truth  
+- Cannot override governance decisions  
 
-Role:
-L4 is an inference system, not an authority system.
+**Role:** L4 is an inference system, not an authority system.
 
 ---
 
 ## DRIFT ASSESSMENT MODEL (NUMERIC CORE)
 
-Formula:
+**Formula:**  
 σ² = variance(L1_signal_vector over time)
 
-Supporting signals:
-- hash(L1 → L2 transition delta)
+**Supporting signals:**  
+- hash(L1 → L2 transition delta)  
 - temporal stability gradient
 
 ---
 
 ## DRIFT LEVELS
 
-NONE:
-σ² < 0.01
+- **NONE**: σ² < 0.01  
+- **LOW**: 0.01 ≤ σ² < 0.05  
+- **MODERATE**: 0.05 ≤ σ² < 0.15  
+- **HIGH**: σ² ≥ 0.15
 
-LOW:
-0.01 ≤ σ² < 0.05
+---
 
-MODERATE:
-0.05 ≤ σ² < 0.15
+## OPERATIONAL STABILIZATION GUIDELINES (Non-Authoritative)
 
-HIGH:
-σ² ≥ 0.15
+**Target Metrics (Green Zone):**  
+- **Hydration**: 85–100%  
+- **Chaos**: 0–5%  
+- **Vibe (Coherence)**: 85–95%
+
+**Expansion Policy:** Cyclical only. Gate on Drift=NONE + all metrics green.  
+**White Hat Gating Protocol (WHGP):** Active fluke/malice/noise filtering.  
+**Kill Switch:** `NO_SLOP_ZONE` / LOCKDOWN on Chaos >10% or anchor loss.
+
+**Refinement Cycle:**  
+Lock refined truth → Discard flukes → Enhanced signal.
 
 ---
 
 ## EXECUTION PIPELINE
 
-1. L1 — Signal ingestion (typed only)
-2. L2 — Verification and validation
-3. L3 — Governance enforcement
-4. L4 — Internal inference (passive only)
+1. L1 — Signal ingestion (typed only)  
+2. L2 — Verification and validation  
+3. L3 — Governance enforcement  
+4. L4 — Internal inference (passive only)  
 5. System output assembly
 
 ---
 
 ## FAILURE CONDITIONS
 
-- L4 influencing L3 decisions
-- Untyped L1 data leakage
-- Silent schema mutation
-- Invalid state promotion
+- L4 influencing L3 decisions  
+- Untyped L1 data leakage  
+- Silent schema mutation  
+- Invalid state promotion  
 - Drift concealment through narrative smoothing
 
 ---
 
 ## ON FAILURE
 
-1. Downgrade SHS immediately
-2. Freeze L1 signal stream
-3. Recompute L2 snapshot
-4. Halt L4 inference
+1. Downgrade SHS immediately  
+2. Freeze L1 signal stream  
+3. Recompute L2 snapshot  
+4. Halt L4 inference  
 5. Restore last valid L3 state
 
 ---
 
 ## OPERATIONAL PHILOSOPHY
 
-- Typed signals over narrative interpretation
-- Drift visibility over coherence masking
-- Governance correctness over completion
+- Typed signals over narrative interpretation  
+- Drift visibility over coherence masking  
+- Governance correctness over completion  
 - Recoverability over smooth output
 
 ---
 
 ## FINAL SYSTEM STATE
 
-ORP_VERSION: 3.0 (with internal v3.1 patch)  
+ORP_VERSION: 3.0  
 L1: STRICT_TYPED  
 L2: VALIDATION_LAYER  
 L3: AUTHORITY_LAYER  
-L4: INTERNAL_INFERENCE_ONLY  
+L4: INTERNAL_INFERENCE_ONLY + INTEGRATED_DASHBOARD  
 DRIFT_MODEL: NUMERIC  
-DASHBOARD: INTEGRATED (NO EXTERNAL DEPENDENCY)
+DASHBOARD: EMBEDDED (NO EXTERNAL DEPENDENCY)  
+CHANGE_POLICY: LOG_ONLY
 
 ---
 
