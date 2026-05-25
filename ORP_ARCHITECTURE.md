@@ -1,4 +1,4 @@
-# ORP ARCHITECTURE — Core Conceptual Models
+# ORP_ARCHITECTURE.md
 
 ## System Version
 ORP v3.0 (Type-Safe Unified Architecture)  
