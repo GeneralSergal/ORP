@@ -19,35 +19,41 @@
     content="ORP, Open Resonance Protocol, epistemic governance, drift observability, provenance preservation, reasoning framework"
   />
 
-  <meta name="theme-color" content="#58a6ff" />
+  <meta name="theme-color" content="#ff4b4b" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #0b0f14;
-      --bg-elevated: #101720;
-      --panel: rgba(18, 24, 33, 0.92);
-      --panel-2: rgba(26, 34, 46, 0.95);
-      --border: rgba(120, 170, 255, 0.14);
-      --border-strong: rgba(120, 170, 255, 0.24);
+      --bg: #070b12;
 
-      --text: #cbd6e2;
-      --muted: #8b9bb0;
-      --heading: #f4f8ff;
+      --panel: #0f1722;
+      --panel-2: #151f2d;
 
-      --primary: #6cb7ff;
-      --primary-bright: #8dd0ff;
+      --border: rgba(255,255,255,0.08);
+      --border-strong: rgba(255,255,255,0.12);
+
+      --text: #d7dde7;
+      --muted: #8f9bb0;
+      --heading: #f3f6fb;
+
+      --primary: #58a6ff;
+      --primary-bright: #7db3ff;
       --cyan: #69f0ff;
-      --violet: #9d7bff;
 
-      --success: #44d17d;
-      --warning: #d7a548;
-      --danger: #ff6262;
+      --accent-red: #ff4b4b;
+      --accent-red-dark: #c92f2f;
+      --accent-red-soft: rgba(255, 75, 75, 0.12);
 
-      --shadow: rgba(0, 0, 0, 0.48);
+      --accent-magenta: #ff5ea8;
+
+      --success: #3fb950;
+      --danger: #ff5c5c;
+      --warning: #ffb347;
+
+      --shadow: rgba(0,0,0,0.45);
 
       --radius: 24px;
       --radius-sm: 16px;
@@ -68,8 +74,8 @@
       overflow-x: hidden;
 
       background:
-        radial-gradient(circle at top right, rgba(109,183,255,0.12), transparent 30%),
-        radial-gradient(circle at bottom left, rgba(157,123,255,0.08), transparent 30%),
+        radial-gradient(circle at top right, rgba(88,166,255,0.12), transparent 30%),
+        radial-gradient(circle at bottom left, rgba(255,75,75,0.08), transparent 30%),
         var(--bg);
 
       color: var(--text);
@@ -112,12 +118,34 @@
       pointer-events: none;
     }
 
+    .glow {
+      position: fixed;
+      width: 900px;
+      height: 900px;
+      border-radius: 999px;
+
+      background:
+        radial-gradient(circle,
+          rgba(255,75,75,0.18) 0%,
+          rgba(255,75,75,0.08) 25%,
+          rgba(88,166,255,0.08) 50%,
+          transparent 75%
+        );
+
+      top: -320px;
+      right: -240px;
+
+      z-index: -1;
+      pointer-events: none;
+      filter: blur(10px);
+    }
+
     .resonance-ring {
       position: fixed;
       width: 900px;
       height: 900px;
       border-radius: 50%;
-      border: 1px solid rgba(108,183,255,0.06);
+      border: 1px solid rgba(88,166,255,0.06);
       top: -300px;
       right: -240px;
       z-index: -3;
@@ -135,7 +163,7 @@
 
     .resonance-ring::after {
       inset: 140px;
-      border-color: rgba(157,123,255,0.08);
+      border-color: rgba(255,75,75,0.08);
     }
 
     @keyframes rotateSlow {
@@ -149,13 +177,13 @@
       z-index: -2;
       pointer-events: none;
       overflow: hidden;
-      opacity: 0.18;
+      opacity: 0.08;
     }
 
     .glyph {
       position: absolute;
       color: var(--primary);
-      font-family: Orbitron, sans-serif;
+      font-family: Oxanium, sans-serif;
       font-size: 14px;
       letter-spacing: 0.12em;
       animation: drift linear infinite;
@@ -222,7 +250,7 @@
 
       color: var(--heading);
 
-      font-family: Orbitron, sans-serif;
+      font-family: Oxanium, sans-serif;
       font-weight: 800;
       letter-spacing: 0.08em;
     }
@@ -236,11 +264,11 @@
 
       background:
         linear-gradient(135deg,
-          var(--primary),
-          var(--cyan));
+          var(--accent-red),
+          var(--accent-magenta));
 
       box-shadow:
-        0 0 26px rgba(108,183,255,0.55);
+        0 0 26px rgba(255,75,75,0.55);
     }
 
     .logo-mark::before {
@@ -272,7 +300,7 @@
       bottom: -7px;
       width: 0;
       height: 2px;
-      background: linear-gradient(90deg, var(--primary), var(--cyan));
+      background: linear-gradient(90deg, var(--accent-red), var(--accent-magenta));
       transition: width var(--transition);
     }
 
@@ -306,14 +334,14 @@
 
       border-radius: 999px;
 
-      border: 1px solid rgba(108,183,255,0.18);
+      border: 1px solid var(--accent-red-soft);
 
       background:
         linear-gradient(180deg,
-          rgba(108,183,255,0.12),
-          rgba(108,183,255,0.04));
+          var(--accent-red-soft),
+          rgba(255,75,75,0.04));
 
-      color: #a7d3ff;
+      color: #ffb0b0;
 
       font-size: 0.9rem;
       font-weight: 700;
@@ -324,8 +352,8 @@
       width: 10px;
       height: 10px;
       border-radius: 50%;
-      background: var(--success);
-      box-shadow: 0 0 16px rgba(68,209,125,0.8);
+      background: var(--accent-red);
+      box-shadow: 0 0 16px rgba(255,75,75,0.8);
       animation: pulse 2.5s infinite;
     }
 
@@ -339,7 +367,7 @@
       margin: 0;
       color: var(--heading);
 
-      font-family: Orbitron, sans-serif;
+      font-family: Oxanium, sans-serif;
       font-size: clamp(3.5rem, 8vw, 6.4rem);
       line-height: 0.98;
       letter-spacing: -0.05em;
@@ -388,13 +416,13 @@
     .btn-primary {
       background:
         linear-gradient(135deg,
-          var(--primary),
-          var(--cyan));
+          var(--accent-red),
+          var(--accent-magenta));
 
-      color: #081018;
+      color: #ffffff;
 
       box-shadow:
-        0 12px 30px rgba(108,183,255,0.24);
+        0 12px 30px rgba(255,75,75,0.24);
     }
 
     .btn-primary:hover {
@@ -410,7 +438,7 @@
     .btn-secondary:hover {
       transform: translateY(-2px);
       background: rgba(24,32,43,0.92);
-      border-color: rgba(108,183,255,0.3);
+      border-color: rgba(255,75,75,0.3);
     }
 
     .hero-panel {
@@ -424,10 +452,22 @@
       border-radius: 30px;
       background:
         linear-gradient(135deg,
-          rgba(108,183,255,0.08),
-          rgba(157,123,255,0.05));
+          rgba(255,75,75,0.08),
+          rgba(88,166,255,0.05));
       filter: blur(18px);
       z-index: -1;
+    }
+
+    .hero-character {
+      position: absolute;
+      right: -60px;
+      bottom: -80px;
+      width: 540px;
+      max-width: 48vw;
+      opacity: 0.16;
+      filter: drop-shadow(0 0 40px rgba(255,75,75,0.25));
+      pointer-events: none;
+      user-select: none;
     }
 
     .terminal {
@@ -453,7 +493,7 @@
 
       background:
         linear-gradient(180deg,
-          rgba(108,183,255,0.03),
+          rgba(255,75,75,0.03),
           transparent 40%);
 
       pointer-events: none;
@@ -500,17 +540,17 @@
       padding: 18px;
 
       border-radius: 16px;
-      border: 1px solid rgba(108,183,255,0.12);
+      border: 1px solid rgba(88,166,255,0.12);
 
       background:
         linear-gradient(180deg,
-          rgba(108,183,255,0.05),
-          rgba(108,183,255,0.015));
+          rgba(88,166,255,0.05),
+          rgba(88,166,255,0.015));
     }
 
     .entity-title {
-      color: var(--cyan);
-      font-family: Orbitron, sans-serif;
+      color: var(--accent-red);
+      font-family: Oxanium, sans-serif;
       font-size: 0.86rem;
       letter-spacing: 0.14em;
       margin-bottom: 10px;
@@ -529,7 +569,7 @@
       background:
         linear-gradient(90deg,
           transparent,
-          rgba(108,183,255,0.2),
+          rgba(255,75,75,0.2),
           transparent);
     }
 
@@ -539,7 +579,7 @@
     }
 
     .section-eyebrow {
-      color: var(--primary);
+      color: var(--accent-red);
       text-transform: uppercase;
       letter-spacing: 0.14em;
       font-size: 0.8rem;
@@ -552,7 +592,7 @@
 
       color: var(--heading);
 
-      font-family: Orbitron, sans-serif;
+      font-family: Oxanium, sans-serif;
       font-size: clamp(2.2rem, 5vw, 3.6rem);
       line-height: 1.08;
       letter-spacing: -0.04em;
@@ -603,9 +643,11 @@
       inset: 0;
 
       background:
-        radial-gradient(circle at top right,
-          rgba(108,183,255,0.08),
-          transparent 45%);
+        linear-gradient(
+          135deg,
+          rgba(255,75,75,0.06),
+          transparent 35%
+        );
 
       opacity: 0;
       transition: opacity var(--transition);
@@ -616,7 +658,7 @@
     .doc-card:hover,
     .principle:hover {
       transform: translateY(-4px);
-      border-color: rgba(108,183,255,0.28);
+      border-color: rgba(255,75,75,0.28);
       box-shadow: 0 18px 40px rgba(0,0,0,0.25);
     }
 
@@ -631,7 +673,7 @@
     }
 
     .pipeline-step {
-      color: var(--cyan);
+      color: var(--accent-red);
       text-transform: uppercase;
       letter-spacing: 0.14em;
       font-size: 0.78rem;
@@ -661,6 +703,8 @@
       padding: 28px;
       background: var(--panel);
       backdrop-filter: blur(14px);
+      position: relative;
+      overflow: hidden;
     }
 
     .doc-card p {
@@ -674,6 +718,14 @@
 
     .doc-card li {
       margin-bottom: 10px;
+    }
+
+    .doc-card a {
+      color: var(--primary);
+    }
+
+    .doc-card a:hover {
+      color: var(--primary-bright);
     }
 
     .principles {
@@ -705,7 +757,7 @@
       color: var(--heading);
       font-weight: 700;
       margin-bottom: 18px;
-      font-family: Orbitron, sans-serif;
+      font-family: Oxanium, sans-serif;
     }
 
     .footer-links {
@@ -745,6 +797,11 @@
       .hero {
         padding-top: 96px;
       }
+
+      .hero-character {
+        right: -120px;
+        max-width: 60vw;
+      }
     }
 
     @media (max-width: 640px) {
@@ -769,6 +826,10 @@
       .terminal-body {
         font-size: 0.88rem;
       }
+
+      .hero-character {
+        display: none;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -785,13 +846,14 @@
 <body>
 
   <div class="grid-bg"></div>
+  <div class="glow"></div>
   <div class="resonance-ring"></div>
 
   <div class="glyph-layer">
-    <div class="glyph">HERALD_CLASS_SIGNAL</div>
-    <div class="glyph">RESONANCE_NODE_ACTIVE</div>
-    <div class="glyph">L3_PROTOCOL_KERNEL</div>
-    <div class="glyph">OBSERVER_PACK_ONLINE</div>
+    <div class="glyph">σ²</div>
+    <div class="glyph">L4</div>
+    <div class="glyph">CRA</div>
+    <div class="glyph">SHS</div>
   </div>
 
   <nav>
@@ -865,9 +927,9 @@
 
           <div class="terminal-body">
 
-            <span style="color:#44d17d">[SHS: GREEN]</span><br>
-            <span style="color:#6cb7ff">[DRIFT: NONE]</span><br>
-            <span style="color:#d7a548">[CRA: VALID]</span><br><br>
+            <span style="color:#ff4b4b">[SHS: ACTIVE]</span><br>
+            <span style="color:#58a6ff">[DRIFT: NOMINAL]</span><br>
+            <span style="color:#ffb347">[CRA: VALID]</span><br><br>
 
             ORP Runtime Kernel Initialized<br>
             σ² Drift Observability: ACTIVE<br>
@@ -1000,39 +1062,68 @@
 
         <div class="doc-card">
           <h3>Core Specifications</h3>
+
           <p>
             Foundational governance and runtime architecture definitions.
           </p>
+
           <ul>
             <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_CORE_SPEC.md">ORP Core Specification</a></li>
             <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_RUNTIME.md">Runtime Kernel</a></li>
             <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_PROMPT.md">Prompt Contract</a></li>
             <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_SYSTEM_ARCHITECTURE.md">System Architecture</a></li>
-          </ul>
-        </div>
-
-        <div class="doc-card">
-          <h3>Evaluation Layer</h3>
-          <p>
-            Structural evaluation, epistemic integrity,
-            and scoring systems.
-          </p>
-          <ul>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_EVALUATION_SCHEMA.md">Evaluation Schema</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_RUBRIC.md">Rubric</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_SCORING.md">Scoring</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_META_MAP.md">Meta-Map</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_SYSTEM_MAP.md">System Map</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_SYSTEM_MAP.manifest.json">System Map Manifest</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_ORIGIN.md">Origin Document</a></li>
           </ul>
         </div>
 
         <div class="doc-card">
           <h3>Drift & Recovery</h3>
+
           <p>
-            Numeric drift monitoring, degradation detection,
-            and recovery systems.
+            Numeric drift monitoring, degradation detection, failure classification, and recovery systems.
           </p>
+
           <ul>
             <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_SIGMA_SQUARED_DRIFT.md">σ² Drift Model</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_MODEL_DECAY_TRACKER.md">Model Decay Tracker</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_ANTI_DEGRADATION.md">Anti-Degradation</a></li>
             <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_DRIFT_RECOVERY_PROTOCOL.md">Recovery Protocol</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_FAILURE_MODES_CATALOG.md">Failure Modes Catalog</a></li>
+          </ul>
+        </div>
+
+        <div class="doc-card">
+          <h3>Evaluation Layer</h3>
+
+          <p>
+            Structural evaluation, epistemic integrity, scoring systems, and transition governance.
+          </p>
+
+          <ul>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_EVALUATION_SCHEMA.md">Evaluation Schema</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_RUBRIC.md">Rubric</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_SCORING.md">Scoring</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_SHS_TRANSITION_TRIGGERS.md">SHS Transition Triggers</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_EPISTEMIC_ISOLATION.md">Epistemic Isolation</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_COHERENCE_CAMOUFLAGE.md">Coherence Camouflage</a></li>
+          </ul>
+        </div>
+
+        <div class="doc-card">
+          <h3>Adversarial Testing</h3>
+
+          <p>
+            Stress testing, hallucination detection, and degradation analysis frameworks.
+          </p>
+
+          <ul>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/testing/ORP_BENCHMARK.md">ORP Benchmark Suite</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/testing/ORP_ADVERSARIAL_STRESS.md">Adversarial Stress Testing</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/testing/ORP_DEGRADATION_PATHWAYS.md">Degradation Pathways</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/testing/ORP_HALLUCINATION_PRESSURE.md">Hallucination Pressure Analysis</a></li>
           </ul>
         </div>
 
@@ -1055,13 +1146,12 @@
         </div>
 
         <h2 class="section-title">
-          Governance-First Design
+          Epistemic Governance Framework
         </h2>
 
         <div class="section-description">
-          ORP prioritizes structural correctness,
-          provenance continuity, and visible uncertainty
-          over stylistic fluency.
+          ORP is built on six foundational principles for reliable,
+          observable, and recoverable reasoning at scale.
         </div>
 
       </div>
@@ -1069,34 +1159,51 @@
       <div class="principles">
 
         <div class="principle">
-          <h3>Signal &gt; Narrative</h3>
+          <h3>Provenance Preservation</h3>
           <p>
-            Linguistic fluency must never override provenance
-            integrity or epistemic correctness.
+            Every inference step maintains complete provenance metadata,
+            enabling full reconstruction of reasoning pathways and
+            dependency chains.
           </p>
         </div>
 
         <div class="principle">
-          <h3>Recoverability &gt; Completion</h3>
+          <h3>Drift Observability</h3>
           <p>
-            Stable recovery paths and bounded uncertainty
-            are preferred over forced narrative continuity.
+            Numeric drift monitoring (σ²) provides real-time degradation
+            detection and failure prediction for long-context execution.
           </p>
         </div>
 
         <div class="principle">
           <h3>Epistemic Isolation</h3>
           <p>
-            L1–L4 authority boundaries remain strictly separated
-            to prevent contamination and assumption laundering.
+            Knowledge domains are strictly compartmentalized with
+            enforced boundary contracts and authority isolation.
           </p>
         </div>
 
         <div class="principle">
-          <h3>Observable Drift</h3>
+          <h3>Recoverable Reasoning</h3>
           <p>
-            Degradation must remain visible, measurable,
-            and recoverable through σ² variance monitoring.
+            Failed inference paths are automatically recoverable through
+            checkpoint restoration and deterministic replay mechanisms.
+          </p>
+        </div>
+
+        <div class="principle">
+          <h3>Coherence Camouflage Detection</h3>
+          <p>
+            Structural validation identifies reasoning that appears
+            coherent but lacks epistemic grounding.
+          </p>
+        </div>
+
+        <div class="principle">
+          <h3>Authority Transparency</h3>
+          <p>
+            All decisions are attributable to specific authority layers,
+            enabling audit trails and responsibility tracking.
           </p>
         </div>
 
@@ -1113,53 +1220,35 @@
       <div class="footer-grid">
 
         <div>
-          <div class="footer-title">ORP v3.0</div>
-
-          <div>
-            Open Resonance Protocol
-          </div>
-
-          <div style="margin-top:14px;color:var(--muted);">
-            Governance-first epistemic reasoning framework.
+          <div class="footer-title">Project</div>
+          <div class="footer-links">
+            <a href="https://github.com/GeneralSergal/ORP">GitHub Repository</a>
+            <a href="#documentation">Documentation</a>
+            <a href="#pipeline">Pipeline Architecture</a>
           </div>
         </div>
 
         <div>
-          <div class="footer-title">Documentation</div>
-
+          <div class="footer-title">Resources</div>
           <div class="footer-links">
-            <a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_SYSTEM_ARCHITECTURE.md">System Architecture</a>
-            <a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_RUBRIC.md">Evaluation Layer</a>
-            <a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_SIGMA_SQUARED_DRIFT.md">Drift Systems</a>
+            <a href="https://github.com/GeneralSergal/ORP/issues">Issues & Discussions</a>
+            <a href="https://github.com/GeneralSergal/ORP/pulls">Contributions</a>
           </div>
         </div>
 
         <div>
-          <div class="footer-title">Repository</div>
-
+          <div class="footer-title">Learn</div>
           <div class="footer-links">
-            <a
-              href="https://github.com/GeneralSergal/ORP"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GitHub
-            </a>
-
-            <a
-              href="https://github.com/GeneralSergal/ORP/blob/main/LICENSE"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              GPL-3.0 License
-            </a>
+            <a href="#overview">Overview</a>
+            <a href="#principles">Core Principles</a>
+            <a href="#documentation">Full Docs</a>
           </div>
         </div>
 
       </div>
 
       <div class="footer-note">
-        Signal &gt; Narrative · Recoverability &gt; Completion · Provenance &gt; Coherence
+        ORP v3.0 — Open Resonance Protocol. Type-safe epistemic governance framework.
       </div>
 
     </div>
