@@ -1,0 +1,117 @@
+# ORP v{{version}} — Release Notes
+**Generated via Release‑Please**  
+**Governance Layer:** L3  
+**Provenance:** PRESERVED  
+**Release Type:** {{#if isPatch}}Maintenance Patch{{else if isMinor}}Feature Expansion{{else}}Major Revision{{/if}}
+
+---
+
+## Runtime Header (v3.0)
+
+```
+[SHS: {{shs}}]
+[DRIFT: {{drift}}]
+[CRA: {{cra}}]
+[LAS: L3]
+```
+
+> This header is included for provenance continuity and ORP‑compliant release metadata.
+
+---
+
+## ✨ Features
+{{#if features.length}}
+{{#each features}}
+- {{this}}
+{{/each}}
+{{else}}
+_No new features in this release._
+{{/if}}
+
+---
+
+## 🐛 Bug Fixes
+{{#if fixes.length}}
+{{#each fixes}}
+- {{this}}
+{{/each}}
+{{else}}
+_No bug fixes in this release._
+{{/if}}
+
+---
+
+## 📝 Documentation
+{{#if docs.length}}
+{{#each docs}}
+- {{this}}
+{{/each}}
+{{else}}
+_No documentation updates in this release._
+{{/if}}
+
+---
+
+## 🔧 Maintenance
+{{#if chores.length}}
+{{#each chores}}
+- {{this}}
+{{/each}}
+{{else}}
+_No maintenance changes in this release._
+{{/if}}
+
+---
+
+## ♻️ Refactoring
+{{#if refactors.length}}
+{{#each refactors}}
+- {{this}}
+{{/each}}
+{{else}}
+_No refactoring in this release._
+{{/if}}
+
+---
+
+## 🔍 Provenance Notes (L3 Authority)
+- All changes validated under L3 governance.
+- L4 inference did not influence authoritative state.
+- L1 typed-signal invariants preserved.
+- σ² drift remained within acceptable bounds during release preparation.
+- No schema mutations detected.
+- Provenance chain intact end‑to‑end.
+
+---
+
+## 📦 Assets
+Release‑Please automatically attaches:
+- Updated `ORP_VERSION`
+- Updated `CHANGELOG.md`
+- Git tag: `v{{version}}`
+
+---
+
+## 🔒 Integrity Summary
+
+| Layer | Status |
+|-------|--------|
+| **L1** | Typed signals preserved |
+| **L2** | Deterministic validation passed |
+| **L3** | Governance authority validated |
+| **L4** | Non-authoritative inference only |
+| **Drift Model** | σ² numeric |
+| **Provenance** | End‑to‑end preserved |
+
+---
+
+## 🧭 Upgrade Path
+This release is compatible with all ORP v3.0‑compliant systems.  
+No migration steps required unless explicitly noted above.
+
+---
+
+**Signal > Narrative**  
+**Recoverability > Completion**  
+**Provenance > Coherence**
+
