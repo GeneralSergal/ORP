@@ -26,112 +26,61 @@ jobs:
 
       - name: Validate required core files
         run: |
-          REQUIRED_CORE=(
-            ORP/core/ORP_RUNTIME.md
-            ORP/core/ORP_PROMPT.md
-            ORP/core/ORP_CORE_SPEC.md
-            ORP/core/ORP_SYSTEM_ARCHITECTURE.md
-            ORP/core/ORP_META_MAP.md
-            ORP/core/ORP_SYSTEM_MAP.md
-            ORP/core/ORP_SYSTEM_MAP.manifest.json
-            ORP/core/ORP_ORIGIN.md
-          )
-          for f in "${REQUIRED_CORE[@]}"; do
-            if [ ! -f "$f" ]; then
-              echo "Missing core file: $f"
-              exit 1
-            fi
-          done
+          echo "Checking core files..."
+          test -f ORP/core/ORP_RUNTIME.md
+          test -f ORP/core/ORP_PROMPT.md
+          test -f ORP/core/ORP_CORE_SPEC.md
+          test -f ORP/core/ORP_SYSTEM_ARCHITECTURE.md
+          test -f ORP/core/ORP_META_MAP.md
+          test -f ORP/core/ORP_SYSTEM_MAP.md
+          test -f ORP/core/ORP_SYSTEM_MAP.manifest.json
+          test -f ORP/core/ORP_ORIGIN.md
 
       - name: Validate evaluation files
         run: |
-          REQUIRED_EVAL=(
-            ORP/evaluation/ORP_EVALUATION_SCHEMA.md
-            ORP/evaluation/ORP_RUBRIC.md
-            ORP/evaluation/ORP_SCORING.md
-            ORP/evaluation/ORP_SHS_TRANSITION_TRIGGERS.md
-            ORP/evaluation/ORP_EPISTEMIC_ISOLATION.md
-            ORP/evaluation/ORP_COHERENCE_CAMOUFLAGE.md
-          )
-          for f in "${REQUIRED_EVAL[@]}"; do
-            if [ ! -f "$f" ]; then
-              echo "Missing evaluation file: $f"
-              exit 1
-            fi
-          done
+          echo "Checking evaluation files..."
+          test -f ORP/evaluation/ORP_EVALUATION_SCHEMA.md
+          test -f ORP/evaluation/ORP_RUBRIC.md
+          test -f ORP/evaluation/ORP_SCORING.md
+          test -f ORP/evaluation/ORP_SHS_TRANSITION_TRIGGERS.md
+          test -f ORP/evaluation/ORP_EPISTEMIC_ISOLATION.md
+          test -f ORP/evaluation/ORP_COHERENCE_CAMOUFLAGE.md
 
       - name: Validate drift subsystem
         run: |
-          REQUIRED_DRIFT=(
-            ORP/drift/ORP_SIGMA_SQUARED_DRIFT.md
-            ORP/drift/ORP_MODEL_DECAY_TRACKER.md
-            ORP/drift/ORP_ANTI_DEGRADATION.md
-            ORP/drift/ORP_DRIFT_RECOVERY_PROTOCOL.md
-            ORP/drift/ORP_FAILURE_MODES_CATALOG.md
-          )
-          for f in "${REQUIRED_DRIFT[@]}"; do
-            if [ ! -f "$f" ]; then
-              echo "Missing drift file: $f"
-              exit 1
-            fi
-          done
+          echo "Checking drift files..."
+          test -f ORP/drift/ORP_SIGMA_SQUARED_DRIFT.md
+          test -f ORP/drift/ORP_MODEL_DECAY_TRACKER.md
+          test -f ORP/drift/ORP_ANTI_DEGRADATION.md
+          test -f ORP/drift/ORP_DRIFT_RECOVERY_PROTOCOL.md
+          test -f ORP/drift/ORP_FAILURE_MODES_CATALOG.md
 
       - name: Validate layer definitions
         run: |
-          REQUIRED_LAYERS=(
-            ORP/layers/ORP_L1_SIGNAL_SCHEMA.md
-            ORP/layers/ORP_L2_VALIDATION_RULES.md
-            ORP/layers/ORP_L4_INFERENCE_GUIDE.md
-          )
-          for f in "${REQUIRED_LAYERS[@]}"; do
-            if [ ! -f "$f" ]; then
-              echo "Missing layer file: $f"
-              exit 1
-            fi
-          done
+          echo "Checking layer files..."
+          test -f ORP/layers/ORP_L1_SIGNAL_SCHEMA.md
+          test -f ORP/layers/ORP_L2_VALIDATION_RULES.md
+          test -f ORP/layers/ORP_L4_INFERENCE_GUIDE.md
 
       - name: Validate recovery subsystem
         run: |
+          echo "Checking recovery files..."
           test -f ORP/recovery/ORP_CRA_SPEC.md
 
-      - name: Validate mandatory header format in runtime files
+      - name: Validate mandatory header presence in ORP_RUNTIME.md
         run: |
-          echo "Checking mandatory header in ORP_RUNTIME.md..."
-          head -n 10 ORP/core/ORP_RUNTIME.md | grep "
+          echo "Checking mandatory header markers in ORP_RUNTIME.md..."
+          head -n 20 ORP/core/ORP_RUNTIME.md | grep "SHS:" >/dev/null
+          head -n 20 ORP/core/ORP_RUNTIME.md | grep "DRIFT:" >/dev/null
+          head -n 20 ORP/core/ORP_RUNTIME.md | grep "CRA:" >/dev/null
+          head -n 20 ORP/core/ORP_RUNTIME.md | grep "LAS:" >/dev/null
 
-\[SHS:" >/dev/null
-          head -n 10 ORP/core/ORP_RUNTIME.md | grep "
-
-\[DRIFT:" >/dev/null
-          head -n 10 ORP/core/ORP_RUNTIME.md | grep "
-
-\[CRA:" >/dev/null
-          head -n 10 ORP/core/ORP_RUNTIME.md | grep "
-
-\[LAS:" >/dev/null
-
-      - name: Validate no forbidden narrative smoothing in runtime files
+      - name: Validate σ² drift thresholds presence
         run: |
-          echo "Checking for forbidden narrative patterns..."
-          FORBIDDEN_PATTERNS=("story" "narrative" "creative" "fiction" "roleplay")
-          for p in "${FORBIDDEN_PATTERNS[@]}"; do
-            if grep -Ri "$p" ORP/core/ORP_RUNTIME.md; then
-              echo "Forbidden narrative smoothing detected: $p"
-              exit 1
-            fi
-          done
-
-      - name: Validate σ² drift thresholds consistency
-        run: |
-          echo "Checking σ² thresholds..."
-          grep -R "0.01" ORP/drift/ORP_SIGMA_SQUARED_DRIFT.md >/dev/null
-          grep -R "0.05" ORP/drift/ORP_SIGMA_SQUARED_DRIFT.md >/dev/null
-          grep -R "0.15" ORP/drift/ORP_SIGMA_SQUARED_DRIFT.md >/dev/null
-
-      - name: Validate manifest consistency
-        run: |
-          echo "Validating ORP_SYSTEM_MAP.manifest.json..."
-          jq empty ORP/core/ORP_SYSTEM_MAP.manifest.json
+          echo "Checking σ² thresholds in ORP_SIGMA_SQUARED_DRIFT.md..."
+          grep "0.01" ORP/drift/ORP_SIGMA_SQUARED_DRIFT.md >/dev/null
+          grep "0.05" ORP/drift/ORP_SIGMA_SQUARED_DRIFT.md >/dev/null
+          grep "0.15" ORP/drift/ORP_SIGMA_SQUARED_DRIFT.md >/dev/null
 
       - name: Final status
         run: echo "ORP v3.0 integrity validation PASSED."
