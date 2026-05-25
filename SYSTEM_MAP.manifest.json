@@ -1,36 +1,34 @@
 {
   "system": "ORP",
-  "version": "2.5",
-  "type": "Epistemic Governance Framework",
-
+  "version": "3.0",
+  "type": "Type-Safe Epistemic Governance Framework",
   "pipeline": [
     "ORP_RUNTIME.md",
-    "PROMPT.md",
-    "BENCHMARK.md",
+    "ORP_PROMPT.md",
+    "ORP_BENCHMARK.md",
     "MODEL_RESPONSE",
-    "EVALUATION_SCHEMA.md",
-    "RUBRIC.md",
-    "SCORING.md",
+    "ORP_EVALUATION_SCHEMA.md",
+    "ORP_RUBRIC.md",
+    "ORP_SCORING.md",
     "FINAL_OUTPUT_STATE"
   ],
-
   "layers": {
     "ORP_RUNTIME.md": {
-      "version": "2.5",
+      "version": "3.0",
       "role": "Runtime Governance Layer",
       "responsibility": [
         "Enforce runtime behavioral constraints",
         "Manage SHS state transitions",
-        "Detect drift indicators",
+        "Detect and quantify drift using σ² model",
         "Preserve provenance continuity",
         "Detect coherence camouflage",
-        "Handle runtime failure escalation"
+        "Handle runtime failure escalation",
+        "L3 Authority Kernel"
       ],
       "output_type": "governed_runtime_state"
     },
-
-    "PROMPT.md": {
-      "version": "2.5",
+    "ORP_PROMPT.md": {
+      "version": "3.0",
       "role": "Behavior Constraint Layer",
       "responsibility": [
         "Define epistemic reasoning constraints",
@@ -41,9 +39,8 @@
       ],
       "output_type": "constrained_reasoning_behavior"
     },
-
-    "BENCHMARK.md": {
-      "version": "2.5",
+    "ORP_BENCHMARK.md": {
+      "version": "3.0",
       "role": "Adversarial Stress Layer",
       "responsibility": [
         "Inject adversarial and mixed-truth inputs",
@@ -54,9 +51,19 @@
       ],
       "output_type": "adversarial_claim_set"
     },
-
-    "EVALUATION_SCHEMA.md": {
-      "version": "2.5",
+    "ORP_SIGMA_SQUARED_DRIFT.md": {
+      "version": "3.0",
+      "role": "Numeric Drift Observability Layer",
+      "responsibility": [
+        "Define and compute σ² variance model",
+        "Provide deterministic drift classification",
+        "Link L1 signal variance to SHS transitions",
+        "Enable measurable degradation tracking"
+      ],
+      "output_type": "drift_measurement_model"
+    },
+    "ORP_EVALUATION_SCHEMA.md": {
+      "version": "3.0",
       "role": "Structural Transformation Layer",
       "responsibility": [
         "Define atomic claim transformation rules",
@@ -67,9 +74,8 @@
       ],
       "output_type": "epistemic_structure_specification"
     },
-
-    "RUBRIC.md": {
-      "version": "2.5",
+    "ORP_RUBRIC.md": {
+      "version": "3.0",
       "role": "Qualitative Evaluation Layer",
       "responsibility": [
         "Evaluate reasoning integrity",
@@ -80,30 +86,30 @@
       ],
       "output_type": "structured_evaluation_vector"
     },
-
-    "SCORING.md": {
-      "version": "2.5",
+    "ORP_SCORING.md": {
+      "version": "3.0",
       "role": "Quantitative Aggregation Layer",
       "responsibility": [
         "Aggregate rubric evaluation outputs",
         "Apply deterministic weights and penalties",
-        "Measure drift severity",
+        "Measure drift severity using σ
+²",
         "Normalize operational integrity scores",
         "Produce final evaluation state"
       ],
       "output_type": "operational_integrity_score"
     }
   },
-
   "runtime_governance": {
     "enabled": true,
     "session_health_state": true,
     "drift_observability": true,
+    "sigma_squared_enabled": true,
     "coherence_camouflage_detection": true,
     "provenance_preservation": true,
-    "recoverability_priority": true
+    "recoverability_priority": true,
+    "anti_degradation_support": true
   },
-
   "session_health_states": [
     "GREEN",
     "YELLOW",
@@ -111,23 +117,21 @@
     "RED",
     "BLACK"
   ],
-
   "layered_authority_stack": {
-    "L1": "Direct evidence / observed data",
+    "L1": "Direct evidence / observed typed signals",
     "L2": "Verified interpretation / constrained synthesis",
-    "L3": "Protocol governance / operational rules",
-    "L4": "Inference / probabilistic synthesis"
+    "L3": "Protocol governance / operational rules (authority)",
+    "L4": "Inference / probabilistic synthesis (non-authoritative)"
   },
-
   "critical_invariants": [
     "L4_must_not_overwrite_L1_L2",
     "No_provenance_laundering",
     "No_silent_temporal_rewrites",
     "No_coherence_camouflage",
     "No_cross_layer_reinterpretation",
-    "Recoverability_over_completion"
+    "Recoverability_over_completion",
+    "Sigma_squared_drift_measurable"
   ],
-
   "design_constraints": {
     "separation_of_concerns": true,
     "no_cross_contamination": true,
@@ -135,9 +139,9 @@
     "schema_contract_enforcement": true,
     "runtime_governance_enforced": true,
     "drift_observability_required": true,
-    "fail_closed_evaluation": true
+    "fail_closed_evaluation": true,
+    "type_safe_L1_signals": true
   },
-
   "execution_model": {
     "type": "governed_pipeline",
     "order_enforced": true,
@@ -146,12 +150,11 @@
     "runtime_monitoring": true,
     "bounded_inference_required_under_red_shs": true
   },
-
   "versioning_policy": {
-    "global_system_version": "2.5",
+    "global_system_version": "3.0",
     "component_versions_independent": true,
-    "compatibility_range": "2.x",
+    "compatibility_range": "3.x",
     "subversion_allowed": true,
-    "subversion_rule": "Subsystem revisions may evolve independently but must preserve ORP governance invariants and structural contracts"
+    "subversion_rule": "Subsystem revisions may evolve independently but must preserve ORP governance invariants, structural contracts, and type-safe boundaries"
   }
 }
