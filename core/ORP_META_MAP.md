@@ -11,7 +11,6 @@ This document defines the structural dependency graph of the ORP system.
 It is a static architecture index only.
 
 It does NOT:
-
 - execute logic  
 - enforce rules  
 - define runtime behavior  
@@ -23,13 +22,12 @@ It does NOT:
 
 ORP is a directed acyclic document graph (DAG) with strict separation of:
 
-- **Execution authority (L3)**  
-- **Evaluation contracts (L3‑aligned)**  
-- **Observational systems (L4)**  
-- **Conceptual models (L4)**  
+- execution authority (L3)  
+- evaluation contracts (L3‑aligned)  
+- observational systems (L4)  
+- conceptual models (L4)  
 
-Only one node has enforcement authority:
-
+Only one node has enforcement authority:  
 **`ORP_RUNTIME.md` (L3 Kernel)**
 
 All other documents are descriptive, contractual, or observational.
@@ -112,7 +110,7 @@ This layer has **no structural influence** on the system.
   - Provide drift thresholds  
   - Support L3 drift classification  
 - **Dependencies:** NONE  
-- **Dependents:** `ORP_RUNTIME.md` (drift computation)  
+- **Dependents:** `ORP_RUNTIME.md`  
 
 Observational layers **cannot influence L3 decisions**.
 
