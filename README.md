@@ -137,7 +137,13 @@ Requirements:
     ORP_CORE_SPEC.md
     ORP_SYSTEM_ARCHITECTURE.md
     ORP_SYSTEM_MAP.md
+    ORP_SYSTEM_MAP.manifest.json
     ORP_ORIGIN.md
+    ORP_ARCHITECTURE.md
+    ORP_COHERENCE_CAMOUFLAGE.md
+    ORP_EPISTEMIC_ISOLATION.md
+    ORP_META_MAP.md
+    ORP_SHS_TRANSITION_TRIGGERS.md
 
 /constraints/
     ORP_PROMPT.md
@@ -154,9 +160,14 @@ Requirements:
     ORP_SCORING.md
 
 /docs/
-    CHANGELOG.md
-    CONTRIBUTING.md
     !REPO_CHECKLIST.md
+    CHANGELOG.md
+    CODE_OF_CONDUCT.md
+    CONTRACT_BRIDGE.md
+    CONTRIBUTING.md
+    NOTICE
+    ORP_ROADMAP.md
+    RELEASE_NOTES.md
 ```
 
 ---
