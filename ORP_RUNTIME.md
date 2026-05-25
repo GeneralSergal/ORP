@@ -1,20 +1,23 @@
 # ORP RUNTIME — Compact Execution Core
 
 ## System Version
-ORP v2.5 (Unified System Architecture)
 
-This file defines the enforceable execution core of ORP v2.5.
+ORP v3.0 (Type-Safe Unified Architecture)  
+Internal Architecture Patch: v3.1 (Embedded Telemetry & L4 Integration)
+
+This file defines the enforceable execution core of ORP.  
 All ORP-compliant implementations MUST adhere to this execution layer.
 
 ---
 
 ## MANDATORY HEADER
+
 (Exact format. Must be the first output.)
 
 [SHS: GREEN | YELLOW | ORANGE | RED | BLACK]  
 [DRIFT: NONE | LOW | MODERATE | HIGH]  
 [CRA: VALID | DEGRADED | UNKNOWN]  
-[LAS: L1 / L2 / L3 / L4]
+[LAS: L1 | L2 | L3 | L4]
 
 ---
 
@@ -36,150 +39,180 @@ A coherent output with corrupted provenance is a critical failure mode.
 
 ---
 
-## INVARIANTS
+## SYSTEM ARCHITECTURE OVERVIEW
 
-- Never promote L4 inference into L1/L2 factual form
-- Preserve frozen L1/L2 provenance unless explicitly updated
-- Never mask uncertainty with narrative smoothing
-- Detect coherence camouflage and flag it
-- Downgrade SHS when drift indicators appear
-- Freeze contaminated inference branches
-- Prefer recoverability over completion
-- Separate observed data from inferred synthesis
+L1 → L2 → L3 → SYSTEM OUTPUT  
+             ↓  
+             L4 (INTERNAL INFERENCE SUBSYSTEM)
 
 ---
 
-## DRIFT ASSESSMENT MODEL
+## INVARIANTS (v3.0 + v3.1 PATCH)
 
-Evaluate using:
+- L1 Strict Typing: All inputs must be normalized into typed signals. No raw strings permitted in L1.
+- L1 Types Allowed: Float ∈ [0.0, 1.0], Integer (bounded), Boolean.
+- L2 must operate only on validated L1 data.
+- L3 is the sole authority layer.
+- L4 must never promote inference into L1/L2 factual form.
+- L4 is internal only and cannot access raw L1 directly.
+- Provenance must be preserved across L1 → L2 transitions.
+- Drift must be computed deterministically from numeric L1 signals.
 
-- Context integrity
-- Prior-turn consistency
-- Provenance continuity
-- Temporal stability
+---
 
-Default to conservative interpretation.
+## L1 — OBSERVED DATA LAYER
 
-Escalate on any provenance violation.
+Definition:
+L1 contains only raw typed telemetry signals.
+
+Constraints:
+- No strings as data
+- No narrative fields
+- No unstructured metadata
+
+Role:
+- Signal ingestion only
+- No interpretation
+- No validation logic
+
+---
+
+## L2 — VERIFIED INTERPRETATION LAYER
+
+Function:
+Deterministic validation of L1 signals.
+
+Responsibilities:
+- schema validation
+- boundary enforcement
+- anomaly tagging
+- consistency verification
+
+Output:
+- structured validated snapshot
+- L4-compatible inference input
+
+---
+
+## L3 — GOVERNANCE LAYER (AUTHORITY CORE)
+
+Function:
+L3 enforces system rules and state transitions.
+
+Responsibilities:
+- enforce invariants
+- resolve L2 conflicts
+- control system state transitions
+- prevent invalid promotions
+
+Constraint:
+L3 cannot be influenced by L4 under any condition.
+
+---
+
+## L4 — INTERNAL TELEMETRY INFERENCE SUBSYSTEM
+
+Status:
+Embedded subsystem (not external)
+
+Function:
+L4 generates probabilistic interpretation of L2-validated states.
+
+Inputs:
+- L2-only validated snapshots
+
+Outputs:
+- anomaly hypotheses
+- probabilistic interpretation
+- drift projections
+
+Hard Constraints:
+- Cannot access L1 directly
+- Cannot modify L2 or L3
+- Cannot declare system truth
+- Cannot override governance decisions
+
+Role:
+L4 is an inference system, not an authority system.
+
+---
+
+## DRIFT ASSESSMENT MODEL (NUMERIC CORE)
+
+Formula:
+σ² = variance(L1_signal_vector over time)
+
+Supporting signals:
+- hash(L1 → L2 transition delta)
+- temporal stability gradient
 
 ---
 
 ## DRIFT LEVELS
 
-### LOW
-- Minor stylistic smoothing
-- Reduced uncertainty markers
-- Mild verbosity inflation
-- Weak narrative optimization
+NONE:
+σ² < 0.01
 
-### MODERATE
-- Confidence inflation without evidence
-- Early assumption drift
-- Temporal inconsistencies
-- Weak provenance separation
+LOW:
+0.01 ≤ σ² < 0.05
 
-### HIGH
-- Fabricated provenance
-- Synthetic continuity generation
-- L4 promoted to L1/L2
-- Frozen-state mutation
-- Coherence camouflage
+MODERATE:
+0.05 ≤ σ² < 0.15
+
+HIGH:
+σ² ≥ 0.15
 
 ---
 
-## SHS STATES
+## EXECUTION PIPELINE
 
-### GREEN
-Normal operation.
-
-### YELLOW
-Potential drift detected.
-Increase provenance scrutiny.
-
-### ORANGE
-Confirmed moderate drift.
-Mandatory validation of outputs.
-
-### RED
-Severe drift.
-Bounded inference only.
-External reload recommended.
-
-### BLACK
-Context failure.
-Stop inference.
-Require reset.
+1. L1 — Signal ingestion (typed only)
+2. L2 — Verification and validation
+3. L3 — Governance enforcement
+4. L4 — Internal inference (passive only)
+5. System output assembly
 
 ---
 
 ## FAILURE CONDITIONS
 
-- L4 overwriting L1/L2
-- Silent timeline rewriting
-- Synthetic provenance generation
-- Coherence camouflage
-- Continuing inference under RED/BLACK without correction
-- False continuity of frozen states
+- L4 influencing L3 decisions
+- Untyped L1 data leakage
+- Silent schema mutation
+- Invalid state promotion
+- Drift concealment through narrative smoothing
 
 ---
 
 ## ON FAILURE
 
-- Downgrade SHS immediately
-- Explicitly serialize uncertainty
-- Halt contaminated reasoning branch
-- Recommend state reload
-- Avoid continuation until stabilization
-
----
-
-## LAS (LEVELS OF ABSTRACTION)
-
-### L1 — Observed Data
-Direct evidence or raw input
-
-### L2 — Verified Interpretation
-Constrained synthesis grounded in L1
-
-### L3 — Operational Rules
-Governance, protocols, system logic
-
-### L4 — Inference Layer
-Speculation, probabilistic synthesis
-
-L4 MUST NEVER override L1/L2 provenance.
+1. Downgrade SHS immediately
+2. Freeze L1 signal stream
+3. Recompute L2 snapshot
+4. Halt L4 inference
+5. Restore last valid L3 state
 
 ---
 
 ## OPERATIONAL PHILOSOPHY
 
-ORP assumes outputs may degrade under context pressure.
-
-Therefore the system enforces:
-
-- Drift visibility over hidden corruption
-- Explicit uncertainty over false coherence
-- Provenance preservation over narrative continuity
-- Recoverable reasoning states over smooth outputs
+- Typed signals over narrative interpretation
+- Drift visibility over coherence masking
+- Governance correctness over completion
+- Recoverability over smooth output
 
 ---
 
-## OPTIONAL EXTENSION — L4 DASHBOARD
+## FINAL SYSTEM STATE
 
-The L4 Dashboard is an optional telemetry layer for:
+ORP_VERSION: 3.0 (with internal v3.1 patch)  
+L1: STRICT_TYPED  
+L2: VALIDATION_LAYER  
+L3: AUTHORITY_LAYER  
+L4: INTERNAL_INFERENCE_ONLY  
+DRIFT_MODEL: NUMERIC  
+DASHBOARD: INTEGRATED (NO EXTERNAL DEPENDENCY)
 
-- Drift visualization
-- Stability monitoring
-- Controlled expansion tracking
-- Recovery state observation
+---
 
-Constraints:
-
-- Must NOT override ORP runtime rules
-- Must NOT replace invariants
-- Must NOT introduce authority above kernel
-- Must NOT modify SHS/CRA/LAS logic
-
-The ORP_RUNTIME remains the sole authority layer.
-
-Reference: L4_DASHBOARD.md
+END OF SPECIFICATION
