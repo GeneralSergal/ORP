@@ -1,10 +1,23 @@
-[![ORP v3.0 Integrity Suite](https://github.com/GeneralSergal/ORP/actions/workflows/orp-ci.yml/badge.svg)](https://github.com/GeneralSergal/ORP/actions/workflows/orp-ci.yml)
+<p align="center">
+  <img src="https://github.com/GeneralSergal/ORP/actions/workflows/orp-ci.yml/badge.svg" alt="ORP v3.0 Integrity Suite">
+  <img src="https://img.shields.io/badge/ORP-v3.0-blue" alt="ORP Version">
+  <img src="https://img.shields.io/github/license/GeneralSergal/ORP" alt="License">
+  <img src="https://img.shields.io/badge/status-active-success" alt="Repository Status">
+  <img src="https://img.shields.io/badge/SHS-5--State%20Model-green" alt="SHS Model">
+  <img src="https://img.shields.io/badge/LAS-L1%E2%86%92L4-orange" alt="LAS Model">
+  <img src="https://img.shields.io/badge/Drift%20Model-%CF%83%C2%B2%20Numeric-purple" alt="Drift Model">
+  <img src="https://img.shields.io/badge/docs-100%25-brightgreen" alt="Documentation Coverage">
+  <img src="https://img.shields.io/github/commit-activity/m/GeneralSergal/ORP" alt="Commit Activity">
+  <img src="https://img.shields.io/github/repo-size/GeneralSergal/ORP" alt="Repository Size">
+  <img src="https://img.shields.io/badge/Governance-L3%20Authoritative-critical" alt="Governance Layer">
+</p>
 
-# ORP — Open Resonance Protocol
-## ORP v3.0 — Type-Safe Unified Runtime Governance Architecture
+<h1 align="center">ORP — Operational Reasoning Protocol v3.0</h1>
 
-A deterministic governance and stabilization framework for high-integrity reasoning, long-context execution, and drift-resistant inference.
-
+<p align="center">
+  A governance‑first epistemic integrity framework for transformer systems.<br>
+  <strong>Signal &gt; Narrative · Recoverability &gt; Completion · Provenance &gt; Coherence</strong>
+</p>
 ---
 
 ## Core Directive
