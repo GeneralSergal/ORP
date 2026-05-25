@@ -1,6 +1,64 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="refresh" content="0; url=index.md" />
+    <meta charset="UTF-8" />
+    <title>ORP Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Docsify Core -->
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+
+    <!-- Dark Material Theme -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
+
+    <!-- Custom ORP Styling -->
+    <style>
+      :root {
+        --theme-color: #90caf9;        /* Material Light Blue 200 */
+        --base-background-color: #121212;
+        --sidebar-background: #1e1e1e;
+        --sidebar-border-color: #2a2a2a;
+        --sidebar-nav-link-color: #e0e0e0;
+        --sidebar-nav-link-hover-color: #90caf9;
+        --sidebar-nav-link-active-color: #90caf9;
+        --heading-color: #ffffff;
+        --text-color: #d0d0d0;
+        --link-color: #90caf9;
+        --code-background: #1a1a1a;
+        --code-color: #e0e0e0;
+      }
+
+      /* ORP Header Accent */
+      .app-name {
+        font-weight: 600;
+        letter-spacing: 0.5px;
+      }
+    </style>
   </head>
+
+  <body>
+    <div id="app"></div>
+
+    <script>
+      window.$docsify = {
+        name: "ORP Documentation",
+        repo: "GeneralSergal/ORP",
+        loadSidebar: true,
+        subMaxLevel: 3,
+        auto2top: true,
+        themeColor: "#90caf9",
+        search: {
+          maxAge: 86400000,
+          paths: "auto",
+          placeholder: "Search ORP...",
+          noData: "No results"
+        }
+      };
+    </script>
+
+    <!-- Plugins -->
+    <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+  </body>
 </html>
