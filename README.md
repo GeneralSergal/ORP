@@ -1,8 +1,5 @@
 <p align="center">
   <img src="https://github.com/GeneralSergal/ORP/actions/workflows/orp-ci.yml/badge.svg" alt="ORP v3.0 Integrity Suite">
-  <a href="https://generalsergal.github.io/ORP/">
-    <img src="https://img.shields.io/badge/Website-Live-blue" alt="Live Website">
-  </a>
   <img src="https://img.shields.io/badge/ORP-v3.0-blue" alt="ORP Version">
   <img src="https://img.shields.io/github/license/GeneralSergal/ORP" alt="License">
   <img src="https://img.shields.io/badge/status-active-success" alt="Status">
