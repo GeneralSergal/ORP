@@ -15,7 +15,7 @@
 
 <p align="center">
   A governance-first epistemic integrity framework.<br>
-  <strong>Signal &gt; Narrative · Recoverability &gt; Completion · Provenance &gt; Coherence</strong>
+  <strong>Signal > Narrative · Recoverability > Completion · Provenance > Coherence</strong>
 </p>
 
 **Live Website**: [https://generalsergal.github.io/ORP/](https://generalsergal.github.io/ORP/)
@@ -51,6 +51,9 @@ No preamble may precede this header.
 
 ### Core Authority Chain
 
+<details>
+<summary>Core Authority Chain</summary>
+
 ```mermaid
 flowchart TD
     IN[INPUT] --> L1[L1: Observed Data<br/>Typed Signals Only]
@@ -58,8 +61,12 @@ flowchart TD
     L2 --> L3[L3: Governance Core<br/>Authority Layer]
     L3 --> OUT[OUTPUT]
 ```
+</details>
 
 ### L4 Non-Authoritative Subsystem
+
+<details>
+<summary>L4 Non-Authoritative Subsystem</summary>
 
 ```mermaid
 flowchart TD
@@ -69,20 +76,27 @@ flowchart TD
     L4 -. cannot modify .-> L3
     L4 -. no access .-> L1[L1: Observed Data]
 ```
+</details>
 
 ### Governance + Drift Loop
+
+<details>
+<summary>Governance + Drift Loop</summary>
 
 ```mermaid
 flowchart TD
     L1[L1 Signal Stream] --> L2[L2 Validation]
     L2 --> L3[L3 Governance Core]
-    L1 --> SIGMA[σ
-² Drift Computation]
+    L1 --> SIGMA[σ² Drift Computation]
     SIGMA --> SHS[SHS State Engine]
     SHS --> L3
 ```
+</details>
 
 ### Session Health State (SHS)
+
+<details>
+<summary>Session Health State (SHS)</summary>
 
 ```mermaid
 stateDiagram-v2
@@ -98,6 +112,7 @@ stateDiagram-v2
     RED: Restricted Inference
     BLACK: Halt State
 ```
+</details>
 
 ---
 
@@ -134,15 +149,18 @@ Probabilistic reasoning only. Non-authoritative. Cannot access raw L1 or overrid
 **σ² = variance(L1_signal_vector over time)**
 
 ### Drift Levels
-- **NONE**: σ² < 0.01  
+- **NONE**: σ
+² < 0.01  
 - **LOW**: 0.01 ≤ σ² < 0.05  
-- **MODERATE**: 0.05 ≤ σ
-² < 0.15  
+- **MODERATE**: 0.05 ≤ σ² < 0.15  
 - **HIGH**: σ² ≥ 0.15  
 
 ---
 
 ## Execution Pipeline
+
+<details>
+<summary>Execution Pipeline</summary>
 
 ```mermaid
 flowchart TD
@@ -153,6 +171,7 @@ flowchart TD
     D --> F[L4 Inference]
     F --> E
 ```
+</details>
 
 ---
 
@@ -228,7 +247,8 @@ L1: STRICT_TYPED_TIME_SERIES
 L2: VALIDATION_LAYER  
 L3: AUTHORITY_LAYER  
 L4: INTERNAL_INFERENCE_ONLY  
-DRIFT_MODEL: NUMERIC (σ²)  
+DRIFT_MODEL: NUMERIC (σ
+²)  
 STATUS: FROZEN
 
 ---
