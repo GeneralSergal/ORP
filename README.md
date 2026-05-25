@@ -52,7 +52,7 @@ No preamble may precede this header.
 ### Core Authority Chain
 
 <details>
-<summary>Core Authority Chain</summary>
+<summary>Core Authority Chain Diagram</summary>
 
 ```mermaid
 flowchart TD
@@ -66,7 +66,7 @@ flowchart TD
 ### L4 Non-Authoritative Subsystem
 
 <details>
-<summary>L4 Non-Authoritative Subsystem</summary>
+<summary>L4 Non-Authoritative Subsystem Diagram</summary>
 
 ```mermaid
 flowchart TD
@@ -81,7 +81,7 @@ flowchart TD
 ### Governance + Drift Loop
 
 <details>
-<summary>Governance + Drift Loop</summary>
+<summary>Governance + Drift Loop Diagram</summary>
 
 ```mermaid
 flowchart TD
@@ -96,7 +96,7 @@ flowchart TD
 ### Session Health State (SHS)
 
 <details>
-<summary>Session Health State (SHS)</summary>
+<summary>Session Health State (SHS) Diagram</summary>
 
 ```mermaid
 stateDiagram-v2
@@ -160,7 +160,7 @@ Probabilistic reasoning only. Non-authoritative. Cannot access raw L1 or overrid
 ## Execution Pipeline
 
 <details>
-<summary>Execution Pipeline</summary>
+<summary>Execution Pipeline Diagram</summary>
 
 ```mermaid
 flowchart TD
