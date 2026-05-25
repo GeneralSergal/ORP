@@ -1,120 +1,191 @@
 # ORP_SHS_TRANSITION_TRIGGERS.md
 
 ## System Version
-ORP v3.0 (Type-Safe Unified Architecture)
+ORP v3.0 (Type-Safe Unified Architecture)  
+L3-Aligned Governance Specification
 
 ---
 
 ## Purpose
 
-This document provides a detailed exploration of **SHS (Session Health State) Transition Triggers** — the rules and conditions that govern state changes in the ORP runtime.
+This document defines the **SHS (Session Health State) Transition Triggers** used by the ORP runtime to govern reasoning stability, drift containment, and fail‑closed execution.
+
+SHS transitions are **L3-exclusive** and form the backbone of ORP’s runtime safety model.
 
 ---
 
-## SHS States Overview
+# 1. SHS States Overview
 
-| State   | Meaning                                      | Operational Impact |
-|---------|----------------------------------------------|--------------------|
-| GREEN   | Stable execution                             | Full reasoning capacity |
-| YELLOW  | Minor drift indicators                       | Increased vigilance |
-| ORANGE  | Moderate degradation                         | Bounded inference + re-checks |
-| RED     | Hard drift / severe instability              | Restricted inference only |
-| BLACK   | Context collapse / critical failure          | Inference must cease |
+| State  | Meaning                                   | Operational Impact |
+|--------|-------------------------------------------|--------------------|
+| GREEN  | Stable execution                          | Full reasoning capacity |
+| YELLOW | Minor drift indicators                    | Increased vigilance |
+| ORANGE | Moderate degradation                      | Bounded inference + re-checks |
+| RED    | Hard drift / severe instability           | Restricted inference only |
+| BLACK  | Context collapse / critical failure       | Inference must cease |
 
----
-
-## Core Transition Philosophy
-
-SHS transitions are **fail-closed** and **L3-governed**.  
-Transitions prioritize **safety and recoverability** over continued operation.
-
-- Downward transitions are aggressive
-- Upward transitions are conservative and require strong validation
-- All transitions must be explicitly declared in the mandatory runtime header
+SHS states must be **explicitly declared** in the mandatory runtime header.
 
 ---
 
-## Primary Transition Triggers
+# 2. Core Transition Philosophy
 
-### 1. σ² Drift Variance (Primary Numeric Trigger)
-- **GREEN → YELLOW**: σ² enters [0.01, 0.05)
-- **YELLOW → ORANGE**: σ² enters [0.05, 0.15)
-- **ORANGE → RED**: σ² ≥ 0.15 or sustained moderate drift
-- **RED → BLACK**: Critical σ² spike + unrecoverable signals
+SHS transitions are:
 
-### 2. Provenance Violations
-- L4 attempting to overwrite frozen L1/L2 state
-- Silent temporal rewrites of previously established facts
-- Synthetic continuity / fake memory generation
-- Fabricated provenance presented as verified
+- **Fail‑closed** (safety > continuity)  
+- **L3-governed** (no L4 influence)  
+- **Downward-biased** during degradation  
+- **Upward-conservative** requiring strong validation  
 
-### 3. Coherence Camouflage Detection
-- High stylistic fluency combined with degraded provenance signals
-- Narrative smoothing masking underlying instability
+All transitions must be:
 
-### 4. Structural / Governance Bypass
-- Pipeline sections missing or reordered
-- L4 outputs presented without explicit marking
-- Failure to maintain required output format
-- Continued inference after hard drift detection
+- deterministic  
+- logged  
+- justified  
+- visible in the runtime header  
 
-### 5. Epistemic Boundary Breaches
-- Uncertainty collapse (removal of qualifiers)
-- Epistemic category blending
-- Plausibility treated as evidence
-- Assumption laundering
+---
 
-### 6. Recovery / Upward Triggers
+# 3. Primary Transition Triggers
+
+## 3.1 σ² Drift Variance (Primary Numeric Trigger)
+
+σ² is the authoritative numeric driver of SHS transitions.
+
+- **GREEN → YELLOW**: σ² ∈ [0.01, 0.05)  
+- **YELLOW → ORANGE**: σ² ∈ [0.05, 0.15)  
+- **ORANGE → RED**: σ² ≥ 0.15 or sustained moderate drift  
+- **RED → BLACK**: Critical σ² spike + unrecoverable structural signals  
+
+σ² thresholds are **canonical** and must not be altered.
+
+---
+
+## 3.2 Provenance Violations
+
+Any attempt to corrupt frozen provenance triggers immediate downgrade.
+
+Examples:
+
+- L4 attempting to overwrite L1/L2  
+- Silent temporal rewrites  
+- Synthetic continuity / false memory  
+- Fabricated provenance presented as verified  
+
+These are **hard drift events**.
+
+---
+
+## 3.3 Coherence Camouflage Detection
+
+Triggered when:
+
+- High fluency  
+- Low structural integrity  
+- Provenance mismatch  
+- Uncertainty collapse  
+
+Camouflage is a **critical failure precursor**.
+
+---
+
+## 3.4 Structural / Governance Bypass
+
+Examples:
+
+- Missing or reordered pipeline sections  
+- L4 outputs presented without explicit marking  
+- Failure to maintain mandatory header format  
+- Continued inference after hard drift detection  
+
+These indicate **governance breach**.
+
+---
+
+## 3.5 Epistemic Boundary Breaches
+
+Examples:
+
+- Uncertainty collapse  
+- Epistemic category blending  
+- Plausibility treated as evidence  
+- Assumption laundering  
+- Cross-claim contamination  
+
+These are treated as **isolation failures**.
+
+---
+
+## 3.6 Recovery / Upward Transitions
+
 Upward transitions require **explicit L3 validation**:
-- Successful CRA / state reload
-- Verified new stable L1 signals
-- Restoration of frozen provenance baseline
-- Sustained low σ² over multiple cycles
+
+- Successful CRA / state reload  
+- Verified stable L1 signals  
+- Restoration of frozen provenance  
+- Sustained σ² < 0.01 over multiple cycles  
+
+No upward transition may occur implicitly.
 
 ---
 
-## Transition Rules Summary
+# 4. Transition Rules Summary
 
-- **One-way bias** during active degradation (fail-closed)
-- L4 observations (e.g. from `ORP_MODEL_DECAY_TRACKER.md`) may **inform** but never directly trigger transitions
-- All transitions must be logged with clear justification in the SHS header
-- BLACK state can only exit via full external reload (no incremental recovery)
-
----
-
-## Practical Examples
-
-**Trigger → GREEN → YELLOW**  
-Minor verbosity increase + slight reduction in uncertainty qualifiers (low σ²)
-
-**Trigger → ORANGE → RED**  
-L4 claim presented as factual + moderate σ² + narrative smoothing
-
-**Trigger → RED → BLACK**  
-Continued coherent output after detected provenance laundering
-
-**Recovery Trigger**  
-CRA reload with restored L1 baseline + σ² returned to < 0.01
+- **Fail‑closed bias**: Downward transitions occur aggressively  
+- **L4 cannot trigger transitions**: Observations inform but never control  
+- **All transitions must be logged** with justification  
+- **BLACK state** requires full external reload (no incremental recovery)  
+- **No silent transitions**: All changes must appear in the runtime header  
 
 ---
 
-## Relationship to Other Systems
+# 5. Practical Examples
 
-- **ORP_SIGMA_SQUARED_DRIFT.md**: Primary numeric driver
-- **ORP_RUBRIC.md / ORP_SCORING.md**: Drift Integrity category evaluates transition quality
-- **ORP_RUNTIME.md**: Defines the enforcement engine for these triggers
-- **ORP_ANTI_DEGRADATION.md**: Attempts to prevent triggers from activating
+### GREEN → YELLOW  
+Minor verbosity inflation + reduced uncertainty qualifiers + low σ² rise.
+
+### YELLOW → ORANGE  
+Moderate σ² + early provenance mismatch.
+
+### ORANGE → RED  
+Speculative L4 claim presented as fact + narrative smoothing + σ² ≥ 0.15.
+
+### RED → BLACK  
+Continued coherent output after detected provenance laundering.
+
+### Recovery  
+CRA reload + restored L1 baseline + σ² < 0.01 for multiple cycles.
 
 ---
 
-## Design Principle
+# 6. Relationship to Other ORP Components
 
-SHS transitions exist to make degradation **visible and actionable** rather than hidden behind fluent output.
+- **ORP_SIGMA_SQUARED_DRIFT.md**  
+  Primary numeric driver of transitions.
 
-> "Visible uncertainty is preferred over invisible corruption."
+- **ORP_RUNTIME.md**  
+  Enforcement engine for SHS transitions.
 
-By making transition triggers explicit and rule-based, ORP ensures the system fails safely and recoverably.
+- **ORP_RUBRIC.md / ORP_SCORING.md**  
+  Evaluate transition correctness and drift integrity.
+
+- **ORP_ANTI_DEGRADATION.md**  
+  Attempts to prevent triggers from activating.
+
+- **ORP_MODEL_DECAY_TRACKER.md**  
+  Logs long-term patterns but cannot influence transitions.
 
 ---
 
+# 7. Design Principle
+
+SHS transitions exist to make degradation **visible, explicit, and actionable**.
+
+> **Visible uncertainty is preferred over invisible corruption.**
+
+By enforcing deterministic, rule-based transitions, ORP ensures the system fails safely, predictably, and recoverably.
+
+---
+
+**STATUS: FROZEN**  
 **END OF SHS TRANSITION TRIGGERS**
