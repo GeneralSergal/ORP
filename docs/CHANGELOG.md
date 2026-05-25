@@ -1,221 +1,105 @@
 # CHANGELOG.md
-## Version: ORP v3.0 (Type‑Safe Unified Architecture)
+## Version: ORP v3.0 (Type-Safe Unified Architecture)
+
+**Release Date:** 25/05/2026  
+**Release Tag:** `v3.0-stable`
 
 ---
 
-## Checkpoint Date
-25/05/2026
+## Overview
+
+ORP v3.0 represents a **major architectural evolution** from v2.5 — transitioning from a pipeline-centric evaluation system into a **governance-first, type-safe epistemic runtime framework**.
+
+This release focuses on strict layer isolation, numeric drift observability, provenance integrity, and fail-closed reasoning behavior.
 
 ---
 
-## Repository State
-ORP v3.0 (Unified Epistemic Governance Architecture)
+## Major Changes
 
-This changelog documents the transition from **v2.5 → v3.0**, representing a structural upgrade in:
+### 1. Runtime Governance Kernel
+- `ORP_RUNTIME.md` — Fully rewritten and frozen as the single authoritative source
+- Mandatory runtime header enforcement
+- Strict L1–L4 authority stack with clear isolation
+- Numeric drift model (`σ²`)
+- Fail-closed execution under degradation
 
-- runtime governance enforcement  
-- epistemic isolation  
-- numeric drift observability  
-- modular architecture formalization  
-- anti‑degradation monitoring  
-- system‑map alignment  
+### 2. Numeric Drift Observability
+- Deterministic variance-based drift calculation (`σ² = variance(L1_signal_vector over time)`)
+- Defined drift levels (NONE / LOW / MODERATE / HIGH)
+- Supporting signals: transition hashing and temporal stability
 
----
+### 3. Epistemic Isolation & Authority Boundaries
+- Formalized L1/L2/L3/L4 separation
+- `ORP_EPISTEMIC_ISOLATION.md`
+- Prohibition of cross-layer contamination
+- L4 explicitly non-authoritative
 
-## Contributor
-Laurentius Maximus ENTROPIA
+### 4. Coherence Camouflage Detection
+- `ORP_COHERENCE_CAMOUFLAGE.md`
+- Defined as major failure mode
+- Detection via σ² spikes, provenance mismatch, and uncertainty collapse
 
----
+### 5. Anti-Degradation & Recovery Systems
+- `ORP_ANTI_DEGRADATION.md`
+- `ORP_MODEL_DECAY_TRACKER.md`
+- `ORP_DRIFT_RECOVERY_PROTOCOL.md`
+- `ORP_CRA_SPEC.md` (Consistency & Recovery Anchor)
+- `ORP_FAILURE_MODES_CATALOG.md`
 
-# Summary of Changes (v3.0 Upgrade)
+### 6. System & Meta Mapping
+- Expanded `ORP_SYSTEM_MAP.md`
+- New `ORP_META_MAP.md`
+- Clear dependency graph and navigation layer
 
-This release is a **full architectural evolution**, not a patch.
+### 7. Evaluation Layer Hardening
+- Strengthened `ORP_EVALUATION_SCHEMA.md`, `ORP_RUBRIC.md`, and `ORP_SCORING.md`
+- σ²-linked scoring
+- Coherence camouflage penalties
+- Fail-closed behavior
 
-Primary objective:
-
-Transition ORP from a pipeline‑centric evaluation system into a **governance‑first epistemic architecture with strict layer isolation and deterministic observability**.
-
----
-
-# Major Architectural Changes
-
-## 1. Version Upgrade: v2.5 → v3.0
-
-### Introduced:
-
-- Strict L1–L4 isolation  
-- Numeric drift model (σ²)  
-- Strengthened governance kernel  
-- Expanded system map  
-- Anti‑degradation subsystem  
-- Formalized failure modes  
-
----
-
-## 2. Governance Hardening
-
-### ORP_RUNTIME.md
-
-- Reinforced L3 authority boundary  
-- Deterministic SHS transitions  
-- Numeric drift observability  
-- Fail‑closed behavior under degradation  
-- Prohibition of cross‑layer reinterpretation  
-
----
-
-## 3. Epistemic Isolation Enforcement
-
-### ORP_EPISTEMIC_ISOLATION.md
-
-- L1/L2/L3/L4 separation rules  
-- Anti‑contamination constraints  
-- Backward influence prohibition  
-- Claim independence enforcement  
+### 8. Repository Reorganization
+- New folder structure:
+  - `/core/`
+  - `/constraints/`
+  - `/drift/`
+  - `/evaluation/`
+  - `/layers/`
+  - `/recovery/`
+  - `/conceptual/`
+  - `/docs/`
 
 ---
 
-## 4. Coherence Camouflage Formalization
+## Removed / Deprecated
 
-### ORP_COHERENCE_CAMOUFLAGE.md
-
-- Defined as primary failure mode  
-- Differentiated fluency vs provenance degradation  
-- Introduced detection signals:  
-  - σ² drift spikes  
-  - provenance mismatch  
-  - uncertainty collapse  
-  - L4 leakage indicators  
+- `L4_DASHBOARD.md` and associated image
+- Implicit cross-layer propagation
+- Narrative-based drift interpretation
+- v2.6 migration artifacts
 
 ---
 
-## 5. System Graph Formalization
+## Current System State
 
-### ORP_SYSTEM_MAP.md
-
-- Repository dependency graph  
-- Layer hierarchy  
-- Separation of runtime, evaluation, and observational subsystems  
-
----
-
-## 6. Meta‑System Layer
-
-### ORP_META_MAP.md
-
-- Navigation layer across all ORP documents  
-- Defines subsystem dependencies  
-- Reinforces non‑authoritative nature of L4  
+**ORP_VERSION**: 3.0 (FROZEN)  
+**Status**: Stable  
+**Governance**: L3 Authoritative  
+**Drift Model**: Numeric (σ²)  
+**Change Policy**: Log-only (strict L3 gating)
 
 ---
 
-## 7. Anti‑Degradation Expansion
+## Design Principle (v3.0)
 
-### ORP_MODEL_DECAY_TRACKER.md
+**Truthfulness is a property of isolation integrity, not narrative fluency.**
 
-- Persistent diagnostic subsystem  
-- Categorized decay patterns:  
-  - instruction resistance  
-  - epistemic drift  
-  - structural erosion  
-  - capability regression  
+Visible uncertainty is preferred over hidden corruption.
 
 ---
 
-## 8. Evaluation Pipeline Stabilization
-
-### ORP_EVALUATION_SCHEMA.md  
-- Strengthened structural transformation rules  
-- Enforced epistemic tagging  
-- Reinforced reconstruction boundaries  
-
-### ORP_RUBRIC.md  
-- Improved provenance integrity scoring  
-- Added coherence camouflage penalties  
-
-### ORP_SCORING.md  
-- σ²‑linked degradation weighting  
-- Fail‑closed scoring behavior  
+**Repository**: https://github.com/GeneralSergal/ORP  
+**Website**: https://generalsergal.github.io/ORP/
 
 ---
 
-## 9. System Architecture Alignment
-
-### ORP_SYSTEM_ARCHITECTURE.md
-
-- Strict layered dependency model  
-- Clear separation of:  
-  - runtime  
-  - evaluation  
-  - observational  
-  - conceptual layers  
-
----
-
-## 10. Conceptual Architecture Refinement
-
-### ORP_ARCHITECTURE.md
-
-- Reclassified as L4 conceptual reference  
-- Removed governance ambiguity  
-- Reinforced metaphor‑only interpretation  
-
----
-
-# Structural Outcomes (v3.0)
-
-ORP is now:
-
-- fully layer‑isolated (L1–L4)  
-- drift‑observable (σ²)  
-- coherence‑camouflage aware  
-- dependency‑graph structured  
-- meta‑mapped for navigation  
-- fail‑closed under degradation  
-- epistemically partitioned  
-
----
-
-# Removed / Deprecated
-
-- implicit cross‑layer propagation  
-- L3/L4 blending  
-- narrative smoothing tolerance  
-- informal provenance merging  
-- unstructured drift interpretation  
-- L4_DASHBOARD.md (removed)  
-- MIGRATION_v2.6_to_v3.0.md (removed)  
-- test_header_rules.py (removed)  
-
----
-
-# Current Active System Stack
-
-```
-ORP_RUNTIME.md
-ORP_EPISTEMIC_ISOLATION.md
-ORP_SYSTEM_MAP.md
-ORP_META_MAP.md
-ORP_MODEL_DECAY_TRACKER.md
-
-ORP_EVALUATION_SCHEMA.md
-ORP_RUBRIC.md
-ORP_SCORING.md
-
-ORP_ARCHITECTURE.md
-ORP_COHERENCE_CAMOUFLAGE.md
-```
-
----
-
-# Final State
-
-ORP v3.0 is:
-
-a governance‑first epistemic system with strict isolation boundaries, deterministic drift observability, and fail‑closed reasoning integrity under degradation.
-
----
-
-# Design Principle (v3.0)
-
-Truthfulness is a property of **isolation integrity**, not narrative fluency.
+**ORP v3.0 is now frozen and released.**
