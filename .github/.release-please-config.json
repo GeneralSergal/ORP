@@ -2,9 +2,13 @@
   "release-type": "simple",
   "changelog-path": "CHANGELOG.md",
   "version-file": "ORP_VERSION",
+
+  "release-notes-template": ".github/.release-notes-template.hbs",
+
   "extra-files": [
     "README.md"
   ],
+
   "changelog-sections": [
     { "type": "feat", "section": "✨ Features" },
     { "type": "fix", "section": "🐛 Bug Fixes" },
