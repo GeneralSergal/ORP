@@ -21,6 +21,19 @@
 
   <meta name="theme-color" content="#ff4b4b" />
 
+  <meta property="og:title" content="ORP v3.0 — Open Resonance Protocol" />
+  <meta
+    property="og:description"
+    content="Governance-first epistemic reasoning framework with drift observability and provenance preservation."
+  />
+  <meta property="og:type" content="website" />
+
+  <link
+    rel="icon"
+    type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230d1117'/%3E%3Cpath d='M50 15 L85 50 L50 85 L15 50 Z' fill='%2358a6ff'/%3E%3C/svg%3E"
+  />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
@@ -1061,6 +1074,7 @@
       <div class="docs-grid">
 
         <div class="doc-card">
+
           <h3>Core Specifications</h3>
 
           <p>
@@ -1077,29 +1091,16 @@
             <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_SYSTEM_MAP.manifest.json">System Map Manifest</a></li>
             <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_ORIGIN.md">Origin Document</a></li>
           </ul>
+
         </div>
 
         <div class="doc-card">
-          <h3>Drift & Recovery</h3>
 
-          <p>
-            Numeric drift monitoring, degradation detection, failure classification, and recovery systems.
-          </p>
-
-          <ul>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_SIGMA_SQUARED_DRIFT.md">σ² Drift Model</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_MODEL_DECAY_TRACKER.md">Model Decay Tracker</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_ANTI_DEGRADATION.md">Anti-Degradation</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_DRIFT_RECOVERY_PROTOCOL.md">Recovery Protocol</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_FAILURE_MODES_CATALOG.md">Failure Modes Catalog</a></li>
-          </ul>
-        </div>
-
-        <div class="doc-card">
           <h3>Evaluation Layer</h3>
 
           <p>
-            Structural evaluation, epistemic integrity, scoring systems, and transition governance.
+            Structural evaluation, epistemic integrity,
+            and scoring systems.
           </p>
 
           <ul>
@@ -1110,21 +1111,74 @@
             <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_EPISTEMIC_ISOLATION.md">Epistemic Isolation</a></li>
             <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_COHERENCE_CAMOUFLAGE.md">Coherence Camouflage</a></li>
           </ul>
+
         </div>
 
         <div class="doc-card">
-          <h3>Adversarial Testing</h3>
+
+          <h3>Drift & Recovery</h3>
 
           <p>
-            Stress testing, hallucination detection, and degradation analysis frameworks.
+            Numeric drift monitoring, degradation detection,
+            and recovery systems.
           </p>
 
           <ul>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/testing/ORP_BENCHMARK.md">ORP Benchmark Suite</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/testing/ORP_ADVERSARIAL_STRESS.md">Adversarial Stress Testing</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/testing/ORP_DEGRADATION_PATHWAYS.md">Degradation Pathways</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/testing/ORP_HALLUCINATION_PRESSURE.md">Hallucination Pressure Analysis</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_SIGMA_SQUARED_DRIFT.md">σ² Drift Model</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_MODEL_DECAY_TRACKER.md">Model Decay Tracker</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_ANTI_DEGRADATION.md">Anti-Degradation</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_DRIFT_RECOVERY_PROTOCOL.md">Recovery Protocol</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_FAILURE_MODES_CATALOG.md">Failure Modes Catalog</a></li>
           </ul>
+
+        </div>
+
+        <div class="doc-card">
+
+          <h3>Layer Definitions</h3>
+
+          <p>
+            Formal definitions for typed signal handling
+            and layered authority separation.
+          </p>
+
+          <ul>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/layers/ORP_L1_SIGNAL_SCHEMA.md">L1 Signal Schema</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/layers/ORP_L2_VALIDATION_RULES.md">L2 Validation Rules</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/layers/ORP_L4_INFERENCE_GUIDE.md">L4 Inference Guide</a></li>
+          </ul>
+
+        </div>
+
+        <div class="doc-card">
+
+          <h3>Recovery Systems</h3>
+
+          <p>
+            Consistency and recovery anchoring mechanisms
+            for recoverable execution.
+          </p>
+
+          <ul>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/recovery/ORP_CRA_SPEC.md">CRA Specification</a></li>
+          </ul>
+
+        </div>
+
+        <div class="doc-card">
+
+          <h3>Conceptual Models</h3>
+
+          <p>
+            Non-authoritative conceptual and exploratory
+            architecture references.
+          </p>
+
+          <ul>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/conceptual/ORP_ARCHITECTURE.md">Architecture Model</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/conceptual/ORP_BENCHMARK.md">Benchmark Model</a></li>
+          </ul>
+
         </div>
 
       </div>
@@ -1146,12 +1200,13 @@
         </div>
 
         <h2 class="section-title">
-          Epistemic Governance Framework
+          Governance-First Design
         </h2>
 
         <div class="section-description">
-          ORP is built on six foundational principles for reliable,
-          observable, and recoverable reasoning at scale.
+          ORP prioritizes structural correctness,
+          provenance continuity, and visible uncertainty
+          over stylistic fluency.
         </div>
 
       </div>
@@ -1159,51 +1214,38 @@
       <div class="principles">
 
         <div class="principle">
-          <h3>Provenance Preservation</h3>
+          <h3>Signal &gt; Narrative</h3>
+
           <p>
-            Every inference step maintains complete provenance metadata,
-            enabling full reconstruction of reasoning pathways and
-            dependency chains.
+            Linguistic fluency must never override provenance
+            integrity or epistemic correctness.
           </p>
         </div>
 
         <div class="principle">
-          <h3>Drift Observability</h3>
+          <h3>Recoverability &gt; Completion</h3>
+
           <p>
-            Numeric drift monitoring (σ²) provides real-time degradation
-            detection and failure prediction for long-context execution.
+            Stable recovery paths and bounded uncertainty
+            are preferred over forced narrative continuity.
           </p>
         </div>
 
         <div class="principle">
           <h3>Epistemic Isolation</h3>
+
           <p>
-            Knowledge domains are strictly compartmentalized with
-            enforced boundary contracts and authority isolation.
+            L1–L4 authority boundaries remain strictly separated
+            to prevent contamination and assumption laundering.
           </p>
         </div>
 
         <div class="principle">
-          <h3>Recoverable Reasoning</h3>
-          <p>
-            Failed inference paths are automatically recoverable through
-            checkpoint restoration and deterministic replay mechanisms.
-          </p>
-        </div>
+          <h3>Observable Drift</h3>
 
-        <div class="principle">
-          <h3>Coherence Camouflage Detection</h3>
           <p>
-            Structural validation identifies reasoning that appears
-            coherent but lacks epistemic grounding.
-          </p>
-        </div>
-
-        <div class="principle">
-          <h3>Authority Transparency</h3>
-          <p>
-            All decisions are attributable to specific authority layers,
-            enabling audit trails and responsibility tracking.
+            Degradation must remain visible, measurable,
+            and recoverable through σ² variance monitoring.
           </p>
         </div>
 
@@ -1220,35 +1262,67 @@
       <div class="footer-grid">
 
         <div>
-          <div class="footer-title">Project</div>
-          <div class="footer-links">
-            <a href="https://github.com/GeneralSergal/ORP">GitHub Repository</a>
-            <a href="#documentation">Documentation</a>
-            <a href="#pipeline">Pipeline Architecture</a>
+
+          <div class="footer-title">
+            ORP v3.0
           </div>
+
+          <div>
+            Open Resonance Protocol
+          </div>
+
+          <div style="margin-top:14px;color:var(--muted);">
+            Governance-first epistemic reasoning framework.
+          </div>
+
         </div>
 
         <div>
-          <div class="footer-title">Resources</div>
-          <div class="footer-links">
-            <a href="https://github.com/GeneralSergal/ORP/issues">Issues & Discussions</a>
-            <a href="https://github.com/GeneralSergal/ORP/pulls">Contributions</a>
+
+          <div class="footer-title">
+            Documentation
           </div>
+
+          <div class="footer-links">
+            <a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_SYSTEM_ARCHITECTURE.md">System Architecture</a>
+            <a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_RUBRIC.md">Evaluation Layer</a>
+            <a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_SIGMA_SQUARED_DRIFT.md">Drift Systems</a>
+          </div>
+
         </div>
 
         <div>
-          <div class="footer-title">Learn</div>
-          <div class="footer-links">
-            <a href="#overview">Overview</a>
-            <a href="#principles">Core Principles</a>
-            <a href="#documentation">Full Docs</a>
+
+          <div class="footer-title">
+            Repository
           </div>
+
+          <div class="footer-links">
+
+            <a
+              href="https://github.com/GeneralSergal/ORP"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </a>
+
+            <a
+              href="https://github.com/GeneralSergal/ORP/blob/main/LICENSE"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GPL-3.0 License
+            </a>
+
+          </div>
+
         </div>
 
       </div>
 
       <div class="footer-note">
-        ORP v3.0 — Open Resonance Protocol. Type-safe epistemic governance framework.
+        Signal &gt; Narrative · Recoverability &gt; Completion · Provenance &gt; Coherence
       </div>
 
     </div>
