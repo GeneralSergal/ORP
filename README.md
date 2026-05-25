@@ -17,6 +17,7 @@
   A governance-first epistemic integrity framework.<br>
   <strong>Signal &gt; Narrative · Recoverability &gt; Completion · Provenance &gt; Coherence</strong>
 </p>
+
 **Live Website**: [https://generalsergal.github.io/ORP/](https://generalsergal.github.io/ORP/)
 
 ---
