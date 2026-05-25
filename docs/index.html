@@ -26,6 +26,7 @@
       --success: #3fb950;
       --warning: #d29922;
       --danger: #f85149;
+      --shadow: 0 0 0 1px rgba(255,255,255,0.02), 0 20px 40px rgba(0,0,0,0.25);
     }
 
     * { box-sizing: border-box; }
@@ -165,17 +166,25 @@
       margin-bottom: 16px;
     }
 
-    .cards, .principles {
+    .cards {
       display: grid;
       gap: 24px;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
 
-    .card, .principle {
+    .card {
       background: var(--panel);
       border: 1px solid rgba(255,255,255,0.06);
       border-radius: 20px;
       padding: 28px;
+    }
+
+    .documentation-index {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+      margin-top: 40px;
     }
 
     footer {
@@ -205,15 +214,15 @@
       <div>
         <div class="badge">
           <div class="pulse" style="background:#3fb950;box-shadow:0 0 12px rgba(63,185,80,0.6);"></div>
-          Type-Safe Epistemic Governance
+          Type-Safe Epistemic Governance Framework
         </div>
         <h1>Open Resonance Protocol</h1>
         <p style="font-size:1.15rem;color:var(--muted);max-width:680px;">
-          A hardened governance framework for provenance-preserving, drift-visible, and recoverable reasoning in long-context systems.
+          ORP v3.0 is a governance-first reasoning architecture designed for provenance preservation, drift observability, recoverable inference, and strict epistemic isolation.
         </p>
         <div style="margin-top:32px;">
-          <a href="#documentation" class="btn btn-primary">Explore Documentation</a>
-          <a href="https://github.com/GeneralSergal/ORP" target="_blank" class="btn btn-secondary" style="margin-left:12px;">GitHub →</a>
+          <a href="#documentation" class="btn btn-primary">Explore Full Documentation</a>
+          <a href="https://github.com/GeneralSergal/ORP" target="_blank" class="btn btn-secondary" style="margin-left:12px;">GitHub Repository →</a>
         </div>
       </div>
 
@@ -228,7 +237,7 @@
             <span style="color:#3fb950">[SHS: GREEN]</span><br>
             <span style="color:#58a6ff">[DRIFT: NONE]</span><br>
             <span style="color:#d29922">[CRA: VALID]</span><br><br>
-            ORP v3.0 Kernel Online<br>
+            ORP v3.0 Kernel Initialized<br>
             Epistemic Isolation: <span style="color:#3fb950">ACTIVE</span><br>
             Signal Priority: <span style="color:#58a6ff">ENFORCED</span>
           </div>
@@ -237,21 +246,19 @@
     </div>
   </header>
 
-  <!-- DOCUMENTATION INDEX -->
+  <!-- DOCUMENTATION -->
   <section id="documentation">
     <div class="container">
-      <h1 align="center">ORP Documentation Index</h1>
+      <h1 align="center" style="margin-bottom:8px;">ORP Documentation Index</h1>
       <p align="center" style="font-size:1.1rem;color:var(--muted);max-width:800px;margin:0 auto 60px;">
         Operational Reasoning Protocol v3.0 — Full Documentation Suite
       </p>
 
-      <div style="background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:40px;">
+      <div class="documentation-index">
 
         <h2 style="color:var(--heading);">Documentation Structure</h2>
 
-        <!-- Paste your full markdown content here as HTML or keep as is. For brevity, using clean sections -->
-
-        <h3 style="margin-top:40px;">1. Core Specifications</h3>
+        <h3>1. Core Specifications</h3>
         <ul>
           <li><a href="https://github.com/GeneralSergal/ORP/tree/main/core" target="_blank">Core Runtime & Architecture</a></li>
         </ul>
@@ -269,6 +276,16 @@
         <h3>4. Layer Definitions</h3>
         <ul>
           <li><a href="https://github.com/GeneralSergal/ORP/tree/main/layers" target="_blank">L1, L2, L4 Schemas</a></li>
+        </ul>
+
+        <h3>5. Recovery Systems</h3>
+        <ul>
+          <li><a href="https://github.com/GeneralSergal/ORP/tree/main/recovery" target="_blank">CRA & Recovery Protocols</a></li>
+        </ul>
+
+        <h3>6. Conceptual Models</h3>
+        <ul>
+          <li><a href="https://github.com/GeneralSergal/ORP/tree/main/conceptual" target="_blank">Architecture & Conceptual References</a></li>
         </ul>
 
       </div>
