@@ -6,10 +6,7 @@
   <img src="https://img.shields.io/badge/SHS-5--State%20Model-green" alt="SHS Model">
   <img src="https://img.shields.io/badge/LAS-L1%E2%86%92L4-orange" alt="LAS Model">
   <img src="https://img.shields.io/badge/Drift%20Model-%CF%83%C2%B2%20Numeric-purple" alt="Drift Model">
-  <img src="https://img.shields.io/badge/docs-100%25-brightgreen" alt="Documentation Coverage">
   <img src="https://img.shields.io/github/commit-activity/m/GeneralSergal/ORP" alt="Commit Activity">
-  <img src="https://img.shields.io/github/repo-size/GeneralSergal/ORP" alt="Repository Size">
-  <img src="https://img.shields.io/badge/Governance-L3%20Authoritative-critical" alt="Governance Layer">
 </p>
 
 <h1 align="center">ORP — Operational Reasoning Protocol v3.0</h1>
