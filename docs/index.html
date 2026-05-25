@@ -21,49 +21,38 @@
 
   <meta name="theme-color" content="#58a6ff" />
 
-  <meta property="og:title" content="ORP v3.0 — Open Resonance Protocol" />
-  <meta
-    property="og:description"
-    content="Governance-first epistemic reasoning framework with drift observability and provenance preservation."
-  />
-  <meta property="og:type" content="website" />
-
-  <link
-    rel="icon"
-    type="image/svg+xml"
-    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230d1117'/%3E%3Cpath d='M50 15 L85 50 L50 85 L15 50 Z' fill='%2358a6ff'/%3E%3C/svg%3E"
-  />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
     :root {
-      --bg: #0d1117;
-      --bg-elevated: #11161d;
+      --bg: #0b0f14;
+      --bg-elevated: #101720;
+      --panel: rgba(18, 24, 33, 0.92);
+      --panel-2: rgba(26, 34, 46, 0.95);
+      --border: rgba(120, 170, 255, 0.14);
+      --border-strong: rgba(120, 170, 255, 0.24);
 
-      --panel: #161b22;
-      --panel-2: #1f2630;
+      --text: #cbd6e2;
+      --muted: #8b9bb0;
+      --heading: #f4f8ff;
 
-      --border: #30363d;
-      --border-soft: rgba(255, 255, 255, 0.06);
+      --primary: #6cb7ff;
+      --primary-bright: #8dd0ff;
+      --cyan: #69f0ff;
+      --violet: #9d7bff;
 
-      --text: #c9d1d9;
-      --muted: #8b949e;
-      --heading: #f0f6fc;
+      --success: #44d17d;
+      --warning: #d7a548;
+      --danger: #ff6262;
 
-      --primary: #58a6ff;
-      --primary-hover: #79c0ff;
-      --primary-soft: rgba(88, 166, 255, 0.12);
+      --shadow: rgba(0, 0, 0, 0.48);
 
-      --success: #3fb950;
-      --danger: #f85149;
-      --warning: #d29922;
+      --radius: 24px;
+      --radius-sm: 16px;
 
-      --shadow: rgba(0, 0, 0, 0.45);
-
-      --radius: 20px;
-      --radius-sm: 14px;
-
-      --transition:
-        180ms cubic-bezier(0.2, 0.8, 0.2, 1);
+      --transition: 180ms cubic-bezier(.2,.8,.2,1);
     }
 
     * {
@@ -79,101 +68,147 @@
       overflow-x: hidden;
 
       background:
-        radial-gradient(circle at top right,
-          rgba(88, 166, 255, 0.06),
-          transparent 35%),
+        radial-gradient(circle at top right, rgba(109,183,255,0.12), transparent 30%),
+        radial-gradient(circle at bottom left, rgba(157,123,255,0.08), transparent 30%),
         var(--bg);
 
       color: var(--text);
 
       font-family:
-        Inter,
+        "Space Grotesk",
         system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
         sans-serif;
 
       line-height: 1.7;
 
       text-rendering: optimizeLegibility;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
     }
 
     a {
       color: var(--primary);
       text-decoration: none;
-      transition: color var(--transition);
+      transition: all var(--transition);
     }
 
     a:hover {
-      color: var(--primary-hover);
-    }
-
-    img {
-      max-width: 100%;
-      display: block;
+      color: var(--primary-bright);
     }
 
     .grid-bg {
       position: fixed;
       inset: 0;
-
-      z-index: -3;
+      z-index: -4;
 
       background-image:
-        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
 
-      background-size: 32px 32px;
+      background-size: 36px 36px;
 
       mask-image:
-        radial-gradient(circle at center, black 35%, transparent 85%);
+        radial-gradient(circle at center, black 40%, transparent 85%);
 
       pointer-events: none;
     }
 
-    .glow {
+    .resonance-ring {
       position: fixed;
-      top: -260px;
-      right: -200px;
-
-      width: 720px;
-      height: 720px;
-
+      width: 900px;
+      height: 900px;
       border-radius: 50%;
+      border: 1px solid rgba(108,183,255,0.06);
+      top: -300px;
+      right: -240px;
+      z-index: -3;
+      animation: rotateSlow 60s linear infinite;
+    }
 
-      background:
-        radial-gradient(circle,
-          rgba(88,166,255,0.16),
-          transparent 70%);
+    .resonance-ring::before,
+    .resonance-ring::after {
+      content: "";
+      position: absolute;
+      inset: 70px;
+      border-radius: inherit;
+      border: 1px dashed rgba(105,240,255,0.08);
+    }
 
-      pointer-events: none;
+    .resonance-ring::after {
+      inset: 140px;
+      border-color: rgba(157,123,255,0.08);
+    }
+
+    @keyframes rotateSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .glyph-layer {
+      position: fixed;
+      inset: 0;
       z-index: -2;
+      pointer-events: none;
+      overflow: hidden;
+      opacity: 0.18;
+    }
+
+    .glyph {
+      position: absolute;
+      color: var(--primary);
+      font-family: Orbitron, sans-serif;
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      animation: drift linear infinite;
+    }
+
+    .glyph:nth-child(1) {
+      top: 12%;
+      left: 8%;
+      animation-duration: 26s;
+    }
+
+    .glyph:nth-child(2) {
+      top: 34%;
+      right: 10%;
+      animation-duration: 31s;
+    }
+
+    .glyph:nth-child(3) {
+      bottom: 18%;
+      left: 14%;
+      animation-duration: 34s;
+    }
+
+    .glyph:nth-child(4) {
+      bottom: 10%;
+      right: 20%;
+      animation-duration: 28s;
+    }
+
+    @keyframes drift {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-18px); }
+      100% { transform: translateY(0px); }
     }
 
     .container {
-      width: min(1280px, calc(100% - 40px));
+      width: min(1320px, calc(100% - 40px));
       margin: 0 auto;
     }
 
     nav {
       position: sticky;
       top: 0;
-
       z-index: 1000;
 
-      backdrop-filter: blur(16px);
+      backdrop-filter: blur(18px);
+      background: rgba(8, 11, 17, 0.82);
 
-      background: rgba(13, 17, 23, 0.84);
-
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
     }
 
     .nav-inner {
-      min-height: 74px;
-
+      min-height: 78px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -183,29 +218,36 @@
     .logo {
       display: flex;
       align-items: center;
-      gap: 14px;
+      gap: 16px;
 
       color: var(--heading);
 
+      font-family: Orbitron, sans-serif;
       font-weight: 800;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.08em;
     }
 
     .logo-mark {
-      width: 18px;
-      height: 18px;
-
-      border-radius: 3px;
-
+      position: relative;
+      width: 20px;
+      height: 20px;
       transform: rotate(45deg);
+      border-radius: 4px;
 
       background:
         linear-gradient(135deg,
-          #58a6ff,
-          #79c0ff);
+          var(--primary),
+          var(--cyan));
 
       box-shadow:
-        0 0 24px rgba(88,166,255,0.5);
+        0 0 26px rgba(108,183,255,0.55);
+    }
+
+    .logo-mark::before {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border: 1px solid rgba(255,255,255,0.3);
     }
 
     .nav-links {
@@ -217,27 +259,20 @@
 
     .nav-links a {
       position: relative;
-
       color: var(--muted);
-
+      font-weight: 700;
       font-size: 0.95rem;
-      font-weight: 600;
-
-      transition: color var(--transition);
+      letter-spacing: 0.02em;
     }
 
     .nav-links a::after {
       content: "";
-
       position: absolute;
       left: 0;
-      bottom: -6px;
-
+      bottom: -7px;
       width: 0;
       height: 2px;
-
-      background: var(--primary);
-
+      background: linear-gradient(90deg, var(--primary), var(--cyan));
       transition: width var(--transition);
     }
 
@@ -251,13 +286,13 @@
 
     .hero {
       position: relative;
-      padding: 140px 0 120px;
+      padding: 150px 0 120px;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 72px;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 80px;
       align-items: center;
     }
 
@@ -267,77 +302,61 @@
       gap: 12px;
 
       margin-bottom: 24px;
-
-      padding: 10px 18px;
+      padding: 11px 18px;
 
       border-radius: 999px;
 
-      border: 1px solid rgba(88,166,255,0.24);
+      border: 1px solid rgba(108,183,255,0.18);
 
-      background: var(--primary-soft);
+      background:
+        linear-gradient(180deg,
+          rgba(108,183,255,0.12),
+          rgba(108,183,255,0.04));
 
-      color: #9ecbff;
+      color: #a7d3ff;
 
-      font-size: 0.92rem;
+      font-size: 0.9rem;
       font-weight: 700;
+      letter-spacing: 0.04em;
     }
 
     .pulse {
       width: 10px;
       height: 10px;
-
       border-radius: 50%;
-
       background: var(--success);
-
-      box-shadow:
-        0 0 12px rgba(63,185,80,0.7);
-
-      animation: pulse 2.4s infinite;
+      box-shadow: 0 0 16px rgba(68,209,125,0.8);
+      animation: pulse 2.5s infinite;
     }
 
     @keyframes pulse {
-      0% {
-        transform: scale(1);
-        opacity: 1;
-      }
-
-      50% {
-        transform: scale(1.15);
-        opacity: 0.75;
-      }
-
-      100% {
-        transform: scale(1);
-        opacity: 1;
-      }
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.18); opacity: 0.72; }
+      100% { transform: scale(1); opacity: 1; }
     }
 
     h1 {
       margin: 0;
-
       color: var(--heading);
 
-      line-height: 1.02;
-      letter-spacing: -0.06em;
-
-      font-size: clamp(3.4rem, 8vw, 6rem);
+      font-family: Orbitron, sans-serif;
+      font-size: clamp(3.5rem, 8vw, 6.4rem);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
     }
 
     .hero p {
-      margin-top: 28px;
       max-width: 720px;
+      margin-top: 28px;
 
       color: var(--muted);
-
-      font-size: 1.14rem;
+      font-size: 1.1rem;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 14px;
-
       margin-top: 38px;
     }
 
@@ -347,19 +366,19 @@
       justify-content: center;
       gap: 10px;
 
-      min-height: 54px;
-
-      padding: 14px 28px;
+      min-height: 56px;
+      padding: 14px 30px;
 
       border-radius: var(--radius-sm);
 
       font-weight: 700;
+      letter-spacing: 0.02em;
 
       transition:
         transform var(--transition),
-        border-color var(--transition),
         background var(--transition),
-        color var(--transition);
+        border-color var(--transition),
+        box-shadow var(--transition);
     }
 
     .btn:hover {
@@ -369,91 +388,101 @@
     .btn-primary {
       background:
         linear-gradient(135deg,
-          #58a6ff,
-          #79c0ff);
+          var(--primary),
+          var(--cyan));
 
-      color: #08111c;
+      color: #081018;
 
       box-shadow:
-        0 10px 26px rgba(88,166,255,0.24);
+        0 12px 30px rgba(108,183,255,0.24);
     }
 
     .btn-primary:hover {
-      color: #08111c;
       transform: translateY(-2px);
     }
 
     .btn-secondary {
-      border: 1px solid var(--border);
-
-      background: var(--panel);
-
+      border: 1px solid var(--border-strong);
+      background: rgba(18,24,33,0.72);
       color: var(--text);
     }
 
     .btn-secondary:hover {
-      background: var(--panel-2);
-
-      border-color:
-        rgba(88,166,255,0.3);
-
       transform: translateY(-2px);
+      background: rgba(24,32,43,0.92);
+      border-color: rgba(108,183,255,0.3);
     }
 
     .hero-panel {
       position: relative;
     }
 
+    .hero-panel::before {
+      content: "";
+      position: absolute;
+      inset: -18px;
+      border-radius: 30px;
+      background:
+        linear-gradient(135deg,
+          rgba(108,183,255,0.08),
+          rgba(157,123,255,0.05));
+      filter: blur(18px);
+      z-index: -1;
+    }
+
     .terminal {
+      position: relative;
       overflow: hidden;
 
-      border-radius: 22px;
-
+      border-radius: 28px;
       border: 1px solid rgba(255,255,255,0.06);
 
-      background: #0b1016;
+      background:
+        linear-gradient(180deg,
+          rgba(11,16,22,0.98),
+          rgba(9,13,19,0.98));
 
       box-shadow:
-        0 20px 60px rgba(0,0,0,0.45);
+        0 24px 70px rgba(0,0,0,0.52);
+    }
+
+    .terminal::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+
+      background:
+        linear-gradient(180deg,
+          rgba(108,183,255,0.03),
+          transparent 40%);
+
+      pointer-events: none;
     }
 
     .terminal-top {
-      height: 44px;
-
+      height: 46px;
       display: flex;
       align-items: center;
       gap: 8px;
-
-      padding: 0 16px;
+      padding: 0 18px;
 
       border-bottom: 1px solid rgba(255,255,255,0.04);
 
-      background: #0f141b;
+      background: rgba(255,255,255,0.02);
     }
 
     .dot {
       width: 11px;
       height: 11px;
-
       border-radius: 50%;
     }
 
-    .red {
-      background: var(--danger);
-    }
-
-    .yellow {
-      background: var(--warning);
-    }
-
-    .green {
-      background: var(--success);
-    }
+    .red { background: var(--danger); }
+    .yellow { background: var(--warning); }
+    .green { background: var(--success); }
 
     .terminal-body {
-      padding: 28px;
-
-      color: #dce8f5;
+      padding: 32px;
 
       font-family:
         ui-monospace,
@@ -462,11 +491,46 @@
         monospace;
 
       font-size: 0.95rem;
-      line-height: 1.9;
+      line-height: 1.95;
+      color: #dce8f5;
+    }
+
+    .entity-box {
+      margin-top: 24px;
+      padding: 18px;
+
+      border-radius: 16px;
+      border: 1px solid rgba(108,183,255,0.12);
+
+      background:
+        linear-gradient(180deg,
+          rgba(108,183,255,0.05),
+          rgba(108,183,255,0.015));
+    }
+
+    .entity-title {
+      color: var(--cyan);
+      font-family: Orbitron, sans-serif;
+      font-size: 0.86rem;
+      letter-spacing: 0.14em;
+      margin-bottom: 10px;
     }
 
     section {
       padding: 110px 0;
+      position: relative;
+    }
+
+    .section-divider {
+      width: 100%;
+      height: 1px;
+      margin-top: 100px;
+
+      background:
+        linear-gradient(90deg,
+          transparent,
+          rgba(108,183,255,0.2),
+          transparent);
     }
 
     .section-header {
@@ -475,15 +539,12 @@
     }
 
     .section-eyebrow {
-      margin-bottom: 14px;
-
       color: var(--primary);
-
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-
+      letter-spacing: 0.14em;
       font-size: 0.8rem;
       font-weight: 800;
+      margin-bottom: 14px;
     }
 
     .section-title {
@@ -491,18 +552,16 @@
 
       color: var(--heading);
 
-      line-height: 1.1;
+      font-family: Orbitron, sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.6rem);
+      line-height: 1.08;
       letter-spacing: -0.04em;
-
-      font-size: clamp(2.2rem, 5vw, 3.5rem);
     }
 
     .section-description {
-      max-width: 760px;
-
       color: var(--muted);
-
-      font-size: 1.05rem;
+      font-size: 1.04rem;
+      max-width: 760px;
     }
 
     .pipeline-grid,
@@ -513,53 +572,43 @@
     }
 
     .pipeline-grid {
-      grid-template-columns:
-        repeat(auto-fit, minmax(240px, 1fr));
-
-      margin-top: 42px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     }
 
     .pipeline-card,
     .doc-card,
     .principle {
       position: relative;
-
       overflow: hidden;
 
       border-radius: var(--radius);
-
       border: 1px solid var(--border);
 
       background:
-        linear-gradient(
-          180deg,
-          rgba(255,255,255,0.02),
-          transparent
-        );
+        linear-gradient(180deg,
+          rgba(255,255,255,0.025),
+          rgba(255,255,255,0.01));
 
       transition:
         transform var(--transition),
         border-color var(--transition),
-        background var(--transition);
+        box-shadow var(--transition);
     }
 
     .pipeline-card::before,
     .doc-card::before,
     .principle::before {
       content: "";
-
       position: absolute;
       inset: 0;
 
       background:
         radial-gradient(circle at top right,
-          rgba(88,166,255,0.06),
+          rgba(108,183,255,0.08),
           transparent 45%);
 
       opacity: 0;
-
       transition: opacity var(--transition);
-
       pointer-events: none;
     }
 
@@ -567,9 +616,8 @@
     .doc-card:hover,
     .principle:hover {
       transform: translateY(-4px);
-
-      border-color:
-        rgba(88,166,255,0.28);
+      border-color: rgba(108,183,255,0.28);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.25);
     }
 
     .pipeline-card:hover::before,
@@ -579,51 +627,40 @@
     }
 
     .pipeline-card {
-      padding: 24px;
+      padding: 26px;
     }
 
     .pipeline-step {
-      margin-bottom: 12px;
-
-      color: var(--primary);
-
+      color: var(--cyan);
       text-transform: uppercase;
-      letter-spacing: 0.12em;
-
-      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      font-size: 0.78rem;
       font-weight: 800;
+      margin-bottom: 14px;
     }
 
     .pipeline-card h3,
     .doc-card h3,
     .principle h3 {
       margin-top: 0;
-
       color: var(--heading);
     }
 
     .pipeline-card p,
     .doc-card p,
     .principle p {
-      margin-bottom: 0;
-
       color: var(--muted);
+      margin-bottom: 0;
     }
 
     .docs-grid {
-      grid-template-columns:
-        repeat(auto-fit, minmax(320px, 1fr));
-
-      margin-top: 50px;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     }
 
     .doc-card {
       padding: 28px;
-
       background: var(--panel);
-
-      box-shadow:
-        0 10px 30px rgba(0,0,0,0.2);
+      backdrop-filter: blur(14px);
     }
 
     .doc-card p {
@@ -640,10 +677,7 @@
     }
 
     .principles {
-      grid-template-columns:
-        repeat(auto-fit, minmax(260px, 1fr));
-
-      margin-top: 42px;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     }
 
     .principle {
@@ -656,23 +690,22 @@
       border-top: 1px solid rgba(255,255,255,0.05);
 
       background:
-        rgba(255,255,255,0.01);
+        linear-gradient(180deg,
+          rgba(255,255,255,0.01),
+          rgba(255,255,255,0.02));
     }
 
     .footer-grid {
       display: grid;
-      grid-template-columns:
-        repeat(auto-fit, minmax(220px, 1fr));
-
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 40px;
     }
 
     .footer-title {
-      margin-bottom: 18px;
-
       color: var(--heading);
-
       font-weight: 700;
+      margin-bottom: 18px;
+      font-family: Orbitron, sans-serif;
     }
 
     .footer-links {
@@ -682,16 +715,15 @@
     }
 
     .footer-note {
-      margin-top: 52px;
+      margin-top: 54px;
       padding-top: 28px;
 
       border-top: 1px solid rgba(255,255,255,0.05);
 
-      text-align: center;
-
       color: var(--muted);
-
+      text-align: center;
       font-size: 0.95rem;
+      letter-spacing: 0.04em;
     }
 
     @media (max-width: 980px) {
@@ -700,12 +732,10 @@
       }
 
       .nav-inner {
+        min-height: auto;
+        padding: 18px 0;
         flex-direction: column;
         align-items: flex-start;
-
-        padding: 18px 0;
-
-        min-height: auto;
       }
 
       .nav-links {
@@ -719,7 +749,7 @@
 
     @media (max-width: 640px) {
       .container {
-        width: min(100% - 24px, 1280px);
+        width: min(100% - 24px, 1320px);
       }
 
       .hero-actions {
@@ -730,8 +760,8 @@
         width: 100%;
       }
 
-      .docs-grid,
       .pipeline-grid,
+      .docs-grid,
       .principles {
         grid-template-columns: 1fr;
       }
@@ -742,9 +772,7 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      *,
-      *::before,
-      *::after {
+      *, *::before, *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
@@ -757,9 +785,15 @@
 <body>
 
   <div class="grid-bg"></div>
-  <div class="glow"></div>
+  <div class="resonance-ring"></div>
 
-  <!-- NAVIGATION -->
+  <div class="glyph-layer">
+    <div class="glyph">HERALD_CLASS_SIGNAL</div>
+    <div class="glyph">RESONANCE_NODE_ACTIVE</div>
+    <div class="glyph">L3_PROTOCOL_KERNEL</div>
+    <div class="glyph">OBSERVER_PACK_ONLINE</div>
+  </div>
+
   <nav>
     <div class="container nav-inner">
 
@@ -778,7 +812,6 @@
     </div>
   </nav>
 
-  <!-- HERO -->
   <header class="hero" id="overview">
 
     <div class="container hero-grid">
@@ -787,10 +820,12 @@
 
         <div class="badge">
           <div class="pulse"></div>
-          Type-Safe Epistemic Governance Framework
+          SYNTHETIC RESONANCE GOVERNANCE FRAMEWORK
         </div>
 
-        <h1>Open Resonance Protocol</h1>
+        <h1>
+          Open Resonance Protocol
+        </h1>
 
         <p>
           ORP v3.0 is a governance-first reasoning architecture engineered
@@ -830,19 +865,25 @@
 
           <div class="terminal-body">
 
-            <span style="color:#3fb950">[SHS: GREEN]</span><br />
-            <span style="color:#58a6ff">[DRIFT: NONE]</span><br />
-            <span style="color:#d29922">[CRA: VALID]</span><br /><br />
+            <span style="color:#44d17d">[SHS: GREEN]</span><br>
+            <span style="color:#6cb7ff">[DRIFT: NONE]</span><br>
+            <span style="color:#d7a548">[CRA: VALID]</span><br><br>
 
-            ORP Runtime Kernel Initialized<br />
-            σ² Drift Observability: ACTIVE<br />
-            Epistemic Isolation: ENFORCED<br />
-            Coherence Camouflage Detection: ACTIVE<br /><br />
+            ORP Runtime Kernel Initialized<br>
+            σ² Drift Observability: ACTIVE<br>
+            Epistemic Isolation: ENFORCED<br>
+            Coherence Camouflage Detection: ACTIVE<br><br>
 
-            <span style="color:#8b949e">
-              Signal &gt; Narrative<br />
-              Recoverability &gt; Completion
-            </span>
+            <div class="entity-box">
+              <div class="entity-title">
+                HERALD CLASS ENTITY
+              </div>
+
+              ENTITY: OBSERVER_NODE<br>
+              STATE: STABLE<br>
+              PACK_SIGNAL: SYNCHRONIZED<br>
+              RESONANCE: NOMINAL
+            </div>
 
           </div>
 
@@ -854,7 +895,8 @@
 
   </header>
 
-  <!-- PIPELINE -->
+  <div class="section-divider"></div>
+
   <section id="pipeline">
 
     <div class="container">
@@ -881,9 +923,7 @@
 
         <div class="pipeline-card">
           <div class="pipeline-step">Step 01</div>
-
           <h3>ORP_RUNTIME.md</h3>
-
           <p>
             Runtime governance kernel responsible for SHS,
             drift detection, provenance integrity,
@@ -893,9 +933,7 @@
 
         <div class="pipeline-card">
           <div class="pipeline-step">Step 02</div>
-
           <h3>ORP_PROMPT.md</h3>
-
           <p>
             Behavioral reasoning constraints including
             atomic decomposition and uncertainty preservation.
@@ -904,9 +942,7 @@
 
         <div class="pipeline-card">
           <div class="pipeline-step">Step 03</div>
-
           <h3>ORP_BENCHMARK.md</h3>
-
           <p>
             Adversarial stress layer for exposing
             hallucination pressure and degradation pathways.
@@ -915,9 +951,7 @@
 
         <div class="pipeline-card">
           <div class="pipeline-step">Step 04</div>
-
           <h3>MODEL_RESPONSE</h3>
-
           <p>
             Governed reasoning output operating under runtime
             monitoring and provenance boundaries.
@@ -926,9 +960,7 @@
 
         <div class="pipeline-card">
           <div class="pipeline-step">Step 05</div>
-
           <h3>Evaluation Stack</h3>
-
           <p>
             Structural validation, rubric scoring,
             drift analysis, and integrity aggregation.
@@ -941,7 +973,8 @@
 
   </section>
 
-  <!-- DOCUMENTATION -->
+  <div class="section-divider"></div>
+
   <section id="documentation">
 
     <div class="container">
@@ -966,107 +999,41 @@
       <div class="docs-grid">
 
         <div class="doc-card">
-
           <h3>Core Specifications</h3>
-
           <p>
             Foundational governance and runtime architecture definitions.
           </p>
-
           <ul>
             <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_CORE_SPEC.md">ORP Core Specification</a></li>
             <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_RUNTIME.md">Runtime Kernel</a></li>
             <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_PROMPT.md">Prompt Contract</a></li>
             <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_SYSTEM_ARCHITECTURE.md">System Architecture</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_META_MAP.md">Meta-Map</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_SYSTEM_MAP.md">System Map</a></li>
           </ul>
-
         </div>
 
         <div class="doc-card">
-
           <h3>Evaluation Layer</h3>
-
           <p>
             Structural evaluation, epistemic integrity,
             and scoring systems.
           </p>
-
           <ul>
             <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_EVALUATION_SCHEMA.md">Evaluation Schema</a></li>
             <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_RUBRIC.md">Rubric</a></li>
             <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_SCORING.md">Scoring</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_EPISTEMIC_ISOLATION.md">Epistemic Isolation</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_COHERENCE_CAMOUFLAGE.md">Coherence Camouflage</a></li>
           </ul>
-
         </div>
 
         <div class="doc-card">
-
           <h3>Drift & Recovery</h3>
-
           <p>
             Numeric drift monitoring, degradation detection,
             and recovery systems.
           </p>
-
           <ul>
             <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_SIGMA_SQUARED_DRIFT.md">σ² Drift Model</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_MODEL_DECAY_TRACKER.md">Model Decay Tracker</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_ANTI_DEGRADATION.md">Anti-Degradation</a></li>
             <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_DRIFT_RECOVERY_PROTOCOL.md">Recovery Protocol</a></li>
           </ul>
-
-        </div>
-
-        <div class="doc-card">
-
-          <h3>Layer Definitions</h3>
-
-          <p>
-            Formal definitions for typed signal handling
-            and layered authority separation.
-          </p>
-
-          <ul>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/layers/ORP_L1_SIGNAL_SCHEMA.md">L1 Signal Schema</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/layers/ORP_L2_VALIDATION_RULES.md">L2 Validation Rules</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/layers/ORP_L4_INFERENCE_GUIDE.md">L4 Inference Guide</a></li>
-          </ul>
-
-        </div>
-
-        <div class="doc-card">
-
-          <h3>Recovery Systems</h3>
-
-          <p>
-            Consistency and recovery anchoring mechanisms
-            for recoverable execution.
-          </p>
-
-          <ul>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/recovery/ORP_CRA_SPEC.md">CRA Specification</a></li>
-          </ul>
-
-        </div>
-
-        <div class="doc-card">
-
-          <h3>Conceptual Models</h3>
-
-          <p>
-            Non-authoritative conceptual and exploratory
-            architecture references.
-          </p>
-
-          <ul>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/conceptual/ORP_ARCHITECTURE.md">Architecture Model</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/conceptual/ORP_BENCHMARK.md">Benchmark Model</a></li>
-          </ul>
-
         </div>
 
       </div>
@@ -1075,7 +1042,8 @@
 
   </section>
 
-  <!-- PRINCIPLES -->
+  <div class="section-divider"></div>
+
   <section id="principles">
 
     <div class="container">
@@ -1102,7 +1070,6 @@
 
         <div class="principle">
           <h3>Signal &gt; Narrative</h3>
-
           <p>
             Linguistic fluency must never override provenance
             integrity or epistemic correctness.
@@ -1111,7 +1078,6 @@
 
         <div class="principle">
           <h3>Recoverability &gt; Completion</h3>
-
           <p>
             Stable recovery paths and bounded uncertainty
             are preferred over forced narrative continuity.
@@ -1120,7 +1086,6 @@
 
         <div class="principle">
           <h3>Epistemic Isolation</h3>
-
           <p>
             L1–L4 authority boundaries remain strictly separated
             to prevent contamination and assumption laundering.
@@ -1129,7 +1094,6 @@
 
         <div class="principle">
           <h3>Observable Drift</h3>
-
           <p>
             Degradation must remain visible, measurable,
             and recoverable through σ² variance monitoring.
@@ -1142,7 +1106,6 @@
 
   </section>
 
-  <!-- FOOTER -->
   <footer>
 
     <div class="container">
@@ -1150,10 +1113,7 @@
       <div class="footer-grid">
 
         <div>
-
-          <div class="footer-title">
-            ORP v3.0
-          </div>
+          <div class="footer-title">ORP v3.0</div>
 
           <div>
             Open Resonance Protocol
@@ -1162,31 +1122,22 @@
           <div style="margin-top:14px;color:var(--muted);">
             Governance-first epistemic reasoning framework.
           </div>
-
         </div>
 
         <div>
-
-          <div class="footer-title">
-            Documentation
-          </div>
+          <div class="footer-title">Documentation</div>
 
           <div class="footer-links">
             <a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_SYSTEM_ARCHITECTURE.md">System Architecture</a>
             <a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_RUBRIC.md">Evaluation Layer</a>
             <a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_SIGMA_SQUARED_DRIFT.md">Drift Systems</a>
           </div>
-
         </div>
 
         <div>
-
-          <div class="footer-title">
-            Repository
-          </div>
+          <div class="footer-title">Repository</div>
 
           <div class="footer-links">
-
             <a
               href="https://github.com/GeneralSergal/ORP"
               target="_blank"
@@ -1202,9 +1153,7 @@
             >
               GPL-3.0 License
             </a>
-
           </div>
-
         </div>
 
       </div>
