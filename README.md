@@ -65,7 +65,7 @@ flowchart TD
 ```mermaid
 flowchart TD
     L3[L3: Governance Core] --> OUT[System Output]
-    L4[L4: Internal Inference<br/>Non-Authoritative] --> OUT
+    L4[L4: Internal Inference (Non-Authoritative)] --> OUT
     L4 -. cannot modify .-> L3
     L4 -. no access .-> L1[L1: Observed Data]
 ```
