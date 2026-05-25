@@ -16,11 +16,22 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Update version in README.md
+      - name: Extract version from release tag
+        id: extract_version
         run: |
-          echo "Updating version badges in README.md..."
-          sed -i 's/ORP-v[0-9.]\+/ORP-v3.0/' README.md || true
-          sed -i 's/badge\/Version-.*-blue/badge\/Version-v3.0-blue/' README.md || true
+          VERSION=${{ github.event.release.tag_name }}
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "Extracted version: $VERSION"
+
+      - name: Update version badges in README.md
+        run: |
+          echo "Updating version badges to ${{ steps.extract_version.outputs.version }}..."
+
+          # Update version badge
+          sed -i "s|ORP-v[0-9.]*|ORP-${{ steps.extract_version.outputs.version }}|g" README.md || true
+          
+          # Update any other version mentions if needed
+          sed -i "s|Version-v[0-9.]*|Version-${{ steps.extract_version.outputs.version }}|g" README.md || true
 
       - name: Commit updated files
         run: |
@@ -28,12 +39,13 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           
           if git diff --quiet; then
-            echo "No changes to commit"
+            echo "No changes detected."
           else
             git add README.md
-            git commit -m "chore: update version badges after v3.0 release"
+            git commit -m "chore: update version badges to ${{ steps.extract_version.outputs.version }} [skip ci]"
             git push
+            echo "✅ Version badges updated and committed."
           fi
 
-      - name: Success Notification
-        run: echo "✅ Version badges and documentation updated for ORP v3.0"
+      - name: Final Status
+        run: echo "✅ Successfully updated badges for version ${{ steps.extract_version.outputs.version }}"
