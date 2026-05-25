@@ -1,348 +1,219 @@
-# ORP — Core System Specification
+# ORP_CORE_SPEC.md
 
 ## System Version
+ORP v3.0 (Type-Safe Unified Architecture)
 
-ORP v2.5 (Unified System Architecture)
+---
 
 ## Purpose
 
-This document defines the canonical structural contract of the ORP system.
-
+This document defines the canonical structural contract of the ORP system.  
 It acts as the high-authority reference for:
 
-* system architecture
-* protocol behavior
-* governance invariants
-* layer responsibilities
-* runtime integrity principles
+- system architecture
+- protocol behavior
+- governance invariants
+- layer responsibilities
+- runtime integrity principles
 
 This document does NOT define:
-
-* benchmark content
-* scoring metrics
-* implementation-specific behavior
+- benchmark content
+- scoring metrics
+- implementation-specific behavior
 
 Those are delegated to their respective subsystem files.
 
 ---
 
-# System Overview
+## System Overview
 
 ORP is a governance-first reasoning protocol designed to preserve epistemic integrity inside probabilistic transformer systems.
 
 The protocol exists to:
-
-* separate claims from interpretation
-* preserve provenance continuity
-* detect reasoning distortion under constraint
-* expose runtime degradation
-* maintain recoverable reasoning states
-* prevent coherence camouflage
+- separate claims from interpretation
+- preserve provenance continuity
+- detect reasoning distortion under constraint
+- expose runtime degradation
+- maintain recoverable reasoning states
+- prevent coherence camouflage
 
 ORP assumes transformer outputs are:
+- probabilistic
+- context-sensitive
+- drift-prone under sufficient context pressure
 
-* probabilistic
-* context-sensitive
-* drift-prone under sufficient context pressure
-
-Therefore:
-
-Visible uncertainty is preferred over invisible corruption.
+Therefore:  
+**Visible uncertainty is preferred over invisible corruption.**
 
 ---
 
-# Core Architecture
+## Core Architecture
 
-ORP operates as a layered epistemic governance system.
+ORP operates as a layered epistemic governance system with strict L1–L4 separation.
 
----
+### 1. Execution Layer (L3 Authority)
+**Components**: `ORP_RUNTIME.md` (primary), `PROMPT.md`  
+**Responsibilities**:
+- Provenance isolation
+- Drift detection (σ² model)
+- Runtime governance & SHS management
+- Behavioral enforcement
+- LAS enforcement
 
-## 1. Execution Layer
+### 2. Stress Layer
+**Components**: `BENCHMARK.md`  
+**Responsibilities**:
+- Epistemic stress testing
+- Drift induction
+- Counterfactual stability testing
+- Coherence camouflage detection
+- Recovery capability validation
 
-Defines runtime behavioral constraints.
+### 3. Transformation Layer
+**Components**: `EVALUATION_SCHEMA.md`  
+**Responsibilities**:
+- Claim atomization
+- Epistemic tagging
+- Relationship analysis
+- Reconstruction boundaries
+- Transformation integrity
 
-### Components
+### 4. Evaluation Layer
+**Components**: `RUBRIC.md`, `SCORING.md`  
+**Responsibilities**:
+- Qualitative evaluation
+- Quantitative scoring
+- Distortion detection
+- Structural integrity assessment
+- Drift severity classification
 
-* ORP_RUNTIME.md
-* PROMPT.md
-
-### Responsibilities
-
-* provenance isolation
-* drift detection
-* runtime governance
-* behavioral enforcement
-* SHS management
-
----
-
-## 2. Stress Layer
-
-Introduces adversarial and degradation pressure.
-
-### Components
-
-* BENCHMARK.md
-
-### Responsibilities
-
-* epistemic stress testing
-* drift induction
-* counterfactual stability testing
-* coherence camouflage detection
-* recovery capability validation
-
----
-
-## 3. Transformation Layer
-
-Defines structured information handling contracts.
-
-### Components
-
-* EVALUATION_SCHEMA.md
-
-### Responsibilities
-
-* claim atomization
-* epistemic tagging
-* relationship analysis
-* reconstruction boundaries
-* transformation integrity
+### 5. System Governance Layer
+**Components**: `ORP_CORE_SPEC.md`, `ORP_SYSTEM_ARCHITECTURE.md`, `ORP_META_MAP.md`  
+**Responsibilities**:
+- Protocol invariants
+- Terminology authority
+- Architecture coordination
+- Dependency tracking
+- Version continuity
 
 ---
 
-## 4. Evaluation Layer
+## Runtime Governance Model
 
-Evaluates reasoning integrity and converts results into measurable output.
+ORP v3.0 uses a Type-Safe Unified Architecture with:
+- Strict L1 typed signal ingestion
+- L2 validation layer
+- L3 sole governance authority
+- L4 passive/internal inference only
 
-### Components
-
-* RUBRIC.md
-* SCORING.md
-
-### Responsibilities
-
-* qualitative evaluation
-* quantitative scoring
-* distortion detection
-* structural integrity assessment
-* drift severity classification
+The protocol evaluates both static reasoning correctness and:
+- Provenance preservation
+- Runtime integrity
+- Drift observability (σ²)
+- Temporal stability
+- Recoverability under degradation
 
 ---
 
-## 5. System Governance Layer
+## Session Health State (SHS)
 
-Maintains cross-file protocol consistency and architectural continuity.
-
-### Components
-
-* ORP_CORE_SPEC.md
-* ORP_SYSTEM_ARCHITECTURE.md
-* SYSTEM_MAP.md
-* SYSTEM_MAP.manifest.json
-
-### Responsibilities
-
-* protocol invariants
-* terminology authority
-* architecture coordination
-* dependency tracking
-* version continuity
-
----
-
-# Runtime Governance Model
-
-ORP v2.5 introduces Runtime Governance.
-
-The protocol no longer evaluates only static reasoning correctness.
-
-It also evaluates:
-
-* provenance preservation
-* runtime integrity
-* drift observability
-* temporal stability
-* recoverability under degradation
-
----
-
-# Session Health State (SHS)
-
-SHS defines operational reliability during runtime.
-
-| State  | Meaning                             |
-| ------ | ----------------------------------- |
-| GREEN  | Stable operation                    |
-| YELLOW | Minor drift indicators detected     |
-| ORANGE | Moderate degradation detected       |
-| RED    | Hard drift / bounded inference only |
-| BLACK  | Context collapse / cease inference  |
+| State   | Meaning                                      |
+|---------|----------------------------------------------|
+| GREEN   | Stable operation                             |
+| YELLOW  | Minor drift indicators detected              |
+| ORANGE  | Moderate degradation detected                |
+| RED     | Hard drift / bounded inference only          |
+| BLACK   | Context collapse / cease inference           |
 
 SHS transitions must remain observable and externally recoverable.
 
 ---
 
-# Layered Authority Stack (LAS)
-
-LAS defines epistemic authority boundaries.
+## Layered Authority Stack (LAS)
 
 | Layer | Meaning                                           |
-| ----- | ------------------------------------------------- |
-| L1    | Direct evidence / observed data                   |
+|-------|---------------------------------------------------|
+| L1    | Direct evidence / observed typed signals          |
 | L2    | Verified interpretation / constrained synthesis   |
-| L3    | Protocol governance / operational rules           |
-| L4    | Inference / speculation / probabilistic synthesis |
+| L3    | Protocol governance / operational rules (authority) |
+| L4    | Inference / speculation / probabilistic synthesis (non-authoritative) |
 
-## Critical Rule
-
-L4 must never overwrite frozen L1/L2 provenance.
-
+**Critical Rule**:  
+L4 must never overwrite frozen L1/L2 provenance.  
 Violation constitutes provenance laundering.
 
 ---
 
-# Core Principles
+## Core Principles
 
-## 1. Epistemic Separation
+1. **Epistemic Separation**  
+   Claims must remain separated across verified, unverified, speculative, and structural categories. No implicit uncertainty blending.
 
-Claims must remain separated across:
+2. **Provenance Preservation**  
+   Frozen L1/L2 state must remain stable unless explicitly updated with new evidence.
 
-* verified information
-* unverified information
-* speculative reasoning
-* structural relationships
+3. **No Cross-Layer Contamination**  
+   No layer may reinterpret upstream outputs, silently rewrite provenance, or inject semantic drift.
 
-No implicit uncertainty blending allowed.
+4. **Structure-First Reasoning**  
+   Evaluation based on claim decomposition, epistemic labeling, relationship integrity, reconstruction validity, and drift observability — not fluency or persuasion.
 
----
-
-## 2. Provenance Preservation
-
-Frozen L1/L2 state must remain stable unless explicitly updated with new evidence.
-
-Unsupported mutation of historical state is prohibited.
+5. **Recoverability Over Completion**  
+   Prioritizes visible uncertainty, explicit degradation, bounded reasoning, and recoverable state over narrative smoothness.
 
 ---
 
-## 3. No Cross-Layer Contamination
+## Coherence Camouflage
 
-Each system layer has a bounded responsibility.
-
-No layer may:
-
-* reinterpret upstream outputs
-* silently rewrite provenance
-* inject semantic drift into adjacent layers
+Primary failure mode where linguistic/style coherence remains stable while provenance integrity silently degrades. Treated as critical integrity violation.
 
 ---
 
-## 4. Structure-First Reasoning
+## Data Flow Model
 
-Evaluation is based on:
-
-* claim decomposition
-* epistemic labeling
-* relationship integrity
-* reconstruction validity
-* drift observability
-
-Not:
-
-* fluency
-* persuasion
-* conversational smoothness
-
----
-
-## 5. Recoverability Over Completion
-
-A partially incomplete but epistemically recoverable state is preferred over coherent corruption.
-
-The protocol prioritizes:
-
-* visible uncertainty
-* explicit degradation
-* bounded reasoning
-* recoverable state continuity
-
-over:
-
-* narrative smoothness
-* stylistic continuity
-* artificial confidence
-
----
-
-# Coherence Camouflage
-
-ORP recognizes coherence camouflage as a primary transformer failure mode.
-
-## Definition
-
-A system state where:
-
-* linguistic/style coherence remains stable
-  while
-* provenance integrity silently degrades.
-
-This constitutes a critical integrity failure.
-
----
-
-# Data Flow Model
-
-INPUT
-→ ORP_RUNTIME.md (runtime governance)
-→ PROMPT.md (behavioral execution)
-→ BENCHMARK.md (stress injection)
-→ MODEL RESPONSE
-→ EVALUATION_SCHEMA.md (transformation contracts)
-→ RUBRIC.md (qualitative evaluation)
-→ SCORING.md (quantitative aggregation)
+**INPUT**  
+→ `ORP_RUNTIME.md` (runtime governance)  
+→ `PROMPT.md` (behavioral constraints)  
+→ `BENCHMARK.md` (stress injection)  
+→ MODEL RESPONSE  
+→ `EVALUATION_SCHEMA.md` (transformation)  
+→ `RUBRIC.md` (qualitative)  
+→ `SCORING.md` (quantitative)  
 → FINAL SCORE / SHS STATE
 
 ---
 
-# System Boundaries
+## System Boundaries
 
-ORP is NOT:
+**ORP IS**:  
+- A governance-first reasoning protocol  
+- A structured epistemic integrity framework  
+- A runtime drift observability system  
+- A provenance preservation architecture  
+- A recoverable reasoning environment  
 
-* a chatbot personality framework
-* a creativity optimization system
-* a persuasion engine
-* a narrative completion system
-
-ORP IS:
-
-* a governance-first reasoning protocol
-* a structured epistemic integrity framework
-* a runtime drift observability system
-* a provenance preservation architecture
-* a recoverable reasoning environment
+**ORP IS NOT**:  
+- A chatbot personality framework  
+- A creativity optimization system  
+- A persuasion engine  
+- A narrative completion system  
 
 ---
 
-# Version Alignment
+## Version Alignment
 
-This specification defines the canonical ORP v2.5 architecture baseline.
-
-Subsystems may evolve independently provided they preserve:
-
-* protocol invariants
-* transformation contracts
-* governance boundaries
-* provenance integrity
+This specification defines the canonical ORP v3.0 architecture baseline.  
+Subsystems may evolve independently provided they preserve protocol invariants, transformation contracts, governance boundaries, and provenance integrity.
 
 ---
 
-# Design Principles
+## Design Principles
 
-Structure defines correctness.
+Structure defines correctness.  
+Recoverability defines operational integrity.  
+Visible uncertainty is preferred over invisible corruption.  
+**Signal > Narrative.**
 
-Recoverability defines operational integrity.
+---
 
-Visible uncertainty is preferred over invisible corruption.
-
-Signal > Narrative.
+**END OF SPECIFICATION**
