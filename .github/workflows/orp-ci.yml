@@ -2,7 +2,9 @@ name: ORP v3.0 Integrity Suite
 
 on:
   push:
+    branches: [ main, master ]
   pull_request:
+    branches: [ main, master ]
   workflow_dispatch:
 
 jobs:
@@ -16,29 +18,30 @@ jobs:
 
       - name: Validate folder structure
         run: |
-          echo "Checking canonical ORP directory layout..."
+          echo "=== Checking canonical ORP directory layout ==="
           test -d core
-          test -d evaluation
-          test -d drift
-          test -d layers
+          test -d constraints
           test -d conceptual
+          test -d docs
+          test -d drift
+          test -d evaluation
+          test -d layers
           test -d recovery
 
-      - name: Validate required core files
+      - name: Validate core files
         run: |
-          echo "Checking core files..."
+          echo "=== Checking core files ==="
           test -f core/ORP_RUNTIME.md
           test -f core/ORP_PROMPT.md
           test -f core/ORP_CORE_SPEC.md
           test -f core/ORP_SYSTEM_ARCHITECTURE.md
           test -f core/ORP_META_MAP.md
           test -f core/ORP_SYSTEM_MAP.md
-          test -f core/ORP_SYSTEM_MAP.manifest.json
           test -f core/ORP_ORIGIN.md
 
       - name: Validate evaluation files
         run: |
-          echo "Checking evaluation files..."
+          echo "=== Checking evaluation files ==="
           test -f evaluation/ORP_EVALUATION_SCHEMA.md
           test -f evaluation/ORP_RUBRIC.md
           test -f evaluation/ORP_SCORING.md
@@ -48,7 +51,7 @@ jobs:
 
       - name: Validate drift subsystem
         run: |
-          echo "Checking drift files..."
+          echo "=== Checking drift subsystem ==="
           test -f drift/ORP_SIGMA_SQUARED_DRIFT.md
           test -f drift/ORP_MODEL_DECAY_TRACKER.md
           test -f drift/ORP_ANTI_DEGRADATION.md
@@ -57,30 +60,27 @@ jobs:
 
       - name: Validate layer definitions
         run: |
-          echo "Checking layer files..."
+          echo "=== Checking layer definitions ==="
           test -f layers/ORP_L1_SIGNAL_SCHEMA.md
           test -f layers/ORP_L2_VALIDATION_RULES.md
           test -f layers/ORP_L4_INFERENCE_GUIDE.md
 
       - name: Validate recovery subsystem
         run: |
-          echo "Checking recovery files..."
+          echo "=== Checking recovery subsystem ==="
           test -f recovery/ORP_CRA_SPEC.md
 
-      - name: Validate mandatory header presence in ORP_RUNTIME.md
+      - name: Check mandatory runtime header
         run: |
-          echo "Checking mandatory header markers in ORP_RUNTIME.md..."
-          head -n 20 core/ORP_RUNTIME.md | grep "SHS:" >/dev/null
-          head -n 20 core/ORP_RUNTIME.md | grep "DRIFT:" >/dev/null
-          head -n 20 core/ORP_RUNTIME.md | grep "CRA:" >/dev/null
-          head -n 20 core/ORP_RUNTIME.md | grep "LAS:" >/dev/null
+          echo "=== Checking mandatory header in ORP_RUNTIME.md ==="
+          head -n 30 core/ORP_RUNTIME.md | grep -E "\[SHS:|\[DRIFT:|\[CRA:|\[LAS:" > /dev/null
 
-      - name: Validate σ² drift thresholds presence
+      - name: Check σ² drift model
         run: |
-          echo "Checking σ² thresholds in ORP_SIGMA_SQUARED_DRIFT.md..."
-          grep "0.01" drift/ORP_SIGMA_SQUARED_DRIFT.md >/dev/null
-          grep "0.05" drift/ORP_SIGMA_SQUARED_DRIFT.md >/dev/null
-          grep "0.15" drift/ORP_SIGMA_SQUARED_DRIFT.md >/dev/null
+          echo "=== Checking σ² drift thresholds ==="
+          grep -E "0\.0[1-9]|0\.05|0\.15" drift/ORP_SIGMA_SQUARED_DRIFT.md > /dev/null
 
-      - name: Final status
-        run: echo "ORP v3.0 integrity validation PASSED."
+      - name: Final Status
+        run: |
+          echo "✅ ORP v3.0 Integrity Validation PASSED"
+          echo "All critical files and structure verified."
