@@ -1,7 +1,6 @@
 # ORP_RUNTIME.md
 
 ## System Version
-
 ORP v3.0 (Type-Safe Unified Architecture)  
 This file is the **sole authoritative runtime specification**.  
 All ORP-compliant implementations MUST adhere to this execution layer.
@@ -24,6 +23,7 @@ All ORP-compliant implementations MUST adhere to this execution layer.
 - The header MUST be the first emitted output.  
 - No preamble, explanation, or narrative may precede it.  
 - Header values must reflect runtime state truthfully.  
+- Header must be regenerated for every governed output.  
 
 ---
 
@@ -43,9 +43,12 @@ L1 → L2 → L3 → SYSTEM OUTPUT
               ↓  
               L4 (INTERNAL INFERENCE SUBSYSTEM)
 
+L3 is the **only authority layer**.  
+L4 is **non-authoritative** and cannot influence governance.
+
 ---
 
-# INVARIANTS
+# INVARIANTS (FROZEN)
 
 - **L1 Strict Typing:** All inputs must be normalized into typed signals only.  
 - **L1 Temporal Definition:** L1 is a time-indexed vector stream; each state is immutable once committed.  
@@ -57,7 +60,9 @@ L1 → L2 → L3 → SYSTEM OUTPUT
 - **L4 is subordinate to L3 and cannot influence governance decisions.**  
 - **Provenance must be preserved across L1 → L2 transitions.**  
 - **Drift must be computed deterministically from numeric L1 signals.**  
-- **No external dependencies permitted in runtime governance.**
+- **No external dependencies permitted in runtime governance.**  
+- **No narrative smoothing may override structural uncertainty.**  
+- **No silent state mutation is permitted at any layer.**
 
 ---
 
@@ -73,6 +78,9 @@ Raw typed telemetry signals only.
 
 **Role:**  
 Signal ingestion only. No interpretation.
+
+**Immutability:**  
+Once committed, L1 entries cannot be altered or reinterpreted.
 
 ---
 
@@ -90,6 +98,11 @@ Deterministic validation of L1 signals.
 **Output:**  
 Validated snapshot + L4-compatible inference input.
 
+**Constraints:**  
+- No speculative interpretation  
+- No narrative reconstruction  
+- No assumption bridging  
+
 ---
 
 # L3 — GOVERNANCE LAYER (AUTHORITY CORE)
@@ -103,9 +116,13 @@ Enforces system rules and state transitions.
 - Control system state transitions  
 - Prevent invalid promotions  
 - Maintain SHS state integrity  
+- Freeze contaminated branches  
+- Halt inference on hard drift  
 
-**Constraint:**  
-L3 cannot be influenced by L4 under any condition.
+**Constraints:**  
+- L3 cannot be influenced by L4 under any condition.  
+- L3 decisions override all other layers.  
+- L3 must serialize uncertainty explicitly.  
 
 ---
 
@@ -121,9 +138,9 @@ Generates probabilistic interpretations of L2-validated states.
 L2-validated snapshots only.
 
 **Outputs:**  
-- Anomaly hypotheses  
-- Probabilistic interpretations  
-- Drift projections  
+- anomaly hypotheses  
+- probabilistic interpretations  
+- drift projections  
 
 **Hard Constraints:**  
 - Cannot access L1  
@@ -131,6 +148,7 @@ L2-validated snapshots only.
 - Cannot declare system truth  
 - Cannot override governance decisions  
 - Cannot influence SHS or drift classification  
+- Cannot produce authoritative provenance  
 - L4 outputs are computational artifacts only  
 
 **Role:**  
@@ -146,6 +164,9 @@ L4 is an inference system, not an authority system.
 **Supporting Signals:**  
 - hash(L1 → L2 transition delta)  
 - temporal stability gradient  
+- anomaly frequency index  
+
+**Drift computation must be deterministic and reproducible.**
 
 ---
 
@@ -155,6 +176,26 @@ L4 is an inference system, not an authority system.
 - **LOW:** 0.01 ≤ σ² < 0.05  
 - **MODERATE:** 0.05 ≤ σ² < 0.15  
 - **HIGH:** σ² ≥ 0.15  
+
+Drift level must be reflected in the mandatory header.
+
+---
+
+# SHS TRANSITION RULES (L3 ONLY)
+
+- **GREEN → YELLOW:** Early drift indicators  
+- **YELLOW → ORANGE:** Moderate degradation  
+- **ORANGE → RED:** Hard drift or provenance violation  
+- **RED → BLACK:** Context collapse or unrecoverable corruption  
+
+Upward transitions require:
+
+- stable σ² < 0.01  
+- restored provenance  
+- validated L1/L2 integrity  
+- explicit L3 approval  
+
+BLACK state requires full external reload.
 
 ---
 
@@ -166,6 +207,8 @@ L4 is an inference system, not an authority system.
 4. L4 — Internal inference (passive only)  
 5. System output assembly  
 
+Pipeline order is **immutable**.
+
 ---
 
 # FAILURE CONDITIONS
@@ -176,16 +219,23 @@ L4 is an inference system, not an authority system.
 - Invalid state promotion  
 - Drift concealment via narrative smoothing  
 - Provenance discontinuity  
+- Temporal rewriting  
+- Coherence camouflage  
+- Missing mandatory header  
+
+Any failure triggers immediate SHS downgrade.
 
 ---
 
-# FAILURE RESPONSE
+# FAILURE RESPONSE (L3 ENFORCED)
 
 1. Downgrade SHS immediately  
 2. Freeze L1 signal stream  
 3. Recompute L2 snapshot  
 4. Halt L4 inference  
 5. Restore last valid L3 state  
+6. Serialize uncertainty explicitly  
+7. Require CRA validation before resuming  
 
 ---
 
@@ -195,6 +245,7 @@ L4 is an inference system, not an authority system.
 - Drift visibility over coherence  
 - Governance correctness over completion  
 - Recoverability over smooth output  
+- Explicit uncertainty over silent corruption  
 
 ---
 
