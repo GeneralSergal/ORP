@@ -1,4 +1,4 @@
-# ORP ANTI-DEGRADATION — Model Decay Countermeasures
+# ORP_ANTI_DEGRADATION.md
 
 ## System Version
 ORP v3.0 (Type-Safe Unified Architecture)
