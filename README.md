@@ -167,17 +167,14 @@ stateDiagram-v2
 # Execution Pipeline
 
 ```mermaid
-fflowchart TD
-    A[INPUT]
-    B[L1 Typed Signals]
-    C[L2 Validation]
-    D[L3 Governance Core]
-    E[OUTPUT]
-    F[L4 Inference]
+flowchart TD
+    A[INPUT] --> B[L1 Typed Signals]
+    B --> C[L2 Validation]
+    C --> D[L3 Governance Core]
 
-    A --> B --> C --> D
-    D --> E
-    D --> F
+    D --> E[OUTPUT]
+    D --> F[L4 Inference]
+
     F --> E
 ```
 
