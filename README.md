@@ -62,7 +62,6 @@ Cannot modify L3. Cannot access raw L1.
 - L4 cannot promote inference into factual form  
 - Provenance must be preserved across L1→L2 transitions  
 - Drift must be computed numerically and deterministically  
-- Dashboard is heuristic‑only and non‑authoritative  
 - No external dependencies permitted in runtime governance  
 
 ---
@@ -114,18 +113,6 @@ Supporting signals:
 
 ---
 
-## Dashboard (Heuristic Only)
-
-Non‑authoritative indicators:
-
-Hydration: 85–100%  
-Chaos: 0–5%  
-Vibe (Coherence): 85–95%  
-
-These metrics cannot influence L3 decisions or drift computation.
-
----
-
 ## Controlled Expansion
 
 Expansion is cyclical.  
@@ -138,7 +125,7 @@ Requirements:
 
 ---
 
-## Repository Structure (Recommended)
+## Repository Structure (v3.0)
 
 ```
 /README.md
@@ -159,7 +146,6 @@ Requirements:
 
 /observability/
     ORP_SIGMA_SQUARED_DRIFT.md
-    L4_DASHBOARD.md
 
 /evaluation/
     ORP_BENCHMARK.md
@@ -167,26 +153,8 @@ Requirements:
     ORP_RUBRIC.md
     ORP_SCORING.md
 
-/src/orp_runtime/
-    __init__.py
-    l1.py
-    l2.py
-    l3.py
-    l4.py
-    drift.py
-    governance.py
-
-/tests/
-    test_l1_typing.py
-    test_l2_validation.py
-    test_l3_authority.py
-    test_l4_isolation.py
-    test_drift_model.py
-    test_header_rules.py
-
 /docs/
     CHANGELOG.md
-    MIGRATION_v2.6_to_v3.0.md
     CONTRIBUTING.md
     !REPO_CHECKLIST.md
 ```
@@ -222,9 +190,8 @@ ORP_VERSION: 3.0 (FROZEN)
 L1: STRICT_TYPED_TIME_SERIES  
 L2: VALIDATION_LAYER  
 L3: AUTHORITY_LAYER  
-L4: INTERNAL_INFERENCE_ONLY + HEURISTIC_OVERLAY  
+L4: INTERNAL_INFERENCE_ONLY  
 DRIFT_MODEL: NUMERIC  
-DASHBOARD: EMBEDDED  
 CHANGE_POLICY: LOG_ONLY  
 STATUS: FROZEN  
 
