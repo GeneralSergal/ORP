@@ -19,7 +19,7 @@
       "responsibility": [
         "Enforce runtime behavioral constraints",
         "Manage SHS state transitions",
-        "Detect and quantify drift using σ² model",
+        "Detect and quantify drift using sigma squared model",
         "Preserve provenance continuity",
         "Detect coherence camouflage",
         "Handle runtime failure escalation",
@@ -55,7 +55,7 @@
       "version": "3.0",
       "role": "Numeric Drift Observability Layer",
       "responsibility": [
-        "Define and compute σ² variance model",
+        "Define and compute sigma squared variance model",
         "Provide deterministic drift classification",
         "Link L1 signal variance to SHS transitions",
         "Enable measurable degradation tracking"
@@ -92,8 +92,7 @@
       "responsibility": [
         "Aggregate rubric evaluation outputs",
         "Apply deterministic weights and penalties",
-        "Measure drift severity using σ
-²",
+        "Measure drift severity using sigma squared",
         "Normalize operational integrity scores",
         "Produce final evaluation state"
       ],
