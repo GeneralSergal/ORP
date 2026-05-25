@@ -38,8 +38,9 @@ Current files (with `ORP_` prefix):
 - `ORP_META_MAP.md`
 - `ORP_MODEL_DECAY_TRACKER.md`
 - `ORP_ORIGIN.md`
-- `ORP_ANTI_DEGRADATION.md` (new)
+- `ORP_ANTI_DEGRADATION.md`
 - `ORP_ARCHITECTURE.md`
+- `ORP_SIGMA_SQUARED_DRIFT.md`
 
 **Rules**:
 - Sub-versions must remain compatible with ORP v3.0 core invariants
@@ -106,7 +107,18 @@ Stress-testing and adversarial input layer.
 
 **Key Principle**: Failure modes must be intentionally observable.
 
-### 4. MODEL_RESPONSE
+### 4. ORP_SIGMA_SQUARED_DRIFT.md
+Numeric drift measurement and observability layer.
+
+**Responsibilities**:
+- Defines σ² variance model for drift quantification
+- Provides deterministic drift classification
+- Links L1 signal variance to SHS transitions
+- Serves as foundation for all drift-related governance
+
+**Key Principle**: Makes degradation measurable and observable.
+
+### 5. MODEL_RESPONSE
 Model-generated output under ORP governance.
 
 **Responsibilities**:
@@ -118,7 +130,7 @@ Model-generated output under ORP governance.
 
 **Key Principle**: Generated output is governed, not trusted.
 
-### 5. ORP_EVALUATION_SCHEMA.md
+### 6. ORP_EVALUATION_SCHEMA.md
 Structural transformation and integrity contract layer.
 
 **Responsibilities**:
@@ -130,7 +142,7 @@ Structural transformation and integrity contract layer.
 
 **Key Principle**: Structure preservation takes priority over narrative continuity.
 
-### 6. ORP_RUBRIC.md
+### 7. ORP_RUBRIC.md
 Qualitative reasoning integrity evaluation layer.
 
 **Responsibilities**:
@@ -142,7 +154,7 @@ Qualitative reasoning integrity evaluation layer.
 
 **Key Principle**: Reasoning quality is evaluated through integrity, not fluency.
 
-### 7. ORP_SCORING.md
+### 8. ORP_SCORING.md
 Quantitative aggregation and operational scoring layer.
 
 **Responsibilities**:
@@ -154,18 +166,17 @@ Quantitative aggregation and operational scoring layer.
 
 **Key Principle**: Scores measure reasoning stability, not stylistic quality.
 
-### 8. ORP_ANTI_DEGRADATION.md (New)
+### 9. ORP_ANTI_DEGRADATION.md
 Anti-degradation monitoring and defense layer.
 
 **Responsibilities**:
 - Tracks model degradation patterns
 - Supports L4 observational diagnostics
 - Feeds signals into runtime governance
-- Helps maintain long-term system integrity
 
-**Key Principle**: Proactive resistance to model decay and coherence camouflage.
+**Key Principle**: Proactive resistance to model decay.
 
-### 9. FINAL OUTPUT STATE
+### 10. FINAL OUTPUT STATE
 Final evaluated reasoning condition.
 
 **Outputs**:
@@ -181,7 +192,7 @@ Final evaluated reasoning condition.
 
 ## Runtime Governance Additions (v3.0)
 
-ORP v3.0 introduces Type-Safe Runtime Governance with anti-degradation capabilities.  
+ORP v3.0 introduces Type-Safe Runtime Governance with numeric drift observability.  
 The protocol evaluates:
 - Static reasoning correctness
 - Runtime stability
