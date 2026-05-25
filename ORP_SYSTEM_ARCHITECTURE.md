@@ -1,4 +1,4 @@
-# ORP_SYSTEM_ARCHITECTURE.md
+# ORP_META_MAP.md
 
 ## System Version
 ORP v3.0 (Type-Safe Unified Architecture)
@@ -7,223 +7,184 @@ ORP v3.0 (Type-Safe Unified Architecture)
 
 ## Purpose
 
-This document provides a human-readable structural overview of the ORP system.  
-It explains how ORP operates as a:
+This document defines the structural dependency graph of the ORP system.  
+It is a static architecture index only.
 
-- layered epistemic governance system
-- drift-observable reasoning pipeline
-- provenance-preserving evaluation architecture
-
----
-
-## Authority Classification
-
-This file is:
-- descriptive
-- structural
-- non-executable
-- non-governing
-
-It MUST NOT override:
-- `ORP_RUNTIME.md` (execution authority kernel)
-- `EVALUATION_SCHEMA.md` (structural contract layer)
-- `RUBRIC.md` (qualitative evaluation layer)
-- `SCORING.md` (quantitative aggregation layer)
+It does NOT:
+- execute logic
+- enforce rules
+- define runtime behavior
+- override `ORP_RUNTIME.md`
 
 ---
 
-## System Overview
+## Core Principle
 
-ORP is a layered epistemic control system designed to:
+ORP is a directed acyclic document graph (DAG) with strict separation of:
 
-- preserve provenance integrity across reasoning steps
-- expose and quantify reasoning drift
-- prevent coherence camouflage
-- maintain recoverable reasoning states under degradation
-- evaluate structural reasoning quality under adversarial pressure
+- execution authority (L3)
+- evaluation contracts (L3-aligned)
+- observational systems (L4)
+- conceptual models (L4)
 
----
-
-## System Design Paradigm
-
-ORP separates reasoning into four orthogonal domains:
-
-- Execution Governance (L3 dominance)
-- Validation (L2 constraint layer)
-- Observation (L1 raw signal space)
-- Inference (L4 non-authoritative synthesis)
-
-**Core Rule:** Only L3 governs system behavior. All other layers are subordinate or observational.
+Only one node has enforcement authority:  
+**ORP_RUNTIME.md (L3 Kernel)**
 
 ---
 
-## High-Level Pipeline
+## System Graph Model
 
-**INPUT FLOW:**
+### 1. CORE RUNTIME LAYER (AUTHORITY KERNEL)
+
+**ORP_RUNTIME.md**
+- **Authority**: L3 (exclusive execution authority)
+- **Role**: System governance kernel
+- **Responsibilities**:
+  - SHS state management
+  - Drift computation (σ² model)
+  - LAS enforcement (L1–L4)
+  - Failure handling
+  - Provenance integrity enforcement
+  - System invariants
+- **Dependency Type**: NONE (root node)
+- **Impact**: All system behavior is downstream-constrained by this file.
+
+---
+
+### 2. ARCHITECTURE DESCRIPTION LAYER (STRUCTURAL OVERVIEW)
+
+**ORP_SYSTEM_ARCHITECTURE.md**
+- **Authority**: L3-descriptive (non-executing)
+- **Role**: System pipeline explanation layer
+- **Responsibilities**:
+  - Describe system structure
+  - Define evaluation pipeline flow
+  - Document layer separation
+  - Explain system principles
+- **Dependency Type**: CONCEPTUAL → `ORP_RUNTIME.md`
+- **Dependents**: Evaluation pipeline specification layer
+
+---
+
+### 3. CONCEPTUAL MODEL LAYER (NON-AUTHORITATIVE)
+
+**ORP_ARCHITECTURE.md**
+- **Authority**: L4 (non-authoritative)
+- **Role**: Metaphorical / cognitive modeling layer
+- **Responsibilities**:
+  - M ↔ L duality model
+  - ACS subsystem abstraction
+  - Entropic stabilization model
+  - Symbolic architecture representations
+- **Dependency Type**: REFERENCE ONLY (no structural influence)
+- **Dependents**: NONE (isolated conceptual layer)
+
+---
+
+### 4. OBSERVATIONAL LAYER (DIAGNOSTIC ONLY)
+
+**ORP_MODEL_DECAY_TRACKER.md**
+- **Authority**: L4 (diagnostic only)
+- **Role**: Behavioral drift observation system
+- **Responsibilities**:
+  - Track degradation patterns
+  - Log instruction failures
+  - Record structural drift signals
+  - Maintain longitudinal anomaly history
+- **Dependency Type**: READ-ONLY reference to `ORP_RUNTIME.md`
+- **Dependents**: Indirect use by L3 evaluation logic (via interpreted signals only)
+
+---
+
+### 5. EVALUATION PIPELINE LAYER (L3-ALIGNED CONTRACT SYSTEM)
+
+**Components**:
+- `EVALUATION_SCHEMA.md`
+- `RUBRIC.md`
+- `SCORING.md`
+
+**Pipeline Flow (Strict Order)**:
+
+```mermaid
+flowchart TD
+    A[MODEL OUTPUT] --> B[EVALUATION_SCHEMA.md]
+    B --> C[RUBRIC.md]
+    C --> D[SCORING.md]
+    D --> E[FINAL SCORE]
 ```
-INPUT
-→ ORP_RUNTIME.md
-→ PROMPT.md
-→ BENCHMARK.md
-→ MODEL EXECUTION
-→ L2 VALIDATION
-→ L3 GOVERNANCE
-→ L4 INFERENCE (NON-AUTHORITATIVE)
-→ SYSTEM OUTPUT
+
+- **EVALUATION_SCHEMA.md**: L3-aligned contract — Defines valid structural transformations
+- **RUBRIC.md**: L3-aligned evaluation logic — Performs qualitative assessment
+- **SCORING.md**: L3-aligned aggregation layer — Produces normalized quantitative outputs
+
+**Important Constraint**:  
+The evaluation pipeline is strictly post-hoc analysis. It does NOT influence runtime behavior or modify `ORP_RUNTIME.md`.
+
+---
+
+## Layer Classification Matrix
+
+| File                        | Layer       | Authority Type      | Role                          |
+|-----------------------------|-------------|---------------------|-------------------------------|
+| ORP_RUNTIME.md             | L3          | Execution Kernel    | Governance + enforcement      |
+| ORP_SYSTEM_ARCHITECTURE.md | L3          | Descriptive Layer   | System structure explanation  |
+| ORP_ARCHITECTURE.md        | L4          | Conceptual Model    | Metaphorical system design    |
+| ORP_MODEL_DECAY_TRACKER.md | L4          | Observational       | Drift diagnostics             |
+| EVALUATION_SCHEMA.md       | L3-aligned  | Contract Layer      | Structural rules              |
+| RUBRIC.md                  | L3-aligned  | Evaluation Layer    | Qualitative assessment        |
+| SCORING.md                 | L3-aligned  | Aggregation Layer   | Quantitative scoring          |
+
+---
+
+## Global Design Constraints
+
+1. **Authority Isolation**  
+   L4 systems cannot influence L3 decisions.
+
+2. **Runtime Uniqueness**  
+   Only `ORP_RUNTIME.md` defines execution behavior.
+
+3. **DAG Integrity**  
+   No cyclic dependencies allowed between layers.
+
+4. **Observational Non-Interference**  
+   Tracking systems are passive only.
+
+5. **Evaluation Non-Governance**  
+   Scoring systems cannot modify runtime state.
+
+---
+
+## System Graph (Simplified)
+
+```mermaid
+flowchart TD
+    Root[ORP_RUNTIME.md<br/>L3 ROOT KERNEL] --> Arch[ORP_SYSTEM_ARCHITECTURE.md<br/>STRUCTURAL VIEW]
+    Arch --> EvalPipeline[Evaluation Pipeline<br/>EVALUATION_SCHEMA → RUBRIC → SCORING]
+    Arch --> Obs[ORP_MODEL_DECAY_TRACKER.md<br/>L4 OBSERVATION]
+    EvalPipeline --> Final[FINAL SCORE]
+    Obs -.->|indirect| EvalPipeline
+    Arch -.->|reference| Concept[ORP_ARCHITECTURE.md<br/>L4 CONCEPTUAL - ISOLATED]
+    
+    classDef l3 fill:#1e3a8a,stroke:#60a5fa,color:#fff
+    classDef l4 fill:#4338ca,stroke:#a5b4fc,color:#fff
+    class Root,Arch l3
+    class Obs,Concept l4
 ```
 
-**EVALUATION FLOW:**
+---
+
+## Final System State
+
+```yaml
+ORP_VERSION: 3.0
+GRAPH_MODEL: DIRECTED_ACYCLIC_GRAPH
+AUTHORITY_MODEL: L3_SINGLE_ROOT_KERNEL
+OBSERVATION_MODEL: L4_PASSIVE
+EVALUATION_MODEL: POST_HOC_L3_ALIGNED
+INTEGRITY_CONSTRAINT: STRICT_ISOLATION
+STATUS: FROZEN
 ```
-MODEL OUTPUT
-→ EVALUATION_SCHEMA.md
-→ RUBRIC.md
-→ SCORING.md
-→ FINAL SCORE
-```
-
----
-
-## Layer Function Specification
-
-### 1. ORP_RUNTIME.md (GOVERNANCE KERNEL)
-- **Role**: Primary execution authority layer  
-- **Responsibilities**:  
-  - SHS state control (GREEN → BLACK)  
-  - Drift computation enforcement (σ² model)  
-  - LAS hierarchy enforcement (L1–L4)  
-  - Coherence camouflage detection  
-  - Failure handling and recovery procedures  
-  - Provenance integrity enforcement  
-- **Authority Level**: ABSOLUTE (L3 SYSTEM KERNEL)
-
-### 2. PROMPT.md (CONSTRAINT LAYER)
-- **Role**: Pre-execution reasoning constraint system  
-- **Responsibilities**:  
-  - Atomic claim decomposition  
-  - Epistemic classification rules  
-  - Uncertainty preservation enforcement  
-  - Anti-narrative structure shaping  
-  - Reconstruction discipline enforcement  
-- **Authority Level**: L3-ASSISTED
-
-### 3. BENCHMARK.md (ADVERSARIAL STRESS LAYER)
-- **Role**: Reasoning stress injection system  
-- **Responsibilities**:  
-  - Expose hallucination pressure points  
-  - Test causal and logical stability  
-  - Trigger drift boundary conditions  
-  - Evaluate uncertainty handling  
-- **Authority Level**: L4 TEST ENVIRONMENT (non-governing)
-
-### 4. EVALUATION_SCHEMA.md (STRUCTURAL CONTRACT LAYER)
-- **Role**: Defines valid reasoning transformations  
-- **Responsibilities**:  
-  - Claim atomization rules  
-  - Epistemic tagging constraints  
-  - Structural transformation validation  
-  - Reconstruction boundary enforcement  
-- **Authority Level**: L3 CONTRACTUAL LAYER
-
-### 5. RUBRIC.md (QUALITATIVE EVALUATION LAYER)
-- **Role**: Human-readable reasoning quality evaluator  
-- **Responsibilities**:  
-  - Detect epistemic distortion  
-  - Evaluate provenance discipline  
-  - Assess drift handling behavior  
-  - Validate structural compliance  
-  - Score reasoning integrity  
-- **Authority Level**: L3 EVALUATION LAYER
-
-### 6. SCORING.md (QUANTITATIVE AGGREGATION LAYER)
-- **Role**: Metric synthesis system  
-- **Responsibilities**:  
-  - Normalize rubric outputs  
-  - Aggregate evaluation signals  
-  - Apply weighted penalties  
-  - Generate final quantitative score  
-- **Authority Level**: L3 METRIC LAYER
-
----
-
-## Core System Principles
-
-1. **SIGNAL > NARRATIVE**  
-   Fluent output is invalid if provenance integrity is degraded. A coherent but ungrounded response is a critical failure state.
-
-2. **PROVENANCE PRESERVATION**  
-   ORP enforces strict separation between:  
-   - L1: observed data  
-   - L2: validated interpretation  
-   - L3: governance rules  
-   - L4: speculative inference  
-   **Rule**: L4 must never overwrite L1/L2 provenance.
-
-3. **DRIFT OBSERVABILITY**  
-   The system assumes degradation under context saturation, narrative compression, or uncertainty collapse.  
-   ORP prioritizes explicit uncertainty signaling, recoverability, and visible degradation tracking over stylistic fluency.
-
-4. **LAYER ISOLATION**  
-   Each layer is strictly single-responsibility. No layer may override upstream outputs, reinterpret frozen provenance, or inject backward influence.
-
-5. **RECOVERABILITY > COMPLETION**  
-   ORP prioritizes bounded reasoning, stable provenance chains, explicit uncertainty serialization, and recoverable system state over narrative completeness.
-
----
-
-## Runtime Governance Concepts
-
-**SHS (SESSION HEALTH STATE)**  
-Tracks system integrity:  
-- GREEN → stable  
-- YELLOW → early drift  
-- ORANGE → confirmed degradation  
-- RED → severe instability  
-- BLACK → failure state  
-
-**LAS (LAYERED AUTHORITY STACK)**  
-- L1 → raw observed signals  
-- L2 → validated interpretation  
-- L3 → governance / enforcement  
-- L4 → inference (non-authoritative)  
-
-**Rule**: L4 cannot affect L1 or L2 truth state.
-
-**COHERENCE CAMOUFLAGE**  
-Critical failure mode where narrative fluency remains high while provenance integrity degrades. Treated as high-severity violation.
-
----
-
-## System Identity
-
-ORP **IS**:  
-- a governance-first reasoning architecture  
-- a provenance-preserving inference system  
-- a drift-observable epistemic framework  
-- a structured evaluation pipeline  
-
-ORP **IS NOT**:  
-- a chatbot personality system  
-- a storytelling engine  
-- a creative roleplay framework  
-- a persuasion system  
-
----
-
-## Relationship to Other Files
-
-- `ORP_RUNTIME.md` → execution authority kernel  
-- `PROMPT.md` → reasoning constraint system  
-- `BENCHMARK.md` → adversarial stress layer  
-- `EVALUATION_SCHEMA.md` → structural validation contract  
-- `RUBRIC.md` → qualitative evaluation system  
-- `SCORING.md` → quantitative aggregation system  
-- `ORP_META_MAP.md` → system topology registry  
-
----
-
-## Design Principle
-
-Reliable reasoning requires observable failure modes, preserved provenance chains, explicit uncertainty representation, recoverable system states, and strict layer isolation — not merely fluent output.
 
 ---
 
