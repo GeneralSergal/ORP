@@ -16,19 +16,35 @@
   <strong>Signal &gt; Narrative · Recoverability &gt; Completion · Provenance &gt; Coherence</strong>
 </p>
 
-## Core Directive
+---
+
+# Overview
+
+ORP (Operational Reasoning Protocol) is a **governance‑first epistemic integrity system** designed to ensure that transformer‑based models maintain:
+
+- structural correctness  
+- provenance continuity  
+- drift visibility  
+- recoverable reasoning states  
+- strict separation of authority layers  
+
+ORP v3.0 defines a **type‑safe, layered architecture** with L1–L4 separation and a numeric drift model (σ²).
+
+---
+
+# Core Directive
 
 **Signal > Narrative**  
 **Recoverability > Completion**  
 **Provenance Preservation > Coherent Storytelling**
 
-A coherent output with corrupted provenance constitutes a **critical failure**.
+A coherent output with corrupted provenance is treated as a **critical failure**.
 
 ---
 
-## Mandatory Runtime Header (v3.0)
+# Mandatory Runtime Header (v3.0)
 
-All ORP-compliant outputs **must** begin with:
+Every ORP‑compliant output must begin with:
 
 ```text
 [SHS: GREEN | YELLOW | ORANGE | RED | BLACK]
@@ -37,13 +53,13 @@ All ORP-compliant outputs **must** begin with:
 [LAS: L1 | L2 | L3 | L4]
 ```
 
-No preamble may precede this header.
+No text may precede this header.
 
 ---
 
-## System Architecture (v3.0)
+# System Architecture
 
-### Core Authority Chain
+## Authority Chain
 
 ```mermaid
 flowchart TD
@@ -53,7 +69,7 @@ flowchart TD
     L3 --> OUT[OUTPUT]
 ```
 
-### L4 Non-Authoritative Subsystem
+## L4 Non‑Authoritative Subsystem
 
 ```mermaid
 flowchart TD
@@ -64,7 +80,7 @@ flowchart TD
     L4 -. no access .-> L1[L1: Observed Data]
 ```
 
-### Full Governance + Drift Loop
+## Governance + Drift Loop
 
 ```mermaid
 flowchart TD
@@ -75,7 +91,9 @@ flowchart TD
     SHS --> L3
 ```
 
-### Session Health State (SHS)
+---
+
+# Session Health State (SHS)
 
 ```mermaid
 stateDiagram-v2
@@ -94,35 +112,35 @@ stateDiagram-v2
 
 ---
 
-## Layer Definitions
+# Layer Definitions
 
-**L1 — Observed Data Layer**  
-Typed signals only. Immutable once committed. No narrative allowed.
+### **L1 — Observed Data Layer**
+Typed signals only. Immutable. No narrative.
 
-**L2 — Verified Interpretation Layer**  
+### **L2 — Verified Interpretation Layer**
 Deterministic validation, schema enforcement, anomaly tagging.
 
-**L3 — Governance Layer (Authority Core)**  
+### **L3 — Governance Layer (Authority Core)**
 Sole authority for state transitions, invariants, and system integrity.
 
-**L4 — Internal Inference Layer**  
-Probabilistic reasoning only. Non-authoritative. Cannot access raw L1 or override L3.
+### **L4 — Internal Inference Layer**
+Probabilistic reasoning only. Non‑authoritative. Cannot access raw L1 or override L3.
 
 ---
 
-## Invariants
+# Invariants
 
-- L1 accepts only typed signals: `Float ∈ [0.0, 1.0]`, bounded Integer, Boolean
-- L1 states are immutable once committed
-- L2 operates exclusively on validated L1 data
-- L3 is the sole authority layer
-- L4 cannot promote inference into factual form
-- Drift must be computed numerically (`σ²`)
-- Provenance must be preserved end-to-end
+- L1 accepts only typed signals  
+- L1 states are immutable  
+- L2 is deterministic  
+- L3 is the sole authority  
+- L4 cannot promote inference into fact  
+- Drift must be numeric (σ²)  
+- Provenance must remain intact end‑to‑end  
 
 ---
 
-## Drift Model (Numeric Core)
+# Drift Model (σ²)
 
 **σ² = variance(L1_signal_vector over time)**
 
@@ -134,7 +152,7 @@ Probabilistic reasoning only. Non-authoritative. Cannot access raw L1 or overrid
 
 ---
 
-## Execution Pipeline
+# Execution Pipeline
 
 ```mermaid
 flowchart TD
@@ -150,39 +168,28 @@ flowchart TD
 
 ---
 
-## Failure Conditions
+# Failure Conditions
 
-- L4 influencing L3
-- Untyped L1 data
-- Silent schema mutation
-- Invalid state promotion
-- Drift concealment via narrative smoothing
-- Loss of provenance continuity
-
----
-
-## Failure Response Protocol
-
-1. Downgrade SHS
-2. Freeze L1 stream
-3. Recompute L2 snapshot
-4. Halt L4 inference
-5. Restore last valid L3 state
+- L4 influencing L3  
+- Untyped L1 data  
+- Silent schema mutation  
+- Invalid state promotion  
+- Drift concealment  
+- Provenance discontinuity  
 
 ---
 
-## Controlled Expansion Policy
+# Failure Response Protocol
 
-Expansion is **cyclical only**.  
-Requires:
-- Drift = NONE
-- L3 validation success
-- Provenance intact
-- Stable recovery path
+1. Downgrade SHS  
+2. Freeze L1 stream  
+3. Recompute L2 snapshot  
+4. Halt L4 inference  
+5. Restore last valid L3 state  
 
 ---
 
-## Repository Structure
+# Repository Structure
 
 ```text
 /
@@ -199,44 +206,35 @@ Requires:
 
 ---
 
-## Compliance Requirements
+# Compliance Requirements
 
-A system is ORP v3.0-compliant only if it enforces:
-- Strict L1 typing
-- Deterministic L2 validation
-- Isolated L3 authority
-- Non-authoritative L4
-- Numeric drift computation
-- Mandatory runtime header
-- End-to-end provenance preservation
+A system is ORP v3.0‑compliant only if it enforces:
 
----
-
-## Operational Philosophy
-
-- Typed signals over narrative
-- Drift visibility over coherence
-- Governance correctness over fluency
-- Recoverability over completion
+- strict L1 typing  
+- deterministic L2 validation  
+- isolated L3 authority  
+- non‑authoritative L4  
+- numeric drift computation  
+- mandatory runtime header  
+- end‑to‑end provenance preservation  
 
 ---
 
-## Current System State
+# Operational Philosophy
 
-**ORP_VERSION: 3.0 (FROZEN)**  
-L1: STRICT_TYPED_TIME_SERIES  
-L2: VALIDATION_LAYER  
-L3: AUTHORITY_LAYER  
-L4: INTERNAL_INFERENCE_ONLY  
-DRIFT_MODEL: NUMERIC (σ²)  
-STATUS: FROZEN
+- Typed signals over narrative  
+- Drift visibility over coherence  
+- Governance correctness over fluency  
+- Recoverability over completion  
 
 ---
 
-## License
+# License
 
-GNU General Public License v3.0 (GPL-3.0)
+GNU General Public License v3.0 (GPL‑3.0)
 
 ---
 
-**Repository**: [https://github.com/GeneralSergal/ORP](https://github.com/GeneralSergal/ORP)
+# Repository
+
+[https://github.com/GeneralSergal/ORP](https://github.com/GeneralSergal/ORP)
