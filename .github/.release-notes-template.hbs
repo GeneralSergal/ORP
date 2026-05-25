@@ -2,7 +2,8 @@
 **Generated via Release‑Please**  
 **Governance Layer:** L3  
 **Provenance:** PRESERVED  
-**Release Type:** {{#if isPatch}}Maintenance Patch{{else if isMinor}}Feature Expansion{{else}}Major Revision{{/if}}
+**Release Type:** 
+{{#if isPatch}}Maintenance Patch{{else if isMinor}}Feature Expansion{{else}}Major Revision{{/if}}
 
 ---
 
@@ -15,12 +16,12 @@
 [LAS: L3]
 ```
 
-> This header is included for provenance continuity and ORP‑compliant release metadata.
+> Included for provenance continuity and ORP‑compliant release metadata.
 
 ---
 
 ## ✨ Features
-{{#if features.length}}
+{{#if features}}
 {{#each features}}
 - {{this}}
 {{/each}}
@@ -31,7 +32,7 @@ _No new features in this release._
 ---
 
 ## 🐛 Bug Fixes
-{{#if fixes.length}}
+{{#if fixes}}
 {{#each fixes}}
 - {{this}}
 {{/each}}
@@ -42,7 +43,7 @@ _No bug fixes in this release._
 ---
 
 ## 📝 Documentation
-{{#if docs.length}}
+{{#if docs}}
 {{#each docs}}
 - {{this}}
 {{/each}}
@@ -53,7 +54,7 @@ _No documentation updates in this release._
 ---
 
 ## 🔧 Maintenance
-{{#if chores.length}}
+{{#if chores}}
 {{#each chores}}
 - {{this}}
 {{/each}}
@@ -64,7 +65,7 @@ _No maintenance changes in this release._
 ---
 
 ## ♻️ Refactoring
-{{#if refactors.length}}
+{{#if refactors}}
 {{#each refactors}}
 - {{this}}
 {{/each}}
@@ -77,7 +78,7 @@ _No refactoring in this release._
 ## 🔍 Provenance Notes (L3 Authority)
 - All changes validated under L3 governance.
 - L4 inference did not influence authoritative state.
-- L1 typed-signal invariants preserved.
+- L1 typed‑signal invariants preserved.
 - σ² drift remained within acceptable bounds during release preparation.
 - No schema mutations detected.
 - Provenance chain intact end‑to‑end.
@@ -99,7 +100,7 @@ Release‑Please automatically attaches:
 | **L1** | Typed signals preserved |
 | **L2** | Deterministic validation passed |
 | **L3** | Governance authority validated |
-| **L4** | Non-authoritative inference only |
+| **L4** | Non‑authoritative inference only |
 | **Drift Model** | σ² numeric |
 | **Provenance** | End‑to‑end preserved |
 
