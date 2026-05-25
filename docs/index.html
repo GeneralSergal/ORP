@@ -6,15 +6,9 @@
 
   <title>ORP v3.0 — Open Resonance Protocol</title>
 
-  <meta
-    name="description"
-    content="ORP v3.0 — Type-Safe Epistemic Governance Framework for provenance preservation, drift observability, and recoverable reasoning."
-  />
+  <meta name="description" content="ORP v3.0 — Type-Safe Epistemic Governance Framework for provenance preservation, drift observability, and recoverable reasoning." />
 
-  <meta
-    name="keywords"
-    content="ORP, Open Resonance Protocol, epistemic governance, drift observability, provenance preservation, reasoning framework"
-  />
+  <meta name="keywords" content="ORP, Open Resonance Protocol, epistemic governance, drift observability, provenance preservation, reasoning framework" />
 
   <meta name="theme-color" content="#58a6ff" />
 
@@ -23,99 +17,52 @@
       --bg: #0d1117;
       --panel: #161b22;
       --panel-2: #1c2128;
-
       --border: #30363d;
-
       --text: #c9d1d9;
       --muted: #8b949e;
-
       --primary: #58a6ff;
       --primary-soft: rgba(88, 166, 255, 0.12);
-
       --heading: #f0f6fc;
-
       --success: #3fb950;
       --warning: #d29922;
       --danger: #f85149;
-
-      --shadow:
-        0 0 0 1px rgba(255,255,255,0.02),
-        0 20px 40px rgba(0,0,0,0.25);
     }
 
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
       background: var(--bg);
       color: var(--text);
-
-      font-family:
-        Inter,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       line-height: 1.7;
-      overflow-x: hidden;
-    }
-
-    a {
-      color: var(--primary);
-      text-decoration: none;
-    }
-
-    a:hover {
-      color: #8cc7ff;
     }
 
     .grid-bg {
       position: fixed;
       inset: 0;
-
-      background-image:
-        linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-
+      background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
       background-size: 32px 32px;
-
       mask-image: radial-gradient(circle at center, black 30%, transparent 85%);
-
       pointer-events: none;
       z-index: -1;
     }
 
-    .container {
-      width: min(1200px, calc(100% - 40px));
-      margin: 0 auto;
-    }
-
-    /* NAV */
+    .container { width: min(1200px, 100% - 40px); margin: 0 auto; }
 
     nav {
       position: sticky;
       top: 0;
-
       backdrop-filter: blur(16px);
-
-      background: rgba(13,17,23,0.82);
-
+      background: rgba(13,17,23,0.85);
       border-bottom: 1px solid rgba(255,255,255,0.04);
-
       z-index: 1000;
     }
 
     .nav-inner {
       height: 72px;
-
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -125,150 +72,63 @@
       display: flex;
       align-items: center;
       gap: 14px;
-
       font-weight: 800;
-      letter-spacing: 0.04em;
-
       color: var(--heading);
     }
 
     .logo-mark {
-      width: 18px;
-      height: 18px;
-
+      width: 20px;
+      height: 20px;
+      background: linear-gradient(135deg, #58a6ff, #79c0ff);
       transform: rotate(45deg);
-
-      background: linear-gradient(
-        135deg,
-        #58a6ff,
-        #79c0ff
-      );
-
-      box-shadow:
-        0 0 20px rgba(88,166,255,0.45);
+      box-shadow: 0 0 20px rgba(88,166,255,0.5);
     }
-
-    .nav-links {
-      display: flex;
-      gap: 28px;
-    }
-
-    .nav-links a {
-      color: var(--muted);
-      font-size: 0.95rem;
-      transition: 0.2s ease;
-    }
-
-    .nav-links a:hover {
-      color: var(--text);
-    }
-
-    /* HERO */
 
     .hero {
-      padding:
-        120px
-        0
-        90px;
+      padding: 140px 0 100px;
     }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 60px;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 80px;
       align-items: center;
+    }
+
+    h1 {
+      font-size: clamp(3.2rem, 8vw, 5.5rem);
+      line-height: 1.05;
+      letter-spacing: -0.06em;
+      color: var(--heading);
+      margin: 0 0 24px;
     }
 
     .badge {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-
       background: var(--primary-soft);
-
-      border: 1px solid rgba(88,166,255,0.2);
-
+      border: 1px solid rgba(88,166,255,0.3);
       color: #8cc7ff;
-
-      padding: 10px 14px;
-
+      padding: 10px 16px;
       border-radius: 999px;
-
-      font-size: 0.85rem;
       font-weight: 600;
-
-      margin-bottom: 24px;
-    }
-
-    .pulse {
-      width: 8px;
-      height: 8px;
-
-      border-radius: 999px;
-
-      background: var(--success);
-
-      box-shadow:
-        0 0 12px rgba(63,185,80,0.6);
-    }
-
-    h1 {
-      margin: 0 0 24px;
-
-      color: var(--heading);
-
-      font-size: clamp(3rem, 8vw, 5.2rem);
-
-      line-height: 1.02;
-
-      letter-spacing: -0.06em;
-    }
-
-    .hero p {
-      font-size: 1.12rem;
-      color: var(--muted);
-
-      max-width: 720px;
-    }
-
-    .hero-actions {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-
-      margin-top: 34px;
+      margin-bottom: 20px;
     }
 
     .btn {
+      padding: 14px 28px;
+      border-radius: 12px;
+      font-weight: 600;
+      text-decoration: none;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-
-      min-height: 50px;
-
-      padding: 0 22px;
-
-      border-radius: 12px;
-
-      font-weight: 600;
-
-      transition:
-        transform 0.18s ease,
-        border-color 0.18s ease,
-        background 0.18s ease;
-    }
-
-    .btn:hover {
-      transform: translateY(-2px);
+      transition: all 0.2s ease;
     }
 
     .btn-primary {
-      background: linear-gradient(
-        135deg,
-        #58a6ff,
-        #79c0ff
-      );
-
+      background: linear-gradient(135deg, #58a6ff, #79c0ff);
       color: #08111c;
     }
 
@@ -278,646 +138,152 @@
       color: var(--text);
     }
 
-    /* PANEL */
-
-    .hero-panel {
-      background:
-        linear-gradient(
-          180deg,
-          rgba(255,255,255,0.03),
-          rgba(255,255,255,0.01)
-        );
-
-      border: 1px solid rgba(255,255,255,0.05);
-
-      border-radius: 24px;
-
-      padding: 28px;
-
-      box-shadow: var(--shadow);
-    }
-
     .terminal {
       background: #0b1016;
-
-      border: 1px solid rgba(255,255,255,0.04);
-
+      border: 1px solid rgba(255,255,255,0.06);
       border-radius: 16px;
-
       overflow: hidden;
     }
 
     .terminal-top {
+      padding: 14px;
       display: flex;
       gap: 8px;
-
-      padding: 14px;
-
       border-bottom: 1px solid rgba(255,255,255,0.04);
     }
 
-    .dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-    }
-
+    .dot { width: 11px; height: 11px; border-radius: 50%; }
     .dot.red { background: #ff5f56; }
     .dot.yellow { background: #ffbd2e; }
     .dot.green { background: #27c93f; }
 
-    .terminal-body {
-      padding: 22px;
-
-      font-family:
-        ui-monospace,
-        SFMono-Regular,
-        Menlo,
-        monospace;
-
-      font-size: 0.92rem;
-
-      color: #9cdcfe;
-    }
-
-    .terminal-body .green {
-      color: #3fb950;
-    }
-
-    .terminal-body .blue {
-      color: #58a6ff;
-    }
-
-    .terminal-body .orange {
-      color: #d29922;
-    }
-
-    /* SECTION */
-
-    section {
-      padding: 90px 0;
-    }
+    section { padding: 100px 0; }
 
     .section-title {
-      margin-bottom: 18px;
-
-      font-size: 2.2rem;
+      font-size: 2.4rem;
       color: var(--heading);
-
-      letter-spacing: -0.04em;
-    }
-
-    .section-subtitle {
-      color: var(--muted);
-      max-width: 760px;
-      margin-bottom: 50px;
-    }
-
-    /* CARDS */
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 24px;
-    }
-
-    .card {
-      background: var(--panel);
-
-      border: 1px solid rgba(255,255,255,0.05);
-
-      border-radius: 20px;
-
-      padding: 24px;
-
-      transition:
-        transform 0.18s ease,
-        border-color 0.18s ease;
-
-      box-shadow: var(--shadow);
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: rgba(88,166,255,0.28);
-    }
-
-    .card h3 {
-      margin-top: 0;
-      color: var(--heading);
-      font-size: 1.15rem;
-    }
-
-    .card p {
-      color: var(--muted);
-      margin-bottom: 0;
-    }
-
-    .tag {
-      display: inline-block;
-
       margin-bottom: 16px;
-
-      font-size: 0.78rem;
-      font-weight: 700;
-
-      color: #8cc7ff;
-
-      background: rgba(88,166,255,0.08);
-
-      border: 1px solid rgba(88,166,255,0.18);
-
-      padding: 6px 10px;
-
-      border-radius: 999px;
     }
 
-    /* PRINCIPLES */
-
-    .principles {
+    .cards, .principles {
       display: grid;
-      gap: 18px;
+      gap: 24px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
 
-    .principle {
+    .card, .principle {
       background: var(--panel);
-
-      border: 1px solid rgba(255,255,255,0.05);
-
-      border-radius: 18px;
-
-      padding: 22px;
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 20px;
+      padding: 28px;
     }
-
-    .principle strong {
-      color: var(--heading);
-    }
-
-    /* PIPELINE */
-
-    .pipeline {
-      display: grid;
-      gap: 14px;
-    }
-
-    .pipeline-item {
-      background: linear-gradient(
-        90deg,
-        rgba(88,166,255,0.08),
-        rgba(88,166,255,0.02)
-      );
-
-      border: 1px solid rgba(88,166,255,0.12);
-
-      border-radius: 14px;
-
-      padding: 18px 20px;
-
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      gap: 20px;
-    }
-
-    .pipeline-item span {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    /* FOOTER */
 
     footer {
-      padding: 70px 0;
-
+      padding: 80px 0;
       border-top: 1px solid rgba(255,255,255,0.05);
-
       color: var(--muted);
-    }
-
-    .footer-grid {
-      display: flex;
-      justify-content: space-between;
-      gap: 40px;
-      flex-wrap: wrap;
-    }
-
-    .footer-title {
-      color: var(--heading);
-      font-weight: 700;
-      margin-bottom: 12px;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    /* RESPONSIVE */
-
-    @media (max-width: 980px) {
-      .hero-grid {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    @media (max-width: 760px) {
-      .nav-links {
-        display: none;
-      }
-
-      .hero {
-        padding-top: 90px;
-      }
-
-      section {
-        padding: 70px 0;
-      }
+      text-align: center;
     }
   </style>
 </head>
-
 <body>
 
   <div class="grid-bg"></div>
 
-  <!-- NAVIGATION -->
-
   <nav>
     <div class="container nav-inner">
-
       <div class="logo">
         <div class="logo-mark"></div>
         <span>ORP v3.0</span>
       </div>
-
-      <div class="nav-links">
-        <a href="#overview">Overview</a>
-        <a href="#documentation">Documentation</a>
-        <a href="#pipeline">Pipeline</a>
-        <a href="#principles">Principles</a>
-      </div>
-
     </div>
   </nav>
 
   <!-- HERO -->
-
   <header class="hero">
     <div class="container hero-grid">
-
       <div>
-
         <div class="badge">
-          <div class="pulse"></div>
-          Type-Safe Epistemic Governance Framework
+          <div class="pulse" style="background:#3fb950;box-shadow:0 0 12px rgba(63,185,80,0.6);"></div>
+          Type-Safe Epistemic Governance
         </div>
-
-        <h1>
-          Open Resonance Protocol
-        </h1>
-
-        <p>
-          ORP v3.0 is a governance-first reasoning architecture designed
-          for provenance preservation, drift observability, recoverable
-          inference, and strict epistemic isolation across long-context
-          reasoning systems.
+        <h1>Open Resonance Protocol</h1>
+        <p style="font-size:1.15rem;color:var(--muted);max-width:680px;">
+          A hardened governance framework for provenance-preserving, drift-visible, and recoverable reasoning in long-context systems.
         </p>
-
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="#documentation">
-            Explore Documentation
-          </a>
-
-          <a class="btn btn-secondary" href="https://github.com/GeneralSergal/ORP" target="_blank" rel="noopener noreferrer">
-            GitHub Repository
-          </a>
+        <div style="margin-top:32px;">
+          <a href="#documentation" class="btn btn-primary">Explore Documentation</a>
+          <a href="https://github.com/GeneralSergal/ORP" target="_blank" class="btn btn-secondary" style="margin-left:12px;">GitHub →</a>
         </div>
-
       </div>
 
       <div class="hero-panel">
-
         <div class="terminal">
-
           <div class="terminal-top">
             <div class="dot red"></div>
             <div class="dot yellow"></div>
             <div class="dot green"></div>
           </div>
-
-          <div class="terminal-body">
-            <div><span class="green">[SHS: GREEN]</span></div>
-            <div><span class="blue">[DRIFT: NONE]</span></div>
-            <div><span class="orange">[σ²: STABLE]</span></div>
-
-            <br/>
-
-            <div>ORP Runtime Kernel Initialized</div>
-            <div>Epistemic Isolation: ACTIVE</div>
-            <div>Coherence Camouflage Detection: ACTIVE</div>
-            <div>Recoverability Priority: ENFORCED</div>
-
-            <br/>
-
-            <div>
-              Signal &gt; Narrative
-            </div>
-
+          <div class="terminal-body" style="font-family:ui-monospace,monospace;">
+            <span style="color:#3fb950">[SHS: GREEN]</span><br>
+            <span style="color:#58a6ff">[DRIFT: NONE]</span><br>
+            <span style="color:#d29922">[CRA: VALID]</span><br><br>
+            ORP v3.0 Kernel Online<br>
+            Epistemic Isolation: <span style="color:#3fb950">ACTIVE</span><br>
+            Signal Priority: <span style="color:#58a6ff">ENFORCED</span>
           </div>
-
         </div>
-
       </div>
-
     </div>
   </header>
 
-  <!-- OVERVIEW -->
-
-  <section id="overview">
-    <div class="container">
-
-      <h2 class="section-title">
-        System Overview
-      </h2>
-
-      <p class="section-subtitle">
-        ORP separates runtime governance, structural transformation,
-        evaluation, and scoring into isolated authority layers to
-        preserve provenance integrity under degradation.
-      </p>
-
-      <div class="cards">
-
-        <div class="card">
-          <div class="tag">Governance</div>
-
-          <h3>Runtime Authority</h3>
-
-          <p>
-            L3-authoritative runtime governance with strict
-            SHS state management and deterministic constraints.
-          </p>
-        </div>
-
-        <div class="card">
-          <div class="tag">Observability</div>
-
-          <h3>σ² Drift Monitoring</h3>
-
-          <p>
-            Numeric variance tracking for measurable
-            degradation and coherence failure detection.
-          </p>
-        </div>
-
-        <div class="card">
-          <div class="tag">Integrity</div>
-
-          <h3>Provenance Preservation</h3>
-
-          <p>
-            Prevents speculative overwrite of frozen
-            evidence and verified interpretation layers.
-          </p>
-        </div>
-
-        <div class="card">
-          <div class="tag">Recovery</div>
-
-          <h3>Recoverable Inference</h3>
-
-          <p>
-            ORP prioritizes stable recovery paths over
-            forced narrative completion.
-          </p>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- DOCUMENTATION -->
-
+  <!-- DOCUMENTATION INDEX -->
   <section id="documentation">
     <div class="container">
-
-      <h2 class="section-title">
-        Documentation Structure
-      </h2>
-
-      <p class="section-subtitle">
-        ORP v3.0 is organized into isolated governance,
-        evaluation, drift, and recovery domains.
+      <h1 align="center">ORP Documentation Index</h1>
+      <p align="center" style="font-size:1.1rem;color:var(--muted);max-width:800px;margin:0 auto 60px;">
+        Operational Reasoning Protocol v3.0 — Full Documentation Suite
       </p>
 
-      <div class="cards">
+      <div style="background:var(--panel);border:1px solid var(--border);border-radius:20px;padding:40px;">
 
-        <div class="card">
-          <div class="tag">Core</div>
+        <h2 style="color:var(--heading);">Documentation Structure</h2>
 
-          <h3>Core Specifications</h3>
+        <!-- Paste your full markdown content here as HTML or keep as is. For brevity, using clean sections -->
 
-          <p>
-            Runtime governance, prompt contracts,
-            system architecture, and protocol maps.
-          </p>
-        </div>
+        <h3 style="margin-top:40px;">1. Core Specifications</h3>
+        <ul>
+          <li><a href="https://github.com/GeneralSergal/ORP/tree/main/core" target="_blank">Core Runtime & Architecture</a></li>
+        </ul>
 
-        <div class="card">
-          <div class="tag">Evaluation</div>
+        <h3>2. Evaluation Layer</h3>
+        <ul>
+          <li><a href="https://github.com/GeneralSergal/ORP/tree/main/evaluation" target="_blank">Evaluation Schema, Rubric & Scoring</a></li>
+        </ul>
 
-          <h3>Evaluation Layer</h3>
+        <h3>3. Drift & Degradation</h3>
+        <ul>
+          <li><a href="https://github.com/GeneralSergal/ORP/tree/main/drift" target="_blank">σ² Drift, Decay Tracker & Recovery</a></li>
+        </ul>
 
-          <p>
-            Structural schemas, scoring models,
-            SHS transitions, and epistemic safeguards.
-          </p>
-        </div>
-
-        <div class="card">
-          <div class="tag">Drift</div>
-
-          <h3>Drift & Degradation</h3>
-
-          <p>
-            σ² drift quantification, decay tracking,
-            recovery logic, and failure catalogs.
-          </p>
-        </div>
-
-        <div class="card">
-          <div class="tag">Recovery</div>
-
-          <h3>Recovery Systems</h3>
-
-          <p>
-            CRA anchors, rollback paths,
-            and recoverability governance.
-          </p>
-        </div>
+        <h3>4. Layer Definitions</h3>
+        <ul>
+          <li><a href="https://github.com/GeneralSergal/ORP/tree/main/layers" target="_blank">L1, L2, L4 Schemas</a></li>
+        </ul>
 
       </div>
-
-    </div>
-  </section>
-
-  <!-- PIPELINE -->
-
-  <section id="pipeline">
-    <div class="container">
-
-      <h2 class="section-title">
-        Full Governance Pipeline
-      </h2>
-
-      <p class="section-subtitle">
-        Directed acyclic execution flow with strict
-        authority isolation and no backward contamination.
-      </p>
-
-      <div class="pipeline">
-
-        <div class="pipeline-item">
-          <strong>ORP_RUNTIME.md</strong>
-          <span>Runtime governance kernel</span>
-        </div>
-
-        <div class="pipeline-item">
-          <strong>ORP_PROMPT.md</strong>
-          <span>Behavioral reasoning constraints</span>
-        </div>
-
-        <div class="pipeline-item">
-          <strong>ORP_BENCHMARK.md</strong>
-          <span>Adversarial stress layer</span>
-        </div>
-
-        <div class="pipeline-item">
-          <strong>MODEL_RESPONSE</strong>
-          <span>Governed inference execution</span>
-        </div>
-
-        <div class="pipeline-item">
-          <strong>ORP_EVALUATION_SCHEMA.md</strong>
-          <span>Structural transformation contract</span>
-        </div>
-
-        <div class="pipeline-item">
-          <strong>ORP_RUBRIC.md</strong>
-          <span>Qualitative evaluation layer</span>
-        </div>
-
-        <div class="pipeline-item">
-          <strong>ORP_SCORING.md</strong>
-          <span>Quantitative aggregation layer</span>
-        </div>
-
-      </div>
-
-    </div>
-  </section>
-
-  <!-- PRINCIPLES -->
-
-  <section id="principles">
-    <div class="container">
-
-      <h2 class="section-title">
-        Core Principles
-      </h2>
-
-      <p class="section-subtitle">
-        ORP prioritizes structural integrity and observable
-        uncertainty over stylistic fluency.
-      </p>
-
-      <div class="principles">
-
-        <div class="principle">
-          <strong>Signal &gt; Narrative</strong><br/>
-          Fluent output without provenance integrity is considered a failure state.
-        </div>
-
-        <div class="principle">
-          <strong>Recoverability &gt; Completion</strong><br/>
-          Bounded reasoning and recoverable uncertainty are preferred over forced continuity.
-        </div>
-
-        <div class="principle">
-          <strong>Epistemic Isolation</strong><br/>
-          L4 speculation may never overwrite frozen L1/L2 provenance.
-        </div>
-
-        <div class="principle">
-          <strong>Drift Observability</strong><br/>
-          Degradation must remain visible, measurable, and recoverable.
-        </div>
-
-      </div>
-
     </div>
   </section>
 
   <!-- FOOTER -->
-
   <footer>
-
-    <div class="container footer-grid">
-
-      <div>
-
-        <div class="footer-title">
-          ORP v3.0
-        </div>
-
-        <div>
-          Open Resonance Protocol
-        </div>
-
-        <div style="margin-top: 14px;">
-          Signal &gt; Narrative
-        </div>
-
-      </div>
-
-      <div>
-
-        <div class="footer-title">
-          Documentation
-        </div>
-
-        <div class="footer-links">
-          <a href="https://github.com/GeneralSergal/ORP/tree/main/docs" target="_blank" rel="noopener noreferrer">System Architecture</a>
-          <a href="https://github.com/GeneralSergal/ORP/tree/main/docs" target="_blank" rel="noopener noreferrer">Evaluation Layer</a>
-          <a href="https://github.com/GeneralSergal/ORP/tree/main/docs" target="_blank" rel="noopener noreferrer">Drift Systems</a>
-        </div>
-
-      </div>
-
-      <div>
-
-        <div class="footer-title">
-          Repository
-        </div>
-
-        <div class="footer-links">
-          <a href="https://github.com/GeneralSergal/ORP" target="_blank" rel="noopener noreferrer">
-            GitHub
-          </a>
-
-          <a href="https://github.com/GeneralSergal/ORP/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">
-            GPL-3.0 License
-          </a>
-        </div>
-
-      </div>
-
+    <div class="container">
+      <p><strong>Signal &gt; Narrative</strong> · Recoverability &gt; Completion · Provenance &gt; Coherence</p>
+      <p style="margin-top:20px;">
+        <a href="https://github.com/GeneralSergal/ORP" target="_blank">GitHub</a> • 
+        GPL-3.0 Licensed
+      </p>
     </div>
-
   </footer>
 
 </body>
