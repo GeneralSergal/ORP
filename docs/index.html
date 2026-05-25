@@ -1,37 +1,343 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>ORP Documentation</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="ORP - Structured epistemic evaluation framework for reasoning systems." />
+    <meta name="keywords" content="ORP, reasoning systems, evaluation, epistemic, framework" />
+    <meta name="author" content="GeneralSergal" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#90caf9" />
+    <meta property="og:title" content="ORP Documentation" />
+    <meta property="og:description" content="Structured epistemic evaluation framework for reasoning systems." />
+    <meta property="og:type" content="website" />
+    
+    <title>ORP Documentation - Epistemic Evaluation Framework</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='75' fill='%2390caf9'>◆</text></svg>">
 
     <!-- Docsify Core -->
     <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
 
     <!-- Dark Material Theme -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
+    
+    <!-- Syntax Highlighting -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1/themes/prism-tomorrow.css" />
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-core.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-javascript.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-json.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
 
     <!-- Custom ORP Styling -->
     <style>
-      :root {
-        --theme-color: #90caf9;        /* Material Light Blue 200 */
-        --base-background-color: #121212;
-        --sidebar-background: #1e1e1e;
-        --sidebar-border-color: #2a2a2a;
-        --sidebar-nav-link-color: #e0e0e0;
-        --sidebar-nav-link-hover-color: #90caf9;
-        --sidebar-nav-link-active-color: #90caf9;
-        --heading-color: #ffffff;
-        --text-color: #d0d0d0;
-        --link-color: #90caf9;
-        --code-background: #1a1a1a;
-        --code-color: #e0e0e0;
+      * {
+        box-sizing: border-box;
       }
 
-      /* ORP Header Accent */
+      :root {
+        /* Primary Colors */
+        --theme-color: #90caf9;
+        --primary-color: #64b5f6;
+        --secondary-color: #42a5f5;
+        
+        /* Background Colors */
+        --base-background-color: #0d1117;
+        --sidebar-background: #161b22;
+        --sidebar-border-color: #30363d;
+        --content-background: #0d1117;
+        
+        /* Text Colors */
+        --heading-color: #f0f6fc;
+        --text-color: #c9d1d9;
+        --secondary-text: #8b949e;
+        --sidebar-nav-link-color: #d0d0d0;
+        --sidebar-nav-link-hover-color: #90caf9;
+        --sidebar-nav-link-active-color: #64b5f6;
+        
+        /* Code Colors */
+        --code-background: #161b22;
+        --code-color: #e6edf3;
+        --code-border: #30363d;
+        
+        /* UI Elements */
+        --link-color: #90caf9;
+        --link-hover-color: #64b5f6;
+        --border-color: #30363d;
+        --shadow-color: rgba(0, 0, 0, 0.3);
+      }
+
+      html, body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      body {
+        background-color: var(--base-background-color);
+        color: var(--text-color);
+      }
+
+      /* App Header */
       .app-name {
-        font-weight: 600;
+        font-weight: 700;
         letter-spacing: 0.5px;
+        color: var(--heading-color);
+        font-size: 1.2rem;
+      }
+
+      .app-name:hover {
+        color: var(--theme-color);
+        transition: color 0.3s ease;
+      }
+
+      /* Sidebar Styling */
+      .sidebar {
+        background-color: var(--sidebar-background);
+        border-right: 1px solid var(--sidebar-border-color);
+      }
+
+      .sidebar nav a {
+        color: var(--sidebar-nav-link-color);
+        transition: color 0.2s ease;
+      }
+
+      .sidebar nav a:hover {
+        color: var(--sidebar-nav-link-hover-color);
+      }
+
+      .sidebar nav li.active > a {
+        color: var(--sidebar-nav-link-active-color);
+        font-weight: 600;
+        border-right: 3px solid var(--primary-color);
+      }
+
+      /* Main Content */
+      .content {
+        background-color: var(--content-background);
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        color: var(--heading-color);
+        font-weight: 600;
+        letter-spacing: -0.5px;
+      }
+
+      h1 {
+        border-bottom: 2px solid var(--theme-color);
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      h2 {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 0.5rem;
+      }
+
+      /* Links */
+      a {
+        color: var(--link-color);
+        text-decoration: none;
+        transition: color 0.2s ease;
+      }
+
+      a:hover {
+        color: var(--link-hover-color);
+        text-decoration: underline;
+      }
+
+      /* Code Blocks */
+      code, pre {
+        background-color: var(--code-background);
+        color: var(--code-color);
+        border: 1px solid var(--code-border);
+        border-radius: 4px;
+      }
+
+      code {
+        padding: 0.2rem 0.4rem;
+        margin: 0 0.25rem;
+        font-size: 0.9em;
+      }
+
+      pre {
+        padding: 1rem;
+        overflow-x: auto;
+        margin: 1rem 0;
+      }
+
+      pre code {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      /* Blockquotes */
+      blockquote {
+        border-left: 4px solid var(--theme-color);
+        background-color: rgba(144, 202, 249, 0.1);
+        padding: 0.5rem 1rem;
+        margin: 1rem 0;
+        border-radius: 0 4px 4px 0;
+      }
+
+      blockquote p {
+        margin: 0.5rem 0;
+        color: var(--text-color);
+      }
+
+      /* Tables */
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        margin: 1rem 0;
+      }
+
+      table th {
+        background-color: var(--code-background);
+        color: var(--heading-color);
+        font-weight: 600;
+        padding: 0.75rem;
+        text-align: left;
+        border: 1px solid var(--border-color);
+      }
+
+      table td {
+        padding: 0.75rem;
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
+      }
+
+      table tr:nth-child(even) {
+        background-color: rgba(144, 202, 249, 0.05);
+      }
+
+      /* Search */
+      .search {
+        margin: 1rem;
+      }
+
+      .search input {
+        background-color: var(--code-background);
+        border: 1px solid var(--border-color);
+        color: var(--text-color);
+        border-radius: 4px;
+        padding: 0.5rem 0.75rem;
+      }
+
+      .search input::placeholder {
+        color: var(--secondary-text);
+      }
+
+      .search input:focus {
+        outline: none;
+        border-color: var(--theme-color);
+        box-shadow: 0 0 0 3px rgba(144, 202, 249, 0.1);
+      }
+
+      /* Search Results */
+      .search .results-panel {
+        background-color: var(--sidebar-background);
+        border: 1px solid var(--border-color);
+        border-radius: 4px;
+      }
+
+      .search .results-panel .result-item {
+        border-bottom: 1px solid var(--border-color);
+        padding: 0.5rem;
+      }
+
+      .search .results-panel .result-item:last-child {
+        border-bottom: none;
+      }
+
+      /* Buttons and Interactive Elements */
+      button, .btn {
+        background-color: var(--primary-color);
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        font-weight: 500;
+      }
+
+      button:hover, .btn:hover {
+        background-color: var(--secondary-color);
+      }
+
+      /* Inline Lists */
+      ul, ol {
+        color: var(--text-color);
+        line-height: 1.6;
+      }
+
+      li {
+        margin: 0.5rem 0;
+      }
+
+      /* Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--sidebar-background);
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: var(--primary-color);
+        border-radius: 4px;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--theme-color);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .sidebar {
+          width: 100% !important;
+          position: relative;
+        }
+
+        .sidebar-toggle {
+          background-color: var(--primary-color);
+        }
+
+        .content {
+          padding: 1rem;
+        }
+
+        h1 {
+          font-size: 1.5rem;
+        }
+
+        h2 {
+          font-size: 1.25rem;
+        }
+      }
+
+      /* Accessibility */
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+
+      /* Dark mode indicator */
+      @media (prefers-color-scheme: dark) {
+        body {
+          color-scheme: dark;
+        }
       }
     </style>
   </head>
@@ -41,24 +347,75 @@
 
     <script>
       window.$docsify = {
+        // Basic Configuration
         name: "ORP Documentation",
-        repo: "GeneralSergal/ORP",
+        repo: "https://github.com/GeneralSergal/ORP",
+        homepage: "README.md",
+        
+        // Navigation
         loadSidebar: true,
+        loadNavbar: false,
         subMaxLevel: 3,
         auto2top: true,
+        coverpage: false,
+        
+        // Theme
         themeColor: "#90caf9",
+        
+        // Search Configuration
         search: {
           maxAge: 86400000,
           paths: "auto",
-          placeholder: "Search ORP...",
-          noData: "No results"
-        }
+          placeholder: "🔍 Search ORP documentation...",
+          noData: "❌ No results found",
+          depth: 3,
+          hideOtherSidebarContent: false
+        },
+        
+        // Formatting
+        formatUpdated: "{docsify-updated}",
+        
+        // Plugins Configuration
+        tabs: {
+          persist: true,
+          sync: true,
+          theme: "classic",
+          tabComments: true,
+          tabHeadings: true
+        },
+        
+        // Markdown Configuration
+        markdown: {
+          smartypants: true,
+          breaks: false
+        },
+        
+        // External Links
+        externalLinkTarget: "_blank",
+        
+        // Navigation Bar
+        navAutoLoadSidebar: true
       };
+
+      // Custom plugin for analytics and tracking (optional)
+      if (window.location.hostname !== 'localhost') {
+        // Analytics can be added here
+      }
     </script>
 
-    <!-- Plugins -->
+    <!-- Plugins - Core Features -->
     <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+
+    <!-- Copy Code Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code@2/dist/docsify-copy-code.min.js"></script>
+
+    <!-- Pagination Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/docsify-pagination@2/dist/docsify-pagination.min.js"></script>
+
+    <!-- Last Updated Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/@alertbox/docsify-footer@1/dist/docsify-footer.min.js"></script>
+
   </body>
 </html>
