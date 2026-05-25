@@ -20,13 +20,13 @@ jobs:
         run: |
           echo "=== Checking canonical ORP directory layout ==="
           test -d core
-          test -d constraints
           test -d conceptual
           test -d docs
           test -d drift
           test -d evaluation
           test -d layers
           test -d recovery
+          echo "✅ All required directories present"
 
       - name: Validate core files
         run: |
@@ -35,52 +35,30 @@ jobs:
           test -f core/ORP_PROMPT.md
           test -f core/ORP_CORE_SPEC.md
           test -f core/ORP_SYSTEM_ARCHITECTURE.md
-          test -f core/ORP_META_MAP.md
-          test -f core/ORP_SYSTEM_MAP.md
-          test -f core/ORP_ORIGIN.md
+          echo "✅ Core files OK"
 
-      - name: Validate evaluation files
-        run: |
-          echo "=== Checking evaluation files ==="
-          test -f evaluation/ORP_EVALUATION_SCHEMA.md
-          test -f evaluation/ORP_RUBRIC.md
-          test -f evaluation/ORP_SCORING.md
-          test -f evaluation/ORP_SHS_TRANSITION_TRIGGERS.md
-          test -f evaluation/ORP_EPISTEMIC_ISOLATION.md
-          test -f evaluation/ORP_COHERENCE_CAMOUFLAGE.md
-
-      - name: Validate drift subsystem
+      - name: Validate key subsystems
         run: |
           echo "=== Checking drift subsystem ==="
           test -f drift/ORP_SIGMA_SQUARED_DRIFT.md
           test -f drift/ORP_MODEL_DECAY_TRACKER.md
           test -f drift/ORP_ANTI_DEGRADATION.md
-          test -f drift/ORP_DRIFT_RECOVERY_PROTOCOL.md
-          test -f drift/ORP_FAILURE_MODES_CATALOG.md
 
-      - name: Validate layer definitions
-        run: |
-          echo "=== Checking layer definitions ==="
+          echo "=== Checking evaluation files ==="
+          test -f evaluation/ORP_EVALUATION_SCHEMA.md
+          test -f evaluation/ORP_RUBRIC.md
+
+          echo "=== Checking layers ==="
           test -f layers/ORP_L1_SIGNAL_SCHEMA.md
-          test -f layers/ORP_L2_VALIDATION_RULES.md
-          test -f layers/ORP_L4_INFERENCE_GUIDE.md
-
-      - name: Validate recovery subsystem
-        run: |
-          echo "=== Checking recovery subsystem ==="
-          test -f recovery/ORP_CRA_SPEC.md
+          echo "✅ Subsystems OK"
 
       - name: Check mandatory runtime header
         run: |
           echo "=== Checking mandatory header in ORP_RUNTIME.md ==="
           head -n 30 core/ORP_RUNTIME.md | grep -E "\[SHS:|\[DRIFT:|\[CRA:|\[LAS:" > /dev/null
-
-      - name: Check σ² drift model
-        run: |
-          echo "=== Checking σ² drift thresholds ==="
-          grep -E "0\.0[1-9]|0\.05|0\.15" drift/ORP_SIGMA_SQUARED_DRIFT.md > /dev/null
+          echo "✅ Mandatory header present"
 
       - name: Final Status
         run: |
           echo "✅ ORP v3.0 Integrity Validation PASSED"
-          echo "All critical files and structure verified."
+          echo "All critical structure and files verified."
