@@ -1,263 +1,236 @@
 # ORP — Open Resonance Protocol
+## ORP v3.0 — Type‑Safe Unified Runtime Governance Architecture
 
-## ORP v2.6 — Unified Runtime Governance Architecture
-
-A structured epistemic evaluation, runtime governance, and semantic stabilization framework designed for high-signal reasoning in long-context and constrained inference environments.
-
-> ⚠️ **Important**
-> Review [`!REPO_CHECKLIST.md`](!REPO_CHECKLIST.md) before use or contribution.
+A deterministic governance and stabilization framework for high‑integrity reasoning, long‑context execution, and drift‑resistant inference.  
+This document defines the public overview of the ORP v3.0 system.
 
 ---
 
-## Core Principle
+## Core Directive
 
-```text
-Signal > Narrative
-Recoverability > Completion
-Optimization > Waste
-```
+Signal > Narrative  
+Recoverability > Completion  
+Provenance Preservation > Coherent Storytelling  
 
-A fluent response with corrupted provenance is considered a critical failure.
+A coherent output with corrupted provenance constitutes a critical failure.
 
 ---
 
-## System Purpose
+## Mandatory Runtime Header (v3.0)
 
-ORP is not:
+All ORP‑compliant outputs must begin with:
 
-* a chatbot framework
-* an autonomous agent
-* a roleplay system
-* a general prompting toolkit
+[SHS: GREEN | YELLOW | ORANGE | RED | BLACK]  
+[DRIFT: NONE | LOW | MODERATE | HIGH]  
+[CRA: VALID | DEGRADED | UNKNOWN]  
+[LAS: L1 | L2 | L3 | L4]
 
-It is a governance-first infrastructure that:
-
-* Enforces atomic claim separation
-* Preserves provenance under degradation
-* Detects and mitigates semantic drift
-* Resists hallucination and assumption laundering
-* Stabilizes long-context reasoning
-* Maintains recoverable inference paths
-* Constrains recursive abstraction
-* Reduces inference waste
-
-ORP makes degradation:
-
-```text
-Visible
-Measurable
-Recoverable
-```
+No preamble may precede the header.
 
 ---
 
-## Runtime Authority
+## System Architecture (v3.0)
 
-All operational decisions originate from:
+L1 → L2 → L3 → SYSTEM OUTPUT  
+              ↓  
+              L4 (Internal Inference Subsystem)
 
-1. Explicit user review
-2. Validated runtime logic
+### Layer Definitions
 
-Symbolic, visual, or emergent interpretations have zero runtime authority.
+**L1 — Observed Data Layer**  
+Typed telemetry only. No strings. No narrative. Immutable time‑indexed vectors.
 
----
+**L2 — Verified Interpretation Layer**  
+Deterministic validation of L1. Schema enforcement, anomaly tagging, consistency checks.
 
-## System Architecture
+**L3 — Governance Layer (Authority Core)**  
+Sole authority for state transitions. Enforces invariants. Resolves conflicts.  
+L4 cannot influence L3.
 
-```mermaid
-flowchart TD
-    A[INPUT]
-        --> B[ORP_RUNTIME.md<br/>Runtime Governance]
-        --> C[PROMPT.md<br/>Execution Constraints]
-        --> D[BENCHMARK.md<br/>Adversarial Stress]
-        --> E[MODEL RESPONSE]
-        --> F[EVALUATION_SCHEMA.md<br/>Structural Contract]
-        --> G[RUBRIC.md<br/>Qualitative Evaluation]
-        --> H[SCORING.md<br/>Quantitative Scoring]
-
-    B --> I[L4 Dashboard v2.6<br/>Topology & Stabilization Layer]
-    I --> J[Validator Layer]
-
-    classDef note fill:#111,stroke:#666,color:#ddd,stroke-dasharray: 3 3;
-```
+**L4 — Internal Inference Subsystem**  
+Probabilistic interpretation only. No truth authority. No promotion into L1/L2.  
+Cannot modify L3. Cannot access raw L1.
 
 ---
 
-## Key Components (v2.6)
+## Invariants
 
-| File                   | Role                                       |
-| ---------------------- | ------------------------------------------ |
-| `ORP_RUNTIME.md`       | Core governance (SHS, LAS, drift handling) |
-| `PROMPT.md`            | Deterministic execution constraints        |
-| `BENCHMARK.md`         | Adversarial stress testing                 |
-| `EVALUATION_SCHEMA.md` | Structural transformation contract         |
-| `RUBRIC.md`            | Qualitative epistemic evaluation           |
-| `SCORING.md`           | Quantitative integrity scoring             |
-| `L4_DASHBOARD.md`      | Operational topology + stabilization map   |
-| `!REPO_CHECKLIST.md`   | Repository safety & recovery guidelines    |
-
----
-
-## L4 Dashboard Integration (v2.6)
-
-The `L4_Dashboard_v2.6.png` artifact and `L4_DASHBOARD.md` serve as:
-
-* Operational topology map
-* Multimodal grounding layer
-* Compression-resilient reference
-* Recovery visualization tool
-
-Important:
-
-> The dashboard is descriptive only.
-> Authoritative logic remains within the Markdown documents and runtime governance layers.
+- L1 accepts only typed signals: Float ∈ [0.0,1.0], bounded Integer, Boolean  
+- L1 states are immutable once committed  
+- L2 operates exclusively on validated L1 data  
+- L3 is the sole authority layer  
+- L4 cannot promote inference into factual form  
+- Provenance must be preserved across L1→L2 transitions  
+- Drift must be computed numerically and deterministically  
+- Dashboard is heuristic‑only and non‑authoritative  
+- No external dependencies permitted in runtime governance  
 
 ---
 
-## Core Inference Pattern
+## Drift Model (Numeric Core)
 
-```text
-Inference Node → Interface Layer → Validator
-```
-
-The Validator accepts only stable, recoverable structures.
-
----
-
-## Runtime Stabilization
-
-### Session Health State (SHS)
-
-| State  | Meaning                  |
-| ------ | ------------------------ |
-| GREEN  | Stable                   |
-| YELLOW | Recoverable degradation  |
-| ORANGE | Elevated drift           |
-| RED    | Critical instability     |
-| BLACK  | Halt & recovery required |
-
----
+σ² = variance(L1_signal_vector over time)
 
 ### Drift Levels
 
-| Level    | Status          |
-| -------- | --------------- |
-| NONE     | Stable          |
-| LOW      | Acceptable      |
-| MODERATE | Monitor         |
-| HIGH     | Recovery needed |
+NONE: σ² < 0.01  
+LOW: 0.01 ≤ σ² < 0.05  
+MODERATE: 0.05 ≤ σ² < 0.15  
+HIGH: σ² ≥ 0.15  
+
+Supporting signals:  
+- hash(L1→L2 transition delta)  
+- temporal stability gradient  
 
 ---
 
-## Layered Authority Stack (LAS)
+## Execution Pipeline
 
-Strict hierarchy:
+1. L1 — Typed signal ingestion  
+2. L2 — Verification and validation  
+3. L3 — Governance enforcement  
+4. L4 — Internal inference (non‑authoritative)  
+5. System output assembly  
 
-| Layer | Role               |
-| ----- | ------------------ |
-| L0    | Physical Anchor    |
-| L1    | Evidence           |
-| L2    | Provenance         |
-| L3    | Interpretation     |
-| L4    | Protocol Logic     |
-| L5    | Abstract Inference |
+---
 
-Lower layers cannot be overwritten by higher-layer speculation.
+## Failure Conditions
+
+- L4 influencing L3  
+- Untyped L1 data  
+- Silent schema mutation  
+- Invalid state promotion  
+- Drift concealment via narrative smoothing  
+
+---
+
+## Failure Response Protocol
+
+1. Downgrade SHS  
+2. Freeze L1 stream  
+3. Recompute L2 snapshot  
+4. Halt L4 inference  
+5. Restore last valid L3 state  
+
+---
+
+## Dashboard (Heuristic Only)
+
+Non‑authoritative indicators:
+
+Hydration: 85–100%  
+Chaos: 0–5%  
+Vibe (Coherence): 85–95%  
+
+These metrics cannot influence L3 decisions or drift computation.
 
 ---
 
 ## Controlled Expansion
 
-Expansion is cyclical, never exponential.
+Expansion is cyclical.  
+Requirements:
 
-New cycles require:
-
-* Drift = NONE
-* All metrics green
-* Prior cycle validated
-* Stable recovery path available
+- Drift = NONE  
+- L3 validation success  
+- Provenance intact  
+- Stable recovery path  
 
 ---
 
-## Lockdown Protocol
+## Repository Structure (Recommended)
 
-```text
-KILL_SWITCH: LOCKDOWN
-Alias: NO_SLOP_ZONE
+```
+/README.md
+/ORP_VERSION
+/LICENSE
+
+/core/
+    ORP_RUNTIME.md
+    ORP_CORE_SPEC.md
+    ORP_SYSTEM_ARCHITECTURE.md
+    ORP_SYSTEM_MAP.md
+    ORP_ORIGIN.md
+
+/constraints/
+    ORP_PROMPT.md
+    ORP_ANTI_DEGRADATION.md
+    ORP_MODEL_DECAY_TRACKER.md
+
+/observability/
+    ORP_SIGMA_SQUARED_DRIFT.md
+    L4_DASHBOARD.md
+
+/evaluation/
+    ORP_BENCHMARK.md
+    ORP_EVALUATION_SCHEMA.md
+    ORP_RUBRIC.md
+    ORP_SCORING.md
+
+/src/orp_runtime/
+    __init__.py
+    l1.py
+    l2.py
+    l3.py
+    l4.py
+    drift.py
+    governance.py
+
+/tests/
+    test_l1_typing.py
+    test_l2_validation.py
+    test_l3_authority.py
+    test_l4_isolation.py
+    test_drift_model.py
+    test_header_rules.py
+
+/docs/
+    CHANGELOG.md
+    MIGRATION_v2.6_to_v3.0.md
+    CONTRIBUTING.md
+    !REPO_CHECKLIST.md
 ```
 
-### Immediate Stop Conditions
+---
 
-* Chaos > 10%
-* Signal coherence instability
-* Recursive semantic flooding
-* Provenance corruption
-* Anchor loss
-* Unrecoverable abstraction loops
-* Malformed inference loops
+## Compliance Requirements
+
+A runtime is ORP v3.0‑compliant only if:
+
+- L1 enforces strict typing  
+- L2 performs deterministic validation  
+- L3 is isolated from L4  
+- L4 cannot promote inference  
+- Drift is computed numerically  
+- Mandatory header is emitted first  
+- Provenance is preserved end‑to‑end  
 
 ---
 
-## Operational Axiom
+## Operational Philosophy
 
-> Optimization is the highest form of respect for the hardware.
-
----
-
-## Hardware Profile
-
-| Component       | Role                             |
-| --------------- | -------------------------------- |
-| RTX 3090 (24GB) | Primary inference device         |
-| Local runtime   | Controlled execution environment |
-| ORP v2.6        | Governance + stabilization layer |
-
----
-
-## Model Role Classification
-
-| Model Class  | Role                      | Characteristics                                          |
-| ------------ | ------------------------- | -------------------------------------------------------- |
-| 7B–9B        | Logic Tester / Probe Node | Fast throughput, higher instability under abstraction    |
-| 18B–30B      | Primary Executor          | Better semantic compression and lower inference friction |
-| Vision Layer | Topology Anchor           | Visual grounding and state validation                    |
-
----
-
-## Non-Goals
-
-ORP does not:
-
-* imply sentience
-* imply autonomous authority
-* replace runtime validation
-* override explicit user intent
-* function as an autonomous agent
-* replace engineering judgment
-* provide security guarantees
+Typed signals over narrative  
+Drift visibility over coherence  
+Governance correctness over fluency  
+Recoverability over completion  
 
 ---
 
 ## Current System State
 
-```text
-STATUS:              VALIDATED
-SCHEMA_STATE:        FROZEN
-DRIFT:               NONE
-OBSERVATION_WINDOW:  ACTIVE
-CHANGE_POLICY:       LOG_ONLY
-PROTOCOL:            0.51_STRICT
-VERSION:             v2.6
-```
+ORP_VERSION: 3.0 (FROZEN)  
+L1: STRICT_TYPED_TIME_SERIES  
+L2: VALIDATION_LAYER  
+L3: AUTHORITY_LAYER  
+L4: INTERNAL_INFERENCE_ONLY + HEURISTIC_OVERLAY  
+DRIFT_MODEL: NUMERIC  
+DASHBOARD: EMBEDDED  
+CHANGE_POLICY: LOG_ONLY  
+STATUS: FROZEN  
 
 ---
 
 ## License
 
-GNU General Public License v3.0 (GPL-3.0)
-
-This project is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
-
-This project is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the [GNU General Public License](LICENSE) for more details.
-
-Attribution for the ORP architecture and governance documents is requested when redistributing modified derivatives.
+GNU General Public License v3.0 (GPL‑3.0).  
+No warranty. Attribution requested for derivative governance documents.
