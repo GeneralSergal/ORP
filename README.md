@@ -129,11 +129,9 @@ Probabilistic reasoning only. Non-authoritative. Cannot access raw L1 or overrid
 flowchart TD
     A[INPUT] --> B[L1 Typed Signals]
     B --> C[L2 Validation]
-    C --> D[L3 Governance Core]
-
+    C --> D[L3 Governance]
     D --> E[OUTPUT]
     D --> F[L4 Inference]
-
     F --> E
 ```
 
