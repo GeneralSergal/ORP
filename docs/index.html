@@ -279,8 +279,9 @@
     .footer-note { margin-top: 54px; padding-top: 28px; border-top: 1px solid rgba(221,17,17,0.1); color: var(--muted); text-align: center; font-size: 0.95rem; letter-spacing: 0.04em; }
     
     .author-section { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 40px; padding-top: 40px; border-top: 1px solid rgba(221,17,17,0.1); }
-    .author-avatar { width: 48px; height: 48px; border-radius: 50%; border: 2px solid rgba(221,17,17,0.3); background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.15), rgba(221,17,17,0.2)); box-shadow: 0 0 20px rgba(255,102,0,0.25), inset 0 0 15px rgba(221,17,17,0.2); flex-shrink: 0; transition: transform var(--transition), box-shadow var(--transition); }
-    .author-avatar:hover { transform: scale(1.08); box-shadow: 0 0 30px rgba(255,102,0,0.4), inset 0 0 20px rgba(221,17,17,0.3); }
+    .author-avatar { width: 56px; height: 56px; border-radius: 50%; border: 2px solid rgba(221,17,17,0.4); overflow: hidden; flex-shrink: 0; transition: transform var(--transition), box-shadow var(--transition); box-shadow: 0 0 24px rgba(255,102,0,0.3), inset 0 0 16px rgba(221,17,17,0.2); background-size: cover; background-position: center; }
+    .author-avatar:hover { transform: scale(1.08); box-shadow: 0 0 36px rgba(255,102,0,0.45), inset 0 0 20px rgba(221,17,17,0.3); }
+    .author-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .author-info { display: flex; flex-direction: column; align-items: center; gap: 4px; }
     .author-name { color: var(--heading); font-weight: 700; font-family: Oxanium, sans-serif; letter-spacing: 0.04em; }
     .author-title { color: var(--accent-orange); font-size: 0.9rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
@@ -337,7 +338,7 @@
       .section-title { font-size: clamp(1.8rem, 4vw, 2.6rem); }
       section { padding: 70px 0; }
       .section-divider { margin-top: 60px; }
-      .author-avatar { width: 40px; height: 40px; }
+      .author-avatar { width: 44px; height: 44px; }
       .author-info { font-size: 0.9rem; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -607,14 +608,16 @@
       <div class="footer-note">Signal &gt; Narrative · Recoverability &gt; Completion · Provenance &gt; Coherence</div>
       
       <div class="author-section">
-        <div class="author-avatar"></div>
+        <div class="author-avatar">
+          <img src="avatar.jpg" alt="Laurentius Maximus" />
+        </div>
         <div class="author-info">
           <div class="author-name">Laurentius Maximus</div>
-          <div class="author-title">The ENTROPIA</div>
+          <div class="author-title">The ENTROPTIA</div>
         </div>
       </div>
       
-      <div class="copyright">© 2026 Laurentius Maximus • The ENTROPIA</div>
+      <div class="copyright">© 2025 Laurentius Maximus • The ENTROPTIA</div>
     </div>
   </footer>
 
