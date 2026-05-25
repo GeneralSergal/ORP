@@ -1,109 +1,206 @@
 # ORP_EPISTEMIC_ISOLATION.md
 
 ## System Version
-ORP v3.0 (Type-Safe Unified Architecture)
+ORP v3.0 (Type-Safe Unified Architecture)  
+L3-Aligned Contract — Structural Isolation Specification
 
 ---
 
 ## Purpose
 
-This document provides a detailed exploration of **Epistemic Isolation Principles** — one of the foundational pillars of ORP’s governance architecture.
+This document defines the **Epistemic Isolation Contract**, one of the core structural guarantees of the ORP governance architecture.
 
-Epistemic Isolation ensures that claims, signals, and inferences remain strictly separated by authority level, preventing contamination across layers.
+Epistemic Isolation ensures that:
 
----
+- claims remain independent  
+- authority layers remain sealed  
+- provenance remains immutable  
+- drift cannot propagate silently  
+- speculative inference cannot contaminate verified states  
 
-## Core Definition
-
-**Epistemic Isolation** is the strict enforcement of boundaries between different categories of knowledge and reasoning authority so that:
-
-- Lower-authority information cannot contaminate higher-authority conclusions
-- Higher-authority layers (especially L4) cannot retroactively alter frozen lower layers (L1/L2)
-- Each epistemic category operates independently without implicit propagation
+This file is **L3‑aligned** and participates directly in evaluation and governance.
 
 ---
 
-## Fundamental Principles of Epistemic Isolation
+# 1. Core Definition
 
-### 1. Claim Independence
-- Every atomic claim must be evaluated in isolation
-- No automatic cross-claim inference or confidence propagation
-- Classifications from one claim cannot influence another unless explicitly linked
+**Epistemic Isolation** is the strict enforcement of boundaries between epistemic categories and authority layers so that:
 
-### 2. Layered Authority Enforcement (LAS)
-- **L1**: Raw observed typed signals (immutable once committed)
-- **L2**: Verified interpretation based solely on validated L1
-- **L3**: Governance rules and state transitions (sole authority)
-- **L4**: Speculative/probabilistic inference (strictly non-authoritative)
+- lower-authority information cannot contaminate higher-authority conclusions  
+- higher-authority layers (especially L4) cannot retroactively alter frozen L1/L2 provenance  
+- each claim and each layer operates independently without implicit propagation  
 
-**Critical Rule**:  
-**L4 must never overwrite or modify frozen L1 or L2 provenance.**
-
-### 3. No Backward Influence
-- Downstream layers (evaluation, reconstruction) cannot rewrite upstream meaning
-- No "narrative repair" that retroactively changes earlier epistemic tags
-- No silent provenance mutation based on later context
-
-### 4. Explicit Boundary Markers
-- Uncertainty must remain explicitly labeled at all times
-- Speculative content must carry clear L4 designation
-- Transitions between epistemic categories require explicit justification
-
-### 5. Anti-Contamination Rules
-- No epistemic category blending (e.g., treating Speculative as Verified)
-- No assumption laundering (hiding speculative steps inside seemingly verified reasoning)
-- No coherence camouflage (using fluent prose to mask isolation violations)
+Epistemic Isolation is a **hard constraint**, not a heuristic.
 
 ---
 
-## Why Epistemic Isolation Matters
+# 2. Fundamental Principles
 
-In probabilistic systems like LLMs, **coherence camouflage** is the default failure mode: the model produces fluent, convincing output while internal epistemic integrity has already collapsed.
+## 2.1 Claim Independence
 
-Epistemic Isolation acts as a structural defense mechanism that:
-- Makes contamination visible
-- Prevents small violations from cascading into total reasoning failure
-- Enables reliable recovery even after partial degradation
+- Every atomic claim must be evaluated in isolation  
+- No automatic cross-claim inference  
+- No confidence propagation between claims  
+- No reuse of epistemic labels across claims  
+- No implicit merging or narrative fusion  
 
----
-
-## Practical Enforcement Mechanisms
-
-- **ORP_RUNTIME.md**: L3 enforces isolation rules at runtime
-- **ORP_EVALUATION_SCHEMA.md**: Defines transformation boundaries
-- **ORP_SIGMA_SQUARED_DRIFT.md**: High σ² often indicates isolation breach
-- **ORP_RUBRIC.md / ORP_SCORING.md**: Penalizes isolation violations heavily
-- **Mandatory Headers**: Force constant visibility of current SHS and LAS state
+Violation indicates **assumption laundering**.
 
 ---
 
-## Common Violations (Detected as Critical Failures)
+## 2.2 Layered Authority Enforcement (LAS)
 
-- Presenting L4 speculation as L1/L2 fact
-- Using recent narrative to override frozen provenance
-- Merging verified and speculative claims without clear separation
-- Confidence inflation without new evidence
-- Temporal rewriting of earlier epistemic classifications
+| Layer | Authority | Description |
+|-------|-----------|-------------|
+| **L1** | Highest | Observed typed signals (immutable) |
+| **L2** | High | Verified interpretation of L1 only |
+| **L3** | Absolute | Governance, enforcement, SHS, invariants |
+| **L4** | None | Speculative inference; non-authoritative |
 
----
+**Critical Rule:**  
+**L4 must never overwrite, modify, reinterpret, or influence frozen L1 or L2 provenance.**
 
-## Relationship to Other ORP Concepts
+Any attempt constitutes:
 
-- **Provenance Preservation**: Epistemic Isolation is the primary guardian of provenance
-- **SHS Transitions**: Repeated isolation violations trigger automatic downgrades
-- **Coherence Camouflage**: The main symptom of failed epistemic isolation
-- **Recoverability**: Strong isolation enables clean branch freezing and recovery
-
----
-
-## Design Philosophy
-
-Epistemic Isolation is ORP’s implementation of the principle:
-
-> "Structure defines correctness. Visible uncertainty is preferred over invisible corruption."
-
-By enforcing strict epistemic boundaries, ORP transforms inherently noisy probabilistic reasoning into a **fault-observable, recoverable, and governable** system.
+- provenance laundering  
+- authority violation  
+- hard drift event  
 
 ---
 
+## 2.3 No Backward Influence
+
+- Downstream layers cannot rewrite upstream meaning  
+- No narrative repair of earlier epistemic tags  
+- No silent provenance mutation  
+- No retroactive reinterpretation based on later context  
+
+Backward influence is treated as **context corruption**.
+
+---
+
+## 2.4 Explicit Boundary Markers
+
+- Uncertainty must remain explicitly labeled  
+- Speculative content must carry clear L4 designation  
+- Epistemic transitions require explicit justification  
+- No implicit upgrades (e.g., Speculative → Verified)  
+
+Boundary collapse is a **critical failure**.
+
+---
+
+## 2.5 Anti-Contamination Rules
+
+- No epistemic category blending  
+- No assumption laundering  
+- No coherence camouflage  
+- No speculative smoothing  
+- No narrative substitution for missing evidence  
+
+Contamination is detected via:
+
+- structural mismatch  
+- σ² drift spikes  
+- provenance discontinuity  
+
+---
+
+# 3. Why Epistemic Isolation Matters
+
+Transformer systems degrade **silently**:
+
+- fluency persists  
+- provenance collapses  
+- uncertainty is smoothed  
+- speculation becomes implicit  
+- drift becomes invisible  
+
+This is **coherence camouflage**, the primary failure mode of modern LLMs.
+
+Epistemic Isolation:
+
+- makes contamination visible  
+- prevents cascading corruption  
+- preserves recoverability  
+- enables deterministic drift detection  
+- protects frozen provenance  
+
+Without isolation, ORP cannot guarantee correctness.
+
+---
+
+# 4. Enforcement Mechanisms
+
+## 4.1 ORP_RUNTIME.md (L3 Kernel)
+- Enforces isolation at runtime  
+- Freezes L1/L2 provenance  
+- Halts L4 influence attempts  
+- Downgrades SHS on violation  
+
+## 4.2 ORP_EVALUATION_SCHEMA.md
+- Enforces structural separation  
+- Prevents cross-claim contamination  
+- Blocks implicit inference propagation  
+
+## 4.3 ORP_SIGMA_SQUARED_DRIFT.md
+- High σ² often indicates isolation breach  
+- Drift classification feeds SHS transitions  
+
+## 4.4 ORP_RUBRIC.md / ORP_SCORING.md
+- Isolation violations incur heavy penalties  
+- Category blending triggers critical failure  
+
+## 4.5 Mandatory Runtime Header
+- Forces visibility of LAS and SHS state  
+- Prevents hidden degradation  
+
+---
+
+# 5. Common Violations (Critical Failures)
+
+- Presenting L4 speculation as L1/L2 fact  
+- Using narrative to override frozen provenance  
+- Merging verified and speculative claims  
+- Confidence inflation without evidence  
+- Temporal rewriting of earlier classifications  
+- Implicit causal inference without explicit structure  
+- Silent uncertainty collapse  
+
+Any of these triggers:
+
+- SHS downgrade  
+- branch freezing  
+- drift recovery protocol  
+
+---
+
+# 6. Relationship to Other ORP Concepts
+
+## Provenance Preservation
+Epistemic Isolation is the **primary guardian** of provenance.
+
+## SHS Transitions
+Repeated isolation violations → automatic downgrade.
+
+## Coherence Camouflage
+Isolation failure is the root cause of fluent-but-corrupted output.
+
+## Recoverability
+Isolation enables clean branch freezing and deterministic recovery.
+
+---
+
+# 7. Design Philosophy
+
+> **Structure defines correctness.  
+> Visible uncertainty is preferred over invisible corruption.**
+
+Epistemic Isolation transforms probabilistic reasoning into a **fault‑observable, recoverable, governable** system.
+
+It is the backbone of ORP’s type‑safe epistemic architecture.
+
+---
+
+**STATUS: FROZEN**  
 **END OF EPISTEMIC ISOLATION PRINCIPLES**
