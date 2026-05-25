@@ -1,4 +1,4 @@
-# ORP — Epistemic Reasoning Prompt
+# ORP_PROMPT.md
 
 ## System Version
 
