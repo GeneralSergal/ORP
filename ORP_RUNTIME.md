@@ -48,6 +48,7 @@ L1 → L2 → L3 → SYSTEM OUTPUT
 ## INVARIANTS
 
 - L1 Strict Typing: All inputs must be normalized into typed signals only. No raw strings permitted in L1.
+- L1 Temporal Definition: L1 is a time-indexed vector stream of typed signals. Each state is immutable once committed.
 - L1 Types Allowed: Float ∈ [0.0, 1.0], Integer (bounded), Boolean.
 - L2 must operate only on validated L1 data.
 - L3 is the sole authority layer.
@@ -55,7 +56,7 @@ L1 → L2 → L3 → SYSTEM OUTPUT
 - L4 is internal only and cannot access raw L1 directly.
 - Provenance must be preserved across L1 → L2 transitions.
 - Drift must be computed deterministically from numeric L1 signals.
-- Dashboard: Fully integrated. No external files or dependencies.
+- Dashboard: Fully integrated as heuristic overlay only. No external files or dependencies.
 
 ---
 
@@ -119,6 +120,7 @@ L1 contains only raw typed telemetry signals.
 - Cannot modify L2 or L3  
 - Cannot declare system truth  
 - Cannot override governance decisions  
+- L4 outputs are computational artifacts only. Visualization is optional and external to execution semantics.
 
 **Role:** L4 is an inference system, not an authority system.
 
@@ -146,17 +148,26 @@ L1 contains only raw typed telemetry signals.
 
 ## OPERATIONAL STABILIZATION GUIDELINES (Non-Authoritative)
 
-**Target Metrics (Green Zone):**  
+**Primary Governance Signals (L3):**  
+- Drift (σ²)  
+- L1 signal integrity  
+- L2 validation results  
+
+**Heuristic Monitoring Metrics (L4 Visualization Only):**  
 - **Hydration**: 85–100%  
 - **Chaos**: 0–5%  
 - **Vibe (Coherence)**: 85–95%
 
-**Expansion Policy:** Cyclical only. Gate on Drift=NONE + all metrics green.  
+**Expansion Policy:** Cyclical only. Gate exclusively on Drift=NONE + L3 validation success.  
 **White Hat Gating Protocol (WHGP):** Active fluke/malice/noise filtering.  
-**Kill Switch:** `NO_SLOP_ZONE` / LOCKDOWN on Chaos >10% or anchor loss.
+**Kill Switch:** `NO_SLOP_ZONE` / LOCKDOWN on Chaos >10% or anchor loss (heuristic trigger only).
 
 **Refinement Cycle:**  
 Lock refined truth → Discard flukes → Enhanced signal.
+
+**Note:**  
+Hydration, Chaos, and Vibe are non-authoritative heuristic indicators.  
+They have no direct influence on L3 governance decisions or DRIFT calculation.
 
 ---
 
@@ -201,14 +212,15 @@ Lock refined truth → Discard flukes → Enhanced signal.
 
 ## FINAL SYSTEM STATE
 
-ORP_VERSION: 3.0  
-L1: STRICT_TYPED  
+ORP_VERSION: 3.0 (FROZEN)  
+L1: STRICT_TYPED_TIME_SERIES  
 L2: VALIDATION_LAYER  
 L3: AUTHORITY_LAYER  
-L4: INTERNAL_INFERENCE_ONLY + INTEGRATED_DASHBOARD  
+L4: INTERNAL_INFERENCE_ONLY + INTEGRATED_HEURISTIC_OVERLAY  
 DRIFT_MODEL: NUMERIC  
-DASHBOARD: EMBEDDED (NO EXTERNAL DEPENDENCY)  
-CHANGE_POLICY: LOG_ONLY
+DASHBOARD: EMBEDDED (HEURISTIC OVERLAY ONLY)  
+CHANGE_POLICY: LOG_ONLY  
+STATUS: FROZEN
 
 ---
 
