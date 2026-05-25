@@ -18,7 +18,6 @@
   A governance‑first epistemic integrity framework for transformer systems.<br>
   <strong>Signal &gt; Narrative · Recoverability &gt; Completion · Provenance &gt; Coherence</strong>
 </p>
----
 
 ## Core Directive
 
