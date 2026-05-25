@@ -166,4 +166,3 @@ Operational authority belongs exclusively to:
 ---
 
 **END OF HISTORICAL DOCUMENT**
-```
