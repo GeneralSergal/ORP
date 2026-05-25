@@ -6,6 +6,7 @@
   <img src="https://img.shields.io/badge/SHS-5--State-green" alt="SHS Model">
   <img src="https://img.shields.io/badge/LAS-L1→L4-orange" alt="Layered Authority">
   <img src="https://img.shields.io/badge/Drift-σ²%20Numeric-purple" alt="Drift Model">
+  <img src="https://img.shields.io/github/v/release/GeneralSergal/ORP?display_name=tag" alt="Latest Release">
 </p>
 
 <h1 align="center">ORP — Open Resonance Protocol v3.0</h1>
@@ -15,21 +16,29 @@
   <strong>Signal > Narrative · Recoverability > Completion · Provenance > Coherence</strong>
 </p>
 
-**Live Website**: [https://generalsergal.github.io/ORP/](https://generalsergal.github.io/ORP/)
+<p align="center">
+  <a href="https://generalsergal.github.io/ORP/">🔗 Live Website</a> ·
+  <a href="https://github.com/GeneralSergal/ORP/releases">📦 Releases</a> ·
+  <a href="https://github.com/GeneralSergal/ORP/blob/main/CHANGELOG.md">🧾 Changelog</a>
+</p>
 
 ---
 
-## Core Directive
+# Overview
 
-**Signal > Narrative**  
-**Recoverability > Completion**  
-**Provenance Preservation > Coherent Storytelling**
+ORP v3.0 is a **governance-first epistemic integrity framework** engineered for:
+
+- structural correctness  
+- provenance continuity  
+- numeric drift visibility  
+- recoverable reasoning states  
+- strict L1–L4 authority separation  
 
 A coherent output with corrupted provenance constitutes a **critical failure**.
 
 ---
 
-## Mandatory Runtime Header (v3.0)
+# Mandatory Runtime Header (v3.0)
 
 All ORP-compliant outputs **must** begin with:
 
@@ -44,9 +53,9 @@ No preamble may precede this header.
 
 ---
 
-## System Architecture (v3.0)
+# System Architecture (v3.0)
 
-### Core Authority Chain
+## Core Authority Chain
 
 <details>
 <summary>Core Authority Chain Diagram</summary>
@@ -60,7 +69,7 @@ flowchart TD
 ```
 </details>
 
-### L4 Non-Authoritative Subsystem
+## L4 Non-Authoritative Subsystem
 
 <details>
 <summary>L4 Non-Authoritative Subsystem Diagram</summary>
@@ -75,7 +84,7 @@ flowchart TD
 ```
 </details>
 
-### Governance + Drift Loop
+## Governance + Drift Loop
 
 <details>
 <summary>Governance + Drift Loop Diagram</summary>
@@ -90,7 +99,7 @@ flowchart TD
 ```
 </details>
 
-### Session Health State (SHS)
+## Session Health State (SHS)
 
 <details>
 <summary>Session Health State (SHS) Diagram</summary>
@@ -113,48 +122,47 @@ stateDiagram-v2
 
 ---
 
-## Layer Definitions
+# Layer Definitions
 
-**L1 — Observed Data Layer**  
-Typed signals only. Immutable once committed. No narrative allowed.
+### **L1 — Observed Data Layer**  
+Typed signals only. Immutable once committed.
 
-**L2 — Verified Interpretation Layer**  
+### **L2 — Verified Interpretation Layer**  
 Deterministic validation, schema enforcement, anomaly tagging.
 
-**L3 — Governance Layer (Authority Core)**  
+### **L3 — Governance Layer (Authority Core)**  
 Sole authority for state transitions, invariants, and system integrity.
 
-**L4 — Internal Inference Layer**  
-Probabilistic reasoning only. Non-authoritative. Cannot access raw L1 or override L3.
+### **L4 — Internal Inference Layer**  
+Probabilistic reasoning only. Non-authoritative.
 
 ---
 
-## Invariants
+# Invariants
 
-- L1 accepts only typed signals: `Float ∈ [0.0, 1.0]`, bounded Integer, Boolean
-- L1 states are immutable once committed
-- L2 operates exclusively on validated L1 data
-- L3 is the sole authority layer
-- L4 cannot promote inference into factual form
-- Drift must be computed numerically (`σ²`)
-- Provenance must be preserved end-to-end
+- L1 accepts only typed signals  
+- L1 states are immutable  
+- L2 operates exclusively on validated L1  
+- L3 is the sole authority layer  
+- L4 cannot promote inference into factual form  
+- Drift must be computed numerically (`σ²`)  
+- Provenance must be preserved end-to-end  
 
 ---
 
-## Drift Model (Numeric Core)
+# Drift Model (Numeric Core)
 
 **σ² = variance(L1_signal_vector over time)**
 
 ### Drift Levels
-- **NONE**: σ
-² < 0.01  
+- **NONE**: σ² < 0.01  
 - **LOW**: 0.01 ≤ σ² < 0.05  
 - **MODERATE**: 0.05 ≤ σ² < 0.15  
 - **HIGH**: σ² ≥ 0.15  
 
 ---
 
-## Execution Pipeline
+# Execution Pipeline
 
 <details>
 <summary>Execution Pipeline Diagram</summary>
@@ -172,35 +180,35 @@ flowchart TD
 
 ---
 
-## Failure Conditions
+# Failure Conditions
 
-- L4 influencing L3
-- Untyped L1 data
-- Silent schema mutation
-- Invalid state promotion
-- Drift concealment via narrative smoothing
-- Loss of provenance continuity
-
----
-
-## Failure Response Protocol
-
-1. Downgrade SHS
-2. Freeze L1 stream
-3. Recompute L2 snapshot
-4. Halt L4 inference
-5. Restore last valid L3 state
+- L4 influencing L3  
+- Untyped L1 data  
+- Silent schema mutation  
+- Invalid state promotion  
+- Drift concealment  
+- Loss of provenance continuity  
 
 ---
 
-## Controlled Expansion Policy
+# Failure Response Protocol
+
+1. Downgrade SHS  
+2. Freeze L1 stream  
+3. Recompute L2 snapshot  
+4. Halt L4 inference  
+5. Restore last valid L3 state  
+
+---
+
+# Controlled Expansion Policy
 
 Expansion is **cyclical only**.  
-Requires: Drift = NONE, L3 validation success, intact provenance, stable recovery path.
+Requires: Drift = NONE, L3 validation success, intact provenance.
 
 ---
 
-## Repository Structure
+# Repository Structure
 
 ```text
 /core/           # Runtime & Architecture
@@ -215,42 +223,80 @@ Requires: Drift = NONE, L3 validation success, intact provenance, stable recover
 
 ---
 
-## Compliance Requirements
+# Compliance Requirements
 
 A system is ORP v3.0-compliant only if it enforces:
-- Strict L1 typing
-- Deterministic L2 validation
-- Isolated L3 authority
-- Non-authoritative L4
-- Numeric drift computation
-- Mandatory runtime header
-- End-to-end provenance preservation
+
+- Strict L1 typing  
+- Deterministic L2 validation  
+- Isolated L3 authority  
+- Non-authoritative L4  
+- Numeric drift computation  
+- Mandatory runtime header  
+- End-to-end provenance preservation  
 
 ---
 
-## Operational Philosophy
+# Operational Philosophy
 
-- Typed signals over narrative
-- Drift visibility over coherence
-- Governance correctness over fluency
-- Recoverability over completion
+- Typed signals over narrative  
+- Drift visibility over coherence  
+- Governance correctness over fluency  
+- Recoverability over completion  
 
 ---
 
-## Current System State
+# Current System State
 
 **ORP_VERSION: 3.0 (FROZEN)**  
 L1: STRICT_TYPED_TIME_SERIES  
 L2: VALIDATION_LAYER  
 L3: AUTHORITY_LAYER  
 L4: INTERNAL_INFERENCE_ONLY  
-DRIFT_MODEL: NUMERIC (σ
-²)  
-STATUS: FROZEN
+DRIFT_MODEL: NUMERIC (σ²)  
+STATUS: FROZEN  
 
 ---
 
-## License
+# Release Automation (Release‑Please)
+
+ORP uses **Release‑Please** to automate:
+
+- version bumps  
+- changelog generation  
+- GitHub Releases  
+- provenance-stable version tracking  
+
+### Conventional Commit Types
+
+| Type | Meaning |
+|------|---------|
+| `feat:` | New feature → minor version bump |
+| `fix:` | Bug fix → patch version bump |
+| `docs:` | Documentation updates |
+| `chore:` | Maintenance |
+| `refactor:` | Internal restructuring |
+
+### Key Files
+
+```
+.release-please-manifest.json
+.release-please-config.json
+ORP_VERSION
+CHANGELOG.md
+```
+
+### Workflow
+
+```
+.github/workflows/release-please.yml
+```
+
+Release‑Please automatically creates a **release PR** when changes require a version bump.
+
+---
+
+# License
 
 GNU General Public License v3.0 (GPL-3.0)
 
