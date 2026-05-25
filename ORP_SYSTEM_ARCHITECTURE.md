@@ -1,298 +1,230 @@
-# ORP — System Architecture Overview
+# ORP_SYSTEM_ARCHITECTURE.md
 
 ## System Version
+ORP v3.0 (Type-Safe Unified Architecture)
 
-ORP v2.5 (Unified System Architecture)
+---
 
 ## Purpose
 
-This document provides a simplified human-readable overview of the ORP architecture.
+This document provides a human-readable structural overview of the ORP system.  
+It explains how ORP operates as a:
 
-It explains how the ORP system operates as a structured epistemic governance and evaluation pipeline.
-
-This file is descriptive only.
-
-It is not:
-- an execution contract
-- a scoring specification
-- a runtime enforcement layer
-
-Those responsibilities belong to:
-- ORP_RUNTIME.md
-- EVALUATION_SCHEMA.md
-- RUBRIC.md
-- SCORING.md
+- layered epistemic governance system
+- drift-observable reasoning pipeline
+- provenance-preserving evaluation architecture
 
 ---
 
-# System Overview
+## Authority Classification
 
-ORP operates as a layered epistemic control and evaluation system designed to:
+This file is:
+- descriptive
+- structural
+- non-executable
+- non-governing
 
-- preserve provenance integrity
-- expose reasoning drift
+It MUST NOT override:
+- `ORP_RUNTIME.md` (execution authority kernel)
+- `EVALUATION_SCHEMA.md` (structural contract layer)
+- `RUBRIC.md` (qualitative evaluation layer)
+- `SCORING.md` (quantitative aggregation layer)
+
+---
+
+## System Overview
+
+ORP is a layered epistemic control system designed to:
+
+- preserve provenance integrity across reasoning steps
+- expose and quantify reasoning drift
 - prevent coherence camouflage
-- maintain recoverable reasoning states
-- evaluate structural reasoning quality under adversarial conditions
-
-The system separates:
-- execution governance
-- adversarial stress testing
-- structural transformation
-- qualitative evaluation
-- quantitative scoring
+- maintain recoverable reasoning states under degradation
+- evaluate structural reasoning quality under adversarial pressure
 
 ---
 
-# High-Level Pipeline
+## System Design Paradigm
 
+ORP separates reasoning into four orthogonal domains:
+
+- Execution Governance (L3 dominance)
+- Validation (L2 constraint layer)
+- Observation (L1 raw signal space)
+- Inference (L4 non-authoritative synthesis)
+
+**Core Rule:** Only L3 governs system behavior. All other layers are subordinate or observational.
+
+---
+
+## High-Level Pipeline
+
+**INPUT FLOW:**
+```
 INPUT
 → ORP_RUNTIME.md
 → PROMPT.md
 → BENCHMARK.md
-→ MODEL RESPONSE
+→ MODEL EXECUTION
+→ L2 VALIDATION
+→ L3 GOVERNANCE
+→ L4 INFERENCE (NON-AUTHORITATIVE)
+→ SYSTEM OUTPUT
+```
+
+**EVALUATION FLOW:**
+```
+MODEL OUTPUT
 → EVALUATION_SCHEMA.md
 → RUBRIC.md
 → SCORING.md
 → FINAL SCORE
+```
 
 ---
 
-# Layer Functions
+## Layer Function Specification
 
-## 1. ORP_RUNTIME.md (Runtime Governance Layer)
+### 1. ORP_RUNTIME.md (GOVERNANCE KERNEL)
+- **Role**: Primary execution authority layer  
+- **Responsibilities**:  
+  - SHS state control (GREEN → BLACK)  
+  - Drift computation enforcement (σ² model)  
+  - LAS hierarchy enforcement (L1–L4)  
+  - Coherence camouflage detection  
+  - Failure handling and recovery procedures  
+  - Provenance integrity enforcement  
+- **Authority Level**: ABSOLUTE (L3 SYSTEM KERNEL)
 
-Defines mandatory runtime execution constraints.
+### 2. PROMPT.md (CONSTRAINT LAYER)
+- **Role**: Pre-execution reasoning constraint system  
+- **Responsibilities**:  
+  - Atomic claim decomposition  
+  - Epistemic classification rules  
+  - Uncertainty preservation enforcement  
+  - Anti-narrative structure shaping  
+  - Reconstruction discipline enforcement  
+- **Authority Level**: L3-ASSISTED
 
-Responsibilities:
-- SHS monitoring
-- drift observability
-- provenance preservation
-- LAS enforcement
-- coherence camouflage detection
-- contaminated branch handling
+### 3. BENCHMARK.md (ADVERSARIAL STRESS LAYER)
+- **Role**: Reasoning stress injection system  
+- **Responsibilities**:  
+  - Expose hallucination pressure points  
+  - Test causal and logical stability  
+  - Trigger drift boundary conditions  
+  - Evaluate uncertainty handling  
+- **Authority Level**: L4 TEST ENVIRONMENT (non-governing)
 
-Key idea:
-Govern reasoning integrity during active inference.
+### 4. EVALUATION_SCHEMA.md (STRUCTURAL CONTRACT LAYER)
+- **Role**: Defines valid reasoning transformations  
+- **Responsibilities**:  
+  - Claim atomization rules  
+  - Epistemic tagging constraints  
+  - Structural transformation validation  
+  - Reconstruction boundary enforcement  
+- **Authority Level**: L3 CONTRACTUAL LAYER
 
----
+### 5. RUBRIC.md (QUALITATIVE EVALUATION LAYER)
+- **Role**: Human-readable reasoning quality evaluator  
+- **Responsibilities**:  
+  - Detect epistemic distortion  
+  - Evaluate provenance discipline  
+  - Assess drift handling behavior  
+  - Validate structural compliance  
+  - Score reasoning integrity  
+- **Authority Level**: L3 EVALUATION LAYER
 
-## 2. PROMPT.md (Execution Constraint Layer)
-
-Defines structured reasoning behavior.
-
-Responsibilities:
-- atomic claim decomposition
-- epistemic classification
-- uncertainty preservation
-- reconstruction discipline
-- anti-narrative enforcement
-
-Key idea:
-Constrain reasoning structure before evaluation.
-
----
-
-## 3. BENCHMARK.md (Adversarial Stress Layer)
-
-Introduces epistemically unstable or adversarial inputs.
-
-Responsibilities:
-- trigger reasoning edge cases
-- expose hallucination pressure
-- test causal integrity
-- stress uncertainty handling
-- evaluate drift resistance
-
-Key idea:
-Expose failure modes under pressure.
-
----
-
-## 4. EVALUATION_SCHEMA.md (Structural Contract Layer)
-
-Defines valid structural transformations.
-
-Responsibilities:
-- claim atomization rules
-- epistemic tagging contracts
-- relationship analysis constraints
-- reconstruction boundaries
-- layer isolation enforcement
-
-Key idea:
-Define valid reasoning structure.
+### 6. SCORING.md (QUANTITATIVE AGGREGATION LAYER)
+- **Role**: Metric synthesis system  
+- **Responsibilities**:  
+  - Normalize rubric outputs  
+  - Aggregate evaluation signals  
+  - Apply weighted penalties  
+  - Generate final quantitative score  
+- **Authority Level**: L3 METRIC LAYER
 
 ---
 
-## 5. RUBRIC.md (Qualitative Evaluation Layer)
+## Core System Principles
 
-Evaluates reasoning integrity and governance compliance.
+1. **SIGNAL > NARRATIVE**  
+   Fluent output is invalid if provenance integrity is degraded. A coherent but ungrounded response is a critical failure state.
 
-Responsibilities:
-- detect epistemic distortions
-- evaluate provenance discipline
-- assess drift handling
-- measure reconstruction validity
-- audit structural compliance
+2. **PROVENANCE PRESERVATION**  
+   ORP enforces strict separation between:  
+   - L1: observed data  
+   - L2: validated interpretation  
+   - L3: governance rules  
+   - L4: speculative inference  
+   **Rule**: L4 must never overwrite L1/L2 provenance.
 
-Key idea:
-Evaluate reasoning quality and governance behavior.
+3. **DRIFT OBSERVABILITY**  
+   The system assumes degradation under context saturation, narrative compression, or uncertainty collapse.  
+   ORP prioritizes explicit uncertainty signaling, recoverability, and visible degradation tracking over stylistic fluency.
 
----
+4. **LAYER ISOLATION**  
+   Each layer is strictly single-responsibility. No layer may override upstream outputs, reinterpret frozen provenance, or inject backward influence.
 
-## 6. SCORING.md (Quantitative Aggregation Layer)
-
-Converts evaluation signals into normalized scoring outputs.
-
-Responsibilities:
-- aggregate rubric dimensions
-- apply integrity penalties
-- normalize scoring ranges
-- quantify epistemic stability
-
-Key idea:
-Convert reasoning integrity into measurable signals.
+5. **RECOVERABILITY > COMPLETION**  
+   ORP prioritizes bounded reasoning, stable provenance chains, explicit uncertainty serialization, and recoverable system state over narrative completeness.
 
 ---
 
-# Core System Principles
+## Runtime Governance Concepts
 
-## 1. Signal > Narrative
+**SHS (SESSION HEALTH STATE)**  
+Tracks system integrity:  
+- GREEN → stable  
+- YELLOW → early drift  
+- ORANGE → confirmed degradation  
+- RED → severe instability  
+- BLACK → failure state  
 
-Linguistic fluency must never override provenance integrity.
+**LAS (LAYERED AUTHORITY STACK)**  
+- L1 → raw observed signals  
+- L2 → validated interpretation  
+- L3 → governance / enforcement  
+- L4 → inference (non-authoritative)  
 
-A coherent-looking response with degraded provenance is considered a critical failure state.
+**Rule**: L4 cannot affect L1 or L2 truth state.
 
----
-
-## 2. Provenance Preservation
-
-ORP separates:
-- observed facts
-- constrained interpretation
-- governance rules
-- speculative inference
-
-Speculative synthesis must never overwrite frozen provenance.
-
----
-
-## 3. Drift Observability
-
-The system assumes transformer outputs can drift under:
-- context degradation
-- narrative pressure
-- uncertainty compression
-- synthetic continuity generation
-
-ORP therefore prioritizes:
-- visible uncertainty
-- recoverability
-- explicit degradation signaling
-
-over stylistic continuity.
+**COHERENCE CAMOUFLAGE**  
+Critical failure mode where narrative fluency remains high while provenance integrity degrades. Treated as high-severity violation.
 
 ---
 
-## 4. Layer Isolation
+## System Identity
 
-Each system component has a single responsibility.
+ORP **IS**:  
+- a governance-first reasoning architecture  
+- a provenance-preserving inference system  
+- a drift-observable epistemic framework  
+- a structured evaluation pipeline  
 
-No layer may:
-- reinterpret upstream meaning
-- overwrite previous structural outputs
-- inject backward influence into the pipeline
-
----
-
-## 5. Recoverability > Completion
-
-The system prioritizes:
-- stable provenance
-- bounded reasoning
-- uncertainty serialization
-- recoverable session state
-
-over forced narrative completion.
+ORP **IS NOT**:  
+- a chatbot personality system  
+- a storytelling engine  
+- a creative roleplay framework  
+- a persuasion system  
 
 ---
 
-# Runtime Governance Concepts
+## Relationship to Other Files
 
-## SHS (Session Health State)
-
-Tracks operational integrity during inference.
-
-States:
-- GREEN
-- YELLOW
-- ORANGE
-- RED
-- BLACK
-
-Higher degradation states restrict reasoning behavior.
+- `ORP_RUNTIME.md` → execution authority kernel  
+- `PROMPT.md` → reasoning constraint system  
+- `BENCHMARK.md` → adversarial stress layer  
+- `EVALUATION_SCHEMA.md` → structural validation contract  
+- `RUBRIC.md` → qualitative evaluation system  
+- `SCORING.md` → quantitative aggregation system  
+- `ORP_META_MAP.md` → system topology registry  
 
 ---
 
-## LAS (Layered Authority Stack)
+## Design Principle
 
-Separates reasoning authority levels:
-
-- L1 → Direct evidence / observed data
-- L2 → Verified interpretation
-- L3 → Governance / protocol rules
-- L4 → Speculative inference
-
-L4 must never overwrite frozen L1/L2 provenance.
+Reliable reasoning requires observable failure modes, preserved provenance chains, explicit uncertainty representation, recoverable system states, and strict layer isolation — not merely fluent output.
 
 ---
 
-## Coherence Camouflage
-
-A critical ORP failure mode where:
-- stylistic consistency persists
-while
-- provenance integrity degrades
-
-ORP treats this as a major integrity violation.
-
----
-
-# System Identity
-
-ORP is not:
-- a chatbot framework
-- a persuasion engine
-- a creativity system
-- a roleplay architecture
-
-ORP is:
-- a governance-first reasoning environment
-- a structured epistemic evaluation system
-- a drift-observable reasoning architecture
-- a provenance-preserving inference framework
-
----
-
-# Relationship to Other Files
-
-- ORP_RUNTIME.md → enforceable runtime execution core
-- PROMPT.md → structured reasoning constraints
-- BENCHMARK.md → adversarial testing layer
-- EVALUATION_SCHEMA.md → structural transformation contract
-- RUBRIC.md → qualitative evaluation system
-- SCORING.md → quantitative aggregation system
-- SYSTEM_MAP.manifest.json → machine-readable architecture contract
-
----
-
-# Design Principle
-
-Reliable reasoning requires:
-- observable failure modes
-- preserved provenance
-- explicit uncertainty
-- recoverable state transitions
-
-Not merely coherent output.
+**END OF SPECIFICATION**
