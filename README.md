@@ -24,7 +24,7 @@ All ORP-compliant outputs **must** begin with:
 [DRIFT: NONE | LOW | MODERATE | HIGH]
 [CRA: VALID | DEGRADED | UNKNOWN]
 [LAS: L1 | L2 | L3 | L4]
-````
+```
 
 No preamble may precede this header.
 
@@ -55,7 +55,7 @@ flowchart TD
     L3[L3: Governance Core]
     OUT[OUTPUT]
 
-    L4 --> L3
+    L4 --> OUT
     L3 --> OUT
 
     L4 -. cannot modify .-> L3
@@ -85,6 +85,7 @@ flowchart TD
 
 ```mermaid
 stateDiagram-v2
+    [*] --> GREEN
     GREEN --> YELLOW
     YELLOW --> ORANGE
     ORANGE --> RED
@@ -97,57 +98,47 @@ stateDiagram-v2
     BLACK: Halt State
 ```
 
+
 ---
 
 # Layer Definitions
 
 ## L1 — Observed Data Layer
-
-* Typed signals only
-* Immutable once committed
-* No narrative content allowed
+* Typed signals only  
+* Immutable once committed  
+* No narrative content allowed  
 
 ## L2 — Verified Interpretation Layer
-
-* Deterministic validation of L1
-* Consistency and schema enforcement
-* No speculative reasoning
+* Deterministic validation of L1  
+* Consistency and schema enforcement  
+* No speculative reasoning  
 
 ## L3 — Governance Layer (Authority Core)
-
-* Sole state authority
-* Handles transitions and invariants
-* Controls SHS and system integrity
+* Sole state authority  
+* Handles transitions and invariants  
+* Controls SHS and system integrity  
 
 ## L4 — Internal Inference Layer
-
-* Probabilistic reasoning only
-* Non-authoritative
-* Cannot access raw L1 or override L3
+* Probabilistic reasoning only  
+* Non-authoritative  
+* Cannot access raw L1 or override L3  
 
 ---
 
 # Invariants
 
 * L1 accepts only typed signals:
-
   * Float ∈ [0.0, 1.0]
   * Integer (bounded domain required)
   * Boolean ∈ {0,1}
 
-* L1 is immutable after commit
-
-* L2 operates strictly on validated L1
-
-* L3 is the only authority layer
-
-* L4 cannot modify L1/L2/L3
-
-* L4 cannot be promoted into authoritative state
-
-* Drift must be numerically computed (σ²)
-
-* Provenance must be preserved end-to-end
+* L1 is immutable after commit  
+* L2 operates strictly on validated L1  
+* L3 is the only authority layer  
+* L4 cannot modify L1/L2/L3  
+* L4 cannot be promoted into authoritative state  
+* Drift must be numerically computed (σ²)  
+* Provenance must be preserved end-to-end  
 
 ---
 
@@ -157,10 +148,10 @@ stateDiagram-v2
 
 ## Drift Levels
 
-* NONE: σ² < 0.01
-* LOW: 0.01 ≤ σ² < 0.05
-* MODERATE: 0.05 ≤ σ² < 0.15
-* HIGH: σ² ≥ 0.15
+* NONE: σ² < 0.01  
+* LOW: 0.01 ≤ σ² < 0.05  
+* MODERATE: 0.05 ≤ σ² < 0.15  
+* HIGH: σ² ≥ 0.15  
 
 ---
 
@@ -182,22 +173,22 @@ flowchart TD
 
 # Failure Conditions
 
-* L4 influencing L3
-* Untyped L1 data
-* Silent schema mutation
-* Invalid state promotion
-* Drift concealment via narrative smoothing
-* Loss of provenance continuity
+* L4 influencing L3  
+* Untyped L1 data  
+* Silent schema mutation  
+* Invalid state promotion  
+* Drift concealment via narrative smoothing  
+* Loss of provenance continuity  
 
 ---
 
 # Failure Response Protocol
 
-1. Downgrade SHS
-2. Freeze L1 stream
-3. Recompute L2 snapshot
-4. Halt L4 inference
-5. Restore last valid L3 state
+1. Downgrade SHS  
+2. Freeze L1 stream  
+3. Recompute L2 snapshot  
+4. Halt L4 inference  
+5. Restore last valid L3 state  
 
 ---
 
@@ -207,10 +198,10 @@ Expansion is cyclical only.
 
 Requires:
 
-* Drift = NONE
-* L3 validation success
-* Provenance intact
-* Stable recovery path
+* Drift = NONE  
+* L3 validation success  
+* Provenance intact  
+* Stable recovery path  
 
 ---
 
@@ -260,35 +251,35 @@ Requires:
 
 A system is ORP v3.0-compliant only if:
 
-* L1 enforces strict typing
-* L2 performs deterministic validation
-* L3 is isolated as sole authority layer
-* L4 remains non-authoritative
-* σ² drift is measurable and enforced
-* Mandatory header is emitted first
-* Provenance is preserved end-to-end
+* L1 enforces strict typing  
+* L2 performs deterministic validation  
+* L3 is isolated as sole authority layer  
+* L4 remains non-authoritative  
+* σ² drift is measurable and enforced  
+* Mandatory header is emitted first  
+* Provenance is preserved end-to-end  
 
 ---
 
 # Operational Philosophy
 
-Typed signals over narrative
-Drift visibility over coherence
-Governance correctness over fluency
-Recoverability over completion
+Typed signals over narrative  
+Drift visibility over coherence  
+Governance correctness over fluency  
+Recoverability over completion  
 
 ---
 
 # System State
 
-ORP_VERSION: 3.0 (FROZEN)
-L1: STRICT_TYPED_TIME_SERIES
-L2: VALIDATION_LAYER
-L3: AUTHORITY_LAYER
-L4: INTERNAL_INFERENCE_ONLY
-DRIFT_MODEL: NUMERIC (σ²)
-CHANGE_POLICY: LOG_ONLY
-STATUS: FROZEN
+**ORP_VERSION: 3.0 (FROZEN)**  
+L1: STRICT_TYPED_TIME_SERIES  
+L2: VALIDATION_LAYER  
+L3: AUTHORITY_LAYER  
+L4: INTERNAL_INFERENCE_ONLY  
+DRIFT_MODEL: NUMERIC (σ²)  
+CHANGE_POLICY: LOG_ONLY  
+STATUS: FROZEN  
 
 ---
 
