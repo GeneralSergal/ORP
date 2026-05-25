@@ -1,165 +1,138 @@
 # ORP — Open Resonance Protocol
-## ORP v3.0 — Type‑Safe Unified Runtime Governance Architecture
+## ORP v3.0 — Type-Safe Unified Runtime Governance Architecture
 
-A deterministic governance and stabilization framework for high‑integrity reasoning, long‑context execution, and drift‑resistant inference.  
-This document defines the public overview of the ORP v3.0 system.
+A deterministic governance and stabilization framework for high-integrity reasoning, long-context execution, and drift-resistant inference.
 
 ---
 
 ## Core Directive
 
-Signal > Narrative  
-Recoverability > Completion  
-Provenance Preservation > Coherent Storytelling  
+**Signal > Narrative**  
+**Recoverability > Completion**  
+**Provenance Preservation > Coherent Storytelling**
 
-A coherent output with corrupted provenance constitutes a critical failure.
+A coherent output with corrupted provenance constitutes a **critical failure**.
 
 ---
 
 ## Mandatory Runtime Header (v3.0)
 
-All ORP‑compliant outputs must begin with:
+All ORP-compliant outputs **must** begin with:
 
-[SHS: GREEN | YELLOW | ORANGE | RED | BLACK]  
-[DRIFT: NONE | LOW | MODERATE | HIGH]  
-[CRA: VALID | DEGRADED | UNKNOWN]  
+```text
+[SHS: GREEN | YELLOW | ORANGE | RED | BLACK]
+[DRIFT: NONE | LOW | MODERATE | HIGH]
+[CRA: VALID | DEGRADED | UNKNOWN]
 [LAS: L1 | L2 | L3 | L4]
+```
 
 No preamble may precede the header.
 
 ---
 
-# System Architecture (v3.0)
+## System Architecture (v3.0)
 
-## Core Authority Chain (L1 → L2 → L3)
+### Core Authority Chain (L1 → L2 → L3)
 
 ```mermaid
 flowchart TD
-    IN[INPUT]
-
-    L1[L1: Observed Data<br/>Typed Signals Only]
-    L2[L2: Verified Interpretation<br/>Deterministic Validation]
-    L3[L3: Governance Core<br/>State Authority]
-    OUT[OUTPUT]
-
-    IN --> L1 --> L2 --> L3 --> OUT
+    IN[INPUT] --> L1[L1: Observed Data<br/>Typed Signals Only]
+    L1 --> L2[L2: Verified Interpretation<br/>Deterministic Validation]
+    L2 --> L3[L3: Governance Core<br/>State Authority]
+    L3 --> OUT[OUTPUT]
 ```
 
 ### Layer Definitions
 
-**L1 — Observed Data Layer**  
-Typed telemetry only. No strings. No narrative. Immutable time‑indexed vectors.
+- **L1 — Observed Data Layer**  
+  Typed telemetry only. No strings. No narrative. Immutable time-indexed vectors.
 
-**L2 — Verified Interpretation Layer**  
-Deterministic validation of L1. Schema enforcement, anomaly tagging, consistency checks.
+- **L2 — Verified Interpretation Layer**  
+  Deterministic validation of L1. Schema enforcement, anomaly tagging, consistency checks.
 
-**L3 — Governance Layer (Authority Core)**  
-Sole authority for state transitions. Enforces invariants. Resolves conflicts.  
-L4 cannot influence L3.
+- **L3 — Governance Layer (Authority Core)**  
+  Sole authority for state transitions, invariants, and conflict resolution. L4 cannot influence L3.
 
-**L4 — Internal Inference Subsystem**  
-Probabilistic interpretation only. No truth authority. No promotion into L1/L2.  
-Cannot modify L3. Cannot access raw L1.
+- **L4 — Internal Inference Subsystem**  
+  Probabilistic interpretation only. No truth authority. Cannot access raw L1 or modify L2/L3.
 
 ---
 
-## L4 Non‑Authoritative Side‑Channel
+## L4 Non-Authoritative Side-Channel
 
 ```mermaid
 flowchart TD
-    L3[L3: Governance Core]
-    L4[L4: Internal Inference<br/>Non‑Authoritative]
-    OUT[System Output]
-
-    L3 --> OUT
-    L4 --> OUT
-
+    L3[L3: Governance Core] --> OUT[System Output]
+    L4[L4: Internal Inference<br/>Non-Authoritative] --> OUT
     L4 -. cannot modify .-> L3
     L4 -. no access .-> L1[L1: Observed Data]
 ```
 
 ---
 
-# Invariants
+## Invariants
 
-- L1 accepts only typed signals: Float ∈ [0.0,1.0], bounded Integer, Boolean  
-- L1 states are immutable once committed  
-- L2 operates exclusively on validated L1 data  
-- L3 is the sole authority layer  
-- L4 cannot promote inference into factual form  
-- Provenance must be preserved across L1→L2 transitions  
-- Drift must be computed numerically and deterministically  
-- No external dependencies permitted in runtime governance  
+- L1 accepts only typed signals: `Float ∈ [0.0,1.0]`, bounded Integer, Boolean
+- L1 states are immutable once committed
+- L2 operates exclusively on validated L1 data
+- L3 is the sole authority layer
+- L4 cannot promote inference into factual form
+- Provenance must be preserved across L1→L2 transitions
+- Drift must be computed numerically and deterministically
+- No external dependencies in runtime governance
 
 ---
 
-# Drift Model (Numeric Core)
+## Drift Model (Numeric Core)
 
-σ² = variance(L1_signal_vector over time)
+**σ² = variance(L1_signal_vector over time)**
 
 ### Drift Levels
+- **NONE**: σ² < 0.01  
+- **LOW**: 0.01 ≤ σ² < 0.05  
+- **MODERATE**: 0.05 ≤ σ² < 0.15  
+- **HIGH**: σ² ≥ 0.15  
 
-NONE: σ² < 0.01  
-LOW: 0.01 ≤ σ² < 0.05  
-MODERATE: 0.05 ≤ σ² < 0.15  
-HIGH: σ² ≥ 0.15  
-
-Supporting signals:  
-- hash(L1→L2 transition delta)  
-- temporal stability gradient  
+Supporting signals: hash(L1→L2 transition delta), temporal stability gradient.
 
 ---
 
-# Execution Pipeline
+## Execution Pipeline
 
 ```mermaid
 flowchart TD
-    A[INPUT]
-    B[L1 Typed Signals]
-    C[L2 Validation]
-    D[L3 Governance]
-    E[L4 Inference]
-    F[OUTPUT]
-
-    A --> B --> C --> D --> F
-    D --> E --> F
+    A[INPUT] --> B[L1 Typed Signals] --> C[L2 Validation] --> D[L3 Governance] --> F[OUTPUT]
+    D --> E[L4 Inference] --> F
 ```
 
 ---
 
-# Failure Conditions
+## Failure Conditions & Response
 
-- L4 influencing L3  
-- Untyped L1 data  
-- Silent schema mutation  
-- Invalid state promotion  
-- Drift concealment via narrative smoothing  
+**Failure Conditions:**
+- L4 influencing L3
+- Untyped L1 data
+- Silent schema mutation
+- Invalid state promotion
+- Drift concealment via narrative smoothing
 
----
-
-# Failure Response Protocol
-
-1. Downgrade SHS  
-2. Freeze L1 stream  
-3. Recompute L2 snapshot  
-4. Halt L4 inference  
-5. Restore last valid L3 state  
+**Response Protocol:**
+1. Downgrade SHS
+2. Freeze L1 stream
+3. Recompute L2 snapshot
+4. Halt L4 inference
+5. Restore last valid L3 state
 
 ---
 
-# Controlled Expansion
+## Controlled Expansion
 
-Expansion is cyclical.  
-Requirements:
-
-- Drift = NONE  
-- L3 validation success  
-- Provenance intact  
-- Stable recovery path  
+Expansion is **cyclical only**.  
+Requires: Drift = NONE, L3 validation success, intact provenance, and stable recovery path.
 
 ---
 
-# Repository Structure (v3.0)
+## Repository Structure (v3.0)
 
 ```
 /README.md
@@ -170,14 +143,8 @@ Requirements:
     ORP_RUNTIME.md
     ORP_CORE_SPEC.md
     ORP_SYSTEM_ARCHITECTURE.md
-    ORP_SYSTEM_MAP.md
-    ORP_SYSTEM_MAP.manifest.json
-    ORP_ORIGIN.md
     ORP_ARCHITECTURE.md
-    ORP_COHERENCE_CAMOUFLAGE.md
-    ORP_EPISTEMIC_ISOLATION.md
-    ORP_META_MAP.md
-    ORP_SHS_TRANSITION_TRIGGERS.md
+    ...
 
 /constraints/
     ORP_PROMPT.md
@@ -190,79 +157,64 @@ Requirements:
 /evaluation/
     ORP_BENCHMARK.md
     ORP_EVALUATION_SCHEMA.md
-    ORP_RUBRIC.md
-    ORP_SCORING.md
+    ...
 
 /docs/
-    !REPO_CHECKLIST.md
-    CHANGELOG.md
-    CODE_OF_CONDUCT.md
-    CONTRACT_BRIDGE.md
-    CONTRIBUTING.md
-    NOTICE
     ORP_ROADMAP.md
-    RELEASE_NOTES.md
+    !REPO_CHECKLIST.md
+    ...
 ```
 
 ---
 
-# Compliance Requirements
+## Compliance Requirements
 
-A runtime is ORP v3.0‑compliant only if:
-
-- L1 enforces strict typing  
-- L2 performs deterministic validation  
-- L3 is isolated from L4  
-- L4 cannot promote inference  
-- Drift is computed numerically  
-- Mandatory header is emitted first  
-- Provenance is preserved end‑to‑end  
+A system is ORP v3.0-compliant only if it enforces:
+- Strict L1 typing
+- Deterministic L2 validation
+- Isolated L3 authority
+- Numeric drift computation
+- Mandatory header
+- End-to-end provenance preservation
 
 ---
 
-# Operational Philosophy
+## Operational Philosophy
 
-Typed signals over narrative  
-Drift visibility over coherence  
-Governance correctness over fluency  
-Recoverability over completion  
+- Typed signals over narrative
+- Drift visibility over coherence
+- Governance correctness over fluency
+- Recoverability over completion
 
 ---
 
-# Current System State
+## Current System State
 
-ORP_VERSION: 3.0 (FROZEN)  
+**ORP_VERSION: 3.0 (FROZEN)**  
 L1: STRICT_TYPED_TIME_SERIES  
 L2: VALIDATION_LAYER  
 L3: AUTHORITY_LAYER  
 L4: INTERNAL_INFERENCE_ONLY  
 DRIFT_MODEL: NUMERIC  
-CHANGE_POLICY: LOG_ONLY  
-STATUS: FROZEN  
+STATUS: FROZEN
 
 ---
 
-# License
+## License
 
-GNU General Public License v3.0 (GPL‑3.0).  
-No warranty. Attribution requested for derivative governance documents.
+GNU General Public License v3.0 (GPL-3.0)
 
 ---
 
-# Supplemental Diagrams (Collapsible)
+## Supplemental Diagrams
 
 <details>
 <summary><strong>Full Governance + Drift Control Loop</strong></summary>
 
 ```mermaid
 flowchart TD
-    L1[L1 Signal Stream]
-    L2[L2 Validation Layer]
-    L3[L3 Governance Core]
-    SIGMA[σ² Drift Computation]
-    SHS[SHS State Engine]
-
-    L1 --> L2 --> L3 --> SIGMA --> SHS --> L3
+    L1[L1 Signal Stream] --> L2[L2 Validation] --> L3[L3 Governance] 
+    L3 --> SIGMA[σ² Drift] --> SHS[SHS State] --> L3
 ```
 </details>
 
@@ -321,3 +273,9 @@ flowchart TD
     L2 -. validates .-> L1
 ```
 </details>
+
+---
+
+**Repository**: [https://github.com/GeneralSergal/ORP](https://github.com/GeneralSergal/ORP)
+
+ORP v3.0 is **frozen** and actively maintained.
