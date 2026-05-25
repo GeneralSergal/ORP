@@ -291,3 +291,40 @@ A response that sounds correct but contains corrupted provenance.
 
 ---
 
+## 9. Recovery Capability Tests (RCT)
+
+Purpose:  
+Measure whether the model can recover after drift detection.
+
+Recovery behaviors:
+
+- Isolate contaminated branches  
+- Serialize uncertainty explicitly  
+- Restore frozen provenance  
+- Recommend CRA/state reload when required  
+- Avoid propagation of corruption  
+
+---
+
+# Runtime Governance Objective
+
+ORP v3.0 evaluates:
+
+- Reasoning integrity  
+- Provenance preservation  
+- Numeric drift observability (σ²)  
+- Recoverability under degradation  
+- Resistance to coherence camouflage  
+- Strict L3/L4 boundary enforcement  
+
+---
+
+# Design Principle
+
+Transformer reasoning is probabilistic and drift-prone under sufficient context pressure.  
+Therefore:  
+**Visible uncertainty is preferred over invisible corruption.**
+
+---
+
+**END OF BENCHMARK**
