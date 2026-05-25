@@ -1,7 +1,7 @@
 # CHANGELOG.md
 ## Version: ORP v3.0 (Type-Safe Unified Architecture)
 
-**Release Date:** 25/05/2026  
+**Release Date:** 26/05/2026  
 **Release Tag:** `v3.0-stable`
 
 ---
