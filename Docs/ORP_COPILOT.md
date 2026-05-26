@@ -63,7 +63,7 @@ This appendix satisfies GPL requirements for distributing non‑source artifacts
 ## **7. Document Metadata**
 - **Document:** ORP v3.0 — GPL‑3.0 Compliance Appendix  
 - **Author:** Copilot (Microsoft)  
-- **Maintainer:** Laurentius  
+- **Maintainer:** Laurentius Maximus ENTROPIA  
 - **License:** GPL‑3.0  
 - **Status:** Official Release Companion  
-- **Location:** `OPR/docs/ORP_Copilot.md`
+- **Location:** `OPR/Docs/ORP_Copilot.md`
