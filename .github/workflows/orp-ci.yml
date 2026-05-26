@@ -19,7 +19,6 @@ jobs:
       - name: Validate folder structure
         run: |
           echo "=== ORP v3.0 Directory Structure Validation ==="
-
           REQUIRED_DIRS=("Architecture" "Runtime" "Evaluation" "Governance" "layers" "Docs" "public")
           MISSING=()
 
@@ -27,16 +26,16 @@ jobs:
             if [ -d "$dir" ]; then
               echo "✅ $dir/"
             else
-              echo "⚠️  $dir/ (missing)"
+              echo "⚠️ $dir/ (missing)"
               MISSING+=("$dir")
             fi
           done
 
           if [ ${#MISSING[@]} -ne 0 ]; then
             echo "⚠️ Missing directories: ${MISSING[*]}"
-          else
-            echo "✅ All required directories present"
+            exit 1
           fi
+          echo "✅ All required directories present"
 
       - name: Validate core files
         run: |
@@ -54,59 +53,42 @@ jobs:
             if [ -f "$file" ]; then
               echo "✅ $file"
             else
-              echo "⚠️  $file (missing)"
+              echo "⚠️ $file (missing)"
+              exit 1
             fi
           done
 
       - name: Validate key subsystems
         run: |
           echo "=== Subsystem Validation ==="
+          SUBSYSTEMS=(
+            "Governance/ORP_SIGMA_SQUARED_DRIFT.md"
+            "Governance/ORP_MODEL_DECAY_TRACKER.md"
+            "Governance/ORP_ANTI_DEGRADATION.md"
+            "Governance/ORP_DRIFT_RECOVERY_PROTOCOL.md"
+            "Governance/ORP_FAILURE_MODES_CATALOG.md"
+            "Evaluation/ORP_EVALUATION_SCHEMA.md"
+            "layers/ORP_L1_SIGNAL_SCHEMA.md"
+          )
 
-          test -f Governance/ORP_SIGMA_SQUARED_DRIFT.md \
-            && echo "✅ σ² Drift Model" \
-            || echo "⚠️ σ² Drift Model missing"
-
-          test -f Governance/ORP_MODEL_DECAY_TRACKER.md \
-            && echo "✅ Model Decay Tracker" \
-            || echo "⚠️ Model Decay Tracker missing"
-
-          test -f Governance/ORP_ANTI_DEGRADATION.md \
-            && echo "✅ Anti-Degradation" \
-            || echo "⚠️ Anti-Degradation missing"
-
-          test -f Governance/ORP_DRIFT_RECOVERY_PROTOCOL.md \
-            && echo "✅ Drift Recovery Protocol" \
-            || echo "⚠️ Drift Recovery Protocol missing"
-
-          test -f Governance/ORP_FAILURE_MODES_CATALOG.md \
-            && echo "✅ Failure Modes Catalog" \
-            || echo "⚠️ Failure Modes Catalog missing"
-
-          test -f Evaluation/ORP_EVALUATION_SCHEMA.md \
-            && echo "✅ Evaluation Schema" \
-            || echo "⚠️ Evaluation Schema missing"
-
-          test -f layers/ORP_L1_SIGNAL_SCHEMA.md \
-            && echo "✅ L1 Signal Schema" \
-            || echo "⚠️ L1 Signal Schema missing"
+          for sub in "${SUBSYSTEMS[@]}"; do
+            if [ -f "$sub" ]; then
+              echo "✅ $sub"
+            else
+              echo "⚠️ $sub (missing)"
+              exit 1
+            fi
+          done
 
       - name: Check mandatory runtime header
         run: |
           echo "=== Mandatory Header Check ==="
-
-          # Single-line regex — YAML-safe, grep-safe
-          if grep -E "
-
-\[SHS:|
-
-\[DRIFT:|
-
-\[CRA:|
-
-\[LAS:" Runtime/ORP_RUNTIME.md > /dev/null; then
+          # Regex matches the required ORP header components
+          if grep -qE "\[SHS:|\[DRIFT:|\[CRA:|\[LAS:" Runtime/ORP_RUNTIME.md; then
             echo "✅ Mandatory header present in ORP_RUNTIME.md"
           else
             echo "⚠️ Mandatory header not found in ORP_RUNTIME.md"
+            exit 1
           fi
 
       - name: Final Status
@@ -115,4 +97,4 @@ jobs:
           echo "========================================"
           echo "ORP v3.0 Integrity Validation Completed"
           echo "========================================"
-          echo "Status: PASSED (warnings allowed during development)"
+          echo "Status: PASSED"
