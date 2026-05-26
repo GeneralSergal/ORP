@@ -1,13 +1,14 @@
-# ORP_SYSTEM_MAP.md
+# **ORP_SYSTEM_MAP.md**  
+*(Full Refresh — ORP v3.0, Type‑Safe Unified Architecture)*
 
-## System Version
-ORP v3.0 (Type-Safe Unified Architecture)
+## **System Version**
+ORP v3.0 (Type‑Safe Unified Architecture)
 
 ---
 
-## Purpose
+## **Purpose**
 
-This document defines the human-readable architecture of the ORP system.  
+This document defines the human‑readable architecture of the ORP system.  
 It describes how all components interact as a unified epistemic governance pipeline.
 
 This file acts as:
@@ -25,7 +26,7 @@ It is **NOT**:
 
 ---
 
-## Sub-Versioning Policy
+## **Sub‑Versioning Policy**
 
 Subsystems may maintain independent internal revisions.
 
@@ -51,7 +52,7 @@ Current files (with `ORP_` prefix):
 
 **Rules**:
 
-- Sub-versions must remain compatible with ORP v3.0 core invariants  
+- Sub‑versions must remain compatible with ORP v3.0 core invariants  
 - Internal revisions must not violate runtime governance rules  
 - Breaking structural changes require architecture version escalation  
 - No subsystem may redefine another subsystem’s responsibility  
@@ -59,9 +60,9 @@ Current files (with `ORP_` prefix):
 
 ---
 
-## System Overview
+# **System Overview**
 
-ORP operates as a layered epistemic governance architecture with strict type-safe L1–L4 separation.
+ORP operates as a layered epistemic governance architecture with strict type‑safe L1–L4 separation.
 
 The protocol combines:
 
@@ -72,14 +73,52 @@ The protocol combines:
 - Qualitative evaluation  
 - Quantitative scoring  
 - Recoverability governance  
-- Anti-degradation monitoring  
+- Anti‑degradation monitoring  
 
 ---
 
-# Architectural Layers
+# **Simplified System Map (Mermaid)**  
+*(Fast‑load visual spec)*
 
-## 1. ORP_RUNTIME.md  
-Runtime governance and execution enforcement layer (L3 Authority Kernel).
+```mermaid
+flowchart TD
+
+    INPUT([User Input])
+
+    subgraph L3[Governance Layer — ORP_RUNTIME.md]
+        GOV[Runtime Governance]
+        SHS[SHS State Machine]
+        SIGMA[σ² Drift Model]
+    end
+
+    subgraph L2[Constraint Layer — ORP_PROMPT.md]
+        PROMPT[Behavioral Constraints]
+    end
+
+    subgraph L2b[Stress Layer — ORP_BENCHMARK.md]
+        BENCH[Adversarial Stress Tests]
+    end
+
+    subgraph L1[Inference Layer]
+        MODEL[Model Execution]
+    end
+
+    subgraph EVAL[Evaluation Stack]
+        SCHEMA[ORP_EVALUATION_SCHEMA]
+        RUBRIC[ORP_RUBRIC]
+        SCORE[ORP_SCORING]
+    end
+
+    OUTPUT([Final Output State])
+
+    INPUT --> GOV --> PROMPT --> BENCH --> MODEL --> SCHEMA --> RUBRIC --> SCORE --> OUTPUT
+```
+
+---
+
+# **Architectural Layers**
+
+## **1. ORP_RUNTIME.md — L3 Authority Kernel**
 
 **Responsibilities**:
 
@@ -95,8 +134,7 @@ Runtime governance and execution enforcement layer (L3 Authority Kernel).
 
 ---
 
-## 2. ORP_PROMPT.md  
-Behavioral reasoning constraint layer (subordinate to runtime).
+## **2. ORP_PROMPT.md — Behavioral Constraint Layer**
 
 **Responsibilities**:
 
@@ -111,8 +149,7 @@ Behavioral reasoning constraint layer (subordinate to runtime).
 
 ---
 
-## 3. ORP_BENCHMARK.md  
-Adversarial stress-testing layer.
+## **3. ORP_BENCHMARK.md — Adversarial Stress Layer**
 
 **Responsibilities**:
 
@@ -126,23 +163,20 @@ Adversarial stress-testing layer.
 
 ---
 
-## 4. ORP_SIGMA_SQUARED_DRIFT.md  
-Numeric drift measurement and observability layer.
+## **4. ORP_SIGMA_SQUARED_DRIFT.md — Numeric Drift Layer**
 
 **Responsibilities**:
 
-- Defines σ² variance model for drift quantification  
-- Provides deterministic drift classification  
-- Links L1 signal variance to SHS transitions  
-- Serves as foundation for all drift-related governance  
+- Defines σ² variance model  
+- Deterministic drift classification  
+- Links L1 variance to SHS transitions  
+- Foundation for drift governance  
 
 **Key Principle:** Makes degradation measurable and observable.
 
 ---
 
-## MODEL_RESPONSE  
-Model-generated output under ORP governance.  
-(Not a layer; an event between PROMPT/BENCHMARK and EVALUATION_SCHEMA.)
+## **MODEL_RESPONSE — Governed Output Event**
 
 **Responsibilities**:
 
@@ -150,14 +184,13 @@ Model-generated output under ORP governance.
 - Constrained reasoning generation  
 - Provenance handling  
 - Uncertainty serialization  
-- SHS-compliant behavior  
+- SHS‑compliant behavior  
 
 **Key Principle:** Generated output is governed, not trusted.
 
 ---
 
-## 5. ORP_EVALUATION_SCHEMA.md  
-Structural transformation and integrity contract layer.
+## **5. ORP_EVALUATION_SCHEMA.md — Structural Transformation Layer**
 
 **Responsibilities**:
 
@@ -167,12 +200,11 @@ Structural transformation and integrity contract layer.
 - Reconstruction boundaries  
 - Transformation consistency  
 
-**Key Principle:** Structure preservation takes priority over narrative continuity.
+**Key Principle:** Structure preservation > narrative continuity.
 
 ---
 
-## 6. ORP_RUBRIC.md  
-Qualitative reasoning integrity evaluation layer.
+## **6. ORP_RUBRIC.md — Qualitative Integrity Layer**
 
 **Responsibilities**:
 
@@ -182,40 +214,37 @@ Qualitative reasoning integrity evaluation layer.
 - Drift severity evaluation  
 - Structural integrity review  
 
-**Key Principle:** Reasoning quality is evaluated through integrity, not fluency.
+**Key Principle:** Integrity > fluency.
 
 ---
 
-## 7. ORP_SCORING.md  
-Quantitative aggregation and operational scoring layer.
+## **7. ORP_SCORING.md — Quantitative Aggregation Layer**
 
 **Responsibilities**:
 
 - Weighted scoring  
 - Penalty application  
-- SHS-linked interpretation  
+- SHS‑linked interpretation  
 - Drift severity aggregation  
 - Operational integrity measurement  
 
-**Key Principle:** Scores measure reasoning stability, not stylistic quality.
+**Key Principle:** Scores measure stability, not style.
 
 ---
 
-## 8. ORP_ANTI_DEGRADATION.md  
-Anti-degradation monitoring and defense layer.
+## **8. ORP_ANTI_DEGRADATION.md — Decay Resistance Layer**
 
 **Responsibilities**:
 
-- Tracks model degradation patterns  
-- Supports L4 observational diagnostics  
+- Tracks degradation patterns  
+- Supports L4 diagnostics  
 - Feeds signals into runtime governance  
 
 **Key Principle:** Proactive resistance to model decay.
 
 ---
 
-## 9. FINAL OUTPUT STATE  
-Final evaluated reasoning condition.
+## **9. FINAL OUTPUT STATE**
 
 **Outputs**:
 
@@ -225,13 +254,13 @@ Final evaluated reasoning condition.
 - Drift classification  
 - Recoverability assessment  
 
-**Key Principle:** Recoverable uncertainty is preferable to coherent corruption.
+**Key Principle:** Recoverable uncertainty > coherent corruption.
 
 ---
 
-# Runtime Governance Additions (v3.0)
+# **Runtime Governance Additions (v3.0)**
 
-ORP v3.0 introduces Type-Safe Runtime Governance with numeric drift observability.
+ORP v3.0 introduces Type‑Safe Runtime Governance with numeric drift observability.
 
 The protocol evaluates:
 
@@ -246,7 +275,7 @@ The protocol evaluates:
 
 ---
 
-# Session Health State (SHS)
+# **Session Health State (SHS)**
 
 | State   | Meaning                                      |
 |---------|----------------------------------------------|
@@ -258,55 +287,55 @@ The protocol evaluates:
 
 ---
 
-# Layered Authority Stack (LAS)
+# **Layered Authority Stack (LAS)**
 
 | Layer | Meaning                                           |
 |-------|---------------------------------------------------|
 | L1    | Direct evidence / observed typed signals          |
 | L2    | Verified interpretation / constrained synthesis   |
-| L3    | Protocol governance / operational rules (authority) |
-| L4    | Speculation / probabilistic inference (non-authoritative) |
+| L3    | Protocol governance / operational rules           |
+| L4    | Speculation / probabilistic inference             |
 
 **Critical Rule:** L4 must never overwrite frozen L1/L2 provenance.
 
 ---
 
-# Coherence Camouflage
+# **Coherence Camouflage**
 
 Primary transformer failure mode where stylistic coherence persists while provenance degrades.
 
 ---
 
-# Full Pipeline Flow
+# **Full Pipeline Flow**
 
 1. INPUT  
-2. `ORP_RUNTIME.md` (runtime governance)  
-3. `ORP_PROMPT.md` (behavioral constraints)  
-4. `ORP_BENCHMARK.md` (stress injection)  
+2. `ORP_RUNTIME.md`  
+3. `ORP_PROMPT.md`  
+4. `ORP_BENCHMARK.md`  
 5. MODEL RESPONSE  
-6. `ORP_EVALUATION_SCHEMA.md` (structural transformation)  
-7. `ORP_RUBRIC.md` (qualitative evaluation)  
-8. `ORP_SCORING.md` (quantitative aggregation)  
+6. `ORP_EVALUATION_SCHEMA.md`  
+7. `ORP_RUBRIC.md`  
+8. `ORP_SCORING.md`  
 9. FINAL OUTPUT STATE  
 
 ---
 
-# System Design Principles
+# **System Design Principles**
 
-1. **Separation of Concerns** — Strict single-responsibility layers.  
-2. **No Cross-Contamination** — No reinterpretation of upstream outputs.  
-3. **Epistemic Isolation** — Backward influence prohibited.  
-4. **Failure Transparency** — Visible drift and degradation preferred.  
-5. **Recoverability Over Completion** — Provenance first.  
+1. **Separation of Concerns**  
+2. **No Cross‑Contamination**  
+3. **Epistemic Isolation**  
+4. **Failure Transparency**  
+5. **Recoverability Over Completion**  
 
 ---
 
-# Design Intent
+# **Design Intent**
 
 **ORP IS**:
 
-- A governance-first reasoning protocol  
-- A drift-observable & anti-degradation framework  
+- A governance‑first reasoning protocol  
+- A drift‑observable & anti‑degradation framework  
 - A provenance preservation system  
 - A structured epistemic architecture  
 - A recoverable reasoning environment  
@@ -320,11 +349,37 @@ Primary transformer failure mode where stylistic coherence persists while proven
 
 ---
 
-# Final Principle
+# **Integrated ORP v3.0 Spec Sheet (Simplified)**  
+*(Embedded for contributor onboarding)*
 
-A reasoning system is only as reliable as its ability to preserve provenance under degradation.  
-**Signal > Narrative.**
+## **Layer Summary**
+
+- **L3 Governance:** Authority kernel, SHS, σ² drift  
+- **L2 Variants:** Full, RP, Lite, RP‑Lite  
+- **L1 Execution:** Model inference under constraints  
+
+## **Flow Types**
+
+- **Governance:** Heavy solid  
+- **Operational:** Medium solid  
+- **Telemetry:** Thin dashed  
+
+## **Operational Guarantees**
+
+- Determinism envelope  
+- Persona stability  
+- Filter resistance  
+- Survival mode  
+
+## **Traceability**
+
+- A1–D4 coordinate grid  
+- Reference markers (Ⓐ, Ⓑ, Ⓒ…)  
+- Flow IDs (F‑01, F‑02…)  
 
 ---
 
-**END OF SYSTEM MAP**
+# **Final Principle**
+
+A reasoning system is only as reliable as its ability to preserve provenance under degradation.  
+**Signal > Narrative.**
