@@ -14,7 +14,7 @@
   <meta property="og:description" content="Governance-first epistemic reasoning framework with drift observability and provenance preservation." />
   <meta property="og:type" content="website" />
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230d1117'/%3E%3Cpath d='M30 50 L50 30 L70 50 L50 70 Z' fill='%23dd1111' opacity='0.9'/%3E%3Ccircle cx='50' cy='50' r='8' fill='%23ff6600'/%3E%3C/svg%3E" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230d1117'/%3E%3Cpath [...]
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
@@ -64,7 +64,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    a { color: var(--primary); text-decoration: none; transition: all var(--transition); }
+    a { color: var(--primary); text-decoration: none; transition: all var(--transition); cursor: pointer; }
     a:hover { color: var(--primary-bright); }
 
     .grid-bg {
@@ -189,12 +189,16 @@
       font-weight: 700; letter-spacing: 0.02em; transition: transform var(--transition), background var(--transition), border-color var(--transition), box-shadow var(--transition), color var(--transition);
       border: none;
       cursor: pointer;
+      text-decoration: none;
     }
     .btn:hover { text-decoration: none; }
+    .btn:active { text-decoration: none; }
     .btn-primary { background: linear-gradient(135deg, var(--primary), var(--accent-orange)); color: #0a0d10; box-shadow: 0 12px 30px rgba(221,17,17,0.3); }
     .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 40px rgba(255,102,0,0.35); color: #050608; }
+    .btn-primary:active { transform: translateY(0px); }
     .btn-secondary { border: 1px solid var(--border-strong); background: rgba(15,19,24,0.6); color: var(--text); }
     .btn-secondary:hover { transform: translateY(-2px); background: rgba(19,26,34,0.8); border-color: rgba(221,17,17,0.3); }
+    .btn-secondary:active { transform: translateY(0px); }
 
     .hero-panel { position: relative; }
     .hero-panel::before {
@@ -213,7 +217,7 @@
     .terminal-title-bar { height: 48px; display: flex; align-items: center; padding: 0 24px; gap: 12px; border-bottom: 1px solid rgba(221,17,17,0.14); flex-wrap: wrap; }
     .terminal-title-text { font-family: Oxanium, sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; flex: 1; min-width: 150px; }
 
-    .status-indicator { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid rgba(221,17,17,0.2); }
+    .status-indicator { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid; }
     .status-indicator.active { background: rgba(221,17,17,0.16); border-color: rgba(221,17,17,0.4); color: var(--primary-bright); }
     .status-indicator.warning { background: rgba(255,136,51,0.12); border-color: rgba(255,136,51,0.3); color: var(--warning); }
     .status-indicator.locked { background: rgba(100,100,100,0.12); border-color: rgba(100,100,100,0.3); color: #999; }
@@ -244,7 +248,7 @@
     section { padding: 110px 0; position: relative; }
     .section-divider { width: 100%; height: 2px; margin-top: 100px; background: linear-gradient(90deg, transparent, rgba(221,17,17,0.3), rgba(255,102,0,0.2), transparent); box-shadow: 0 0 20px rgba(221,17,17,0.2); }
     .section-header { max-width: 920px; margin-bottom: 52px; }
-    .section-eyebrow { color: var(--accent-orange); text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.8rem; font-weight: 800; margin-bottom: 14px; text-shadow: 0 0 12px rgba(255,102,0,0.2); }
+    .section-eyebrow { color: var(--accent-orange); text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.8rem; font-weight: 800; margin-bottom: 14px; text-shadow: 0 0 12px rgba(255,102,0,0.1); }
     .section-title { margin: 0 0 16px; color: var(--heading); font-family: Oxanium, sans-serif; font-size: clamp(2.2rem, 5vw, 3.6rem); line-height: 1.08; letter-spacing: -0.04em; }
     .section-description { color: var(--muted); font-size: 1.04rem; max-width: 760px; }
 
@@ -256,8 +260,8 @@
       position: relative; overflow: hidden; border-radius: var(--radius); border: 1px solid rgba(221,17,17,0.16);
       background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition), background var(--transition);
     }
-    .pipeline-card::before, .doc-card::before, .principle::before, .quick-access-card::before, .release-card::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,102,0,0.08), transparent 35%); opacity: 0; transition: opacity var(--transition); }
-    .pipeline-card:hover, .doc-card:hover, .principle:hover, .quick-access-card:hover, .release-card:hover { transform: translateY(-4px); border-color: rgba(221,17,17,0.32); box-shadow: 0 18px 40px rgba(221,17,17,0.15); background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); }
+    .pipeline-card::before, .doc-card::before, .principle::before, .quick-access-card::before, .release-card::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,102,0,0.1), rgba(221,17,17,0.1)); opacity: 0; transition: opacity var(--transition); }
+    .pipeline-card:hover, .doc-card:hover, .principle:hover, .quick-access-card:hover, .release-card:hover { transform: translateY(-4px); border-color: rgba(221,17,17,0.32); box-shadow: 0 18px 40px rgba(221,17,17,0.15); }
     .pipeline-card:hover::before, .doc-card:hover::before, .principle:hover::before, .quick-access-card:hover::before, .release-card:hover::before { opacity: 1; }
 
     .pipeline-card { padding: 26px; }
@@ -270,7 +274,7 @@
     .doc-card p { margin-bottom: 20px; }
     .doc-card ul { margin: 0; padding-left: 18px; }
     .doc-card li { margin-bottom: 10px; }
-    .doc-card a { color: var(--accent-orange); }
+    .doc-card a { color: var(--accent-orange); cursor: pointer; }
     .doc-card a:hover { color: var(--accent-orange-bright); }
 
     .principles { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
@@ -278,14 +282,14 @@
 
     .quick-access-card { padding: 28px; }
     .quick-access-card h3 { font-size: 1.15rem; margin-bottom: 16px; }
-    .quick-access-card a { display: block; margin-top: 12px; color: var(--accent-orange); font-weight: 600; }
+    .quick-access-card a { display: block; margin-top: 12px; color: var(--accent-orange); font-weight: 600; cursor: pointer; }
     .quick-access-card a:hover { color: var(--accent-orange-bright); }
 
     .release-card { padding: 28px; background: linear-gradient(135deg, rgba(221,17,17,0.08), rgba(255,102,0,0.04)); }
-    .release-tag { display: inline-block; padding: 6px 12px; border-radius: 6px; background: rgba(221,17,17,0.2); color: var(--primary-bright); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
+    .release-tag { display: inline-block; padding: 6px 12px; border-radius: 6px; background: rgba(221,17,17,0.2); color: var(--primary-bright); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
     .release-card h3 { font-size: 1.3rem; margin-bottom: 8px; }
     .release-card > p { margin-top: 12px; }
-    .release-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; color: var(--primary); font-weight: 700; }
+    .release-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; color: var(--primary); font-weight: 700; cursor: pointer; }
     .release-link:hover { color: var(--primary-bright); }
 
     footer { padding: 90px 0 60px; border-top: 1px solid rgba(221,17,17,0.12); background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,102,0,0.02)); }
@@ -306,7 +310,7 @@
     /* ENHANCEMENT LAYER INTERACTION LAYER RULES */
     .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, #dd1111, #ff6600); z-index: 2000; }
     .toc-title { font-family: Oxanium, sans-serif; font-size: 0.75rem; letter-spacing: 0.14em; color: #ff6600; margin-bottom: 12px; }
-    .toc-panel a { display: block; margin-bottom: 10px; color: #8f9bb0; font-size: 0.9rem; transition: color 180ms; }
+    .toc-panel a { display: block; margin-bottom: 10px; color: #8f9bb0; font-size: 0.9rem; transition: color 180ms; cursor: pointer; }
     .toc-panel a:hover { color: #ff3333; }
 
     .reveal { opacity: 0; transform: translateY(40px); transition: all 700ms cubic-bezier(.2,.8,.2,1); }
@@ -527,61 +531,61 @@
           <h3>Core Specifications</h3>
           <p>Foundational governance and runtime architecture definitions.</p>
           <ul>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_CORE_SPEC.md">ORP Core Specification</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_RUNTIME.md">Runtime Kernel</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_PROMPT.md">Prompt Contract</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_SYSTEM_ARCHITECTURE.md">System Architecture</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_META_MAP.md">Meta-Map</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_SYSTEM_MAP.md">System Map</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_SYSTEM_MAP.manifest.json">System Map Manifest</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_ORIGIN.md">Origin Document</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_CORE_SPEC.md" target="_blank" rel="noopener noreferrer">ORP Core Specification</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_RUNTIME.md" target="_blank" rel="noopener noreferrer">Runtime Kernel</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_PROMPT.md" target="_blank" rel="noopener noreferrer">Prompt Contract</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_SYSTEM_ARCHITECTURE.md" target="_blank" rel="noopener noreferrer">System Architecture</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_META_MAP.md" target="_blank" rel="noopener noreferrer">Meta-Map</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_SYSTEM_MAP.md" target="_blank" rel="noopener noreferrer">System Map</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_SYSTEM_MAP.manifest.json" target="_blank" rel="noopener noreferrer">System Map Manifest</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_ORIGIN.md" target="_blank" rel="noopener noreferrer">Origin Document</a></li>
           </ul>
         </div>
         <div class="doc-card">
           <h3>Evaluation Layer</h3>
           <p>Structural evaluation, epistemic integrity, and scoring systems.</p>
           <ul>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_EVALUATION_SCHEMA.md">Evaluation Schema</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_RUBRIC.md">Rubric</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_SCORING.md">Scoring</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_SHS_TRANSITION_TRIGGERS.md">SHS Transition Triggers</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_EPISTEMIC_ISOLATION.md">Epistemic Isolation</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_COHERENCE_CAMOUFLAGE.md">Coherence Camouflage</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_EVALUATION_SCHEMA.md" target="_blank" rel="noopener noreferrer">Evaluation Schema</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_RUBRIC.md" target="_blank" rel="noopener noreferrer">Rubric</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_SCORING.md" target="_blank" rel="noopener noreferrer">Scoring</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_SHS_TRANSITION_TRIGGERS.md" target="_blank" rel="noopener noreferrer">SHS Transition Triggers</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_EPISTEMIC_ISOLATION.md" target="_blank" rel="noopener noreferrer">Epistemic Isolation</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_COHERENCE_CAMOUFLAGE.md" target="_blank" rel="noopener noreferrer">Coherence Camouflage</a></li>
           </ul>
         </div>
         <div class="doc-card">
           <h3>Drift & Recovery</h3>
           <p>Numeric drift monitoring, degradation detection, and recovery systems.</p>
           <ul>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_SIGMA_SQUARED_DRIFT.md">σ² Drift Model</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_MODEL_DECAY_TRACKER.md">Model Decay Tracker</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_ANTI_DEGRADATION.md">Anti-Degradation</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_DRIFT_RECOVERY_PROTOCOL.md">Recovery Protocol</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_FAILURE_MODES_CATALOG.md">Failure Modes Catalog</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_SIGMA_SQUARED_DRIFT.md" target="_blank" rel="noopener noreferrer">σ² Drift Model</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_MODEL_DECAY_TRACKER.md" target="_blank" rel="noopener noreferrer">Model Decay Tracker</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_ANTI_DEGRADATION.md" target="_blank" rel="noopener noreferrer">Anti-Degradation</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_DRIFT_RECOVERY_PROTOCOL.md" target="_blank" rel="noopener noreferrer">Recovery Protocol</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_FAILURE_MODES_CATALOG.md" target="_blank" rel="noopener noreferrer">Failure Modes Catalog</a></li>
           </ul>
         </div>
         <div class="doc-card">
           <h3>Layer Definitions</h3>
           <p>Formal definitions for typed signal handling and layered authority separation.</p>
           <ul>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/layers/ORP_L1_SIGNAL_SCHEMA.md">L1 Signal Schema</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/layers/ORP_L2_VALIDATION_RULES.md">L2 Validation Rules</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/layers/ORP_L4_INFERENCE_GUIDE.md">L4 Inference Guide</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/layers/ORP_L1_SIGNAL_SCHEMA.md" target="_blank" rel="noopener noreferrer">L1 Signal Schema</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/layers/ORP_L2_VALIDATION_RULES.md" target="_blank" rel="noopener noreferrer">L2 Validation Rules</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/layers/ORP_L4_INFERENCE_GUIDE.md" target="_blank" rel="noopener noreferrer">L4 Inference Guide</a></li>
           </ul>
         </div>
         <div class="doc-card">
           <h3>Recovery Systems</h3>
           <p>Consistency and recovery anchoring mechanisms for recoverable execution.</p>
           <ul>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/recovery/ORP_CRA_SPEC.md">CRA Specification</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/recovery/ORP_CRA_SPEC.md" target="_blank" rel="noopener noreferrer">CRA Specification</a></li>
           </ul>
         </div>
         <div class="doc-card">
           <h3>Conceptual Models</h3>
           <p>Non-authoritative conceptual and exploratory architecture references.</p>
           <ul>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/conceptual/ORP_ARCHITECTURE.md">Architecture Model</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/conceptual/ORP_BENCHMARK.md">Benchmark Model</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/conceptual/ORP_ARCHITECTURE.md" target="_blank" rel="noopener noreferrer">Architecture Model</a></li>
+            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/conceptual/ORP_BENCHMARK.md" target="_blank" rel="noopener noreferrer">Benchmark Model</a></li>
           </ul>
         </div>
       </div>
@@ -650,9 +654,9 @@
         <div>
           <div class="footer-title">Documentation</div>
           <div class="footer-links">
-            <a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_SYSTEM_ARCHITECTURE.md">System Architecture</a>
-            <a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_RUBRIC.md">Evaluation Layer</a>
-            <a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_SIGMA_SQUARED_DRIFT.md">Drift Systems</a>
+            <a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_SYSTEM_ARCHITECTURE.md" target="_blank" rel="noopener noreferrer">System Architecture</a>
+            <a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_RUBRIC.md" target="_blank" rel="noopener noreferrer">Evaluation Layer</a>
+            <a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_SIGMA_SQUARED_DRIFT.md" target="_blank" rel="noopener noreferrer">Drift Systems</a>
           </div>
         </div>
         <div>
