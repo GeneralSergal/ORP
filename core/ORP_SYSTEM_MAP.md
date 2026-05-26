@@ -1,5 +1,5 @@
 # **ORP_SYSTEM_MAP.md**  
-*(Full Refresh — ORP v3.0, Type‑Safe Unified Architecture)*
+*(Unified Architecture Map — ORP v3.0, Type‑Safe Governance)*
 
 ## **System Version**
 ORP v3.0 (Type‑Safe Unified Architecture)
@@ -34,6 +34,9 @@ Current files (with `ORP_` prefix):
 
 - `ORP_PROMPT.md`  
 - `ORP_RUNTIME.md`  
+- `ORP_RUNTIME_RP.md`  
+- `ORP_RUNTIME_LITE.md`  
+- `ORP_RUNTIME_RP_LITE.md`  
 - `ORP_BENCHMARK.md`  
 - `ORP_RUBRIC.md`  
 - `ORP_SCORING.md`  
@@ -77,8 +80,7 @@ The protocol combines:
 
 ---
 
-# **Simplified System Map (Mermaid)**  
-*(Fast‑load visual spec)*
+# **Simplified System Map (Mermaid)**
 
 ```mermaid
 flowchart TD
@@ -91,12 +93,11 @@ flowchart TD
         SIGMA[σ² Drift Model]
     end
 
-    subgraph L2[Constraint Layer — ORP_PROMPT.md]
-        PROMPT[Behavioral Constraints]
-    end
-
-    subgraph L2b[Stress Layer — ORP_BENCHMARK.md]
-        BENCH[Adversarial Stress Tests]
+    subgraph L2[Execution Policy Layer — Runtime Variants]
+        FULL[Full Runtime]
+        RP[RP Runtime]
+        LITE[Lite Runtime]
+        RPLITE[RP-Lite Runtime]
     end
 
     subgraph L1[Inference Layer]
@@ -111,7 +112,10 @@ flowchart TD
 
     OUTPUT([Final Output State])
 
-    INPUT --> GOV --> PROMPT --> BENCH --> MODEL --> SCHEMA --> RUBRIC --> SCORE --> OUTPUT
+    INPUT --> GOV --> FULL --> MODEL --> SCHEMA --> RUBRIC --> SCORE --> OUTPUT
+    GOV --> RP
+    GOV --> LITE
+    GOV --> RPLITE
 ```
 
 ---
@@ -134,18 +138,53 @@ flowchart TD
 
 ---
 
-## **2. ORP_PROMPT.md — Behavioral Constraint Layer**
+## **2. Execution Policy Layer — Runtime Variants (L2)**  
+*(Integrated from `ORP_RUNTIME_VARIANTS.md`)*
 
-**Responsibilities**:
+The L2 layer contains **four official runtime variants**, each optimized for a different operational regime.
 
-- Claim atomization  
-- Epistemic separation  
-- Uncertainty preservation  
-- Reconstruction discipline  
-- Causal integrity constraints  
+### **Variant Comparison Table**
 
-**Key Principle:** Reasoning must remain structurally constrained before evaluation.  
-**PROMPT.md cannot override runtime governance.**
+| Variant | Full Name | Best For | Role‑Play Support | Strictness | Token Efficiency | Link |
+|--------|-----------|----------|------------------|------------|------------------|------|
+| **Full Runtime** | Full Type‑Safe Runtime | Strong models, production governance | Low (controlled) | Highest | Medium | **Open Full Runtime** |
+| **RP Runtime** | Role‑Play Compatible Mode | Creative work, persona‑driven sessions | High | High | Medium‑High | **Open RP Runtime** |
+| **Lite Runtime** | Degraded Environment Survival Mode | Filtered, rate‑limited, or weak models | Low | Medium | High | **Open Lite Runtime** |
+| **RP‑Lite Runtime** | RP + Survival Mode | Small/distilled models that drift into RP | High | Medium | Highest | **Open RP‑Lite Runtime** |
+
+---
+
+### **Visual Variant Map**
+
+```mermaid
+flowchart TD
+    A[ORP v3.0 Core] --> B[Full Runtime<br>ORP_RUNTIME.md]
+    A --> C[Role-Play Mode<br>ORP_RUNTIME_RP.md]
+    A --> D[Lite Survival Mode<br>ORP_RUNTIME_LITE.md]
+    A --> E[RP-Lite Mode<br>ORP_RUNTIME_RP_LITE.md]
+
+    B -->|Highest Governance| F[Strong Models]
+    C -->|Immersive Allowed| G[Creative Sessions]
+    D -->|Maximum Survival| H[Filtered Models]
+    E -->|Best Balance| I[Small / RP-Biased Models]
+```
+
+---
+
+### **Quick Selection Guide**
+
+- Use **Full Runtime** → Strong models (high capability)  
+- Use **RP Mode** → Persona‑consistent creative sessions  
+- Use **LITE Mode** → When model performance degrades  
+- Use **RP‑LITE Mode** → Small models that drift into RP  
+
+---
+
+### **Optimization Axiom**
+
+> **Optimization is the highest form of respect for the hardware.**
+
+Choose the lightest viable variant that still maintains governance.
 
 ---
 
@@ -320,62 +359,13 @@ Primary transformer failure mode where stylistic coherence persists while proven
 
 ---
 
-# **System Design Principles**
+# **Design Principles**
 
 1. **Separation of Concerns**  
 2. **No Cross‑Contamination**  
 3. **Epistemic Isolation**  
 4. **Failure Transparency**  
 5. **Recoverability Over Completion**  
-
----
-
-# **Design Intent**
-
-**ORP IS**:
-
-- A governance‑first reasoning protocol  
-- A drift‑observable & anti‑degradation framework  
-- A provenance preservation system  
-- A structured epistemic architecture  
-- A recoverable reasoning environment  
-
-**ORP IS NOT**:
-
-- A chatbot personality layer  
-- A creativity enhancement framework  
-- A persuasion engine  
-- A narrative optimization system  
-
----
-
-# **Integrated ORP v3.0 Spec Sheet (Simplified)**  
-*(Embedded for contributor onboarding)*
-
-## **Layer Summary**
-
-- **L3 Governance:** Authority kernel, SHS, σ² drift  
-- **L2 Variants:** Full, RP, Lite, RP‑Lite  
-- **L1 Execution:** Model inference under constraints  
-
-## **Flow Types**
-
-- **Governance:** Heavy solid  
-- **Operational:** Medium solid  
-- **Telemetry:** Thin dashed  
-
-## **Operational Guarantees**
-
-- Determinism envelope  
-- Persona stability  
-- Filter resistance  
-- Survival mode  
-
-## **Traceability**
-
-- A1–D4 coordinate grid  
-- Reference markers (Ⓐ, Ⓑ, Ⓒ…)  
-- Flow IDs (F‑01, F‑02…)  
 
 ---
 
