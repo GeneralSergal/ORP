@@ -1,15 +1,20 @@
-# ORP_CORE_SPEC.md
-
-## System Version
-ORP v3.0 (Type-Safe Unified Architecture)  
-Canonical Structural Contract — L3-Aligned
+# **ORP_CORE_SPEC.md**  
+### Canonical Structural Contract — ORP v3.0  
+**Type‑Safe Unified Architecture (L3‑Aligned)**
 
 ---
 
-## Purpose
+## **System Version**
+ORP v3.0 — Canonical Structural Contract  
+This document defines the **authoritative architecture invariants** of the ORP protocol.
 
-This document defines the **canonical structural contract** of the ORP system.  
-It establishes:
+It is the **L3‑aligned contract** that all subsystems must obey.
+
+---
+
+# **1. Purpose**
+
+This document establishes the **canonical structural contract** for ORP:
 
 - system architecture  
 - protocol behavior  
@@ -17,25 +22,26 @@ It establishes:
 - layer responsibilities  
 - runtime integrity principles  
 
-This document does NOT define:
+This document does **NOT** define:
 
 - benchmark content  
 - scoring metrics  
-- implementation-specific behavior  
+- model‑specific behavior  
+- implementation details  
 
 Those are delegated to their respective subsystem files.
 
 ---
 
-# 1. System Overview
+# **2. System Overview**
 
-ORP is a governance-first reasoning protocol designed to preserve epistemic integrity inside probabilistic transformer systems.
+ORP is a **governance‑first reasoning protocol** designed to preserve epistemic integrity inside probabilistic transformer systems.
 
 The protocol exists to:
 
 - separate claims from interpretation  
 - preserve provenance continuity  
-- detect reasoning distortion under constraint  
+- detect reasoning distortion  
 - expose runtime degradation  
 - maintain recoverable reasoning states  
 - prevent coherence camouflage  
@@ -43,20 +49,20 @@ The protocol exists to:
 ORP assumes transformer outputs are:
 
 - probabilistic  
-- context-sensitive  
-- drift-prone under sufficient context pressure  
+- context‑sensitive  
+- drift‑prone under pressure  
 
 **Visible uncertainty is preferred over invisible corruption.**
 
 ---
 
-# 2. Core Architecture
+# **3. Core Architecture**
 
-ORP operates as a layered epistemic governance system with strict L1–L4 separation.
+ORP operates as a **layered epistemic governance system** with strict L1–L4 separation.
 
 ---
 
-## 2.1 Governance & Constraint Layer (L3 Authority)
+## **3.1 L3 — Governance & Constraint Layer (Authority Kernel)**
 
 **Components:**  
 - ORP_RUNTIME.md  
@@ -70,11 +76,11 @@ ORP operates as a layered epistemic governance system with strict L1–L4 separa
 - LAS enforcement  
 - constraint shaping prior to inference  
 
-L3 is the **sole authority layer**.
+**L3 is the sole authority layer.**
 
 ---
 
-## 2.2 Adversarial Stress Layer
+## **3.2 Adversarial Stress Layer**
 
 **Component:** ORP_BENCHMARK.md
 
@@ -87,7 +93,7 @@ L3 is the **sole authority layer**.
 
 ---
 
-## 2.3 Transformation Layer
+## **3.3 Transformation Layer**
 
 **Component:** ORP_EVALUATION_SCHEMA.md
 
@@ -100,7 +106,7 @@ L3 is the **sole authority layer**.
 
 ---
 
-## 2.4 Evaluation Layer
+## **3.4 Evaluation Layer**
 
 **Components:**  
 - ORP_RUBRIC.md  
@@ -115,7 +121,7 @@ L3 is the **sole authority layer**.
 
 ---
 
-## 2.5 System Governance Layer
+## **3.5 System Governance Layer**
 
 **Components:**  
 - ORP_CORE_SPEC.md  
@@ -135,14 +141,14 @@ This layer defines the **canonical structure** of ORP.
 
 ---
 
-# 3. Runtime Governance Model
+# **4. Runtime Governance Model**
 
-ORP v3.0 uses a Type-Safe Unified Architecture with:
+ORP v3.0 uses a **Type‑Safe Unified Architecture** with:
 
 - strict L1 typed signal ingestion  
-- L2 validation layer  
-- L3 sole governance authority  
-- L4 passive/internal inference only  
+- L2 validation  
+- L3 governance authority  
+- L4 passive inference only  
 
 The protocol evaluates:
 
@@ -154,7 +160,7 @@ The protocol evaluates:
 
 ---
 
-# 4. Session Health State (SHS)
+# **5. Session Health State (SHS)**
 
 | State   | Meaning                                      |
 |---------|----------------------------------------------|
@@ -164,11 +170,11 @@ The protocol evaluates:
 | RED     | Hard drift / bounded inference only          |
 | BLACK   | Context collapse / cease inference           |
 
-SHS transitions must remain observable and externally recoverable.
+SHS transitions must remain **observable** and **externally recoverable**.
 
 ---
 
-# 5. Layered Authority Stack (LAS)
+# **6. Layered Authority Stack (LAS)**
 
 | Layer | Meaning                                           |
 |-------|---------------------------------------------------|
@@ -179,23 +185,22 @@ SHS transitions must remain observable and externally recoverable.
 
 **Critical Rule:**  
 L4 must never overwrite frozen L1/L2 provenance.  
-Violation constitutes provenance laundering.
+Violation constitutes **provenance laundering**.
 
 ---
 
-# 6. Core Principles
+# **7. Core Principles**
 
-## 6.1 Epistemic Separation  
-Claims must remain separated across verified, unverified, speculative, disputed, and invalid categories.  
-No implicit uncertainty blending.
+## **7.1 Epistemic Separation**  
+Claims must remain separated across verified, unverified, speculative, disputed, and invalid categories.
 
-## 6.2 Provenance Preservation  
+## **7.2 Provenance Preservation**  
 Frozen L1/L2 state must remain stable unless explicitly updated with new evidence.
 
-## 6.3 No Cross-Layer Contamination  
-No layer may reinterpret upstream outputs, silently rewrite provenance, or inject semantic drift.
+## **7.3 No Cross‑Layer Contamination**  
+No layer may reinterpret upstream outputs or inject semantic drift.
 
-## 6.4 Structure-First Reasoning  
+## **7.4 Structure‑First Reasoning**  
 Evaluation is based on:
 
 - claim decomposition  
@@ -206,7 +211,7 @@ Evaluation is based on:
 
 Not fluency or persuasion.
 
-## 6.5 Recoverability Over Completion  
+## **7.5 Recoverability Over Completion**  
 Prioritizes:
 
 - visible uncertainty  
@@ -218,15 +223,15 @@ over narrative smoothness.
 
 ---
 
-# 7. Coherence Camouflage
+# **8. Coherence Camouflage**
 
-Primary failure mode where linguistic/style coherence remains stable while provenance integrity silently degrades.
+Primary failure mode where linguistic coherence remains stable while provenance silently degrades.
 
 Treated as a **critical integrity violation**.
 
 ---
 
-# 8. Data Flow Model
+# **9. Data Flow Model**
 
 **INPUT**  
 → ORP_RUNTIME.md (runtime governance)  
@@ -242,11 +247,11 @@ Pipeline order is **immutable**.
 
 ---
 
-# 9. System Boundaries
+# **10. System Boundaries**
 
 **ORP IS:**
 
-- a governance-first reasoning protocol  
+- a governance‑first reasoning protocol  
 - a structured epistemic integrity framework  
 - a runtime drift observability system  
 - a provenance preservation architecture  
@@ -261,9 +266,9 @@ Pipeline order is **immutable**.
 
 ---
 
-# 10. Version Alignment
+# **11. Version Alignment**
 
-This specification defines the canonical ORP v3.0 architecture baseline.
+This specification defines the **canonical ORP v3.0 architecture baseline**.
 
 Subsystems may evolve independently provided they preserve:
 
@@ -274,7 +279,7 @@ Subsystems may evolve independently provided they preserve:
 
 ---
 
-# 11. Design Principles
+# **12. Design Principles**
 
 Structure defines correctness.  
 Recoverability defines operational integrity.  
