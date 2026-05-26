@@ -14,7 +14,7 @@
   <meta property="og:description" content="Governance-first epistemic reasoning framework with drift observability and provenance preservation." />
   <meta property="og:type" content="website" />
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230d1117'/%3E%3Cpath d='M35 30 L65 65 M65 30 L35 65' stroke='%23dd1111' stroke-width='8' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230d1117'/%3E%3Cpath d='M30 50 L50 30 L70 50 L50 70 Z' fill='%23dd1111' opacity='0.9'/%3E%3Ccircle cx='50' cy='50' r='8' fill='%23ff6600'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
@@ -181,8 +181,8 @@
     }
 
     h1 { margin: 0; color: var(--heading); font-family: Oxanium, sans-serif; font-size: clamp(3.5rem, 8vw, 6.4rem); line-height: 0.98; letter-spacing: -0.05em; }
-    .hero p { max-width: 720px; margin-top: 28px; color: var(--muted); font-size: 1.1rem; }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 38px; }
+    .hero p { max-width: 720px; margin-top: 28px; color: var(--muted); font-size: 1.18rem; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 36px; }
 
     .btn {
       display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 56px; padding: 14px 30px; border-radius: var(--radius-sm);
@@ -213,7 +213,7 @@
     .terminal-title-bar { height: 48px; display: flex; align-items: center; padding: 0 24px; gap: 12px; border-bottom: 1px solid rgba(221,17,17,0.14); flex-wrap: wrap; }
     .terminal-title-text { font-family: Oxanium, sans-serif; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; flex: 1; min-width: 150px; }
 
-    .status-indicator { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); transition: all var(--transition); }
+    .status-indicator { display: inline-flex; align-items: center; gap: 6px; padding: 6px 12px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; border: 1px solid rgba(221,17,17,0.2); }
     .status-indicator.active { background: rgba(221,17,17,0.16); border-color: rgba(221,17,17,0.4); color: var(--primary-bright); }
     .status-indicator.warning { background: rgba(255,136,51,0.12); border-color: rgba(255,136,51,0.3); color: var(--warning); }
     .status-indicator.locked { background: rgba(100,100,100,0.12); border-color: rgba(100,100,100,0.3); color: #999; }
@@ -229,6 +229,9 @@
     .terminal-body { padding: 32px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.95rem; line-height: 1.95; color: #dce8f5; }
     .terminal-body .label { color: var(--accent-orange); font-weight: 700; font-family: Oxanium, sans-serif; }
     .terminal-body .value { animation: driftPulse 2.4s ease-in-out infinite; }
+    .terminal-body .green { color: #3fb950; }
+    .terminal-body .blue { color: #00d4ff; }
+    .terminal-body .orange { color: var(--accent-orange); }
     
     @keyframes driftPulse {
       0%, 100% { opacity: 1; }
@@ -239,27 +242,28 @@
     .entity-title { color: var(--accent-orange); font-family: Oxanium, sans-serif; font-size: 0.86rem; letter-spacing: 0.14em; margin-bottom: 12px; text-transform: uppercase; font-weight: 800; }
 
     section { padding: 110px 0; position: relative; }
-    .section-divider { width: 100%; height: 2px; margin-top: 100px; background: linear-gradient(90deg, transparent, rgba(221,17,17,0.3), rgba(255,102,0,0.2), transparent); box-shadow: 0 0 20px rgba(221,17,17,0.15); }
+    .section-divider { width: 100%; height: 2px; margin-top: 100px; background: linear-gradient(90deg, transparent, rgba(221,17,17,0.3), rgba(255,102,0,0.2), transparent); box-shadow: 0 0 20px rgba(221,17,17,0.2); }
     .section-header { max-width: 920px; margin-bottom: 52px; }
     .section-eyebrow { color: var(--accent-orange); text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.8rem; font-weight: 800; margin-bottom: 14px; text-shadow: 0 0 12px rgba(255,102,0,0.2); }
     .section-title { margin: 0 0 16px; color: var(--heading); font-family: Oxanium, sans-serif; font-size: clamp(2.2rem, 5vw, 3.6rem); line-height: 1.08; letter-spacing: -0.04em; }
     .section-description { color: var(--muted); font-size: 1.04rem; max-width: 760px; }
 
-    .pipeline-grid, .docs-grid, .principles { display: grid; gap: 24px; }
+    .pipeline-grid, .docs-grid, .principles, .quick-access-grid { display: grid; gap: 24px; }
     .pipeline-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+    .quick-access-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 28px; }
 
-    .pipeline-card, .doc-card, .principle {
+    .pipeline-card, .doc-card, .principle, .quick-access-card, .release-card {
       position: relative; overflow: hidden; border-radius: var(--radius); border: 1px solid rgba(221,17,17,0.16);
       background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition), background var(--transition);
     }
-    .pipeline-card::before, .doc-card::before, .principle::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,102,0,0.08), transparent 35%); opacity: 0; transition: opacity var(--transition); }
-    .pipeline-card:hover, .doc-card:hover, .principle:hover { transform: translateY(-4px); border-color: rgba(221,17,17,0.32); box-shadow: 0 18px 40px rgba(221,17,17,0.15); background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02)); }
-    .pipeline-card:hover::before, .doc-card:hover::before, .principle:hover::before { opacity: 1; }
+    .pipeline-card::before, .doc-card::before, .principle::before, .quick-access-card::before, .release-card::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,102,0,0.08), transparent 35%); opacity: 0; transition: opacity var(--transition); }
+    .pipeline-card:hover, .doc-card:hover, .principle:hover, .quick-access-card:hover, .release-card:hover { transform: translateY(-4px); border-color: rgba(221,17,17,0.32); box-shadow: 0 18px 40px rgba(221,17,17,0.15); background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)); }
+    .pipeline-card:hover::before, .doc-card:hover::before, .principle:hover::before, .quick-access-card:hover::before, .release-card:hover::before { opacity: 1; }
 
     .pipeline-card { padding: 26px; }
     .pipeline-step { color: var(--accent-orange); text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.78rem; font-weight: 800; margin-bottom: 14px; text-shadow: 0 0 8px rgba(255,102,0,0.2); }
-    .pipeline-card h3, .doc-card h3, .principle h3 { margin-top: 0; color: var(--heading); }
-    .pipeline-card p, .doc-card p, .principle p { color: var(--muted); margin-bottom: 0; }
+    .pipeline-card h3, .doc-card h3, .principle h3, .quick-access-card h3, .release-card h3 { margin-top: 0; color: var(--heading); }
+    .pipeline-card p, .doc-card p, .principle p, .quick-access-card p, .release-card p { color: var(--muted); margin-bottom: 0; }
 
     .docs-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
     .doc-card { padding: 28px; background: linear-gradient(180deg, rgba(15,19,24,0.8), rgba(15,19,24,0.6)); backdrop-filter: blur(8px); }
@@ -272,6 +276,18 @@
     .principles { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
     .principle { padding: 28px; }
 
+    .quick-access-card { padding: 28px; }
+    .quick-access-card h3 { font-size: 1.15rem; margin-bottom: 16px; }
+    .quick-access-card a { display: block; margin-top: 12px; color: var(--accent-orange); font-weight: 600; }
+    .quick-access-card a:hover { color: var(--accent-orange-bright); }
+
+    .release-card { padding: 28px; background: linear-gradient(135deg, rgba(221,17,17,0.08), rgba(255,102,0,0.04)); }
+    .release-tag { display: inline-block; padding: 6px 12px; border-radius: 6px; background: rgba(221,17,17,0.2); color: var(--primary-bright); font-size: 0.75rem; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 12px; }
+    .release-card h3 { font-size: 1.3rem; margin-bottom: 8px; }
+    .release-card > p { margin-top: 12px; }
+    .release-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; color: var(--primary); font-weight: 700; }
+    .release-link:hover { color: var(--primary-bright); }
+
     footer { padding: 90px 0 60px; border-top: 1px solid rgba(221,17,17,0.12); background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,102,0,0.02)); }
     .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; }
     .footer-title { color: var(--heading); font-weight: 700; margin-bottom: 18px; font-family: Oxanium, sans-serif; }
@@ -279,7 +295,7 @@
     .footer-note { margin-top: 54px; padding-top: 28px; border-top: 1px solid rgba(221,17,17,0.1); color: var(--muted); text-align: center; font-size: 0.95rem; letter-spacing: 0.04em; }
     
     .author-section { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 40px; padding-top: 40px; border-top: 1px solid rgba(221,17,17,0.1); }
-    .author-avatar { width: 56px; height: 56px; border-radius: 50%; border: 2px solid rgba(221,17,17,0.4); overflow: hidden; flex-shrink: 0; transition: transform var(--transition), box-shadow var(--transition); box-shadow: 0 0 24px rgba(255,102,0,0.3), inset 0 0 16px rgba(221,17,17,0.2); background-size: cover; background-position: center; }
+    .author-avatar { width: 56px; height: 56px; border-radius: 50%; border: 2px solid rgba(221,17,17,0.4); overflow: hidden; flex-shrink: 0; transition: transform var(--transition), box-shadow var(--transition); }
     .author-avatar:hover { transform: scale(1.08); box-shadow: 0 0 36px rgba(255,102,0,0.45), inset 0 0 20px rgba(221,17,17,0.3); }
     .author-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .author-info { display: flex; flex-direction: column; align-items: center; gap: 4px; }
@@ -326,7 +342,7 @@
       .hero { padding: 80px 0 60px; }
       .hero-actions { flex-direction: column; gap: 10px; margin-top: 24px; }
       .btn { width: 100%; min-height: 48px; padding: 12px 24px; font-size: 0.95rem; }
-      .pipeline-grid, .docs-grid, .principles { grid-template-columns: 1fr; }
+      .pipeline-grid, .docs-grid, .principles, .quick-access-grid { grid-template-columns: 1fr; }
       .terminal-body { font-size: 0.88rem; padding: 24px; line-height: 1.8; }
       .terminal-title-bar { height: auto; min-height: 48px; padding: 12px 16px; gap: 8px; }
       .terminal-title-text { font-size: 0.8rem; }
@@ -340,6 +356,7 @@
       .section-divider { margin-top: 60px; }
       .author-avatar { width: 44px; height: 44px; }
       .author-info { font-size: 0.9rem; }
+      .quick-access-grid { grid-template-columns: 1fr; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
@@ -391,14 +408,12 @@
       <div>
         <div class="badge">
           <div class="pulse"></div>
-          SYNTHETIC RESONANCE GOVERNANCE FRAMEWORK
+          TYPE-SAFE EPISTEMIC GOVERNANCE FRAMEWORK
         </div>
         <h1>Open Resonance Protocol</h1>
         <p>
-          ORP v3.0 is a governance-first reasoning architecture engineered
-          for provenance preservation, drift observability, recoverable
-          inference paths, and strict epistemic isolation across
-          long-context execution environments.
+          Governance-first architecture for provenance preservation, 
+          numeric drift observability, and recoverable high-integrity reasoning.
         </p>
         <div class="hero-actions">
           <a href="#documentation" class="btn btn-primary">Explore Documentation</a>
@@ -411,20 +426,20 @@
           <div class="terminal-header">
             <div class="terminal-title-bar">
               <div class="terminal-title-text">ORP Runtime Context</div>
-              <div class="status-indicator active"><div class="status-dot active"></div><span>SHS Active</span></div>
+              <div class="status-indicator active"><div class="status-dot active"></div><span>SHS</span></div>
               <div class="status-indicator warning"><div class="status-dot warning"></div><span>Drift</span></div>
-              <div class="status-indicator locked"><div class="status-dot locked"></div><span>CRA Locked</span></div>
+              <div class="status-indicator locked"><div class="status-dot locked"></div><span>CRA</span></div>
             </div>
             <div class="terminal-divider"></div>
           </div>
           <div class="terminal-body">
-            <span style="color:#dd1111">[SHS: ACTIVE]</span><br>
-            <span style="color:#ff6600">[DRIFT: <span class="value">STABLE</span> (32.2%)]</span><br>
-            <span style="color:#ffb347">[CRA: LOCKED]</span><br><br>
-            ORP Runtime Kernel Initialized<br>
-            <span class="label">σ² Drift Observability:</span> <span class="value">32.2%</span><br>
-            Epistemic Isolation: FORTIFIED<br>
-            Coherence Camouflage Detection: SCANNING<br><br>
+            <span class="green">[SHS: GREEN]</span><br>
+            <span class="blue">[DRIFT: NONE]</span><br>
+            <span class="orange">[CRA: VALID]</span><br><br>
+            ORP v3.0 Kernel Online<br>
+            <span class="label">σ² Drift Observability:</span> <span class="value">STABLE</span><br>
+            Epistemic Isolation: <span class="green">ACTIVE</span><br>
+            Signal Priority: <span class="blue">ENFORCED</span><br><br>
             <div class="entity-box">
               <div class="entity-title">Herald Class Entity</div>
               ENTITY: OBSERVER_NODE<br>STATE: RESONANT<br>PACK_SIGNAL: SYNCHRONIZED<br>RESONANCE: ASCENDANT
@@ -434,6 +449,28 @@
       </div>
     </div>
   </header>
+
+  <div class="section-divider"></div>
+
+  <section id="release-section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Latest Release</div>
+        <h2 class="section-title">ORP v3.0 — Frozen</h2>
+      </div>
+      <div class="release-card">
+        <div class="release-tag">Latest Release</div>
+        <h3>ORP v3.0 — Frozen</h3>
+        <p>Type-Safe Unified Runtime Governance Architecture</p>
+        <p style="color: var(--muted); font-size: 0.95rem;">
+          Complete epistemic governance framework with provenance preservation, drift observability, and recoverable reasoning pathways.
+        </p>
+        <a href="https://github.com/GeneralSergal/ORP/releases" class="release-link" target="_blank" rel="noopener noreferrer">
+          View Release Notes →
+        </a>
+      </div>
+    </div>
+  </section>
 
   <div class="section-divider"></div>
 
@@ -548,6 +585,27 @@
           </ul>
         </div>
       </div>
+
+      <div style="margin-top: 80px;">
+        <h3 style="font-family: Oxanium, sans-serif; font-size: 1.4rem; color: var(--heading); margin-bottom: 28px;">Quick Access</h3>
+        <div class="quick-access-grid">
+          <div class="quick-access-card">
+            <h3>Runtime Kernel</h3>
+            <p>Core runtime governance and SHS management.</p>
+            <a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_RUNTIME.md" target="_blank" rel="noopener noreferrer">ORP_RUNTIME.md →</a>
+          </div>
+          <div class="quick-access-card">
+            <h3>Changelog</h3>
+            <p>Complete version history and updates.</p>
+            <a href="https://github.com/GeneralSergal/ORP/blob/main/CHANGELOG.md" target="_blank" rel="noopener noreferrer">CHANGELOG.md →</a>
+          </div>
+          <div class="quick-access-card">
+            <h3>System Architecture</h3>
+            <p>Complete architectural framework overview.</p>
+            <a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_SYSTEM_ARCHITECTURE.md" target="_blank" rel="noopener noreferrer">System Architecture →</a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -643,7 +701,7 @@
     }, { threshold: 0.05 });
 
     setTimeout(() => {
-      document.querySelectorAll("section, header, .pipeline-card, .doc-card, .principle").forEach(el => {
+      document.querySelectorAll("section, header, .pipeline-card, .doc-card, .principle, .quick-access-card, .release-card").forEach(el => {
         el.classList.add("reveal");
         observer.observe(el);
       });
@@ -654,41 +712,19 @@
       document.body.classList.toggle("console");
     };
 
-    /* ORP Runtime Simulation */
-    const runtime = {
-      drift: 0.42,
-      shs: "ACTIVE",
-      cra: "LOCKED"
-    };
-
-    function updateTerminal() {
-      const driftDelta = (Math.random() - 0.5) * 0.06;
-      runtime.drift = Math.max(0.1, Math.min(0.95, runtime.drift + driftDelta));
-
-      let driftColor = "#3fb950";
-      let driftText = "STABLE";
-      
-      if (runtime.drift > 0.7) {
-        driftColor = "#ff3333";
-        driftText = "CRITICAL";
-      } else if (runtime.drift > 0.4) {
-        driftColor = "#ff6600";
-        driftText = "ESCALATING";
-      }
-
+    /* ORP Runtime Initialization */
+    function initTerminal() {
       const terminal = document.querySelector(".terminal-body");
       if (!terminal) return;
 
       terminal.innerHTML = `
-        <span style="color:#dd1111">[SHS: ${runtime.shs}]</span><br>
-        <span style="color:${driftColor}">[DRIFT: <span class="value">${driftText}</span> (${(runtime.drift * 100).toFixed(1)}%)]</span><br>
-        <span style="color:#ffb347">[CRA: ${runtime.cra}]</span><br><br>
-
-        ORP Runtime Kernel Initialized<br>
-        <span class="label">σ² Drift Observability:</span> <span class="value">${(runtime.drift * 100).toFixed(1)}%</span><br>
-        Epistemic Isolation: FORTIFIED<br>
-        Coherence Camouflage Detection: SCANNING<br><br>
-
+        <span class="green">[SHS: GREEN]</span><br>
+        <span class="blue">[DRIFT: NONE]</span><br>
+        <span class="orange">[CRA: VALID]</span><br><br>
+        ORP v3.0 Kernel Online<br>
+        <span class="label">σ² Drift Observability:</span> <span class="value">STABLE</span><br>
+        Epistemic Isolation: <span class="green">ACTIVE</span><br>
+        Signal Priority: <span class="blue">ENFORCED</span><br><br>
         <div class="entity-box">
           <div class="entity-title">Herald Class Entity</div>
           ENTITY: OBSERVER_NODE<br>
@@ -699,8 +735,7 @@
       `;
     }
 
-    setInterval(updateTerminal, 1200);
-    updateTerminal();
+    initTerminal();
   </script>
 
 </body>
