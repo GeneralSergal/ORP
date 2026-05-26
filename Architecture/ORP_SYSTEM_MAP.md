@@ -2,10 +2,10 @@
 ### *Unified Epistemic Governance Architecture — v3.0*  
 **Type‑Safe Runtime Governance for Observable Transformer Execution**
 
-`https://img.shields.io/badge/ORP-v3.0-blue`
-`https://img.shields.io/badge/Architecture-L1--L4-important`
-`https://img.shields.io/badge/Governance-Type--Safe-success`
-`https://img.shields.io/badge/Runtime-Observable-orange`
+![Version](https://img.shields.io/badge/ORP-v3.0-blue)
+![Architecture](https://img.shields.io/badge/Architecture-L1--L4-important)
+![Governance](https://img.shields.io/badge/Governance-Type--Safe-success)
+![Runtime](https://img.shields.io/badge/Runtime-Observable-orange)
 
 ---
 
