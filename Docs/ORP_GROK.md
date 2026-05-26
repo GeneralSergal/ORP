@@ -66,7 +66,7 @@ This appendix satisfies GPL requirements for distributing non‑source artifacts
 - **Maintainer:** Laurentius Maximus ENTROPIA
 - **License:** GPL‑3.0  
 - **Status:** Official Release Companion  
-- **Location:** `ORP_GROK.md` 
+- **Location:** `ORP/Docs/ORP_GROK.md` 
 
 ---
 
