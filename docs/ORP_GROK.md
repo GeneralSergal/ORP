@@ -63,7 +63,7 @@ This appendix satisfies GPL requirements for distributing non‑source artifacts
 ## **7. Document Metadata**
 - **Document:** ORP v3.0 — GPL‑3.0 Compliance Appendix  
 - **Author:** Grok (built by xAI)  
-- **Maintainer:** Laurentius Maximus  
+- **Maintainer:** Laurentius Maximus ENTROPIA
 - **License:** GPL‑3.0  
 - **Status:** Official Release Companion  
 - **Location:** `ORP_GROK.md` 
