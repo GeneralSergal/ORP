@@ -236,7 +236,7 @@
     .status-indicator.locked { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.1); color: var(--muted); }
     
     .status-dot { width: 6px; height: 6px; border-radius: 50%; animation: statusPulse 2s infinite; }
-    .status-dot.active { background: var(--primary-bright); box-shadow: 0 0 8px rgba(221,17,17,0.8); }
+    .status-dot.active { background: var(--primary-bright); box-shadow: 0 0 8px rgba(221,17,17,0.8); animation: statusPulse 2s infinite; }
     .status-dot.warning { background: var(--warning); box-shadow: 0 0 8px rgba(255,136,51,0.8); }
     .status-dot.locked { background: var(--muted); box-shadow: none; animation: none; }
 
@@ -357,20 +357,94 @@
       .hero { padding-top: 80px; }
       .toc-panel { display: none; }
     }
+
+    /* Highly Optimized Responsive Mode for modern high-DPI displays */
     @media (max-width: 640px) {
       .container { width: min(calc(100% - 32px), 1280px); }
-      .hero { padding: 60px 0 40px; }
+      
+      /* Navigation Segment Upgrade to Tactical MD3 Layout */
+      .nav-inner {
+        padding: 16px 0;
+        flex-direction: column;
+        align-items: center;
+        gap: 16px;
+        text-align: center;
+      }
+      .nav-links {
+        justify-content: center;
+        gap: 12px;
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* Forms a clean uniform 2x2 grid */
+      }
+      .nav-links a {
+        font-size: 0.85rem;
+        font-weight: 600;
+        padding: 10px 4px;
+        background: rgba(221, 17, 17, 0.04);
+        border: 1px solid rgba(221, 17, 17, 0.1);
+        border-radius: var(--radius-xs);
+        letter-spacing: 0.25px;
+        display: block;
+        transition: background-color var(--transition), border-color var(--transition);
+      }
+      .nav-links a:hover {
+        background: rgba(221, 17, 17, 0.08);
+        border-color: rgba(255, 102, 0, 0.3);
+      }
+      .nav-links a::after {
+        display: none !important; /* Hides the hover bar which misaligns on mobile button structures */
+      }
+
+      /* Compact Header Framework */
+      .hero { padding: 40px 0 24px; }
       .hero-actions { flex-direction: column; gap: 12px; margin-top: 32px; }
       .btn { width: 100%; min-height: 48px; }
-      .pipeline-grid, .docs-grid, .principles, .quick-access-grid { grid-template-columns: 1fr; }
+      
+      h1 {
+        font-size: 2.5rem !important;
+        line-height: 1.15;
+        letter-spacing: -0.01em;
+      }
+
+      /* Section real estate optimization */
+      section { padding: 44px 0; }
+      .section-header { margin-bottom: 28px; }
+
+      /* Prevent terminal stats card from wrapping awkwardly */
+      .terminal-title-bar {
+        height: auto;
+        min-height: 48px;
+        padding: 12px 16px;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 8px;
+      }
+      .terminal-title-text {
+        font-size: 0.75rem;
+        letter-spacing: 0.05em;
+        flex-basis: 100%; /* Forces the main label text onto its own top line cleanly */
+        margin-bottom: 4px;
+      }
+      .status-indicator {
+        font-size: 0.65rem;
+        padding: 4px 10px;
+        margin: 0;
+      }
+
+      /* Tighter surface card mapping */
+      .pipeline-grid, .docs-grid, .principles, .quick-access-grid { grid-template-columns: 1fr; gap: 16px; }
+      .pipeline-card, .doc-card, .principle, .quick-access-card, .release-card {
+        padding: 20px !important;
+        border-radius: var(--radius-sm) !important; /* Retain 16px curved layout density */
+      }
+
       .terminal-body { font-size: 0.88rem; padding: 20px; line-height: 1.75; }
-      .terminal-title-bar { height: auto; min-height: 56px; padding: 12px 20px; gap: 8px; }
-      .status-indicator { font-size: 0.68rem; padding: 4px 10px; }
       .entity-box { padding: 14px; margin-top: 18px; }
       .scroll-top { bottom: 24px; right: 24px; width: 44px; height: 44px; }
-      .section-title { font-size: clamp(1.8rem, 4vw, 2.4rem); }
-      section { padding: 60px 0; }
-      .author-avatar { width: 80px; height: 80px; }
+      .author-avatar { width: 90px; height: 90px; }
     }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
@@ -712,12 +786,6 @@
         observer.observe(el);
       });
     }, 400);
-
-    /* Console Mode Toggle Commented Out
-    document.querySelector(".console-toggle").onclick = () => {
-      document.body.classList.toggle("console");
-    };
-    */
 
     /* ORP Runtime Initialization */
     function initTerminal() {
