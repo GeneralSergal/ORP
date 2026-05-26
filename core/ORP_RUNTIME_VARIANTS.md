@@ -49,6 +49,8 @@ flowchart TD
 - Use **LITE Mode** → When model performance suddenly degrades
 - Use **RP-LITE Mode** → Best for smaller models that naturally drift into role-play
 
+See also: [ORP Design Philosophy](../docs/ORP_DESIGN_PHILOSOPHY.md)
+
 ---
 
 ### Optimization Axiom
