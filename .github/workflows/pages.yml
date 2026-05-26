@@ -24,9 +24,17 @@ jobs:
       - name: Prepare deployment directory
         run: |
           mkdir -p public
+          
+          # Copy main interface file if it exists
           if [ -f index.html ]; then cp index.html public/; fi
+          
+          # Copy avatar if it exists
           if [ -f avatar.jpg ]; then cp avatar.jpg public/; fi
-          if [ -d docs ]; then cp -R docs/* public/; fi
+          
+          # Safely copy the docs directory itself instead of using an exploding wildcard
+          if [ -d docs ] && [ "$(ls -A docs 2>/dev/null)" ]; then 
+            cp -R docs public/
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
