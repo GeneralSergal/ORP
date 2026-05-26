@@ -25,26 +25,10 @@ jobs:
       - name: Prepare deployment directory
         run: |
           mkdir -p public
-
-          # Copy index.html if present
-          if [ -f index.html ]; then
-            cp index.html public/
-          fi
-
-          # Copy avatar if present
-          if [ -f avatar.jpg ]; then
-            cp avatar.jpg public/
-          fi
-
-          # Copy docs directory if non-empty
-          if [ -d docs ] && [ "$(ls -A docs 2>/dev/null)" ]; then
-            cp -R docs public/
-          fi
-
-          # Ensure artifact is never empty
-          if [ ! -f public/index.html ]; then
-            echo "<h1>ORP Documentation</h1>" > public/index.html
-          fi
+          if [ -f index.html ]; then cp index.html public/; fi
+          if [ -f avatar.jpg ]; then cp avatar.jpg public/; fi
+          if [ -d docs ] && [ "$(ls -A docs 2>/dev/null)" ]; then cp -R docs public/; fi
+          if [ ! -f public/index.html ]; then echo "<h1>ORP Documentation</h1>" > public/index.html; fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -57,7 +41,6 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
