@@ -17,6 +17,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -24,16 +25,25 @@ jobs:
       - name: Prepare deployment directory
         run: |
           mkdir -p public
-          
-          # Copy main interface file if it exists
-          if [ -f index.html ]; then cp index.html public/; fi
-          
-          # Copy avatar if it exists
-          if [ -f avatar.jpg ]; then cp avatar.jpg public/; fi
-          
-          # Safely copy the docs directory itself instead of using an exploding wildcard
-          if [ -d docs ] && [ "$(ls -A docs 2>/dev/null)" ]; then 
+
+          # Copy index.html if present
+          if [ -f index.html ]; then
+            cp index.html public/
+          fi
+
+          # Copy avatar if present
+          if [ -f avatar.jpg ]; then
+            cp avatar.jpg public/
+          fi
+
+          # Copy docs directory if non-empty
+          if [ -d docs ] && [ "$(ls -A docs 2>/dev/null)" ]; then
             cp -R docs public/
+          fi
+
+          # Ensure artifact is never empty
+          if [ ! -f public/index.html ]; then
+            echo "<h1>ORP Documentation</h1>" > public/index.html
           fi
 
       - name: Upload artifact
@@ -47,6 +57,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
