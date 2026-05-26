@@ -3,7 +3,7 @@
   "version": "3.0",
   "model": "Type-Safe Unified Architecture",
   "type": "canonical_manifest",
-  "description": "Authoritative dependency and layer mapping for ORP v3.0",
+  "description": "Authoritative dependency, governance, and layer mapping for ORP v3.0",
 
   "pipeline_order": [
     "ORP_RUNTIME.md",
@@ -15,6 +15,33 @@
     "ORP_SCORING.md",
     "FINAL_OUTPUT_STATE"
   ],
+
+  "runtime_variants": {
+    "ORP_RUNTIME.md": {
+      "mode": "full",
+      "strictness": "highest",
+      "rp_support": "low",
+      "efficiency": "medium"
+    },
+    "ORP_RUNTIME_RP.md": {
+      "mode": "rp",
+      "strictness": "high",
+      "rp_support": "highest",
+      "efficiency": "medium-high"
+    },
+    "ORP_RUNTIME_LITE.md": {
+      "mode": "lite",
+      "strictness": "medium",
+      "rp_support": "low",
+      "efficiency": "highest"
+    },
+    "ORP_RUNTIME_RP_LITE.md": {
+      "mode": "rp-lite",
+      "strictness": "medium",
+      "rp_support": "high",
+      "efficiency": "highest"
+    }
+  },
 
   "layers": {
     "L1": {
@@ -40,8 +67,13 @@
       "layer": "L3",
       "type": "runtime_kernel",
       "depends_on": [],
-      "outputs": ["governed_runtime_state"],
-      "edges": ["ORP_PROMPT.md", "ORP_EVALUATION_SCHEMA.md", "ORP_RUBRIC.md"]
+      "outputs": ["governed_runtime_state", "shs_state"],
+      "edges": [
+        "ORP_PROMPT.md",
+        "ORP_EVALUATION_SCHEMA.md",
+        "ORP_RUBRIC.md",
+        "ORP_SIGMA_SQUARED_DRIFT.md"
+      ]
     },
 
     "ORP_PROMPT.md": {
@@ -88,7 +120,7 @@
       "layer": "L3",
       "type": "aggregation_layer",
       "depends_on": ["ORP_RUBRIC.md"],
-      "outputs": ["operational_integrity_score"],
+      "outputs": ["operational_integrity_score", "drift_severity"],
       "edges": ["FINAL_OUTPUT_STATE"]
     },
 
@@ -104,13 +136,23 @@
     "ORP_SIGMA_SQUARED_DRIFT.md": {
       "type": "numeric_drift_model",
       "layer": "observational",
-      "feeds": ["ORP_RUNTIME.md"],
+      "feeds": ["ORP_RUNTIME.md", "ORP_SCORING.md"],
       "definition": "variance(L1_signal_vector_over_time)"
     },
     "ORP_MODEL_DECAY_TRACKER.md": {
       "type": "degradation_observer",
       "layer": "observational",
       "feeds": ["ORP_ANTI_DEGRADATION.md"]
+    },
+    "ORP_FAILURE_MODES_CATALOG.md": {
+      "type": "failure_mode_index",
+      "layer": "observational",
+      "feeds": ["ORP_RUNTIME.md", "ORP_DRIFT_RECOVERY_PROTOCOL.md"]
+    },
+    "ORP_DRIFT_RECOVERY_PROTOCOL.md": {
+      "type": "recovery_logic",
+      "layer": "observational",
+      "feeds": ["ORP_RUNTIME.md"]
     }
   },
 
@@ -126,7 +168,8 @@
     "ORP_ARCHITECTURE.md",
     "ORP_EPISTEMIC_ISOLATION.md",
     "ORP_COHERENCE_CAMOUFLAGE.md",
-    "ORP_ANTI_DEGRADATION.md"
+    "ORP_ANTI_DEGRADATION.md",
+    "ORP_UNDERSTANDING_RP_DRIFT_TENDENCY.M"
   ],
 
   "critical_invariants": [
@@ -137,7 +180,8 @@
     "recoverability_over_completion",
     "sigma_squared_deterministic",
     "coherence_camouflage_is_failure",
-    "epistemic_isolation_required"
+    "epistemic_isolation_required",
+    "pipeline_order_is_immutable"
   ],
 
   "versioning_policy": {
