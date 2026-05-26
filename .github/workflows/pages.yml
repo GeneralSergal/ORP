@@ -57,7 +57,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-        with:
-          timeout: 300000        # Reduce timeout to 5 minutes so it fails fast instead of locking up for 10
-          error_count: 3          # Lower error tolerance thresholds to drop bad connections early
-          reporting_interval: 3000 # Poll more frequently for snappier status updates
