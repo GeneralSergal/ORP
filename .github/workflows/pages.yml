@@ -23,23 +23,10 @@ jobs:
 
       - name: Prepare deployment directory
         run: |
-          # Create clean production staging area
           mkdir -p public
-          
-          # Copy your main cyberpunk interface file from the root
-          if [ -f index.html ]; then
-            cp index.html public/
-          fi
-          
-          # Copy any asset dependencies (like avatar.jpg) if they exist in the root
-          if [ -f avatar.jpg ]; then
-            cp avatar.jpg public/
-          fi
-
-          # Safely mirror your structural docs subfolder if it exists
-          if [ -d docs ]; then
-            cp -R docs/* public/
-          fi
+          if [ -f index.html ]; then cp index.html public/; fi
+          if [ -f avatar.jpg ]; then cp avatar.jpg public/; fi
+          if [ -d docs ]; then cp -R docs/* public/; fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
@@ -52,7 +39,6 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
