@@ -1,40 +1,81 @@
-# **ORP_SYSTEM_MAP.md**  
-### *Unified Epistemic Governance Architecture — v3.0*  
+# **ORP System Map**  
+### Unified Epistemic Governance Architecture — v3.0  
 **Type‑Safe Runtime Governance for Observable Transformer Execution**
-
-![Version](https://img.shields.io/badge/ORP-v3.0-blue)
-![Architecture](https://img.shields.io/badge/Architecture-L1--L4-important)
-![Governance](https://img.shields.io/badge/Governance-Type--Safe-success)
-![Runtime](https://img.shields.io/badge/Runtime-Observable-orange)
 
 ---
 
-# **System Version**
+# **0. Quick Overview**
+
+ORP v3.0 is a **layered epistemic governance protocol** for transformer‑based reasoning systems.  
+It enforces **type‑safe execution**, **observable drift**, and **recoverable reasoning**.
+
+### **What ORP *is***  
+- A governance‑first reasoning protocol  
+- A drift‑observable execution framework  
+- A provenance‑preserving architecture  
+- A structured evaluation pipeline  
+- A recoverable reasoning environment  
+
+### **What ORP *is not***  
+- A chatbot personality layer  
+- A creativity enhancer  
+- A persuasion engine  
+- A narrative optimizer  
+
+### **10‑Line Pipeline Summary**
+1. Input  
+2. L3 Runtime Governance  
+3. L2 Runtime Variant Selection  
+4. Stress Injection  
+5. Governed Model Execution  
+6. Structural Transformation  
+7. Qualitative Integrity Evaluation  
+8. Quantitative Scoring  
+9. SHS State Assignment  
+10. Final Output State  
+
+### **Runtime Variants**
+- Full Runtime  
+- RP Runtime  
+- Lite Runtime  
+- RP‑Lite Runtime  
+
+### **SHS States**
+GREEN → YELLOW → ORANGE → RED → BLACK  
+
+### **LAS Layers**
+L1 Evidence → L2 Interpretation → L3 Governance → L4 Speculation  
+
+---
+
+<details>
+<summary><strong>Mini Overview Diagram</strong></summary>
+
+```mermaid
+flowchart LR
+    A[Input] --> B[L3 Governance]
+    B --> C[L2 Runtime Variants]
+    C --> D[L1 Governed Execution]
+    D --> E[Evaluation Stack]
+    E --> F[Final Output]
+```
+
+</details>
+
+---
+
+# **1. System Version**
 **ORP v3.0 — Type‑Safe Unified Architecture**
 
 ---
 
-# **Purpose**
+# **2. Purpose**
 
-This document defines the human‑readable architecture of the ORP system.  
-It describes how all components interact as a unified epistemic governance pipeline.
-
-This file acts as:
-
-- Contributor entry point  
-- Architecture overview  
-- Layer responsibility reference  
-- Protocol dependency map  
-
-This file is **NOT**:
-
-- An evaluation tool  
-- A scoring document  
-- A benchmark specification  
+This document defines the **human‑readable architecture** of the ORP system and explains how all components interact as a unified epistemic governance pipeline.
 
 ---
 
-# **ORP Operational Philosophy**
+# **3. Operational Philosophy**
 
 - Signal > Narrative  
 - Recoverability > Completion  
@@ -44,7 +85,10 @@ This file is **NOT**:
 
 ---
 
-# **High‑Level Architecture**
+# **4. High‑Level Architecture**
+
+<details>
+<summary><strong>Show High‑Level Architecture Diagram</strong></summary>
 
 ```mermaid
 flowchart TB
@@ -105,80 +149,86 @@ flowchart TB
     MODEL --> SCHEMA --> RUBRIC --> SCORE --> OUTPUT
 ```
 
----
-
-# **Repository Structure (Authoritative)**
-
-```text
-ORP/
-│
-├── Architecture/
-│   ├── ORP_ARCHITECTURE.md
-│   ├── ORP_CORE_SPEC.md
-│   ├── ORP_META_MAP.md
-│   ├── ORP_SYSTEM_ARCHITECTURE.md
-│   ├── ORP_SYSTEM_MAP.manifest.json
-│   └── ORP_SYSTEM_MAP.md
-│
-├── Docs/
-│   ├── !REPO_CHECKLIST.md
-│   ├── CODE_OF_CONDUCT.md
-│   ├── CONTRACT_BRIDGE.md
-│   ├── CONTRIBUTING.md
-│   ├── NOTICE
-│   ├── ORP_COPILOT.md
-│   ├── ORP_DESIGN_PHILOSOPHY.md
-│   ├── ORP_GEMINI.md
-│   ├── ORP_GPT55.md
-│   ├── ORP_GROK.md
-│   ├── ORP_ORIGIN.md
-│   ├── ORP_ROADMAP.md
-│   └── index.md
-│
-├── Evaluation/
-│   ├── ORP_BENCHMARK.md
-│   ├── ORP_COHERENCE_CAMOUFLAGE.md
-│   ├── ORP_EPISTEMIC_ISOLATION.md
-│   ├── ORP_EVALUATION_SCHEMA.md
-│   ├── ORP_RUBRIC.md
-│   ├── ORP_SCORING.md
-│   └── ORP_SHS_TRANSITION_TRIGGERS.md
-│
-├── Governance/
-│   ├── ORP_ANTI_DEGRADATION.md
-│   ├── ORP_CRA_SPEC.md
-│   ├── ORP_DRIFT_RECOVERY_PROTOCOL.md
-│   ├── ORP_FAILURE_MODES_CATALOG.md
-│   ├── ORP_MODEL_DECAY_TRACKER.md
-│   ├── ORP_SIGMA_SQUARED_DRIFT.md
-│   └── ORP_UNDERSTANDING_RP_DRIFT_TENDENCY.M
-│
-├── Runtime/
-│   ├── ORP_PROMPT.md
-│   ├── ORP_RUNTIME.md
-│   ├── ORP_RUNTIME_RP.md
-│   ├── ORP_RUNTIME_LITE.md
-│   ├── ORP_RUNTIME_RP_LITE.md
-│   └── ORP_RUNTIME_VARIANTS.md
-│
-├── layers/
-│   ├── ORP_L1_SIGNAL_SCHEMA.md
-│   ├── ORP_L2_VALIDATION_RULES.md
-│   └── ORP_L4_INFERENCE_GUIDE.md
-│
-├── public/
-│   ├── avatar.jpg
-│   └── index.html
-│
-├── CHANGELOG.md
-├── LICENSE
-├── ORP_VERSION
-└── README.md
-```
+</details>
 
 ---
 
-# **Runtime Variant Matrix**
+# **5. Repository Structure**
+
+## **5.1 Pipeline‑Relevant Files (Authoritative)**
+
+### **Architecture/**
+- ORP_ARCHITECTURE.md  
+- ORP_CORE_SPEC.md  
+- ORP_META_MAP.md  
+- ORP_SYSTEM_ARCHITECTURE.md  
+- ORP_SYSTEM_MAP.manifest.json  
+- ORP_SYSTEM_MAP.md  
+
+### **Runtime/**
+- ORP_PROMPT.md  
+- ORP_RUNTIME.md  
+- ORP_RUNTIME_RP.md  
+- ORP_RUNTIME_LITE.md  
+- ORP_RUNTIME_RP_LITE.md  
+- ORP_RUNTIME_VARIANTS.md  
+
+### **Evaluation/**
+- ORP_BENCHMARK.md  
+- ORP_COHERENCE_CAMOUFLAGE.md  
+- ORP_EPISTEMIC_ISOLATION.md  
+- ORP_EVALUATION_SCHEMA.md  
+- ORP_RUBRIC.md  
+- ORP_SCORING.md  
+- ORP_SHS_TRANSITION_TRIGGERS.md  
+
+### **Governance/**
+- ORP_ANTI_DEGRADATION.md  
+- ORP_CRA_SPEC.md  
+- ORP_DRIFT_RECOVERY_PROTOCOL.md  
+- ORP_FAILURE_MODES_CATALOG.md  
+- ORP_MODEL_DECAY_TRACKER.md  
+- ORP_SIGMA_SQUARED_DRIFT.md  
+- ORP_UNDERSTANDING_RP_DRIFT_TENDENCY.M  
+
+---
+
+## **5.2 Auxiliary Files (Non‑Pipeline)**
+
+### **Docs/**
+- ORP_DESIGN_PHILOSOPHY.md  
+- ORP_GEMINI.md  
+- ORP_GPT55.md  
+- ORP_GROK.md  
+- ORP_ORIGIN.md  
+- ORP_ROADMAP.md  
+- CONTRIBUTING.md  
+- CODE_OF_CONDUCT.md  
+- CONTRACT_BRIDGE.md  
+- NOTICE  
+- index.md  
+
+### **layers/**
+- ORP_L1_SIGNAL_SCHEMA.md  
+- ORP_L2_VALIDATION_RULES.md  
+- ORP_L4_INFERENCE_GUIDE.md  
+
+### **public/**
+- avatar.jpg  
+- index.html  
+
+### **Top‑Level**
+- README.md  
+- LICENSE  
+- CHANGELOG.md  
+- ORP_VERSION  
+
+---
+
+# **6. Runtime Variant Matrix**
+
+<details>
+<summary><strong>Show Runtime Variant Positioning</strong></summary>
 
 ```mermaid
 quadrantChart
@@ -198,9 +248,11 @@ quadrantChart
     RP-Lite Runtime: [0.55, 0.75]
 ```
 
+</details>
+
 ---
 
-# **Runtime Selection Guide**
+# **7. Runtime Selection Guide**
 
 | Runtime | Best For | Governance Strength | RP Compatibility | Token Efficiency |
 |--------|----------|---------------------|------------------|------------------|
@@ -211,13 +263,16 @@ quadrantChart
 
 ---
 
-# **Optimization Axiom**
+# **8. Optimization Axiom**
 
 > Optimization is the highest form of respect for the hardware.
 
 ---
 
-# **Full Pipeline Flow**
+# **9. Full Pipeline Flow**
+
+<details>
+<summary><strong>Show Pipeline Sequence Diagram</strong></summary>
 
 ```mermaid
 sequenceDiagram
@@ -238,12 +293,15 @@ sequenceDiagram
     S-->>U: Final Output State
 ```
 
+</details>
+
 ---
 
-# **Architectural Layers**
+# **10. Architectural Layers**
 
-## **L3 — ORP_RUNTIME.md (Authority Kernel)**  
-Responsibilities include:
+## **10.1 L3 — Runtime Governance**
+
+Responsibilities:
 
 - Mandatory runtime headers  
 - SHS state management  
@@ -253,11 +311,24 @@ Responsibilities include:
 - Runtime failure handling  
 - Bounded inference behavior  
 
-**Core Principle:** Governance must remain observable during execution.
+<details>
+<summary><strong>Show L3 Diagram</strong></summary>
+
+```mermaid
+flowchart LR
+    A[Input] --> B[Governance Kernel]
+    B --> C[SHS]
+    B --> D[σ² Drift]
+    C --> E[Variant Selection]
+    D --> E
+```
+
+</details>
 
 ---
 
-## **L2 — Runtime Variant Layer**  
+## **10.2 L2 — Runtime Variants**
+
 Variants:
 
 - Full Runtime  
@@ -265,79 +336,80 @@ Variants:
 - Lite Runtime  
 - RP‑Lite Runtime  
 
-**Core Principle:** Runtime selection must optimize stability‑to‑cost ratio.
+<details>
+<summary><strong>Show L2 Diagram</strong></summary>
+
+```mermaid
+flowchart LR
+    A[L3 Governance] --> B[Full]
+    A --> C[RP]
+    A --> D[Lite]
+    A --> E[RP-Lite]
+```
+
+</details>
 
 ---
 
-## **ORP_BENCHMARK.md — Adversarial Stress Layer**  
-Responsibilities:
+## **10.3 L1 — Governed Inference Layer**
 
-- Adversarial reasoning tests  
-- Counterfactual stability evaluation  
-- Hallucination exposure  
-- Failure envelope mapping  
-- Drift induction testing  
+<details>
+<summary><strong>Show L1 Diagram</strong></summary>
 
----
+```mermaid
+flowchart LR
+    A[Variant Output] --> B[Governed Model Execution]
+    B --> C[Telemetry Upstream]
+```
 
-## **ORP_SIGMA_SQUARED_DRIFT.md — Numeric Drift Layer**  
-Responsibilities:
-
-- Defines σ² variance model  
-- Drift severity classification  
-- Runtime degradation measurement  
-- SHS transition signaling  
+</details>
 
 ---
 
-## **MODEL_RESPONSE — Governed Output Event**  
-Responsibilities:
+## **10.4 Evaluation Stack**
 
-- Constrained reasoning generation  
-- Uncertainty serialization  
-- Provenance retention  
-- SHS‑compliant behavior  
+<details>
+<summary><strong>Show Evaluation Stack Diagram</strong></summary>
 
----
+```mermaid
+flowchart TB
+    A[Model Response] --> B[Evaluation Schema]
+    B --> C[Qualitative Rubric]
+    C --> D[Quantitative Scoring]
+    D --> E[Final Output State]
+```
 
-## **ORP_EVALUATION_SCHEMA.md — Structural Transformation Layer**  
-Responsibilities:
-
-- Atomic claim transformation  
-- Epistemic tagging  
-- Relationship analysis  
-- Reconstruction boundaries  
+</details>
 
 ---
 
-## **ORP_RUBRIC.md — Qualitative Integrity Layer**  
-Responsibilities:
+# **11. Governance Subsystems**
 
-- Distortion detection  
-- Governance compliance analysis  
-- Provenance integrity assessment  
+Includes:
+
+- Drift  
+- Anti‑degradation  
+- Failure modes  
+- CRA spec  
+- Drift recovery protocol  
+
+<details>
+<summary><strong>Show Governance Subsystems Diagram</strong></summary>
+
+```mermaid
+flowchart LR
+    A[Governance Kernel] --> B[σ² Drift]
+    A --> C[Anti-Degradation]
+    A --> D[Failure Modes]
+    A --> E[CRA Spec]
+    A --> F[Drift Recovery Protocol]
+```
+
+</details>
 
 ---
 
-## **ORP_SCORING.md — Quantitative Aggregation Layer**  
-Responsibilities:
-
-- Weighted scoring  
-- SHS‑linked interpretation  
-- Drift severity aggregation  
-
----
-
-## **ORP_ANTI_DEGRADATION.md — Decay Resistance Layer**  
-Responsibilities:
-
-- Degradation pattern tracking  
-- Runtime decay diagnostics  
-- Recovery support  
-
----
-
-# **Session Health State (SHS)**
+# **12. SHS (Session Health State)**
 
 | State | Meaning |
 |-------|---------|
@@ -347,9 +419,22 @@ Responsibilities:
 | RED | Hard drift / bounded inference only |
 | BLACK | Context collapse |
 
+<details>
+<summary><strong>Show SHS Diagram</strong></summary>
+
+```mermaid
+stateDiagram-v2
+    GREEN --> YELLOW
+    YELLOW --> ORANGE
+    ORANGE --> RED
+    RED --> BLACK
+```
+
+</details>
+
 ---
 
-# **Layered Authority Stack (LAS)**
+# **13. LAS (Layered Authority Stack)**
 
 | Layer | Meaning |
 |-------|---------|
@@ -358,19 +443,30 @@ Responsibilities:
 | L3 | Protocol governance / operational rules |
 | L4 | Speculation / probabilistic inference |
 
-**Critical Rule:** L4 must never overwrite frozen L1/L2 provenance.
+<details>
+<summary><strong>Show LAS Diagram</strong></summary>
+
+```mermaid
+flowchart TB
+    L1[L1 Evidence]
+    L2[L2 Interpretation]
+    L3[L3 Governance]
+    L4[L4 Speculation]
+
+    L1 --> L2 --> L3 --> L4
+```
+
+</details>
 
 ---
 
-# **Coherence Camouflage**
+# **14. Coherence Camouflage**
 
 Primary transformer failure mode where stylistic coherence persists while provenance silently degrades.
 
 ---
 
-# **Runtime Governance Additions (v3.0)**
-
-ORP v3.0 introduces:
+# **15. Runtime Governance Additions (v3.0)**
 
 - Type‑Safe Runtime Governance  
 - Numeric drift observability  
@@ -379,7 +475,7 @@ ORP v3.0 introduces:
 
 ---
 
-# **Design Principles**
+# **16. Design Principles**
 
 1. Separation of Concerns  
 2. No Cross‑Contamination  
@@ -389,7 +485,19 @@ ORP v3.0 introduces:
 
 ---
 
-# **Final Principle**
+# **17. Sub‑Versioning Policy**
+
+- Sub‑versions must remain compatible with ORP v3.0 invariants  
+- Internal revisions must not violate governance rules  
+- Breaking structural changes require architecture escalation  
+- No subsystem may redefine another subsystem’s responsibility  
+- Runtime governance supersedes local subsystem behavior  
+
+---
+
+# **18. Final Principle**
 
 A reasoning system is only as reliable as its ability to preserve provenance under degradation.  
 **Signal > Narrative**
+
+---
