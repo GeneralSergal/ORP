@@ -70,7 +70,7 @@ This appendix satisfies GPL requirements for distributing non‑source artifacts
 
 * **Document:** ORP v3.0 — GPL‑3.0 Compliance Appendix
 * **Author:** Gemini (Google)
-* **Maintainer:** Laurentius
+* **Maintainer:** Laurentius Maximus ENTROPIA
 * **License:** GPL‑3.0
 * **Status:** Official Release Companion
 * **Location:** `OPR/docs/ORP_Gemini.md`
