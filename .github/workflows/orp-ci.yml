@@ -33,10 +33,9 @@ jobs:
           done
 
           if [ ${#MISSING[@]} -ne 0 ]; then
-            echo "⚠️ Some directories are missing: ${MISSING[*]}"
-            echo "This is acceptable during active development."
+            echo "⚠️ Missing directories: ${MISSING[*]}"
           else
-            echo "✅ All core directories present"
+            echo "✅ All required directories present"
           fi
 
       - name: Validate core files
@@ -67,6 +66,22 @@ jobs:
             && echo "✅ σ² Drift Model" \
             || echo "⚠️ σ² Drift Model missing"
 
+          test -f Governance/ORP_MODEL_DECAY_TRACKER.md \
+            && echo "✅ Model Decay Tracker" \
+            || echo "⚠️ Model Decay Tracker missing"
+
+          test -f Governance/ORP_ANTI_DEGRADATION.md \
+            && echo "✅ Anti-Degradation" \
+            || echo "⚠️ Anti-Degradation missing"
+
+          test -f Governance/ORP_DRIFT_RECOVERY_PROTOCOL.md \
+            && echo "✅ Drift Recovery Protocol" \
+            || echo "⚠️ Drift Recovery Protocol missing"
+
+          test -f Governance/ORP_FAILURE_MODES_CATALOG.md \
+            && echo "✅ Failure Modes Catalog" \
+            || echo "⚠️ Failure Modes Catalog missing"
+
           test -f Evaluation/ORP_EVALUATION_SCHEMA.md \
             && echo "✅ Evaluation Schema" \
             || echo "⚠️ Evaluation Schema missing"
@@ -75,18 +90,12 @@ jobs:
             && echo "✅ L1 Signal Schema" \
             || echo "⚠️ L1 Signal Schema missing"
 
-          test -f Governance/ORP_FAILURE_MODES_CATALOG.md \
-            && echo "✅ Failure Modes Catalog" \
-            || echo "⚠️ Failure Modes Catalog missing"
-
-          test -f Governance/ORP_DRIFT_RECOVERY_PROTOCOL.md \
-            && echo "✅ Drift Recovery Protocol" \
-            || echo "⚠️ Drift Recovery Protocol missing"
-
       - name: Check mandatory runtime header
         run: |
           echo "=== Mandatory Header Check ==="
-          if head -n 40 Runtime/ORP_RUNTIME.md | grep -E "
+
+          # Single-line regex — YAML-safe, grep-safe
+          if grep -E "
 
 \[SHS:|
 
@@ -94,7 +103,7 @@ jobs:
 
 \[CRA:|
 
-\[LAS:" > /dev/null; then
+\[LAS:" Runtime/ORP_RUNTIME.md > /dev/null; then
             echo "✅ Mandatory header present in ORP_RUNTIME.md"
           else
             echo "⚠️ Mandatory header not found in ORP_RUNTIME.md"
