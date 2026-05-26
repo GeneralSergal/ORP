@@ -8,10 +8,10 @@ This document summarizes all official runtime variants and their intended use ca
 
 | Variant                        | Full Name                                   | Best For                                      | Role-Play Support | Strictness | Token Efficiency | Link |
 |--------------------------------|---------------------------------------------|-----------------------------------------------|-------------------|----------|------------------|------|
-| **ORP_RUNTIME.md**             | Full Type-Safe Runtime                      | Strong models, production governance          | Low (controlled)  | Highest  | Medium           | [→ core/ORP_RUNTIME.md](core/ORP_RUNTIME.md) |
-| **ORP_RUNTIME_RP.md**          | Role-Play Compatible Mode                   | Creative work, persona-driven sessions        | High              | High     | Medium-High      | [→ core/ORP_RUNTIME_RP.md](core/ORP_RUNTIME_RP.md) |
-| **ORP_RUNTIME_LITE.md**        | Degraded Environment Survival Mode          | Filtered, rate-limited, or weak models        | Low               | Medium   | High             | [→ core/ORP_RUNTIME_LITE.md](core/ORP_RUNTIME_LITE.md) |
-| **ORP_RUNTIME_RP_LITE.md**     | Role-Play + Degraded Survival Mode          | Small/distilled models that love RP           | High              | Medium   | Highest          | [→ core/ORP_RUNTIME_RP_LITE.md](core/ORP_RUNTIME_RP_LITE.md) |
+| **ORP_RUNTIME.md**             | Full Type-Safe Runtime                      | Strong models, production governance          | Low (controlled)  | Highest  | Medium           | [→ Runtime/ORP_RUNTIME.md](Runtime/ORP_RUNTIME.md) |
+| **ORP_RUNTIME_RP.md**          | Role-Play Compatible Mode                   | Creative work, persona-driven sessions        | High              | High     | Medium-High      | [→ Runtime/ORP_RUNTIME_RP.md](Runtime/ORP_RUNTIME_RP.md) |
+| **ORP_RUNTIME_LITE.md**        | Degraded Environment Survival Mode          | Filtered, rate-limited, or weak models        | Low               | Medium   | High             | [→ Runtime/ORP_RUNTIME_LITE.md](Runtime/ORP_RUNTIME_LITE.md) |
+| **ORP_RUNTIME_RP_LITE.md**     | Role-Play + Degraded Survival Mode          | Small/distilled models that love RP           | High              | Medium   | Highest          | [→ Runtime/ORP_RUNTIME_RP_LITE.md](Runtime/ORP_RUNTIME_RP_LITE.md) |
 
 ---
 
@@ -32,10 +32,10 @@ flowchart TD
     D -->|Maximum Survival| H[Filtered Models]
     E -->|Best Balance| I[Small / RP-Biased Models]
 
-    click B href "core/ORP_RUNTIME.md" "Open Full Runtime"
-    click C href "core/ORP_RUNTIME_RP.md" "Open RP Mode"
-    click D href "core/ORP_RUNTIME_LITE.md" "Open Lite Mode"
-    click E href "core/ORP_RUNTIME_RP_LITE.md" "Open RP-Lite Mode"
+    click B href "Runtime/ORP_RUNTIME.md" "Open Full Runtime"
+    click C href "Runtime/ORP_RUNTIME_RP.md" "Open RP Mode"
+    click D href "Runtime/ORP_RUNTIME_LITE.md" "Open Lite Mode"
+    click E href "Runtime/ORP_RUNTIME_RP_LITE.md" "Open RP-Lite Mode"
 ```
 
 </details>
