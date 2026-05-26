@@ -293,14 +293,14 @@
     .release-link:hover { color: var(--primary-bright); }
 
     footer { padding: 90px 0 60px; border-top: 1px solid rgba(221,17,17,0.12); background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,102,0,0.02)); }
-    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 40px; }
+    .footer-grid { display: grid;   /* Changed grid layout from 3 columns to 2 columns since documentation was removed */  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));   gap: 40px; }
     .footer-title { color: var(--heading); font-weight: 700; margin-bottom: 18px; font-family: Oxanium, sans-serif; }
     .footer-links { display: flex; flex-direction: column; gap: 12px; }
     .footer-note { margin-top: 54px; padding-top: 28px; border-top: 1px solid rgba(221,17,17,0.1); color: var(--muted); text-align: center; font-size: 0.95rem; letter-spacing: 0.04em; }
-    
-    .author-section { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 40px; padding-top: 40px; border-top: 1px solid rgba(221,17,17,0.1); }
-    .author-avatar { width: 56px; height: 56px; border-radius: 50%; border: 2px solid rgba(221,17,17,0.4); overflow: hidden; flex-shrink: 0; transition: transform var(--transition), box-shadow var(--transition); }
-    .author-avatar:hover { transform: scale(1.08); box-shadow: 0 0 36px rgba(255,102,0,0.45), inset 0 0 20px rgba(221,17,17,0.3); }
+  
+    .author-section { display: flex;  flex-direction: column; /* Stack avatar above the text for a cleaner look */ align-items: center;   justify-content: center;   gap: 16px;  margin-top: 40px;   padding-top: 40px;   border-top: 1px solid rgba(221,17,17,0.1); }
+    .author-avatar {   width: 100px;          /* Increased from 56px to 100px */  height: 100px;         /* Increased from 56px to 100px */  border-radius: 50%;   border: 2px solid rgba(221,17,17,0.4);   overflow: hidden;   flex-shrink: 0;   transition: transform var(--transition), box-shadow var(--transition); }
+    .author-avatar:hover {   transform: scale(1.05);   box-shadow: 0 0 36px rgba(255,102,0,0.45); }
     .author-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .author-info { display: flex; flex-direction: column; align-items: center; gap: 4px; }
     .author-name { color: var(--heading); font-weight: 700; font-family: Oxanium, sans-serif; letter-spacing: 0.04em; }
@@ -643,45 +643,38 @@
     </div>
   </section>
 
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div>
-          <div class="footer-title">ORP v3.0</div>
-          <div>Open Resonance Protocol</div>
-          <div style="margin-top:14px;color:var(--muted);">Governance-first epistemic reasoning framework.</div>
-        </div>
-        <div>
-          <div class="footer-title">Documentation</div>
-          <div class="footer-links">
-            <a href="https://github.com/GeneralSergal/ORP/blob/main/core/ORP_SYSTEM_ARCHITECTURE.md" target="_blank" rel="noopener noreferrer">System Architecture</a>
-            <a href="https://github.com/GeneralSergal/ORP/blob/main/evaluation/ORP_RUBRIC.md" target="_blank" rel="noopener noreferrer">Evaluation Layer</a>
-            <a href="https://github.com/GeneralSergal/ORP/blob/main/drift/ORP_SIGMA_SQUARED_DRIFT.md" target="_blank" rel="noopener noreferrer">Drift Systems</a>
-          </div>
-        </div>
-        <div>
-          <div class="footer-title">Repository</div>
-          <div class="footer-links">
-            <a href="https://github.com/GeneralSergal/ORP" target="_blank" rel="noopener noreferrer">GitHub</a>
-            <a href="https://github.com/GeneralSergal/ORP/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">GPL-3.0 License</a>
-          </div>
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-title">ORP v3.0</div>
+        <div>Open Resonance Protocol</div>
+        <div style="margin-top:14px;color:var(--muted);">Governance-first epistemic reasoning framework.</div>
+      </div>
+      <div>
+        <div class="footer-title">Repository</div>
+        <div class="footer-links">
+          <a href="https://github.com/GeneralSergal/ORP" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://github.com/GeneralSergal/ORP/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">GPL-3.0 License</a>
         </div>
       </div>
-      <div class="footer-note">Signal &gt; Narrative · Recoverability &gt; Completion · Provenance &gt; Coherence</div>
-      
-      <div class="author-section">
-        <div class="author-avatar">
-          <img src="avatar.jpg" alt="Laurentius Maximus" />
-        </div>
-        <div class="author-info">
-          <div class="author-name">Laurentius Maximus</div>
-          <div class="author-title">The ENTROPIA</div>
-        </div>
-      </div>
-      
-      <div class="copyright">© 2026 Laurentius Maximus • The ENTROPIA</div>
     </div>
-  </footer>
+    
+    <div class="footer-note">Signal &gt; Narrative · Recoverability &gt; Completion · Provenance &gt; Coherence</div>
+    
+    <div class="author-section">
+      <div class="author-avatar">
+        <img src="avatar.jpg" alt="Laurentius Maximus" />
+      </div>
+      <div class="author-info">
+        <div class="author-name">Laurentius Maximus</div>
+        <div class="author-title">The ENTROPIA</div>
+      </div>
+    </div>
+    
+    <div class="copyright">© 2026 Laurentius Maximus • The ENTROPIA</div>
+  </div>
+</footer>
 
   <script>
     /* Scroll progress bar */
