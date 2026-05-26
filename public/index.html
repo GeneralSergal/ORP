@@ -655,31 +655,34 @@
 <section id="variants">
   <div class="container">
     <div class="section-header">
+      <div class="section-eyebrow">Runtime Architecture</div>
       <h2 class="section-title">Runtime Variants</h2>
-      <p class="section-description">Choose the lightest viable variant that maintains governance. Optimization is respect for the hardware.</p>
+      <div class="section-description">
+        Choose the lightest viable variant that maintains governance. Optimization is respect for the hardware.
+      </div>
     </div>
 
-    <div style="margin: 20px 0; text-align: center;">
-      <button id="variant-toggle-btn" class="status-indicator" onclick="toggleVariants()">
+    <div style="margin: 32px 0; text-align: center;">
+      <button id="variant-toggle-btn" class="status-indicator active" onclick="toggleVariants()">
         <span>[SYSTEM // EXECUTE VARIANT MATRIX]</span>
       </button>
     </div>
 
-    <div id="variant-matrix-panel" style="display: none; margin-top: 20px;" class="terminal">
-      <div class="terminal-body" style="overflow-x: auto;">
-        <table style="width: 100%; border-collapse: collapse;">
-          <thead>
-            <tr style="color: var(--accent-orange);">
-              <th style="padding: 12px; text-align: left;">Variant</th>
-              <th style="padding: 12px; text-align: left;">Best For</th>
-              <th style="padding: 12px; text-align: left;">RP</th>
+    <div id="variant-matrix-panel" class="terminal" style="display: none; border-radius: var(--radius);">
+      <div class="terminal-body" style="padding: 0; overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+          <thead style="background: rgba(255, 255, 255, 0.03);">
+            <tr style="color: var(--accent-orange); font-family: Oxanium, sans-serif; text-transform: uppercase; font-size: 0.8rem;">
+              <th style="padding: 16px 24px;">Variant</th>
+              <th style="padding: 16px 24px;">Best For</th>
+              <th style="padding: 16px 24px;">RP</th>
             </tr>
           </thead>
           <tbody>
-            <tr><td style="padding: 12px; border-top: 1px solid var(--border);">Full</td><td style="padding: 12px; border-top: 1px solid var(--border);">Production</td><td style="padding: 12px; border-top: 1px solid var(--border);">Low</td></tr>
-            <tr><td style="padding: 12px; border-top: 1px solid var(--border);">RP</td><td style="padding: 12px; border-top: 1px solid var(--border);">Creative</td><td style="padding: 12px; border-top: 1px solid var(--border);">High</td></tr>
-            <tr><td style="padding: 12px; border-top: 1px solid var(--border);">Lite</td><td style="padding: 12px; border-top: 1px solid var(--border);">Filtered</td><td style="padding: 12px; border-top: 1px solid var(--border);">Low</td></tr>
-            <tr><td style="padding: 12px; border-top: 1px solid var(--border);">RP-Lite</td><td style="padding: 12px; border-top: 1px solid var(--border);">Distilled</td><td style="padding: 12px; border-top: 1px solid var(--border);">High</td></tr>
+            <tr class="row-hover"><td style="padding: 16px 24px; border-top: 1px solid var(--border);">Full</td><td style="padding: 16px 24px; border-top: 1px solid var(--border);">Production</td><td style="padding: 16px 24px; border-top: 1px solid var(--border);">Low</td></tr>
+            <tr class="row-hover"><td style="padding: 16px 24px; border-top: 1px solid var(--border);">RP</td><td style="padding: 16px 24px; border-top: 1px solid var(--border);">Creative</td><td style="padding: 16px 24px; border-top: 1px solid var(--border);">High</td></tr>
+            <tr class="row-hover"><td style="padding: 16px 24px; border-top: 1px solid var(--border);">Lite</td><td style="padding: 16px 24px; border-top: 1px solid var(--border);">Filtered</td><td style="padding: 16px 24px; border-top: 1px solid var(--border);">Low</td></tr>
+            <tr class="row-hover"><td style="padding: 16px 24px; border-top: 1px solid var(--border);">RP-Lite</td><td style="padding: 16px 24px; border-top: 1px solid var(--border);">Distilled</td><td style="padding: 16px 24px; border-top: 1px solid var(--border);">High</td></tr>
           </tbody>
         </table>
       </div>
@@ -687,6 +690,23 @@
   </div>
 </section>
 
+<style>
+  .row-hover:hover { background: rgba(221, 17, 17, 0.04); transition: background 0.2s; }
+</style>
+
+<script>
+  function toggleVariants() {
+    const panel = document.getElementById('variant-matrix-panel');
+    const btn = document.getElementById('variant-toggle-btn');
+    const btnText = btn.querySelector('span');
+    const isHidden = panel.style.display === 'none';
+    
+    panel.style.display = isHidden ? 'block' : 'none';
+    btnText.innerText = isHidden ? '[SYSTEM // CLOSE VARIANT MATRIX]' : '[SYSTEM // EXECUTE VARIANT MATRIX]';
+    btn.classList.toggle('active', !isHidden);
+    btn.classList.toggle('locked', isHidden);
+  }
+</script>
 <script>
   function toggleVariants() {
     const panel = document.getElementById('variant-matrix-panel');
