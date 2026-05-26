@@ -17,18 +17,36 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Prepare deployment directory
+      - name: Create staging directory
+        run: mkdir -p public
+
+      - name: Stage index.html
         run: |
-          mkdir -p public
-          if [ -f index.html ]; then cp index.html public/; fi
-          if [ -f avatar.jpg ]; then cp avatar.jpg public/; fi
-          if [ -d docs ] && [ "$(ls -A docs 2>/dev/null)" ]; then cp -R docs public/; fi
-          if [ ! -f public/index.html ]; then echo "<h1>ORP Documentation</h1>" > public/index.html; fi
+          if [ -f index.html ]; then
+            cp index.html public/
+          fi
+
+      - name: Stage avatar asset
+        run: |
+          if [ -f avatar.jpg ]; then
+            cp avatar.jpg public/
+          fi
+
+      - name: Stage docs directory
+        run: |
+          if [ -d docs ] && [ "$(ls -A docs 2>/dev/null)" ]; then
+            cp -R docs public/
+          fi
+
+      - name: Verify build artifact health
+        run: |
+          if [ ! -f public/index.html ]; then
+            echo "<h1>ORP Documentation</h1>" > public/index.html
+          fi
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
