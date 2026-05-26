@@ -108,7 +108,7 @@ Non‑authoritative conceptual and exploratory documents.
 # **License**
 
 This project is licensed under **GPL‑3.0**.  
-See: [LICENSE](LICENSE)
+See: [LICENSE](https://github.com/GeneralSergal/ORP/blob/main/LICENSE)
 
 ---
 
