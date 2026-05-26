@@ -26,15 +26,23 @@
 
 # Overview
 
-ORP v3.0 is a **governance-first epistemic integrity framework** engineered for:
+ORP v3.0 is a **governance-first epistemic integrity framework** engineered for real-world LLM environments. It provides:
 
-- structural correctness  
-- provenance continuity  
-- numeric drift visibility  
-- recoverable reasoning states  
-- strict L1–L4 authority separation  
+- Structural correctness and provenance continuity  
+- Numeric drift visibility (`σ²`)  
+- Recoverable reasoning states  
+- Strict L1–L4 authority separation  
+- Multiple runtime variants adapted to different model capabilities
 
 A coherent output with corrupted provenance constitutes a **critical failure**.
+
+---
+
+# Runtime Variants
+
+ORP is not a single prompt — it is a **family of execution policies**.
+
+See: [`docs/ORP_RUNTIME_VARIANTS.md`](docs/ORP_RUNTIME_VARIANTS.md)
 
 ---
 
@@ -49,16 +57,14 @@ All ORP-compliant outputs **must** begin with:
 [LAS: L1 | L2 | L3 | L4]
 ```
 
-No preamble may precede this header.
-
 ---
 
-# System Architecture (v3.0)
+# System Architecture
 
 ## Core Authority Chain
 
 <details>
-<summary>Core Authority Chain Diagram</summary>
+<summary>Core Authority Chain</summary>
 
 ```mermaid
 flowchart TD
@@ -72,22 +78,21 @@ flowchart TD
 ## L4 Non-Authoritative Subsystem
 
 <details>
-<summary>L4 Non-Authoritative Subsystem Diagram</summary>
+<summary>L4 Non-Authoritative Subsystem</summary>
 
 ```mermaid
 flowchart TD
     L3[L3: Governance Core] --> OUT[OUTPUT]
     L4[L4: Internal Inference<br/>Non-Authoritative] --> OUT
-
     L4 -. cannot modify .-> L3
-    L4 -. no access .-> L1[L1: Observed Data]
+    L4 -. no access .-> L1
 ```
 </details>
 
 ## Governance + Drift Loop
 
 <details>
-<summary>Governance + Drift Loop Diagram</summary>
+<summary>Governance + Drift Loop</summary>
 
 ```mermaid
 flowchart TD
@@ -102,7 +107,7 @@ flowchart TD
 ## Session Health State (SHS)
 
 <details>
-<summary>Session Health State (SHS) Diagram</summary>
+<summary>Session Health State (SHS)</summary>
 
 ```mermaid
 stateDiagram-v2
@@ -115,54 +120,14 @@ stateDiagram-v2
     GREEN: Stable
     YELLOW: Early Drift
     ORANGE: Degraded
-    RED: Restricted Inference
-    BLACK: Halt State
+    RED: Restricted
+    BLACK: Halt
 ```
 </details>
 
 ---
 
-# Layer Definitions
-
-### **L1 — Observed Data Layer**  
-Typed signals only. Immutable once committed.
-
-### **L2 — Verified Interpretation Layer**  
-Deterministic validation, schema enforcement, anomaly tagging.
-
-### **L3 — Governance Layer (Authority Core)**  
-Sole authority for state transitions, invariants, and system integrity.
-
-### **L4 — Internal Inference Layer**  
-Probabilistic reasoning only. Non-authoritative.
-
----
-
-# Invariants
-
-- L1 accepts only typed signals  
-- L1 states are immutable  
-- L2 operates exclusively on validated L1  
-- L3 is the sole authority layer  
-- L4 cannot promote inference into factual form  
-- Drift must be computed numerically (`σ²`)  
-- Provenance must be preserved end-to-end  
-
----
-
-# Drift Model (Numeric Core)
-
-**σ² = variance(L1_signal_vector over time)**
-
-### Drift Levels
-- **NONE**: σ² < 0.01  
-- **LOW**: 0.01 ≤ σ² < 0.05  
-- **MODERATE**: 0.05 ≤ σ² < 0.15  
-- **HIGH**: σ² ≥ 0.15  
-
----
-
-# Execution Pipeline
+## Execution Pipeline
 
 <details>
 <summary>Execution Pipeline Diagram</summary>
@@ -180,60 +145,52 @@ flowchart TD
 
 ---
 
-# Failure Conditions
+# Layer Definitions
 
-- L4 influencing L3  
-- Untyped L1 data  
-- Silent schema mutation  
-- Invalid state promotion  
-- Drift concealment  
-- Loss of provenance continuity  
+- **L1** — Observed Data Layer (Typed signals only, immutable)  
+- **L2** — Verified Interpretation Layer (Deterministic validation)  
+- **L3** — Governance Layer (Sole authority)  
+- **L4** — Internal Inference Layer (Non-authoritative)
 
 ---
 
-# Failure Response Protocol
+# Design Philosophy
 
-1. Downgrade SHS  
-2. Freeze L1 stream  
-3. Recompute L2 snapshot  
-4. Halt L4 inference  
-5. Restore last valid L3 state  
+See: [`docs/ORP_DESIGN_PHILOSOPHY.md`](docs/ORP_DESIGN_PHILOSOPHY.md)
+
+> **Optimization is the highest form of respect for the hardware.**
 
 ---
 
-# Controlled Expansion Policy
+# Drift Model (Numeric)
 
-Expansion is **cyclical only**.  
-Requires: Drift = NONE, L3 validation success, intact provenance.
+**σ² = variance(L1_signal_vector over time)**
+
+- **NONE**: σ
+² < 0.01  
+- **LOW**: 0.01 ≤ σ² < 0.05  
+- **MODERATE**: 0.05 ≤ σ² < 0.15  
+- **HIGH**: σ² ≥ 0.15  
 
 ---
 
 # Repository Structure
 
 ```text
-/core/           # Runtime & Architecture
-/constraints/    # Prompts & Anti-Degradation
-/drift/          # Drift & Decay Tracking
-/evaluation/     # Schemas, Rubrics & Scoring
-/layers/         # Layer Schemas
-/recovery/       # Recovery & CRA
-/conceptual/     # Conceptual Models
-/docs/           # Documentation
+/core/           # Core runtime specifications
+/docs/           # Documentation & philosophy
+/drift/          # Drift & decay tracking
+/evaluation/     # Evaluation schemas
+/layers/         # Layer definitions
+/recovery/       # Recovery systems
+/conceptual/     # Conceptual models
 ```
 
 ---
 
 # Compliance Requirements
 
-A system is ORP v3.0-compliant only if it enforces:
-
-- Strict L1 typing  
-- Deterministic L2 validation  
-- Isolated L3 authority  
-- Non-authoritative L4  
-- Numeric drift computation  
-- Mandatory runtime header  
-- End-to-end provenance preservation  
+A system is ORP v3.0-compliant only if it enforces strict L1 typing, deterministic L2 validation, isolated L3 authority, non-authoritative L4, numeric drift computation, mandatory header, and end-to-end provenance preservation.
 
 ---
 
@@ -249,50 +206,7 @@ A system is ORP v3.0-compliant only if it enforces:
 # Current System State
 
 **ORP_VERSION: 3.0 (FROZEN)**  
-L1: STRICT_TYPED_TIME_SERIES  
-L2: VALIDATION_LAYER  
-L3: AUTHORITY_LAYER  
-L4: INTERNAL_INFERENCE_ONLY  
-DRIFT_MODEL: NUMERIC (σ²)  
-STATUS: FROZEN  
-
----
-
-# Release Automation (Release‑Please)
-
-ORP uses **Release‑Please** to automate:
-
-- version bumps  
-- changelog generation  
-- GitHub Releases  
-- provenance-stable version tracking  
-
-### Conventional Commit Types
-
-| Type | Meaning |
-|------|---------|
-| `feat:` | New feature → minor version bump |
-| `fix:` | Bug fix → patch version bump |
-| `docs:` | Documentation updates |
-| `chore:` | Maintenance |
-| `refactor:` | Internal restructuring |
-
-### Key Files
-
-```
-.release-please-manifest.json
-.release-please-config.json
-ORP_VERSION
-CHANGELOG.md
-```
-
-### Workflow
-
-```
-.github/workflows/release-please.yml
-```
-
-Release‑Please automatically creates a **release PR** when changes require a version bump.
+**STATUS: ACTIVE**
 
 ---
 
