@@ -24,69 +24,75 @@ ORP is a governance‑first epistemic integrity framework ensuring:
 
 ---
 
-## **1. Core Specifications**  
-Foundational governance and runtime definitions.
+### **1. Core Specifications**
 
-- `Architecture/ORP_CORE_SPEC.md`  
-- `Runtime/ORP_RUNTIME.md`  
-- `Runtime/ORP_PROMPT.md`  
-- `Architecture/ORP_SYSTEM_ARCHITECTURE.md`  
-- `Architecture/ORP_META_MAP.md`  
-- `Architecture/ORP_SYSTEM_MAP.md`  
-- `Architecture/ORP_SYSTEM_MAP.manifest.json`  
-- `Docs/ORP_ORIGIN.md`  
+Foundational governance and runtime architecture definitions.
+
+* [Core Specification](https://github.com/GeneralSergal/ORP/blob/main/Architecture/ORP_CORE_SPEC.md)
+* [Runtime Kernel](https://github.com/GeneralSergal/ORP/blob/main/Runtime/ORP_RUNTIME.md)
+* [Prompt Contract](https://github.com/GeneralSergal/ORP/blob/main/Runtime/ORP_PROMPT.md)
+* [System Architecture](https://github.com/GeneralSergal/ORP/blob/main/Architecture/ORP_SYSTEM_ARCHITECTURE.md)
+* [Meta-Map Reference](https://github.com/GeneralSergal/ORP/blob/main/Architecture/ORP_META_MAP.md)
+* [System Map](https://github.com/GeneralSergal/ORP/blob/main/Architecture/ORP_SYSTEM_MAP.md)
+* [System Map Manifest (JSON)](https://github.com/GeneralSergal/ORP/blob/main/Architecture/ORP_SYSTEM_MAP.manifest.json)
+* [Protocol Origin Document](https://github.com/GeneralSergal/ORP/blob/main/Docs/ORP_ORIGIN.md)
 
 ---
 
-## **2. Evaluation Layer**  
+## **2. Evaluation Layer**
+
 Evaluation schemas, rubrics, scoring, and epistemic safeguards.
 
-- `Evaluation/ORP_EVALUATION_SCHEMA.md`  
-- `Evaluation/ORP_RUBRIC.md`  
-- `Evaluation/ORP_SCORING.md`  
-- `Evaluation/ORP_SHS_TRANSITION_TRIGGERS.md`  
-- `Evaluation/ORP_EPISTEMIC_ISOLATION.md`  
-- `Evaluation/ORP_COHERENCE_CAMOUFLAGE.md`  
-- `Evaluation/ORP_BENCHMARK.md`  
+* [Evaluation Schema](https://github.com/GeneralSergal/ORP/blob/main/Evaluation/ORP_EVALUATION_SCHEMA.md)
+* [Rubric Definitions](https://github.com/GeneralSergal/ORP/blob/main/Evaluation/ORP_RUBRIC.md)
+* [Scoring Methodology](https://github.com/GeneralSergal/ORP/blob/main/Evaluation/ORP_SCORING.md)
+* [SHS Transition Triggers](https://github.com/GeneralSergal/ORP/blob/main/Evaluation/ORP_SHS_TRANSITION_TRIGGERS.md)
+* [Epistemic Isolation Protocol](https://github.com/GeneralSergal/ORP/blob/main/Evaluation/ORP_EPISTEMIC_ISOLATION.md)
+* [Coherence Camouflage](https://github.com/GeneralSergal/ORP/blob/main/Evaluation/ORP_COHERENCE_CAMOUFLAGE.md)
+* [Benchmark Suite](https://github.com/GeneralSergal/ORP/blob/main/Evaluation/ORP_BENCHMARK.md)
 
 ---
 
-## **3. Drift & Degradation**  
+## **3. Drift & Degradation**
+
 Numeric drift model, decay tracking, and failure catalog.
 
-- `Governance/ORP_SIGMA_SQUARED_DRIFT.md`  
-- `Governance/ORP_MODEL_DECAY_TRACKER.md`  
-- `Governance/ORP_ANTI_DEGRADATION.md`  
-- `Governance/ORP_DRIFT_RECOVERY_PROTOCOL.md`  
-- `Governance/ORP_FAILURE_MODES_CATALOG.md`  
-- `Governance/ORP_CRA_SPEC.md`  
+* [σ² Drift Model](https://github.com/GeneralSergal/ORP/blob/main/Governance/ORP_SIGMA_SQUARED_DRIFT.md)
+* [Model Decay Tracker](https://github.com/GeneralSergal/ORP/blob/main/Governance/ORP_MODEL_DECAY_TRACKER.md)
+* [Anti-Degradation Safeguards](https://github.com/GeneralSergal/ORP/blob/main/Governance/ORP_ANTI_DEGRADATION.md)
+* [Drift Recovery Protocol](https://github.com/GeneralSergal/ORP/blob/main/Governance/ORP_DRIFT_RECOVERY_PROTOCOL.md)
+* [Failure Modes Catalog](https://github.com/GeneralSergal/ORP/blob/main/Governance/ORP_FAILURE_MODES_CATALOG.md)
+* [CRA Specification](https://github.com/GeneralSergal/ORP/blob/main/Governance/ORP_CRA_SPEC.md)
 
 ---
 
-## **4. Layer Definitions**  
-Formal definitions of L1, L2, and L4.
+## **4. Layer Definitions**
 
-- `layers/ORP_L1_SIGNAL_SCHEMA.md`  
-- `layers/ORP_L2_VALIDATION_RULES.md`  
-- `layers/ORP_L4_INFERENCE_GUIDE.md`  
+Formal definitions of L1, L2, and L4 signal handling.
+
+* [L1 Signal Schema](https://github.com/GeneralSergal/ORP/blob/main/layers/ORP_L1_SIGNAL_SCHEMA.md)
+* [L2 Validation Rules](https://github.com/GeneralSergal/ORP/blob/main/layers/ORP_L2_VALIDATION_RULES.md)
+* [L4 Inference Guide](https://github.com/GeneralSergal/ORP/blob/main/layers/ORP_L4_INFERENCE_GUIDE.md)
 
 ---
 
-## **5. Runtime Variants**  
+## **5. Runtime Variants**
+
 Governed execution modes for different model capabilities.
 
-- `Runtime/ORP_RUNTIME.md`  
-- `Runtime/ORP_RUNTIME_RP.md`  
-- `Runtime/ORP_RUNTIME_LITE.md`  
-- `Runtime/ORP_RUNTIME_RP_LITE.md`  
-- `Runtime/ORP_RUNTIME_VARIANTS.md`  
+* [Full Runtime](https://github.com/GeneralSergal/ORP/blob/main/Runtime/ORP_RUNTIME.md)
+* [RP Runtime](https://github.com/GeneralSergal/ORP/blob/main/Runtime/ORP_RUNTIME_RP.md)
+* [Lite Runtime](https://github.com/GeneralSergal/ORP/blob/main/Runtime/ORP_RUNTIME_LITE.md)
+* [RP-Lite Runtime](https://github.com/GeneralSergal/ORP/blob/main/Runtime/ORP_RUNTIME_RP_LITE.md)
+* [Runtime Variant Matrix](https://github.com/GeneralSergal/ORP/blob/main/Runtime/ORP_RUNTIME_VARIANTS.md)
 
 ---
 
-## **6. Conceptual Models**  
+## **6. Conceptual Models**
+
 Non‑authoritative conceptual and exploratory documents.
 
-- `Architecture/ORP_ARCHITECTURE.md`  
+* [Conceptual Architecture Overview](https://github.com/GeneralSergal/ORP/blob/main/Architecture/ORP_ARCHITECTURE.md)
 
 ---
 
@@ -102,7 +108,7 @@ Non‑authoritative conceptual and exploratory documents.
 # **License**
 
 This project is licensed under **GPL‑3.0**.  
-See: `LICENSE`
+See: [LICENSE](LICENSE)
 
 ---
 
