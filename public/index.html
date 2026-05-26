@@ -651,7 +651,54 @@
 
 
   <div class="section-divider"></div>
+  
+<section id="variants">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-eyebrow">Runtime Architecture</div>
+      <h2 class="section-title">ORP Runtime Variants</h2>
+      <div class="section-description">
+        Choose the lightest viable variant that maintains governance. Optimization is the highest form of respect for the hardware.
+      </div>
+    </div>
 
+    <div class="terminal" style="margin-bottom: 32px;">
+      <div class="terminal-header"><div class="terminal-title-bar"><div class="terminal-title-text">Runtime Matrix</div></div></div>
+      <div class="terminal-body" style="overflow-x: auto;">
+        <table style="width: 100%; border-collapse: collapse; color: var(--text);">
+          <thead style="text-align: left; color: var(--accent-orange); font-family: Oxanium, sans-serif; font-size: 0.8rem; text-transform: uppercase;">
+            <tr><th style="padding: 12px;">Variant</th><th style="padding: 12px;">Best For</th><th style="padding: 12px;">RP Support</th><th style="padding: 12px;">Efficiency</th></tr>
+          </thead>
+          <tbody style="font-size: 0.9rem;">
+            <tr><td style="padding: 12px; border-top: 1px solid var(--border);">Full Runtime</td><td style="padding: 12px; border-top: 1px solid var(--border);">Strong/Prod</td><td style="padding: 12px; border-top: 1px solid var(--border);">Low</td><td style="padding: 12px; border-top: 1px solid var(--border);">Medium</td></tr>
+            <tr><td style="padding: 12px; border-top: 1px solid var(--border);">RP Runtime</td><td style="padding: 12px; border-top: 1px solid var(--border);">Creative</td><td style="padding: 12px; border-top: 1px solid var(--border);">High</td><td style="padding: 12px; border-top: 1px solid var(--border);">Med-High</td></tr>
+            <tr><td style="padding: 12px; border-top: 1px solid var(--border);">Lite Runtime</td><td style="padding: 12px; border-top: 1px solid var(--border);">Filtered</td><td style="padding: 12px; border-top: 1px solid var(--border);">Low</td><td style="padding: 12px; border-top: 1px solid var(--border);">High</td></tr>
+            <tr><td style="padding: 12px; border-top: 1px solid var(--border);">RP-Lite Runtime</td><td style="padding: 12px; border-top: 1px solid var(--border);">Small/Distilled</td><td style="padding: 12px; border-top: 1px solid var(--border);">High</td><td style="padding: 12px; border-top: 1px solid var(--border);">Highest</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="pipeline-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+      <div class="pipeline-card">
+        <h3>Quick Selection Guide</h3>
+        <ul style="color: var(--muted); padding-left: 20px;">
+          <li><strong>Full:</strong> Strong models (High capability)</li>
+          <li><strong>RP:</strong> Consistent persona + control</li>
+          <li><strong>Lite:</strong> When performance degrades</li>
+          <li><strong>RP-Lite:</strong> Small/RP-biased models</li>
+        </ul>
+      </div>
+      <div class="pipeline-card">
+        <h3>Design Philosophy</h3>
+        <p>ORP treats LLMs like unstable distributed runtimes. By selecting the correct variant, you optimize governance stability against token overhead.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <div class="section-divider"></div>
+  
 <section id="documentation">
   <div class="container">
     <div class="section-header">
