@@ -24,28 +24,17 @@ jobs:
       - name: Create staging directory
         run: mkdir -p public
 
-      - name: Stage index.html
+      - name: Stage all files
+        # This copies everything from the root, excluding hidden .git files 
+        # and the 'public' folder itself if it exists, into the staging area.
         run: |
-          if [ -f index.html ]; then
-            cp index.html public/
-          fi
+          rsync -av --exclude='.git' --exclude='.github' --exclude='public' ./ public/
 
-      - name: Stage avatar asset
-        run: |
-          if [ -f avatar.jpg ]; then
-            cp avatar.jpg public/
-          fi
-
-      - name: Stage docs directory
-        run: |
-          if [ -d docs ] && [ "$(ls -A docs 2>/dev/null)" ]; then
-            cp -R docs public/
-          fi
-
-      - name: Verify build artifact health
+      - name: Verify index.html exists
         run: |
           if [ ! -f public/index.html ]; then
-            echo "<h1>ORP Documentation</h1>" > public/index.html
+            echo "Error: index.html not found in repository root."
+            exit 1
           fi
 
       - name: Upload artifact
