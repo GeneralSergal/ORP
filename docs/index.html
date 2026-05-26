@@ -260,7 +260,7 @@
       position: relative; overflow: hidden; border-radius: var(--radius); border: 1px solid rgba(221,17,17,0.16);
       background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition), background var(--transition);
     }
-    .pipeline-card::before, .doc-card::before, .principle::before, .quick-access-card::before, .release-card::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,102,0,0.1), rgba(221,17,17,0.1)); opacity: 0; transition: opacity var(--transition); }
+    .pipeline-card::before, .doc-card::before, .principle::before, .quick-access-card::before, .release-card::before { content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,102,0,0.1), rgba(221,17,17,0.1)); opacity: 0; transition: opacity var(--transition); pointer-events: none;}
     .pipeline-card:hover, .doc-card:hover, .principle:hover, .quick-access-card:hover, .release-card:hover { transform: translateY(-4px); border-color: rgba(221,17,17,0.32); box-shadow: 0 18px 40px rgba(221,17,17,0.15); }
     .pipeline-card:hover::before, .doc-card:hover::before, .principle:hover::before, .quick-access-card:hover::before, .release-card:hover::before { opacity: 1; }
 
