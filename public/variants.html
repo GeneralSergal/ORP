@@ -35,22 +35,70 @@
     <div class="glyph">SHS</div>
   </div>
 
-  <!-- ── Navigation ─────────────────────────────────────── -->
-  <nav id="main-nav">
-    <div class="container nav-inner">
-      <a href="index.html" class="logo" style="color:inherit;text-decoration:none;">
-        <div class="logo-mark"></div>
-        <span>ORP v3.0</span>
-      </a>
-      <div class="nav-links">
-        <a href="index.html">Overview</a>
-        <a href="pipeline.html">Pipeline</a>
-        <a href="variants.html">Variants</a>
-        <a href="documentation.html">Documentation</a>
-        <a href="principles.html">Principles</a>
-      </div>
+<!-- ── Navigation ─────────────────────────────────────── -->
+<nav id="main-nav">
+
+  <div class="container nav-inner">
+
+    <a href="index.html"
+       class="logo"
+       style="color:inherit;text-decoration:none;">
+
+      <div class="logo-mark"></div>
+
+      <span>ORP v3.0</span>
+    </a>
+
+    <!-- Hamburger -->
+    <button
+      class="hamburger-btn"
+      id="hamburger-btn"
+      aria-label="Toggle navigation"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <!-- Desktop Navigation -->
+    <div class="nav-links">
+
+      <a href="index.html">Overview</a>
+
+      <a href="pipeline.html">Pipeline</a>
+
+      <a href="variants.html">Variants</a>
+
+      <a href="documentation.html">Documentation</a>
+
+      <a href="principles.html">Principles</a>
+
     </div>
-  </nav>
+
+  </div>
+
+  <!-- Mobile Navigation Overlay -->
+  <div class="mobile-nav" id="mobile-nav">
+
+    <div class="mobile-nav-inner">
+
+      <a href="index.html">Overview</a>
+
+      <a href="pipeline.html">Pipeline</a>
+
+      <a href="variants.html">Variants</a>
+
+      <a href="documentation.html">Documentation</a>
+
+      <a href="principles.html">Principles</a>
+
+    </div>
+
+  </div>
+
+</nav>
 
   <!-- ── Page Hero ──────────────────────────────────────── -->
   <header class="page-hero">
