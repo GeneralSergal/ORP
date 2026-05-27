@@ -16,12 +16,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css" />
 </head>
-
 <body>
 
   <div class="scroll-progress"></div>
   <button class="scroll-top" id="scroll-top-btn" aria-label="Scroll back to top">↑</button>
 
+  <!-- Background Atmosphere -->
   <div class="grid-bg"></div>
   <div class="glow"></div>
   <div class="resonance-ring"></div>
@@ -39,7 +39,6 @@
     <div class="glyph">SHS</div>
   </div>
 
-<!-- ── Navigation ─────────────────────────────────────── -->
 <nav id="main-nav">
 
   <div class="container nav-inner">
@@ -103,9 +102,8 @@
   </div>
 
 </nav>
-
-  <!-- ── Hero / Overview ────────────────────────────────── -->
-  <header class="hero" id="overview">
+  <!-- Hero -->
+  <header class="hero">
     <div class="container hero-grid">
       <div>
         <div class="badge-wrapper">
@@ -113,35 +111,17 @@
             <div class="pulse"></div>
             FRAMEWORK SPECIFICATION V3.0
           </div>
-          <div style="font-size:0.85rem;color:var(--muted);margin-top:8px;max-width:600px;">
-            Designed to make multi-step reasoning systems measurable instead of implicit.
-          </div>
         </div>
 
         <h1>Open Resonance <span style="color:var(--accent-orange);">Protocol</span></h1>
 
-        <p style="margin-top:18px;color:var(--heading);font-weight:500;font-size:1.1rem;border-left:2px solid var(--primary);padding-left:12px;max-width:640px;">
+        <p style="margin-top:24px; font-size:1.15rem; max-width:720px;">
+          Designed to make multi-step reasoning systems measurable instead of implicit.
+        </p>
+
+        <p style="margin:20px 0 32px; max-width:640px; color:var(--muted);">
           ORP observes multi-step reasoning pipelines, assigns stability states (SHS), and exposes drift when outputs degrade.
         </p>
-
-        <p style="margin-top:16px;margin-bottom:28px;">
-          ORP is a governance framework for reasoning systems that makes execution traceable, drift observable, and outputs recoverable under degradation.
-        </p>
-
-        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(130px,1fr));gap:12px;margin-bottom:32px;background:rgba(221,17,17,0.03);padding:16px;border-radius:var(--radius-sm);border:1px solid var(--border);">
-          <div style="font-size:0.85rem;border-left:2px solid var(--primary);padding-left:10px;">
-            <div style="font-family:Oxanium,monospace;font-weight:700;color:var(--accent-orange);font-size:0.75rem;text-transform:uppercase;">[ SYSTEM TYPE ]</div>
-            <div style="color:var(--heading);font-weight:500;margin-top:2px;">Orchestration Spec</div>
-          </div>
-          <div style="font-size:0.85rem;border-left:2px solid var(--accent-orange);padding-left:10px;">
-            <div style="font-family:Oxanium,monospace;font-weight:700;color:var(--accent-orange);font-size:0.75rem;text-transform:uppercase;">[ ENFORCEMENT ]</div>
-            <div style="color:var(--heading);font-weight:500;margin-top:2px;">Deterministic Pipelines</div>
-          </div>
-          <div style="font-size:0.85rem;border-left:2px solid var(--accent-purple-bright);padding-left:10px;">
-            <div style="font-family:Oxanium,monospace;font-weight:700;color:var(--accent-orange);font-size:0.75rem;text-transform:uppercase;">[ TARGET ENVIRO ]</div>
-            <div style="color:var(--heading);font-weight:500;margin-top:2px;">Multi-Agent Systems</div>
-          </div>
-        </div>
 
         <div class="hero-actions">
           <a href="pipeline.html" class="btn btn-primary">Initialize Runtime</a>
@@ -149,92 +129,101 @@
         </div>
       </div>
 
-      <div class="hero-panel">
-        <section class="terminal" role="region" aria-label="System telemetry log">
-          <button class="terminal-header-btn" id="console-toggle-btn" aria-expanded="false" aria-controls="extended-telemetry-container">
-            <div class="terminal-title-bar">
-              <div class="terminal-title-text">ORP Active Telemetry Log</div>
-              <div class="status-indicator active"><div class="status-dot active"></div><span>SHS</span></div>
-              <div class="status-indicator warning"><div class="status-dot warning"></div><span>Drift</span></div>
-              <div class="status-indicator locked"><div class="status-dot locked"></div><span>CRA</span></div>
-            </div>
-            <div class="terminal-divider"></div>
-          </button>
-          <div class="terminal-body">
-            <div style="font-size:0.8rem;font-family:Oxanium,monospace;color:var(--muted);margin-bottom:12px;border-bottom:1px dashed var(--border);padding-bottom:8px;">
-              MONITOR_TARGET // CORE_RUN_MATRIX_L3
-            </div>
-            <span class="green">[SHS: GREEN]</span><br>
-            <span class="blue">[DRIFT: NONE]</span><br>
-            <span class="orange">[CRA: VALID]</span><br><br>
-            ORP v3.0 Kernel Online<br>
-            <span class="label">σ² Drift Observability:</span> <span class="value">STABLE</span><br>
-            Epistemic Isolation: <span class="green">ACTIVE</span><br>
-            Signal Priority: <span class="blue">ENFORCED</span><br>
-
-            <div id="extended-telemetry-container" style="display:none;margin-top:16px;border-top:1px dashed var(--border);padding-top:16px;">
-              <div class="entity-box" style="margin-top:0;">
-                <div class="entity-title">Herald Class Entity</div>
-                ENTITY: OBSERVER_NODE<br>STATE: RESONANT<br>PACK_SIGNAL: SYNCHRONIZED<br>RESONANCE: ASCENDANT
-              </div>
-            </div>
-
-            <div style="margin-top:16px;font-size:0.75rem;text-align:right;font-family:Oxanium,monospace;">
-              <span id="telemetry-btn-text" style="color:var(--muted);text-decoration:underline;cursor:pointer;">[ EXPAND SYSTEM ARTIFACTS + ]</span>
-            </div>
-          </div>
-        </section>
+      <!-- Terminal Telemetry -->
+<div class="orp-custom-scope">
+  
+  <div class="telemetry-card">
+    <div class="telemetry-card-header">
+      <div class="header-text-container">
+        <h2 class="telemetry-title">MONITOR: TARGET_CORE</h2>
+        <span class="telemetry-subtitle">Runtime Engine Link Stack</span>
       </div>
-    </div>
-  </header>
 
-  <div class="section-divider"></div>
-
-  <!-- ── Core Operational Directives ────────────────────── -->
-  <section id="directives-section">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-eyebrow">Strategic Mandates</div>
-        <h2 class="section-title">Core Operational Directives</h2>
-        <div class="section-description">
-          The structural anchors ensuring deterministic execution profiles and eliminating cross-node semantic contamination.
+      <div class="telemetry-chip-set">
+        <div class="telemetry-chip chip-active">
+          <span class="chip-dot dot-active"></span>
+          SHS
+        </div>
+        <div class="telemetry-chip">
+          <span class="chip-dot"></span>
+          DRIFT
+        </div>
+        <div class="telemetry-chip">
+          <span class="chip-dot"></span>
+          CRA
         </div>
       </div>
-      <div class="entity-box" style="margin-top:0;padding:28px;background:var(--panel);">
-        <div class="entity-title" style="font-size:0.95rem;margin-bottom:16px;">System Execution Mandates</div>
-        <ul class="directives-list">
-          <li><strong>Signal &gt; Narrative:</strong> Prioritize factual signal density over smooth or curated presentation formats. Data provenance accuracy parameters must never be modified to achieve cleaner linguistic fluency profiles.</li>
-          <li><strong>Recoverability &gt; Completion:</strong> Ensure processing states can completely fall back safely rather than forcing completion on corrupt data. Graceful, safe diagnostic degradation sequences are systematically favored over forced operational processing continuity.</li>
-          <li><strong>Provenance Preservation:</strong> Explicitly log tracking and context history without summarizing away anomalous tokens, ensuring every occurrence of operational decay maps explicitly to visible σ² telemetry metrics.</li>
-        </ul>
+    </div>
+
+    <hr class="telemetry-divider">
+
+    <div class="telemetry-card-body">
+      <div class="log-row">
+        <span class="log-label text-success">[SHS: GREEN]</span>
+      </div>
+      <div class="log-row">
+        <span class="log-label text-info">[DRIFT: NONE]</span>
+      </div>
+      <div class="log-row">
+        <span class="log-label text-warning">[CRA: VALID]</span>
+      </div>
+      <div class="log-row">
+        <span class="log-label"><strong>ORP v3.0 Kernel: Online</strong></span>
+      </div>
+      <div class="log-row">
+        <span class="log-label text-danger">&sigma;&sup2; Drift Observability: <strong>ACTIVE</strong></span>
       </div>
     </div>
-  </section>
+  </div>
 
-  <div class="section-divider"></div>
+</div>
 
-  <!-- ── Latest Release ─────────────────────────────────── -->
-  <section id="release-section">
+  </header>
+
+  <!-- Core Operational Directives -->
+  <section>
     <div class="container">
       <div class="section-header">
-        <div class="section-eyebrow">Latest Stable Matrix</div>
-        <h2 class="section-title">ORP v3.0 — Frozen</h2>
+        <div class="section-eyebrow">STRATEGIC MANDATES</div>
+        <h2 class="section-title">Core Operational Directives</h2>
+        <p class="section-description">The structural anchors ensuring deterministic execution profiles and eliminating cross-node semantic contamination.</p>
       </div>
-      <div class="release-card">
-        <div class="release-tag">Production Core</div>
-        <h3>ORP v3.0 — Frozen Release</h3>
-        <p>Type-Safe Unified Runtime Governance Architecture</p>
-        <p style="color:var(--muted);font-size:0.95rem;margin-top:8px;">
-          Complete deployment specification mapping structural verification pathways, dynamic isolation layers, and cryptographic context schemas.
-        </p>
-        <a href="https://github.com/GeneralSergal/ORP/releases" class="release-link" target="_blank" rel="noopener noreferrer">
-          View Core Release Notes →
-        </a>
+
+      <div class="principles">
+        <div class="principle">
+          <h3>Signal &gt; Narrative</h3>
+          <p>Prioritize factual signal density over smooth or curated presentation formats. Data provenance accuracy parameters must never be modified to achieve cleaner linguistic fluency profiles.</p>
+        </div>
+        <div class="principle">
+          <h3>Recoverability &gt; Completion</h3>
+          <p>Ensure processing states can completely fall back safely rather than forcing completion on corrupt data. Graceful, safe diagnostic degradation sequences are systematically favored over forced operational processing continuity.</p>
+        </div>
+        <div class="principle">
+          <h3>Provenance Preservation</h3>
+          <p>Explicitly log tracking and context history without summarizing away anomalous tokens, ensuring every occurrence of operational decay maps explicitly to visible σ² telemetry metrics.</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- ── Footer ─────────────────────────────────────────── -->
+  <!-- Latest Release -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">LATEST STABLE MATRIX</div>
+        <h2 class="section-title">Production Core Release</h2>
+      </div>
+
+      <div class="release-card">
+        <div class="release-tag">FROZEN SPEC</div>
+        <h3>ORP v3.0 — Frozen Baseline</h3>
+        <p>Type-Safe Unified Runtime Governance Architecture</p>
+        <p style="color:var(--muted); margin-top: 12px;">Complete deployment specification mapping structural verification pathways, dynamic isolation layers, and cryptographic context schemas.</p>
+        <a href="https://github.com/GeneralSergal/ORP/releases" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="margin-top:20px;">View Core Release Notes →</a>
+      </div>
+    </div>
+  </section>
+
   <footer>
     <div class="container">
       <div class="footer-grid">
@@ -270,15 +259,5 @@
   </footer>
 
   <script src="assets/js/main.js"></script>
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    "headline": "Open Resonance Protocol v3.0",
-    "description": "Governance-first epistemic framework. Enforce Signal > Narrative. Maintain provenance. Reject coherence camouflage.",
-    "protocolVersion": "3.0"
-  }
-  </script>
 </body>
 </html>

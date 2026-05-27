@@ -391,57 +391,6 @@ h1 {
 .btn-secondary:hover { transform: translateY(-2px); background: var(--panel); border-color: rgba(221,17,17,0.4); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
 .btn-secondary:active { transform: translateY(0px); }
 
-/* ── Hero Panel / Terminal ─────────────────────────────── */
-.hero-panel { position: relative; }
-.hero-panel::before {
-  content: ""; position: absolute; inset: -12px; border-radius: 40px;
-  background: linear-gradient(135deg, rgba(221,17,17,0.08), rgba(255,102,0,0.04));
-  filter: blur(24px); z-index: -1;
-}
-
-.terminal {
-  position: relative; overflow: hidden; border-radius: var(--radius);
-  border: 1px solid var(--border-strong); background: var(--panel);
-  box-shadow: 0 16px 48px rgba(0,0,0,0.4), inset 0 0 24px rgba(221,17,17,0.04);
-}
-.terminal::before {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(255,102,0,0.01), transparent 50%);
-  pointer-events: none;
-}
-.terminal-header-btn { width: 100%; text-align: left; background: transparent; border: none; padding: 0; margin: 0; cursor: pointer; display: block; font-family: inherit; color: inherit; }
-.terminal-title-bar { height: 56px; display: flex; align-items: center; padding: 0 24px; gap: 12px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
-.terminal-title-text { font-family: Oxanium, sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; flex: 1; min-width: 150px; }
-
-.status-indicator { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: var(--radius-xs); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; border: 1px solid; font-family: Oxanium, sans-serif; transition:
-  background var(--transition),
-  border-color var(--transition),
-  transform var(--transition),
-  opacity var(--transition); }
-.status-indicator-btn { background: transparent; border: none; padding: 0; margin: 0; cursor: pointer; display: inline-block; font-family: inherit; }
-.status-indicator.active   { background: rgba(221,17,17,0.12); border-color: rgba(221,17,17,0.3); color: var(--primary-bright); }
-.status-indicator.warning  { background: rgba(255,136,51,0.1); border-color: rgba(255,136,51,0.25); color: var(--warning); }
-.status-indicator.locked   { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.1); color: var(--muted); }
-
-.status-dot { width: 6px; height: 6px; border-radius: 50%; }
-.status-dot.active  { background: var(--primary-bright); box-shadow: 0 0 8px rgba(221,17,17,0.8); animation: statusPulse 2s infinite; }
-.status-dot.warning { background: var(--warning); box-shadow: 0 0 8px rgba(255,136,51,0.8); }
-.status-dot.locked  { background: var(--muted); box-shadow: none; }
-
-@keyframes statusPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.25); } }
-
-.terminal-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(221,17,17,0.15), rgba(255,102,0,0.1), transparent); }
-.terminal-body { padding: 28px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.92rem; line-height: 1.85; color: #d6e1ed; }
-.terminal-body .label { color: var(--accent-orange); font-weight: 700; font-family: Oxanium, sans-serif; }
-.terminal-body .value { animation: driftPulse 2.4s ease-in-out infinite; }
-.terminal-body .green  { color: #3fb950; }
-.terminal-body .blue   { color: #00d4ff; }
-.terminal-body .orange { color: var(--accent-orange); }
-
-@keyframes driftPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
-
-.entity-box { margin-top: 24px; padding: 18px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--panel-2); }
-.entity-title { color: var(--accent-orange); font-family: Oxanium, sans-serif; font-size: 0.82rem; letter-spacing: 0.12em; margin-bottom: 8px; text-transform: uppercase; font-weight: 700; }
 
 /* ── Directives ────────────────────────────────────────── */
 .directives-list { margin: 12px 0 0 0; padding-left: 20px; list-style-type: square; }
@@ -749,3 +698,180 @@ nav.menu-open {
     scroll-behavior: auto !important;
   }
 }
+/* Terminal Improvements */
+/* All rules scoped strictly inside our unique namespace container */
+  .orp-custom-scope {
+    /* Color tokens extracted directly from your website interface */
+    --site-bg-card: rgba(22, 22, 26, 0.75);
+    --site-border: rgba(255, 255, 255, 0.08);
+    --site-text-primary: #ffffff;
+    --site-text-muted: #8a8a93;
+    --site-accent-orange: #ff4500;
+    --site-accent-orange-dim: rgba(255, 69, 0, 0.15);
+    --site-success-green: #4ade80;
+	    --site-warning-orange: #fd7e14;
+		    --site-info-cyan: #0dcaf0;
+	   --site-danger-red: #dc3545;
+
+    display: inline-block;
+    width: 100%;
+    max-width: 520px;
+    box-sizing: border-box;
+  }
+
+  /* Scoped element resets to protect from global site layout interference */
+  .orp-custom-scope *, 
+  .orp-custom-scope *::before, 
+  .orp-custom-scope *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Container Card integrated with your site's panel look */
+  .orp-custom-scope .telemetry-card {
+    background-color: var(--site-bg-card);
+    color: var(--site-text-primary);
+    border: 1px solid var(--site-border);
+    border-radius: 16px; 
+    padding: 24px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    width: 100%;
+  }
+
+  /* Header Layout */
+  .orp-custom-scope .telemetry-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    gap: 16px;
+  }
+
+  .orp-custom-scope .header-text-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Title stylized to match your technical headers */
+  .orp-custom-scope .telemetry-title {
+    font-family: inherit; /* Inherits your main site font seamlessly */
+    font-size: 1.1rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--site-text-primary);
+  }
+
+  .orp-custom-scope .telemetry-subtitle {
+    font-size: 0.8rem;
+    color: var(--site-text-muted);
+    margin-top: 6px;
+    letter-spacing: 0.5px;
+  }
+
+  /* Interactive Technical Chips */
+  .orp-custom-scope .telemetry-chip-set {
+    display: flex;
+    gap: 6px;
+  }
+
+  .orp-custom-scope .telemetry-chip {
+    display: inline-flex;
+    align-items: center;
+    height: 26px;
+    padding: 0 10px;
+    border: 1px solid var(--site-border);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--site-text-muted);
+    letter-spacing: 0.5px;
+  }
+
+  /* Active State (Matches the Orange buttons/pills on your layout) */
+  .orp-custom-scope .telemetry-chip.chip-active {
+    background-color: var(--site-accent-orange-dim);
+    color: var(--site-accent-orange);
+    border-color: rgba(255, 69, 0, 0.4);
+  }
+
+  .orp-custom-scope .chip-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: var(--site-text-muted);
+    margin-right: 6px;
+  }
+
+  .orp-custom-scope .chip-dot.dot-active {
+    background-color: var(--site-accent-orange);
+    box-shadow: 0 0 6px var(--site-accent-orange);
+  }
+
+  /* Clean Divider */
+  .orp-custom-scope .telemetry-divider {
+    border: none;
+    height: 1px;
+    background-color: var(--site-border);
+    margin: 16px 0;
+    width: 100%;
+  }
+
+  /* Row Items Alignment */
+  .orp-custom-scope .telemetry-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .orp-custom-scope .log-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+
+  /* Monospace typography alignment for structural reading */
+  .orp-custom-scope .log-label {
+    font-family: monospace;
+    color: var(--site-text-muted);
+    letter-spacing: 0.25px;
+  }
+
+  .orp-custom-scope .log-value {
+    font-family: monospace;
+    font-weight: 500;
+    color: var(--site-text-primary);
+  }
+
+  /* Highlight Modifiers */
+  .orp-custom-scope .text-success {
+    color: var(--site-success-green);
+    font-weight: 600;
+  }
+  
+    /* Highlight Modifiers */
+  .orp-custom-scope .text-info {
+    color: var(--site-info-cyan);
+    font-weight: 600;
+  }
+  
+    /* Highlight Modifiers */
+  .orp-custom-scope .text-warning {
+    color: var(--site-warning-orange);
+    font-weight: 600;
+  }
+
+    /* Highlight Modifiers */
+  .orp-custom-scope .text-danger {
+    color: var(--site-danger-red);
+    font-weight: 600;
+  }
+
+  .orp-custom-scope .text-bold {
+    font-weight: 700;
+  }
