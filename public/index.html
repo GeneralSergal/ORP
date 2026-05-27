@@ -3,383 +3,18 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-
   <title>ORP v3.0 — Open Resonance Protocol</title>
-
   <meta name="description" content="ORP v3.0 — Type-Safe Epistemic Governance Framework for provenance preservation, drift observability, and recoverable reasoning." />
   <meta name="keywords" content="ORP, Open Resonance Protocol, epistemic governance, drift observability, provenance preservation, reasoning framework" />
   <meta name="theme-color" content="#dd1111" />
-
   <meta property="og:title" content="ORP v3.0 — Open Resonance Protocol" />
   <meta property="og:description" content="Governance-first epistemic reasoning framework with drift observability and provenance preservation." />
   <meta property="og:type" content="website" />
-
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230a0d10'/%3E%3Crect x='30' y='30' width='40' height='40' rx='6' transform='rotate(45 50 50)' fill='url(%23grad)' stroke='rgba(255,255,255,0.4)' stroke-width='2'/%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23dd1111'/%3E%3Cstop offset='100%25' stop-color='%23ff6600'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
-
-  <style>
-    :root {
-      /* MD3 Surface Architecture + Cyber Tonal Mapping */
-      --bg: #06080b;                  /* Ultra-dark canvas background */
-      --panel: #0f1217;               /* MD3 Surface Level 1 Container */
-      --panel-2: #161a22;             /* MD3 Surface Level 2 Container */
-      --panel-bright: #212630;        /* MD3 Surface Level 3 Active state */
-      --border: rgba(221, 17, 17, 0.08);
-      --border-strong: rgba(221, 17, 17, 0.18);
-      
-      --text: #dce2eb;
-      --muted: #8a95a5;
-      --heading: #f0f4f9;
-      /* Strategic Cyber Brand Tones */
-      --primary: #dd1111;
-      --primary-bright: #ff3333;
-      --primary-dark: #aa0000;
-      --accent-orange: #ff6600;
-      --accent-orange-bright: #ff8833;
-      --accent-purple: #6a3a8a;
-      --accent-purple-bright: #8a5aaa;
-      --accent-cyan: #00d4ff;
-      --success: #3fb950;
-      --danger: #ff3333;
-      --warning: #ff8833;
-      --shadow: rgba(0, 0, 0, 0.65);
-      /* MD3 Expressive Corner Shapes */
-      --radius: 28px;
-      /* MD3 Signature Container Radius */
-      --radius-sm: 16px;
-      /* MD3 Small Shape / FABs / Badges */
-      --radius-xs: 12px;
-      /* MD3 Standard Easing Curve */
-      --transition: 250ms cubic-bezier(0.2, 0, 0, 1);
-    }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-
-    body {
-      margin: 0;
-      overflow-x: hidden;
-      background:
-        radial-gradient(circle at top right, rgba(255,102,0,0.06), transparent 40%),
-        radial-gradient(circle at bottom left, rgba(221,17,17,0.05), transparent 45%),
-        radial-gradient(circle at 20% 80%, rgba(106,58,138,0.03), transparent 50%),
-        var(--bg);
-      color: var(--text);
-      font-family: "Space Grotesk", system-ui, sans-serif;
-      line-height: 1.65;
-      text-rendering: optimizeLegibility;
-      -webkit-font-smoothing: antialiased;
-      letter-spacing: 0.15px;
-    }
-
-    a { color: var(--accent-orange); text-decoration: none; transition: all var(--transition); cursor: pointer; }
-    a:hover { color: var(--accent-orange-bright); }
-
-    .grid-bg {
-      position: fixed;
-      inset: 0;
-      z-index: -4;
-      background-image:
-        linear-gradient(rgba(221, 17, 17, 0.015) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(221, 17, 17, 0.015) 1px, transparent 1px);
-      background-size: 32px 32px;
-      mask-image: radial-gradient(circle at center, black 50%, transparent 90%);
-      pointer-events: none;
-    }
-
-    .ember {
-      position: fixed;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: -1;
-      animation: emberFloat linear infinite;
-    }
-    .ember-1 { width: 4px; height: 4px; background: rgba(255, 102, 0, 0.5); top: 20%; left: 15%; animation-duration: 8s; animation-delay: 0s; }
-    .ember-2 { width: 3px; height: 3px; background: rgba(255, 51, 51, 0.6); top: 35%; right: 12%; animation-duration: 10s; animation-delay: 2s; }
-    .ember-3 { width: 5px; height: 5px; background: rgba(255, 136, 51, 0.4); bottom: 30%; left: 8%; animation-duration: 12s; animation-delay: 4s; }
-    .ember-4 { width: 3px; height: 3px; background: rgba(221, 17, 17, 0.5); bottom: 15%; right: 20%; animation-duration: 9s; animation-delay: 1s; }
-    .ember-5 { width: 4px; height: 4px; background: rgba(106, 58, 138, 0.35); top: 60%; right: 8%; animation-duration: 11s; animation-delay: 3s; }
-
-    @keyframes emberFloat {
-      0% { transform: translateY(0px) translateX(0px); opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { transform: translateY(-70px) translateX(25px); opacity: 0; }
-    }
-
-    .glow {
-      position: fixed;
-      width: 1000px;
-      height: 1000px;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,102,0,0.12) 0%, rgba(221,17,17,0.08) 35%, rgba(106,58,138,0.04) 55%, transparent 75%);
-      top: -350px;
-      right: -250px;
-      z-index: -1;
-      pointer-events: none;
-      filter: blur(20px);
-    }
-
-    .resonance-ring {
-      position: fixed;
-      width: 1000px;
-      height: 1000px;
-      border-radius: 50%;
-      border: 1px solid rgba(221,17,17,0.05);
-      top: -330px;
-      right: -250px;
-      z-index: -3;
-      animation: rotateSlow 75s linear infinite;
-    }
-    .resonance-ring::before, .resonance-ring::after {
-      content: ""; position: absolute; inset: 80px; border-radius: inherit; border: 1px dashed rgba(255,102,0,0.04);
-    }
-    .resonance-ring::after { inset: 160px; border-color: rgba(106,58,138,0.04); }
-
-    @keyframes rotateSlow {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .glyph-layer { position: fixed; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; opacity: 0.05; }
-    .glyph { position: absolute; color: var(--primary); font-family: Oxanium, sans-serif; font-size: 14px; letter-spacing: 0.12em; animation: drift linear infinite; }
-    .glyph:nth-child(1) { top: 12%; left: 8%; animation-duration: 26s; }
-    .glyph:nth-child(2) { top: 34%; right: 10%; animation-duration: 31s; }
-    .glyph:nth-child(3) { bottom: 18%; left: 14%; animation-duration: 34s; }
-    .glyph:nth-child(4) { bottom: 10%; right: 20%; animation-duration: 28s; }
-
-    @keyframes drift {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-18px); }
-      100% { transform: translateY(0px); }
-    }
-
-    .container { width: min(1280px, calc(100% - 48px)); margin: 0 auto; }
-
-    nav { position: sticky; top: 0; z-index: 1000; backdrop-filter: blur(20px); background: rgba(6, 8, 11, 0.85); border-bottom: 1px solid var(--border); transition: transform 300ms cubic-bezier(0.2, 0, 0, 1); will-change: transform; }
-    nav.nav-hidden { transform: translateY(-100%); }
-    .nav-inner { min-height: 84px; display: flex; align-items: center; justify-content: space-between; gap: 32px; }
-    .logo { display: flex; align-items: center; gap: 16px; color: var(--heading); font-family: Oxanium, sans-serif; font-weight: 700; letter-spacing: 0.04em; }
-    .logo-mark {
-      position: relative; width: 18px; height: 18px; transform: rotate(45deg); border-radius: 4px;
-      background: linear-gradient(135deg, var(--primary), var(--accent-orange));
-      box-shadow: 0 0 24px rgba(221,17,17,0.5), 0 0 12px rgba(255,102,0,0.25);
-    }
-    .logo-mark::before { content: ""; position: absolute; inset: 4px; border: 1px solid rgba(255,255,255,0.25); }
-
-    .nav-links { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
-    .nav-links a { position: relative; color: var(--muted); font-weight: 500; font-size: 0.95rem; letter-spacing: 0.15px; font-family: "Space Grotesk", sans-serif; }
-    .nav-links a::after { content: ""; position: absolute; left: 50%; transform: translateX(-50%); bottom: -6px; width: 0; height: 3px; border-radius: 99px; background: var(--primary); transition: width var(--transition); }
-    .nav-links a:hover { color: var(--heading); }
-    .nav-links a:hover::after { width: 16px; }
-
-    .hero { position: relative; padding: clamp(100px, 12vw, 160px) 0 clamp(60px, 8vw, 100px); }
-    .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: clamp(32px, 5vw, 64px); align-items: center; }
-
-    section { padding: clamp(60px, 10vw, 120px) 0 !important; border-bottom: 1px solid rgba(255, 255, 255, 0.02); }
-    p, li { font-weight: 300; line-height: 1.7; }
-
-    .badge-wrapper { margin-bottom: 24px; }
-    .badge {
-      display: inline-flex; align-items: center; gap: 12px; padding: 8px 16px; border-radius: var(--radius-xs);
-      border: 1px solid var(--border-strong); background: var(--panel);
-      color: #ffa494; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.5px; font-family: Oxanium, sans-serif;
-    }
-    .pulse { width: 8px; height: 8px; border-radius: 50%; background: var(--primary-bright); box-shadow: 0 0 12px rgba(221,17,17,0.8); animation: pulse 2s infinite; }
-
-    @keyframes pulse {
-      0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.25); opacity: 0.6; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
-    h1 { margin: 0; color: var(--heading); font-family: Oxanium, sans-serif; font-size: clamp(3rem, 6vw, 4.8rem); line-height: 1.08; letter-spacing: -0.03em; font-weight: 800; }
-    .hero p { max-width: 640px; margin-top: 24px; color: var(--muted); font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.6; }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 40px; }
-
-    .btn {
-      display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 52px; padding: 0 28px; border-radius: 999px;
-      font-weight: 700; font-size: 0.95rem; letter-spacing: 0.25px; transition: all var(--transition);
-      border: none; cursor: pointer; text-decoration: none; font-family: "Space Grotesk", sans-serif;
-    }
-    .btn:hover { text-decoration: none; }
-    
-    .btn-primary { background: linear-gradient(135deg, var(--primary), var(--accent-orange)); color: #06080b; box-shadow: 0 4px 16px rgba(221,17,17,0.2); }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,102,0,0.3); color: #000; }
-    .btn-primary:active { transform: translateY(0px); }
-    
-    .btn-secondary { border: 1px solid var(--border-strong); background: rgba(15,18,23,0.4); color: var(--text); }
-    .btn-secondary:hover { transform: translateY(-2px); background: var(--panel); border-color: rgba(221,17,17,0.4); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
-    .btn-secondary:active { transform: translateY(0px); }
-
-    .hero-panel { position: relative; }
-    .hero-panel::before {
-      content: ""; position: absolute; inset: -12px; border-radius: 40px;
-      background: linear-gradient(135deg, rgba(221,17,17,0.08), rgba(255,102,0,0.04)); filter: blur(24px); z-index: -1;
-    }
-
-    .terminal {
-      position: relative; overflow: hidden; border-radius: var(--radius); border: 1px solid var(--border-strong);
-      background: var(--panel);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.4), inset 0 0 24px rgba(221,17,17,0.04);
-    }
-    .terminal::before { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(255,102,0,0.01), transparent 50%); pointer-events: none; }
-    .terminal-header-btn { width: 100%; text-align: left; background: transparent; border: none; padding: 0; margin: 0; cursor: pointer; display: block; font-family: inherit; color: inherit; }
-    .terminal-title-bar { height: 56px; display: flex; align-items: center; padding: 0 24px; gap: 12px; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
-    .terminal-title-text { font-family: Oxanium, sans-serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase; flex: 1; min-width: 150px; }
-
-    .status-indicator { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: var(--radius-xs); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; border: 1px solid; font-family: Oxanium, sans-serif; transition: all var(--transition); }
-    .status-indicator-btn { background: transparent; border: none; padding: 0; margin: 0; cursor: pointer; display: inline-block; font-family: inherit; }
-    .status-indicator.active { background: rgba(221, 17, 17, 0.12); border-color: rgba(221, 17, 17, 0.3); color: var(--primary-bright); }
-    .status-indicator.warning { background: rgba(255,136,51,0.1); border-color: rgba(255,136,51,0.25); color: var(--warning); }
-    .status-indicator.locked { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.1); color: var(--muted); }
-    
-    .status-dot { width: 6px; height: 6px; border-radius: 50%; }
-    .status-dot.active { background: var(--primary-bright); box-shadow: 0 0 8px rgba(221,17,17,0.8); animation: statusPulse 2s infinite; }
-    .status-dot.warning { background: var(--warning); box-shadow: 0 0 8px rgba(255,136,51,0.8); }
-    .status-dot.locked { background: var(--muted); box-shadow: none; }
-
-    @keyframes statusPulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.25); } }
-
-    .terminal-divider { height: 1px; background: linear-gradient(90deg, transparent, rgba(221,17,17,0.15), rgba(255,102,0,0.1), transparent); }
-    .terminal-body { padding: 28px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 0.92rem; line-height: 1.85; color: #d6e1ed; }
-    .terminal-body .label { color: var(--accent-orange); font-weight: 700; font-family: Oxanium, sans-serif; }
-    .terminal-body .value { animation: driftPulse 2.4s ease-in-out infinite; }
-    .terminal-body .green { color: #3fb950; }
-    .terminal-body .blue { color: #00d4ff; }
-    .terminal-body .orange { color: var(--accent-orange); }
-    
-    @keyframes driftPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
-    
-    .entity-box { margin-top: 24px; padding: 18px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--panel-2); }
-    .entity-title { color: var(--accent-orange); font-family: Oxanium, sans-serif; font-size: 0.82rem; letter-spacing: 0.12em; margin-bottom: 8px; text-transform: uppercase; font-weight: 700; }
-
-    /* Custom Style Extensions for Restored Directives Module */
-    .directives-list { margin: 12px 0 0 0; padding-left: 20px; list-style-type: square; }
-    .directives-list li { margin-bottom: 10px; color: var(--text); font-size: 0.9rem; }
-    .directives-list li strong { color: var(--accent-orange); font-family: Oxanium, sans-serif; }
-
-    .section-divider { width: 100%; height: 1px; background: linear-gradient(90deg, transparent, rgba(221,17,17,0.15), rgba(255,102,0,0.1), transparent); }
-    .section-header { max-width: 800px; margin-bottom: clamp(40px, 6vw, 64px); text-align: left; }
-    .section-eyebrow { color: var(--primary-bright); text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.8rem; font-weight: 700; margin-bottom: 12px; font-family: Oxanium, sans-serif; }
-    .section-title { margin: 0 0 16px; color: var(--heading); font-family: Oxanium, sans-serif; font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.1; letter-spacing: -0.02em; font-weight: 700; }
-    .section-description { color: var(--muted); font-size: 1.1rem; max-width: 700px; line-height: 1.6; }
-
-    .pipeline-grid, .docs-grid, .principles, .quick-access-grid { display: grid; gap: 24px; }
-    .pipeline-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
-    .quick-access-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 32px; }
-
-    .pipeline-card, .doc-card, .principle, .quick-access-card, .release-card {
-      position: relative; overflow: hidden; border-radius: var(--radius); border: 1px solid var(--border);
-      background: var(--panel); transition: transform var(--transition), border-color var(--transition), box-shadow var(--transition), background-color var(--transition);
-    }
-    .pipeline-card::before, .doc-card::before, .principle::before, .quick-access-card::before, .release-card::before { 
-      content: ""; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(255,102,0,0.03), rgba(221,17,17,0.03)); opacity: 0; transition: opacity var(--transition); pointer-events: none;
-    }
-    .pipeline-card:hover, .doc-card:hover, .principle:hover, .quick-access-card:hover, .release-card:hover { 
-      transform: translateY(-4px); background-color: var(--panel-2); border-color: rgba(221, 17, 17, 0.24); box-shadow: 0 12px 32px rgba(0,0,0,0.4), 0 0 16px rgba(221,17,17,0.03);
-    }
-    .pipeline-card:hover::before, .doc-card:hover::before, .principle:hover::before, .quick-access-card:hover::before, .release-card:hover::before { opacity: 1; }
-
-    .pipeline-card { padding: 28px; }
-    .pipeline-step { color: var(--accent-orange); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.78rem; font-weight: 700; margin-bottom: 12px; font-family: Oxanium, sans-serif; }
-    .pipeline-card h3, .doc-card h3, .principle h3, .quick-access-card h3, .release-card h3 { margin-top: 0; color: var(--heading); font-size: 1.3rem; font-weight: 600; letter-spacing: -0.15px; }
-    .pipeline-card p, .doc-card p, .principle p, .quick-access-card p, .release-card p { color: var(--muted); margin-bottom: 0; font-size: 0.98rem; }
-
-    .docs-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
-    .doc-card { padding: 32px; background: var(--panel); }
-    .doc-card p { margin-bottom: 24px; }
-    .doc-card ul { margin: 0; padding-left: 16px; }
-    .doc-card li { margin-bottom: 12px; list-style-type: square; color: rgba(221,17,17,0.4); }
-    
-    .doc-card ul li a { color: var(--accent-orange); font-weight: 500; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 4px; }
-    .doc-card ul li a:hover { color: var(--accent-orange-bright); transform: translateX(3px); text-decoration: none; }
-
-    .principles { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-    .principle { padding: 32px; }
-
-    .quick-access-card { padding: 32px; }
-    .quick-access-card h3 { font-size: 1.2rem; margin-bottom: 12px; }
-    .quick-access-card a { display: inline-flex; align-items: center; gap: 4px; margin-top: 16px; color: var(--accent-orange); font-weight: 600; }
-    .quick-access-card a:hover { color: var(--accent-orange-bright); transform: translateX(3px); }
-
-    .release-card { padding: 36px; background: linear-gradient(135deg, rgba(221,17,17,0.04), rgba(255,102,0,0.02)); border-color: var(--border-strong); }
-    .release-tag { display: inline-block; padding: 4px 12px; border-radius: var(--radius-xs); background: rgba(221, 17, 17, 0.12); color: var(--primary-bright); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; font-family: Oxanium, sans-serif; border: 1px solid rgba(221,17,17,0.2); }
-    .release-card h3 { font-size: 1.5rem; margin-top: 16px; margin-bottom: 8px; font-family: Oxanium, sans-serif; }
-    .release-card > p { margin-top: 12px; }
-    .release-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 20px; color: var(--primary-bright); font-weight: 700; }
-    .release-link:hover { color: #ff6666; transform: translateX(4px); text-decoration: none; }
-
-    footer { padding: 80px 0 60px; border-top: 1px solid var(--border); background: rgba(255,255,255,0.005); }
-    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; }
-    .footer-title { color: var(--heading); font-weight: 700; margin-bottom: 16px; font-family: Oxanium, sans-serif; letter-spacing: 0.05em; }
-    .footer-links { display: flex; flex-direction: column; gap: 12px; }
-    .footer-links a { color: var(--muted); font-size: 0.95rem; }
-    .footer-links a:hover { color: var(--heading); }
-    .footer-note { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); text-align: center; font-size: 0.92rem; letter-spacing: 0.5px; }
-  
-    .author-section { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; margin-top: 40px; padding-top: 40px; border-top: 1px solid var(--border); }
-    .author-avatar { width: 100px; height: 100px; border-radius: 50%; border: 2px solid rgba(221,17,17,0.25); overflow: hidden; flex-shrink: 0; transition: transform var(--transition), box-shadow var(--transition); background: var(--panel-2); position: relative; }
-    .author-avatar:hover { transform: scale(1.04); box-shadow: 0 0 28px rgba(255,102,0,0.3); }
-    .author-avatar img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .avatar-fallback { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: var(--panel-bright); color: var(--accent-orange); font-family: Oxanium, monospace; font-size: 1.5rem; font-weight: 700; opacity: 0; pointer-events: none; transition: opacity 0.2s; }
-    .author-avatar.img-error .avatar-fallback { opacity: 1; pointer-events: auto; }
-
-    .author-info { display: flex; flex-direction: column; align-items: center; gap: 4px; }
-    .author-name { color: var(--heading); font-weight: 700; font-family: Oxanium, sans-serif; letter-spacing: 0.02em; font-size: 1.1rem; }
-    .author-title { color: var(--accent-orange); font-size: 0.85rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; font-family: Oxanium, sans-serif; }
-    .copyright { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); text-align: center; font-size: 0.85rem; letter-spacing: 0.02em; }
-
-    .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, #dd1111, #ff6600); z-index: 2000; }
-
-    .reveal { opacity: 0; transform: translateY(32px); transition: opacity 650ms cubic-bezier(0.2, 0, 0, 1), transform 650ms cubic-bezier(0.2, 0, 0, 1); will-change: transform, opacity; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    .scroll-top {
-      position: fixed; bottom: 32px; right: 32px; width: 48px; height: 48px; border-radius: var(--radius-sm); background: var(--panel-2); border: 1px solid var(--border-strong);
-      display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transition: all var(--transition); z-index: 900; font-size: 1.2rem; color: var(--primary-bright);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    }
-    .scroll-top.visible { opacity: 1; }
-    .scroll-top:hover { background: var(--panel-bright); color: var(--accent-orange-bright); border-color: rgba(255,102,0,0.4); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.5); }
-
-    @media (max-width: 980px) {
-      .hero-grid { grid-template-columns: 1fr; gap: 48px; }
-      .nav-inner { min-height: auto; padding: 20px 0; flex-direction: column; align-items: flex-start; gap: 16px; }
-      .nav-links { gap: 20px; }
-      .hero { padding-top: 80px; }
-    }
-
-    @media (max-width: 640px) {
-      .container { width: min(calc(100% - 32px), 1280px); }
-      nav { position: fixed; width: 100%; }
-      .nav-inner { padding: 16px 0; flex-direction: column; align-items: center; gap: 16px; text-align: center; }
-      .nav-links { justify-content: center; gap: 12px; width: 100%; display: grid; grid-template-columns: repeat(2, 1fr); }
-      .nav-links a { font-size: 0.85rem; font-weight: 600; padding: 10px 4px; background: rgba(221, 17, 17, 0.04); border: 1px solid rgba(221, 17, 17, 0.1); border-radius: var(--radius-xs); letter-spacing: 0.25px; display: block; }
-      .nav-links a:hover { background: rgba(221, 17, 17, 0.08); border-color: rgba(255, 102, 0, 0.3); }
-      .nav-links a::after { display: none !important; }
-      .hero { padding: 180px 0 24px; }
-      .hero-actions { flex-direction: column; gap: 12px; margin-top: 32px; }
-      .btn { width: 100%; min-height: 48px; }
-      h1 { font-size: 2.5rem !important; line-height: 1.15; letter-spacing: -0.01em; }
-      section { padding: 44px 0; }
-      .section-header { margin-bottom: 28px; }
-      .terminal-title-bar { height: auto; min-height: 48px; padding: 12px 16px; display: flex; flex-flow: row wrap; align-items: center; justify-content: flex-start; gap: 8px; }
-      .terminal-title-text { font-size: 0.75rem; letter-spacing: 0.05em; flex-basis: 100%; margin-bottom: 4px; }
-      .status-indicator { font-size: 0.65rem; padding: 4px 10px; margin: 0; }
-      .pipeline-grid, .docs-grid, .principles, .quick-access-grid { grid-template-columns: 1fr; gap: 16px; }
-      .pipeline-card, .doc-card, .principle, .quick-access-card, .release-card { padding: 20px !important; border-radius: var(--radius-sm) !important; }
-      .terminal-body { font-size: 0.88rem; padding: 20px; line-height: 1.75; }
-      .entity-box { padding: 14px; margin-top: 18px; }
-      .scroll-top { bottom: 24px; right: 24px; width: 44px; height: 44px; }
-      .author-avatar { width: 90px; height: 90px; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 
 <body>
@@ -404,22 +39,24 @@
     <div class="glyph">SHS</div>
   </div>
 
+  <!-- ── Navigation ─────────────────────────────────────── -->
   <nav id="main-nav">
     <div class="container nav-inner">
-      <div class="logo">
+      <a href="index.html" class="logo" style="color:inherit;text-decoration:none;">
         <div class="logo-mark"></div>
         <span>ORP v3.0</span>
-      </div>
+      </a>
       <div class="nav-links">
-        <a href="#overview">Overview</a>
-        <a href="#pipeline">Pipeline</a>
-        <a href="#variants">Variants</a>
-        <a href="#documentation">Documentation</a>
-        <a href="#principles">Principles</a>
+        <a href="index.html">Overview</a>
+        <a href="pipeline.html">Pipeline</a>
+        <a href="variants.html">Variants</a>
+        <a href="documentation.html">Documentation</a>
+        <a href="principles.html">Principles</a>
       </div>
     </div>
   </nav>
 
+  <!-- ── Hero / Overview ────────────────────────────────── -->
   <header class="hero" id="overview">
     <div class="container hero-grid">
       <div>
@@ -428,38 +65,39 @@
             <div class="pulse"></div>
             FRAMEWORK SPECIFICATION V3.0
           </div>
-          <div style="font-size: 0.85rem; color: var(--muted); margin-top: 8px; max-width: 600px;">
+          <div style="font-size:0.85rem;color:var(--muted);margin-top:8px;max-width:600px;">
             Designed to make multi-step reasoning systems measurable instead of implicit.
           </div>
         </div>
-        <h1>Open Resonance <span style="color: var(--accent-orange);">Protocol</span></h1>
-        
-        <p style="margin-top: 18px; color: var(--heading); font-weight: 500; font-size: 1.1rem; border-left: 2px solid var(--primary); padding-left: 12px; max-width: 640px;">
+
+        <h1>Open Resonance <span style="color:var(--accent-orange);">Protocol</span></h1>
+
+        <p style="margin-top:18px;color:var(--heading);font-weight:500;font-size:1.1rem;border-left:2px solid var(--primary);padding-left:12px;max-width:640px;">
           ORP observes multi-step reasoning pipelines, assigns stability states (SHS), and exposes drift when outputs degrade.
         </p>
 
-        <p style="margin-top: 16px; margin-bottom: 28px;">
+        <p style="margin-top:16px;margin-bottom:28px;">
           ORP is a governance framework for reasoning systems that makes execution traceable, drift observable, and outputs recoverable under degradation.
         </p>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 32px; background: rgba(221, 17, 17, 0.03); padding: 16px; border-radius: var(--radius-sm); border: 1px solid var(--border);">
-          <div style="font-size: 0.85rem; border-left: 2px solid var(--primary); padding-left: 10px;">
-            <div style="font-family: Oxanium, monospace; font-weight: 700; color: var(--accent-orange); font-size: 0.75rem; text-transform: uppercase;">[ SYSTEM TYPE ]</div>
-            <div style="color: var(--heading); font-weight: 500; margin-top: 2px;">Orchestration Spec</div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(130px,1fr));gap:12px;margin-bottom:32px;background:rgba(221,17,17,0.03);padding:16px;border-radius:var(--radius-sm);border:1px solid var(--border);">
+          <div style="font-size:0.85rem;border-left:2px solid var(--primary);padding-left:10px;">
+            <div style="font-family:Oxanium,monospace;font-weight:700;color:var(--accent-orange);font-size:0.75rem;text-transform:uppercase;">[ SYSTEM TYPE ]</div>
+            <div style="color:var(--heading);font-weight:500;margin-top:2px;">Orchestration Spec</div>
           </div>
-          <div style="font-size: 0.85rem; border-left: 2px solid var(--accent-orange); padding-left: 10px;">
-            <div style="font-family: Oxanium, monospace; font-weight: 700; color: var(--accent-orange); font-size: 0.75rem; text-transform: uppercase;">[ ENFORCEMENT ]</div>
-            <div style="color: var(--heading); font-weight: 500; margin-top: 2px;">Deterministic Pipelines</div>
+          <div style="font-size:0.85rem;border-left:2px solid var(--accent-orange);padding-left:10px;">
+            <div style="font-family:Oxanium,monospace;font-weight:700;color:var(--accent-orange);font-size:0.75rem;text-transform:uppercase;">[ ENFORCEMENT ]</div>
+            <div style="color:var(--heading);font-weight:500;margin-top:2px;">Deterministic Pipelines</div>
           </div>
-          <div style="font-size: 0.85rem; border-left: 2px solid var(--accent-purple-bright); padding-left: 10px;">
-            <div style="font-family: Oxanium, monospace; font-weight: 700; color: var(--accent-orange); font-size: 0.75rem; text-transform: uppercase;">[ TARGET ENVIRO ]</div>
-            <div style="color: var(--heading); font-weight: 500; margin-top: 2px;">Multi-Agent Systems</div>
+          <div style="font-size:0.85rem;border-left:2px solid var(--accent-purple-bright);padding-left:10px;">
+            <div style="font-family:Oxanium,monospace;font-weight:700;color:var(--accent-orange);font-size:0.75rem;text-transform:uppercase;">[ TARGET ENVIRO ]</div>
+            <div style="color:var(--heading);font-weight:500;margin-top:2px;">Multi-Agent Systems</div>
           </div>
         </div>
 
         <div class="hero-actions">
-          <a href="#pipeline" class="btn btn-primary">Initialize Runtime</a>
-          <a href="#documentation" class="btn btn-secondary">Explore Documentation</a>
+          <a href="pipeline.html" class="btn btn-primary">Initialize Runtime</a>
+          <a href="documentation.html" class="btn btn-secondary">Explore Documentation</a>
         </div>
       </div>
 
@@ -475,10 +113,9 @@
             <div class="terminal-divider"></div>
           </button>
           <div class="terminal-body">
-            <div style="font-size: 0.8rem; font-family: Oxanium, monospace; color: var(--muted); margin-bottom: 12px; border-bottom: 1px dashed var(--border); padding-bottom: 8px;">
+            <div style="font-size:0.8rem;font-family:Oxanium,monospace;color:var(--muted);margin-bottom:12px;border-bottom:1px dashed var(--border);padding-bottom:8px;">
               MONITOR_TARGET // CORE_RUN_MATRIX_L3
             </div>
-            
             <span class="green">[SHS: GREEN]</span><br>
             <span class="blue">[DRIFT: NONE]</span><br>
             <span class="orange">[CRA: VALID]</span><br><br>
@@ -487,15 +124,15 @@
             Epistemic Isolation: <span class="green">ACTIVE</span><br>
             Signal Priority: <span class="blue">ENFORCED</span><br>
 
-            <div id="extended-telemetry-container" style="display: none; margin-top: 16px; border-top: 1px dashed var(--border); padding-top: 16px;">
-              <div class="entity-box" style="margin-top: 0;">
+            <div id="extended-telemetry-container" style="display:none;margin-top:16px;border-top:1px dashed var(--border);padding-top:16px;">
+              <div class="entity-box" style="margin-top:0;">
                 <div class="entity-title">Herald Class Entity</div>
                 ENTITY: OBSERVER_NODE<br>STATE: RESONANT<br>PACK_SIGNAL: SYNCHRONIZED<br>RESONANCE: ASCENDANT
               </div>
             </div>
-  
-            <div style="margin-top: 16px; font-size: 0.75rem; text-align: right; font-family: Oxanium, monospace;">
-              <span id="telemetry-btn-text" style="color: var(--muted); text-decoration: underline; cursor: pointer;">[ EXPAND SYSTEM ARTIFACTS + ]</span>
+
+            <div style="margin-top:16px;font-size:0.75rem;text-align:right;font-family:Oxanium,monospace;">
+              <span id="telemetry-btn-text" style="color:var(--muted);text-decoration:underline;cursor:pointer;">[ EXPAND SYSTEM ARTIFACTS + ]</span>
             </div>
           </div>
         </section>
@@ -505,7 +142,7 @@
 
   <div class="section-divider"></div>
 
-  <!-- === RESTORED SECTION === -->
+  <!-- ── Core Operational Directives ────────────────────── -->
   <section id="directives-section">
     <div class="container">
       <div class="section-header">
@@ -515,8 +152,8 @@
           The structural anchors ensuring deterministic execution profiles and eliminating cross-node semantic contamination.
         </div>
       </div>
-      <div class="entity-box" style="margin-top: 0; padding: 28px; background: var(--panel);">
-        <div class="entity-title" style="font-size: 0.95rem; margin-bottom: 16px;">System Execution Mandates</div>
+      <div class="entity-box" style="margin-top:0;padding:28px;background:var(--panel);">
+        <div class="entity-title" style="font-size:0.95rem;margin-bottom:16px;">System Execution Mandates</div>
         <ul class="directives-list">
           <li><strong>Signal &gt; Narrative:</strong> Prioritize factual signal density over smooth or curated presentation formats. Data provenance accuracy parameters must never be modified to achieve cleaner linguistic fluency profiles.</li>
           <li><strong>Recoverability &gt; Completion:</strong> Ensure processing states can completely fall back safely rather than forcing completion on corrupt data. Graceful, safe diagnostic degradation sequences are systematically favored over forced operational processing continuity.</li>
@@ -528,6 +165,7 @@
 
   <div class="section-divider"></div>
 
+  <!-- ── Latest Release ─────────────────────────────────── -->
   <section id="release-section">
     <div class="container">
       <div class="section-header">
@@ -538,7 +176,7 @@
         <div class="release-tag">Production Core</div>
         <h3>ORP v3.0 — Frozen Release</h3>
         <p>Type-Safe Unified Runtime Governance Architecture</p>
-        <p style="color: var(--muted); font-size: 0.95rem; margin-top: 8px;">
+        <p style="color:var(--muted);font-size:0.95rem;margin-top:8px;">
           Complete deployment specification mapping structural verification pathways, dynamic isolation layers, and cryptographic context schemas.
         </p>
         <a href="https://github.com/GeneralSergal/ORP/releases" class="release-link" target="_blank" rel="noopener noreferrer">
@@ -548,253 +186,7 @@
     </div>
   </section>
 
-  <div class="section-divider"></div>
-
-  <section id="pipeline">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-eyebrow">Execution Flow</div>
-        <h2 class="section-title">Unified Governance Pipeline</h2>
-        <div class="section-description">
-          ORP operates as a deterministic, multi-stage processing pipeline that transforms raw model inference passes into structured, validated outcomes.
-        </div>
-      </div>
-
-      <div class="pipeline-grid">
-        <div class="pipeline-card">
-          <div class="pipeline-step">Step 01</div>
-          <h3>Runtime Kernel</h3>
-          <p>The operational L3 layer managing state telemetry, token-level parsing triggers, and real-time variance bounds.</p>
-        </div>
-
-        <div class="pipeline-card">
-          <div class="pipeline-step">Step 02</div>
-          <h3>Prompt Layer</h3>
-          <p>Configures semantic reasoning parameters, structural boundary markers, and uncertainty serialization structures.</p>
-        </div>
-
-        <div class="pipeline-card">
-          <div class="pipeline-step">Step 03</div>
-          <h3>Benchmark Layer</h3>
-          <p>Executes continuous adversarial stress challenges to determine contextual drift thresholds prior to storage resolution.</p>
-        </div>
-
-        <div class="pipeline-card">
-          <div class="pipeline-step">Step 04</div>
-          <h3>Model Response</h3>
-          <p>The monitored processing engine execution window, validating structural format conformance dynamically.</p>
-        </div>
-
-        <div class="pipeline-card">
-          <div class="pipeline-step">Step 05</div>
-          <h3>Evaluation Schema</h3>
-          <p>Atomizes complex qualitative system claims into linear, query-safe semantic trees for structural verification.</p>
-        </div>
-
-        <div class="pipeline-card">
-          <div class="pipeline-step">Step 06</div>
-          <h3>Rubric Metrics</h3>
-          <p>Applies granular validation parameters across output patterns to prevent contextual drifting or coherence masks.</p>
-        </div>
-
-        <div class="pipeline-card">
-          <div class="pipeline-step">Step 07</div>
-          <h3>Scoring Engine</h3>
-          <p>Aggregates systemic validation metrics into clear mathematical clarity ranges to calculate processing integrity.</p>
-        </div>
-
-        <div class="pipeline-card">
-          <div class="pipeline-step">Step 08</div>
-          <h3>Output State</h3>
-          <p>The terminal, integrity-preserved result.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-  
-  <section id="variants">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-eyebrow">Runtime Architecture</div>
-        <h2 class="section-title">Governed Execution Variants</h2>
-        <div class="section-description">
-          Deploy localized runtime packages tailored to compute efficiency constraints without dropping authority parameters.
-        </div>
-      </div>
-
-      <div style="margin: 32px 0 0 0; text-align: center;">
-        <button id="variant-toggle-btn" class="status-indicator status-indicator-btn active" aria-expanded="false" aria-controls="variant-matrix-panel">
-          <span>[SYSTEM // EXECUTE VARIANT MATRIX]</span>
-        </button>
-      </div>
-
-      <div id="variant-matrix-panel" class="terminal" style="display: none; margin-top: 24px; border-radius: var(--radius);">
-        <div class="terminal-body" style="padding: 0; overflow-x: auto;">
-          <table style="width: 100%; border-collapse: collapse; text-align: left;">
-            <thead style="background: rgba(255, 255, 255, 0.03);">
-              <tr style="color: var(--accent-orange); font-family: Oxanium, sans-serif; text-transform: uppercase; font-size: 0.8rem;">
-                <th style="padding: 16px 24px;">Variant</th>
-                <th style="padding: 16px 24px;">Target Use Case</th>
-                <th style="padding: 16px 24px;">Resource Footprint</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="row-hover"><td style="padding: 16px 24px; border-top: 1px solid var(--border);">Full Spec</td><td style="padding: 16px 24px; border-top: 1px solid var(--border);">Production Enterprise Infrastructure</td><td style="padding: 16px 24px; border-top: 1px solid var(--border);">Standard Baseline</td></tr>
-              <tr class="row-hover"><td style="padding: 16px 24px; border-top: 1px solid var(--border);">RP Engine</td><td style="padding: 16px 24px; border-top: 1px solid var(--border);">Unstructured Generative Contexts</td><td style="padding: 16px 24px; border-top: 1px solid var(--border);">Optimized Alpha</td></tr>
-              <tr class="row-hover"><td style="padding: 16px 24px; border-top: 1px solid var(--border);">Lite Engine</td><td style="padding: 16px 24px; border-top: 1px solid var(--border);">Edge Processing Array Nodes</td><td style="padding: 16px 24px; border-top: 1px solid var(--border);">Low Overhead</td></tr>
-              <tr class="row-hover"><td style="padding: 16px 24px; border-top: 1px solid var(--border);">RP-Lite</td><td style="padding: 16px 24px; border-top: 1px solid var(--border);">Distilled High-Density Workloads</td><td style="padding: 16px 24px; border-top: 1px solid var(--border);">Minimal Footprint</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <style>
-    .row-hover:hover { background: rgba(221, 17, 17, 0.04); transition: background 0.2s; }
-  </style>
-
-  <div class="section-divider"></div>
-  
-  <section id="documentation">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-eyebrow">Documentation Index</div>
-        <h2 class="section-title">ORP Engineering Specification</h2>
-        <div class="section-description">
-          Access specialized design specs mapping structural layers, evaluation processes, and automated restoration matrices.
-        </div>
-      </div>
-
-      <div class="docs-grid">
-        <div class="doc-card">
-          <h3>Core Specifications</h3>
-          <p>Foundational governance and runtime architecture definitions.</p>
-          <ul>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Architecture/ORP_CORE_SPEC.md" target="_blank">Core Specification</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Runtime/ORP_RUNTIME_VARIANTS.md" target="_blank">Runtime Kernel Variants</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Runtime/ORP_PROMPT.md" target="_blank">Prompt Contract</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Architecture/ORP_SYSTEM_ARCHITECTURE.md" target="_blank">System Architecture</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Architecture/ORP_META_MAP.md" target="_blank">Meta-Map Reference</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Architecture/ORP_SYSTEM_MAP.md" target="_blank">System Map</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Architecture/ORP_SYSTEM_MAP.manifest.json" target="_blank">System Map Manifest (JSON)</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Docs/ORP_ORIGIN.md" target="_blank">Protocol Origin Document</a></li>
-          </ul>
-        </div>
-
-        <div class="doc-card">
-          <h3>Evaluation Layer</h3>
-          <p>Structural evaluation, epistemic integrity, and scoring systems.</p>
-          <ul>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Evaluation/ORP_EVALUATION_SCHEMA.md" target="_blank">Evaluation Schema</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Evaluation/ORP_RUBRIC.md" target="_blank">Rubric Definitions</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Evaluation/ORP_SCORING.md" target="_blank">Scoring Methodology</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Evaluation/ORP_SHS_TRANSITION_TRIGGERS.md" target="_blank">SHS Transition Triggers</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Evaluation/ORP_EPISTEMIC_ISOLATION.md" target="_blank">Epistemic Isolation Protocol</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Evaluation/ORP_COHERENCE_CAMOUFLAGE.md" target="_blank">Coherence Camouflage</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Evaluation/ORP_BENCHMARK.md" target="_blank">Benchmark Suite</a></li>
-          </ul>
-        </div>
-
-        <div class="doc-card">
-          <h3>Drift & Recovery</h3>
-          <p>Numeric drift monitoring, degradation detection, and recovery systems.</p>
-          <ul>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Governance/ORP_SIGMA_SQUARED_DRIFT.md" target="_blank">σ² Drift Model</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Governance/ORP_MODEL_DECAY_TRACKER.md" target="_blank">Model Decay Tracker</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Governance/ORP_ANTI_DEGRADATION.md" target="_blank">Anti-Degradation Safeguards</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Governance/ORP_DRIFT_RECOVERY_PROTOCOL.md" target="_blank">Drift Recovery Protocol</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Governance/ORP_FAILURE_MODES_CATALOG.md" target="_blank">Failure Modes Catalog</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Governance/ORP_CRA_SPEC.md" target="_blank">CRA Specification</a></li>
-          </ul>
-        </div>
-
-        <div class="doc-card">
-          <h3>Layer Definitions</h3>
-          <p>Formal definitions for typed signal handling and layered authority separation.</p>
-          <ul>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/layers/ORP_L1_SIGNAL_SCHEMA.md" target="_blank">L1 Signal Schema</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/layers/ORP_L2_VALIDATION_RULES.md" target="_blank">L2 Validation Rules</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/layers/ORP_L4_INFERENCE_GUIDE.md" target="_blank">L4 Inference Guide</a></li>
-          </ul>
-        </div>
-
-        <div class="doc-card">
-          <h3>Runtime Variants</h3>
-          <p>Governed execution modes for different model capabilities.</p>
-          <ul>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Runtime/ORP_RUNTIME.md" target="_blank">Full Runtime</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Runtime/ORP_RUNTIME_RP.md" target="_blank">RP Runtime</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Runtime/ORP_RUNTIME_LITE.md" target="_blank">Lite Runtime</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Runtime/ORP_RUNTIME_RP_LITE.md" target="_blank">RP-Lite Runtime</a></li>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Runtime/ORP_RUNTIME_VARIANTS.md" target="_blank">Runtime Variant Matrix</a></li>
-          </ul>
-        </div>
-
-        <div class="doc-card">
-          <h3>Conceptual Models</h3>
-          <p>Non‑authoritative conceptual and exploratory architecture references.</p>
-          <ul>
-            <li><a href="https://github.com/GeneralSergal/ORP/blob/main/Architecture/ORP_ARCHITECTURE.md" target="_blank">Conceptual Architecture Overview</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div style="margin-top: 80px;">
-        <h3 style="font-family: Oxanium, sans-serif; font-size: 1.4rem; color: var(--heading); margin-bottom: 24px;">Quick Access References</h3>
-        <div class="quick-access-grid">
-          <div class="quick-access-card">
-            <h3>Runtime Kernel</h3>
-            <p>Core runtime governance and SHS management implementations.</p>
-            <a href="https://github.com/GeneralSergal/ORP/blob/main/Runtime/ORP_RUNTIME.md" target="_blank">ORP_RUNTIME.md →</a>
-          </div>
-          <div class="quick-access-card">
-            <h3>Changelog Matrix</h3>
-            <p>Complete historical timeline mapping specification alterations.</p>
-            <a href="https://github.com/GeneralSergal/ORP/blob/main/CHANGELOG.md" target="_blank">CHANGELOG.md →</a>
-          </div>
-          <div class="quick-access-card">
-            <h3>System Architecture</h3>
-            <p>Complete architectural framework and process blueprints.</p>
-            <a href="https://github.com/GeneralSergal/ORP/blob/main/Architecture/ORP_SYSTEM_ARCHITECTURE.md" target="_blank">System Architecture →</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <section id="principles">
-    <div class="container">
-      <div class="section-header">
-        <div class="section-eyebrow">Core Axioms</div>
-        <h2 class="section-title">Governance-First Axioms</h2>
-        <div class="section-description">ORP prioritizes mathematical validation parameters, system isolation borders, and distinct error reporting over fluid messaging.</div>
-      </div>
-      <div class="principles">
-        <div class="principle">
-          <h3>Signal &gt; Narrative</h3>
-          <p>Data provenance accuracy parameters must never be modified to achieve cleaner linguistic fluency profiles.</p>
-        </div>
-        <div class="principle">
-          <h3>Recoverability &gt; Completion</h3>
-          <p>Graceful, safe diagnostic degradation sequences are systematically favored over forced operational processing continuity.</p>
-        </div>
-        <div class="principle">
-          <h3>Epistemic Isolation</h3>
-          <p>Maintains strict separate processing access blocks across execution segments to avoid logic contamination errors.</p>
-        </div>
-        <div class="principle">
-          <h3>Observable Drift</h3>
-          <p>Every occurrence of operational decay must map explicitly to visible σ² telemetry metrics for diagnostic visibility.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
+  <!-- ── Footer ─────────────────────────────────────────── -->
   <footer>
     <div class="container">
       <div class="footer-grid">
@@ -811,148 +203,25 @@
           </div>
         </div>
       </div>
-      
-      <div class="footer-note">Signal &gt; Narrative · Recoverability &gt; Completion · Provenance &gt; Coherence</div>
-      
-<div class="author-section">
-  <div class="author-avatar">
-    <img src="avatar.jpg" alt="Laurentius Maximus" class="avatar-img" />
-    <div class="avatar-fallback">LM</div>
-  </div>
 
-  <div class="author-info">
-    <div class="author-name">Laurentius Maximus</div>
-    <div class="author-title">The ENTROPIA</div>
-  </div>
-</div>
+      <div class="footer-note">Signal &gt; Narrative · Recoverability &gt; Completion · Provenance &gt; Coherence</div>
+
+      <div class="author-section">
+        <div class="author-avatar" id="avatar-container">
+          <img src="avatar.jpg" alt="Laurentius Maximus" class="avatar-img" id="author-img" />
+          <div class="avatar-fallback">LM</div>
+        </div>
+        <div class="author-info">
+          <div class="author-name">Laurentius Maximus</div>
+          <div class="author-title">The ENTROPIA</div>
+        </div>
+      </div>
 
       <div class="copyright">© 2026 Laurentius Maximus • The ENTROPIA</div>
     </div>
   </footer>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      /* Scroll progress bar tracking */
-      window.addEventListener("scroll", () => {
-        const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-        const progressEl = document.querySelector(".scroll-progress");
-        if(progressEl) progressEl.style.width = scrolled + "%";
-      });
-
-      /* Scroll to top utility */
-      const topBtn = document.getElementById("scroll-top-btn");
-      if(topBtn) {
-        window.addEventListener("scroll", () => {
-          topBtn.classList.toggle("visible", window.scrollY > 400);
-        });
-        topBtn.addEventListener("click", () => {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        });
-      }
-
-      /* Mobile Contextual Navbar Hide/Reveal Engine */
-      let lastScrollY = window.scrollY;
-      const navElement = document.getElementById("main-nav");
-      const scrollThreshold = 8;
-
-      window.addEventListener("scroll", () => {
-        if (window.innerWidth <= 640) {
-          const currentScrollY = window.scrollY;
-          const delta = currentScrollY - lastScrollY;
-
-          if (currentScrollY <= 0) {
-            navElement.classList.remove("nav-hidden");
-            lastScrollY = currentScrollY;
-            return;
-          }
-
-          if (Math.abs(delta) > scrollThreshold) {
-            if (delta > 0) {
-              navElement.classList.add("nav-hidden");
-            } else {
-              navElement.classList.remove("nav-hidden");
-            }
-            lastScrollY = currentScrollY;
-          }
-        } else {
-          navElement.classList.remove("nav-hidden");
-        }
-      }, { passive: true });
-
-      /* Native Asset Error Resilience */
-      const authorImg = document.getElementById("author-img");
-      const avatarContainer = document.getElementById("avatar-container");
-      if (authorImg && avatarContainer) {
-        authorImg.addEventListener("error", () => {
-          avatarContainer.classList.add("img-error");
-        });
-        if (authorImg.naturalWidth === 0) {
-          avatarContainer.classList.add("img-error");
-        }
-      }
-
-      /* Decoupled Event Listeners replacing inline onclicks */
-      const consoleToggleBtn = document.getElementById("console-toggle-btn");
-      if (consoleToggleBtn) {
-        consoleToggleBtn.addEventListener("click", () => {
-          const extendedContainer = document.getElementById('extended-telemetry-container');
-          const btnText = document.getElementById('telemetry-btn-text');
-          if(!extendedContainer || !btnText) return;
-          
-          const isHidden = extendedContainer.style.display === 'none';
-          if(isHidden) {
-            extendedContainer.style.display = 'block';
-            consoleToggleBtn.setAttribute("aria-expanded", "true");
-            btnText.innerText = "[ COLLAPSE SYSTEM ARTIFACTS - ]";
-            btnText.style.color = "var(--accent-orange)";
-          } else {
-            extendedContainer.style.display = 'none';
-            consoleToggleBtn.setAttribute("aria-expanded", "false");
-            btnText.innerText = "[ EXPAND SYSTEM ARTIFACTS + ]";
-            btnText.style.color = "var(--muted)";
-          }
-        });
-      }
-
-      const variantToggleBtn = document.getElementById("variant-toggle-btn");
-      if (variantToggleBtn) {
-        variantToggleBtn.addEventListener("click", () => {
-          const panel = document.getElementById('variant-matrix-panel');
-          const btnSpan = variantToggleBtn.querySelector('span');
-          if(!panel || !btnSpan) return;
-          
-          const isHidden = panel.style.display === 'none';
-          panel.style.display = isHidden ? 'block' : 'none';
-          variantToggleBtn.setAttribute("aria-expanded", isHidden ? "true" : "false");
-          btnSpan.innerText = isHidden 
-            ? '[SYSTEM // CLOSE VARIANT MATRIX]' 
-            : '[SYSTEM // EXECUTE VARIANT MATRIX]';
-        });
-      }
-
-      /* Progressive reveal animation matrix via IntersectionObserver */
-      const observer = new IntersectionObserver(entries => {
-        entries.forEach(e => {
-          if (e.isIntersecting) e.target.classList.add("visible");
-        });
-      }, { threshold: 0.05 });
-      document.querySelectorAll("section, header, .pipeline-card, .doc-card, .principle, .quick-access-card, .release-card").forEach(el => {
-        el.classList.add("reveal");
-        observer.observe(el);
-      });
-    });
-  </script>
-
-  <div style="display:none" aria-hidden="true">
-    <h2>ORP v3.0 Framework Core Principles Manifest</h2>
-    <p>Operational Guidelines for High-Integrity Multi-Step Inference Monitoring:</p>
-    <ul>
-      <li>Priority 01: Verify prompt-space and response alignment boundaries deterministically.</li>
-      <li>Priority 02: Log sigma-squared variance markers continuously at every stage boundary.</li>
-      <li>Priority 03: Establish independent data pathways to eliminate cross-node context mutation.</li>
-      <li>Priority 04: Isolate execution pipelines cleanly when processing thresholds deviate from nominal bounds.</li>
-    </ul>
-  </div>
+  <script src="assets/js/main.js"></script>
 
   <script type="application/ld+json">
   {

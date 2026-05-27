@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Variants — ORP v3.0</title>
+  <meta name="description" content="ORP v3.0 Governed Execution Variants — deploy localized runtime packages tailored to compute efficiency constraints." />
+  <meta name="theme-color" content="#dd1111" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='24' fill='%230a0d10'/%3E%3Crect x='30' y='30' width='40' height='40' rx='6' transform='rotate(45 50 50)' fill='url(%23grad)' stroke='rgba(255,255,255,0.4)' stroke-width='2'/%3E%3Cdefs%3E%3ClinearGradient id='grad' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23dd1111'/%3E%3Cstop offset='100%25' stop-color='%23ff6600'/%3E%3C/linearGradient%3E%3C/defs%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+
+<body>
+
+  <div class="scroll-progress"></div>
+  <button class="scroll-top" id="scroll-top-btn" aria-label="Scroll back to top">↑</button>
+
+  <div class="grid-bg"></div>
+  <div class="glow"></div>
+  <div class="resonance-ring"></div>
+
+  <div class="ember ember-1"></div>
+  <div class="ember ember-2"></div>
+  <div class="ember ember-3"></div>
+  <div class="ember ember-4"></div>
+  <div class="ember ember-5"></div>
+
+  <div class="glyph-layer">
+    <div class="glyph">σ²</div>
+    <div class="glyph">L4</div>
+    <div class="glyph">CRA</div>
+    <div class="glyph">SHS</div>
+  </div>
+
+  <!-- ── Navigation ─────────────────────────────────────── -->
+  <nav id="main-nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo" style="color:inherit;text-decoration:none;">
+        <div class="logo-mark"></div>
+        <span>ORP v3.0</span>
+      </a>
+      <div class="nav-links">
+        <a href="index.html">Overview</a>
+        <a href="pipeline.html">Pipeline</a>
+        <a href="variants.html">Variants</a>
+        <a href="documentation.html">Documentation</a>
+        <a href="principles.html">Principles</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Page Hero ──────────────────────────────────────── -->
+  <header class="page-hero">
+    <div class="container">
+      <div class="section-eyebrow">Runtime Architecture</div>
+      <h1>Governed Execution <span style="color:var(--accent-orange);">Variants</span></h1>
+      <p>Deploy localized runtime packages tailored to compute efficiency constraints without dropping authority parameters.</p>
+    </div>
+  </header>
+
+  <!-- ── Variant Matrix ─────────────────────────────────── -->
+  <section id="variants">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Deployment Matrix</div>
+        <h2 class="section-title">Select Your Runtime Profile</h2>
+        <div class="section-description">
+          Each variant preserves ORP's governance invariants while scaling resource usage to match the target environment. No variant drops provenance tracking or SHS state management.
+        </div>
+      </div>
+
+      <div style="margin:32px 0 0 0;text-align:center;">
+        <button id="variant-toggle-btn" class="status-indicator status-indicator-btn active" aria-expanded="false" aria-controls="variant-matrix-panel">
+          <span>[SYSTEM // EXECUTE VARIANT MATRIX]</span>
+        </button>
+      </div>
+
+      <div id="variant-matrix-panel" class="terminal" style="display:none;margin-top:24px;border-radius:var(--radius);">
+        <div class="terminal-body" style="padding:0;overflow-x:auto;">
+          <table style="width:100%;border-collapse:collapse;text-align:left;">
+            <thead style="background:rgba(255,255,255,0.03);">
+              <tr style="color:var(--accent-orange);font-family:Oxanium,sans-serif;text-transform:uppercase;font-size:0.8rem;">
+                <th style="padding:16px 24px;">Variant</th>
+                <th style="padding:16px 24px;">Target Use Case</th>
+                <th style="padding:16px 24px;">Resource Footprint</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="row-hover"><td style="padding:16px 24px;border-top:1px solid var(--border);">Full Spec</td><td style="padding:16px 24px;border-top:1px solid var(--border);">Production Enterprise Infrastructure</td><td style="padding:16px 24px;border-top:1px solid var(--border);">Standard Baseline</td></tr>
+              <tr class="row-hover"><td style="padding:16px 24px;border-top:1px solid var(--border);">RP Engine</td><td style="padding:16px 24px;border-top:1px solid var(--border);">Unstructured Generative Contexts</td><td style="padding:16px 24px;border-top:1px solid var(--border);">Optimized Alpha</td></tr>
+              <tr class="row-hover"><td style="padding:16px 24px;border-top:1px solid var(--border);">Lite Engine</td><td style="padding:16px 24px;border-top:1px solid var(--border);">Edge Processing Array Nodes</td><td style="padding:16px 24px;border-top:1px solid var(--border);">Low Overhead</td></tr>
+              <tr class="row-hover"><td style="padding:16px 24px;border-top:1px solid var(--border);">RP-Lite</td><td style="padding:16px 24px;border-top:1px solid var(--border);">Distilled High-Density Workloads</td><td style="padding:16px 24px;border-top:1px solid var(--border);">Minimal Footprint</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ── Variant Detail Cards ──────────────────────── -->
+      <div class="pipeline-grid" style="margin-top:48px;">
+        <div class="pipeline-card">
+          <div class="pipeline-step">Full Spec</div>
+          <h3>Production Enterprise</h3>
+          <p>Complete governance pipeline with all eight stages active. Intended for high-stakes production environments requiring full provenance chains and SHS state logging.</p>
+        </div>
+
+        <div class="pipeline-card">
+          <div class="pipeline-step">RP Engine</div>
+          <h3>Generative Contexts</h3>
+          <p>Tuned for unstructured, open-ended generative tasks. Optimized Alpha footprint preserves core drift detection while relaxing formatting enforcement layers.</p>
+        </div>
+
+        <div class="pipeline-card">
+          <div class="pipeline-step">Lite Engine</div>
+          <h3>Edge Processing</h3>
+          <p>Minimal-overhead deployment for edge array nodes and constrained environments. Retains signal prioritization and recoverability invariants.</p>
+        </div>
+
+        <div class="pipeline-card">
+          <div class="pipeline-step">RP-Lite</div>
+          <h3>High-Density Workloads</h3>
+          <p>Distilled configuration for maximum throughput under strict memory ceilings. Suitable for batched inference pipelines at scale.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:40px;">
+        <a href="https://github.com/GeneralSergal/ORP/blob/main/Runtime/ORP_RUNTIME_VARIANTS.md" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+          Full Variant Specification →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Navigation CTA ─────────────────────────────────── -->
+  <section id="variants-cta" style="border-bottom:none !important;">
+    <div class="container">
+      <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;">
+        <div>
+          <div class="section-eyebrow">Continue Exploring</div>
+          <h2 class="section-title" style="font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:8px;">Documentation Index</h2>
+          <p style="color:var(--muted);max-width:520px;">Access the full engineering specification, evaluation layers, drift recovery protocols, and layer definitions.</p>
+        </div>
+        <a href="documentation.html" class="btn btn-primary">Browse Docs →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ─────────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-title">ORP v3.0</div>
+          <div>Open Resonance Protocol</div>
+          <div style="margin-top:14px;color:var(--muted);">Governance-first epistemic reasoning framework.</div>
+        </div>
+        <div>
+          <div class="footer-title">Repository Links</div>
+          <div class="footer-links">
+            <a href="https://github.com/GeneralSergal/ORP" target="_blank" rel="noopener noreferrer">GitHub Source</a>
+            <a href="https://github.com/GeneralSergal/ORP/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">GPL-3.0 License</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-note">Signal &gt; Narrative · Recoverability &gt; Completion · Provenance &gt; Coherence</div>
+
+      <div class="author-section">
+        <div class="author-avatar" id="avatar-container">
+          <img src="avatar.jpg" alt="Laurentius Maximus" class="avatar-img" id="author-img" />
+          <div class="avatar-fallback">LM</div>
+        </div>
+        <div class="author-info">
+          <div class="author-name">Laurentius Maximus</div>
+          <div class="author-title">The ENTROPIA</div>
+        </div>
+      </div>
+
+      <div class="copyright">© 2026 Laurentius Maximus • The ENTROPIA</div>
+    </div>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
