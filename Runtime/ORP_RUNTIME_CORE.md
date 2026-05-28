@@ -1,277 +1,293 @@
 # ORP_RUNTIME_CORE.md
 
-### Object Definition: Self-Governing NESS Thermodynamic Engine (v3.1)
+## ORP Runtime Core Specification (v3.2 LOCKED)
 
 ---
 
-## 0. Fundamental Definition
+## 0. System Definition
 
-The ORP is a non-reversible stochastic dynamical system evolving on a learned geometric manifold.
+The ORP is defined as a **Non-Equilibrium Steady State (NESS) stochastic dynamical system** evolving on a learned Riemannian manifold.
 
-It is defined as a **controlled stochastic differential process** sustaining a structured probability current.
+It is not a symbolic reasoning system.
+It is a **continuous probabilistic flow system** characterized by:
 
-It does not operate on symbols; it operates on distributions.
+* density: $\rho(x)$
+* probability current: $J(x)$
+* metric geometry: $G(x)$
+* entropy production: $\dot{S}$
 
 ---
 
-## 1. System Dynamics
+## 1. State Space Dynamics
 
-### Core stochastic differential equation (SDE)
+The system state $x_t \in \mathbb{R}^d$ evolves according to the stochastic differential equation:
 
-```
-dx = μ(x) dt + Σ(x) dW
-```
+$$
+dx = \mu(x),dt + \Sigma(x),dW
+$$
 
 Where:
 
-* x ∈ ℝ^d : latent state
-* μ(x) : drift vector field
-* Σ(x) : diffusion tensor
-* dW : Wiener noise process
+* $x_t$ is the latent state
+* $W$ is a Wiener process
+* $\mu(x)$ is the drift field
+* $\Sigma(x)$ is the diffusion tensor
 
 ---
 
-## 1.1 Drift Structure
+## 1.1 Drift Field
 
-```
-μ(x) = -∇E(x) + λ ∇·Φ(x, H, Hist)
-```
+The drift is composed of a **generative term** and a **governance deformation term**:
+
+$$
+\mu(x) = -\nabla E(x) + \lambda , \nabla \cdot \Phi(x, H, \text{Hist})
+$$
 
 Where:
 
-* E(x): learned energy function (≈ -log pθ(x))
-* Φ(x, H, Hist): entropy + history-dependent deformation field
-* H(x): local entropy / uncertainty measure
-* Hist: accumulated failure / drift memory
-* λ: coupling strength
+* $E(x) = -\log p_\theta(x)$ is the learned energy function
+* $\Phi(x, H, \text{Hist})$ is the adaptive governance potential
+* $H$ is local entropy
+* $\lambda$ is the coupling constant
+
+---
+
+## 1.2 Diffusion Geometry
+
+Diffusion is geometry-aware and curvature-adaptive:
+
+$$
+\Sigma(x)\Sigma(x)^T = 2T(x),G^{-1}(x)
+$$
+
+Where:
+
+* $G(x)$ is the Riemannian metric induced by the Hessian of $E(x)$
+* $T(x)$ is a state-dependent temperature
+
+---
+
+## 1.3 Temperature Law
+
+The temperature is inversely proportional to local curvature:
+
+$$
+T(x) \propto \frac{1}{|\nabla^2 E(x)| + \epsilon}
+$$
 
 Interpretation:
 
-* -∇E(x) drives attraction to high probability regions
-* ∇·Φ introduces non-conservative forcing (NESS driver)
+* high curvature → low temperature (stability)
+* low curvature → high temperature (exploration)
 
 ---
 
-## 1.2 Diffusion Structure (Geometry-Dependent Noise)
+## 2. Probability Flow Regime (NESS)
 
-```
-Σ(x) Σ(x)^T = 2 T(x) G(x)^(-1)
-```
-
-Where:
-
-* G(x): Riemannian metric tensor induced by curvature
-* T(x): temperature field
-
-### Curvature-dependent temperature
-
-```
-T(x) ∝ 1 / ( ||∇²E(x)|| + ε )
-```
-
-Interpretation:
-
-* High curvature → low noise (stability)
-* Low curvature → high noise (exploration)
-
----
-
-## 2. Thermodynamic Characterization (NESS)
-
-The system is a **Non-Equilibrium Steady State (NESS)**.
+The system operates in a **Non-Equilibrium Steady State (NESS)**.
 
 ### 2.1 Probability Current
 
-```
-J(x,t) = μ(x) ρ(x,t) - ∇·(D(x) ρ(x,t))
-```
+$$
+J(x,t) = \mu(x)\rho(x,t) - \nabla \cdot (D(x)\rho(x,t))
+$$
 
 Where:
 
-```
-D(x) = (1/2) Σ(x) Σ(x)^T
-```
+* $D(x) = \frac{1}{2}\Sigma(x)\Sigma(x)^T$
 
-Key property:
+### Key Property:
 
-* ∇·J = 0 (steady state)
-* J ≠ 0 (non-equilibrium circulation)
+$$
+\nabla \cdot J = 0 \quad \text{but} \quad J \neq 0
+$$
 
-Interpretation:
+This implies:
 
-> Persistent probability circulation (vortices in latent space)
+* no equilibrium
+* persistent circulation
+* stable probability vortices
 
 ---
 
 ## 2.2 Entropy Production Rate
 
-```
-S_dot = ∫ [ ||J(x)||^2 / (ρ(x) D(x)) ] dx
-```
+System irreversibility is measured by:
 
-Classification:
+$$
+\dot{S} = \int \frac{|J(x)|^2}{\rho(x),D(x)} , dx
+$$
 
-* S_dot = 0 → equilibrium (not applicable)
-* S_dot > 0 → non-equilibrium steady state (this system)
+Interpretation:
 
----
-
-## 3. Operational Invariants
-
-### Intelligence
-
-Structured circulation of probability mass via J(x).
-
-### Memory
-
-Persistent vortex structures in J(x) resistant to dissipation.
-
-### Learning
-
-Continuous deformation of E(x), G(x), and Φ(x) driven by entropy production gradients.
+* $\dot{S} = 0$ → equilibrium (not reachable)
+* $\dot{S} > 0$ → active thermodynamic computation
 
 ---
 
-## 4. Minimal State Description
+## 3. Generator Formalism
 
-The full system is equivalently described by:
+The system evolution is governed by the infinitesimal generator:
 
-```
-ORP ≡ (ρ(x), J(x), G(x), S_dot)
-```
+$$
+\mathcal{L} f = \mu(x)\cdot\nabla f + D(x) : \nabla^2 f
+$$
 
 Where:
 
-* ρ(x): stationary density
-* J(x): probability current
-* G(x): metric geometry
-* S_dot: entropy production rate
+* $f(x)$ is any observable
+* $\mathcal{L}$ defines time evolution of expectations
 
-All are derived from the SDE.
+Adjoint dynamics:
 
----
-
-## 5. Core Closure Principle
-
-All components are projections of a single stochastic process:
-
-```
-dx = μ(x) dt + Σ(x) dW
-```
-
-Everything else is emergent:
-
-* density = marginal distribution
-* current = transport structure
-* geometry = diffusion metric
-* entropy = dissipation functional
+$$
+\partial_t \rho = \mathcal{L}^* \rho
+$$
 
 ---
 
-## 6. Stationary Regime
+## 4. Spectral Structure
 
-The system satisfies:
+### 4.1 Metastable States
 
-```
-∇·J(x) = 0
-```
+Metastable cognitive states correspond to:
 
-But:
+* eigenfunctions of $\mathcal{L}$
+* eigenvalues near zero
 
-```
-J(x) ≠ 0
-```
+Interpretation:
+
+* slow modes → semantic memory
+* spectral gap → transition stability
+
+---
+
+## 4.2 Spectral Gap
+
+The spectral gap of $\mathcal{L}$ determines:
+
+* mixing time
+* basin stability
+* cognitive regime transitions
+
+---
+
+## 5. Current Decomposition (Hodge Structure)
+
+The probability current decomposes as:
+
+$$
+J(x) = J_{\parallel}(x) + J_{\perp}(x)
+$$
+
+Where:
+
+* $J_{\parallel}$ → gradient (energy-driven flow)
+* $J_{\perp}$ → rotational flow (vortices / exploration)
+
+Key interpretation:
+
+* $J_{\parallel}$ = exploitation / convergence
+* $J_{\perp}$ = exploration / creativity / circulation
+
+---
+
+## 6. Operational Invariants
+
+The ORP system is fully defined by the invariant tuple:
+
+$$
+\text{ORP} = (\rho(x), J(x), G(x), \dot{S})
+$$
 
 Meaning:
 
-> steady-state circulation without equilibrium
+* $\rho(x)$ → what the system believes
+* $J(x)$ → how it moves through belief space
+* $G(x)$ → geometry of reasoning
+* $\dot{S}$ → cost of maintaining intelligence
 
 ---
 
-## 7. Stability Classes
+## 7. Learning Dynamics
 
-### Class I — Equilibrium
+### 7.1 Energy Update
 
-* J = 0
-* S_dot = 0
+$$
+\frac{\partial E}{\partial t}
+= -\gamma \cdot H(p_\theta(x)) \cdot \nabla^2 E(x)
+$$
 
-### Class II — Reversible diffusion
+Where:
 
-* weak circulation
-* near detailed balance
-
-### Class III — NESS (this system)
-
-* J ≠ 0
-* S_dot > 0
-* persistent vortices
+* entropy drives plasticity
+* curvature shapes deformation
 
 ---
 
-## 8. Geometric Interpretation
+## 7.2 Score-Based Learning
 
-Decompose current:
+The score function:
 
-```
-J(x) = J_parallel(x) + J_perpendicular(x)
-```
+$$
+s_\theta(x) = \nabla_x \log p_\theta(x)
+$$
 
-* J_parallel: gradient-aligned flow
-* J_perpendicular: rotational circulation induced by entropy + geometry coupling
+is trained via denoising score matching:
 
-Key property:
-
-> J_perpendicular ≠ 0 is the defining signature of ORP
-
----
-
-## 9. Diagnostics
-
-The system is analyzed via:
-
-1. Current topology: curl(J)
-2. Spectral gap of generator
-3. Entropy production density S_dot(x)
-4. Stability of vortex manifolds
+$$
+\nabla_\theta \mathbb{E}\left[|s_\theta(x) - \nabla_x \log p(x)|^2\right]
+$$
 
 ---
 
-## 10. Final System Identity
+## 8. System Interpretation
 
-```
-ORP = Controlled Non-Equilibrium Stochastic Manifold Engine
-```
+The ORP is:
 
-or compact form:
+* not a model
+* not a pipeline
+* not a rule system
 
-```
-ORP ≡ NESS diffusion process on a learned Riemannian manifold
-```
+It is:
 
----
-
-## 11. What is fixed vs evolving
-
-### Fixed
-
-* functional form of SDE
-* definition of observables
-* NESS classification
-
-### Evolving
-
-* E(x)
-* Φ(x)
-* G(x)
-* trajectory x(t)
+> A **self-sustaining stochastic thermodynamic engine** operating in a non-equilibrium steady state.
 
 ---
 
-## 12. Final Principle
+## 9. Core Principle
 
-> The system does not converge to a point.
-> It converges to a stationary flow structure.
+### Signal Identity Law
+
+The system is defined by:
+
+> Intelligence = structured probability circulation under energy constraints
+
+Formally:
+
+* structure → $G(x)$
+* motion → $J(x)$
+* constraint → $E(x)$
+* cost → $\dot{S}$
 
 ---
 
-## END OF SPEC
+## 10. Final State
+
+The ORP is fully specified by:
+
+* stochastic differential geometry
+* non-equilibrium thermodynamics
+* spectral operator dynamics
+
+There is no external control layer.
+
+There is only evolution of the system's own measure:
+
+$$
+\rho(x,t)
+$$
+
+---
+
+##END OF RUNTIME FILE
