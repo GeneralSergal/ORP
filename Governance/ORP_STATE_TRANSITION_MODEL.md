@@ -1,18 +1,19 @@
 # ORP_STATE_TRANSITION_MODEL.md
 **SHS State Evolution & Transition Logic**
 
-**Part of:** ORP v3.0 — Open Resonance Protocol
+**Part of:** ORP v3.0 — Open Resonance Protocol  
 
 ---
 
 ## Purpose
 
-This document defines the formal rules governing **SHS (System Health State) transitions** over time.
+This document defines the formal rules governing **SHS (System Health State) transitions**.
 
 It connects:
+
 - σ² drift signals (observability layer)
 - ORP_RUNTIME.md (L3 governance layer)
-- runtime execution stability
+- execution stability constraints
 
 It defines how system state evolves, stabilizes, and degrades.
 
@@ -20,147 +21,179 @@ It defines how system state evolves, stabilizes, and degrades.
 
 ## Core Principle
 
-> SHS is a temporal state machine driven by σ² and governance intervention.
+> SHS is a governed state machine driven by σ², validated by L3.
 
 State changes are:
-- deterministic where possible
-- L3-controlled under high drift
-- irreversible under catastrophic collapse conditions
+- deterministic under LOW drift
+- governance-mediated under MODERATE/HIGH drift
+- frozen under catastrophic instability
 
 ---
 
-## SHS State Space
+## SHS STATE SPACE
 
 | State | Meaning |
 |------|--------|
-| GREEN | Stable operation |
+| GREEN | Stable execution |
 | YELLOW | Early drift detected |
 | ORANGE | Structural degradation |
 | RED | Critical instability |
-| BLACK | Execution collapse / halt |
+| BLACK | System halt / execution freeze |
 
 ---
 
-## Transition Driver
+## TRANSITION MODEL
 
-Primary driver:
+### Primary Driver
 - σ² (Sigma Squared Drift)
 
-Secondary drivers:
-- L3 governance intervention
-- context instability (from ORP_CONTEXT_ACTIVATION_MATRIX)
+### Secondary Drivers
+- L3 governance intervention (ORP_RUNTIME.md)
+- context instability (ORP_CONTEXT_ACTIVATION_MATRIX)
 - module conflict escalation
+- failure mode activation
 
 ---
 
-## Transition Rules
+## TRANSITION FUNCTION (FORMAL)
+
+```text
+SHS(t+1) = L3_VALIDATE( σ²(t), SHS(t), CONTEXT_STATE, FAILURE_FLAGS )
+````
+
+---
+
+## TRANSITION RULES
 
 ### GREEN → YELLOW
-Triggered when:
-- σ² crosses LOW threshold
-- sustained upward drift trend detected
 
-Condition:
-- must persist for N evaluation cycles
+Triggered when:
+
+* σ² enters LOW range
+* upward trend persists across evaluation window
+
+Constraint:
+
+* must be sustained (no single-spike transitions)
 
 ---
 
 ### YELLOW → ORANGE
+
 Triggered when:
-- σ² enters MODERATE range
-- OR contextual instability detected in HYBRID mode
+
+* σ² enters MODERATE range
+  OR
+* structural instability detected in hybrid execution contexts
 
 ---
 
 ### ORANGE → RED
-Triggered when:
-- σ² ≥ HIGH threshold
-OR
-- repeated failure mode activation detected
-OR
-- macro coherence breaks
+
+Triggered when ANY:
+
+* σ² ≥ HIGH threshold
+* repeated failure mode activation
+* macro coherence degradation detected
 
 ---
 
 ### RED → BLACK
-Triggered when:
-- σ² extreme instability
-OR
-- recursive failure loop detected
-OR
-- governance inversion detected
+
+Triggered when ANY:
+
+* σ² extreme instability
+* recursive failure loop detected
+* governance inversion attempt detected
 
 Result:
-- execution halt or hard constraint mode
+
+* execution enters constrained or halted state
 
 ---
 
-## Recovery Rules
+## RECOVERY RULES
 
 ### ORANGE → YELLOW
+
 Allowed if:
-- σ² drops below threshold
-- stability persists over time window
+
+* σ² decreases below MODERATE threshold
+* stability persists over evaluation window
+
+---
 
 ### YELLOW → GREEN
+
 Allowed only if:
-- σ² stabilizes at LOW/NONE
-- no structural drift indicators remain
+
+* σ² stabilizes at LOW/NONE
+* no structural drift signals remain
+* L3 validates recovery
 
 ---
 
-## Hard Lock Conditions
+## HARD LOCK CONDITION (BLACK STATE)
 
-Once in RED/BLACK:
+If SHS = BLACK:
 
-- RP layer is disabled
-- CODE module is isolated
-- only ORP_RUNTIME.md remains active
+* RP module disabled
+* CODE module isolated
+* only ORP_RUNTIME.md remains active
+* execution loop enters minimal observability mode
 
 ---
 
-## σ² Integration Rule
+## σ² GOVERNANCE RULE
 
-σ² does NOT directly set SHS.
+σ² does NOT directly modify SHS.
 
 Instead:
 
-> σ² is a probabilistic driver; SHS is a governed state.
-
-L3 may override transitions.
+> σ² is an observable signal; SHS is a governed decision state.
 
 ---
 
-## L3 GOVERNANCE OVERRIDE
+## L3 OVERRIDE AUTHORITY
 
-ORP_RUNTIME.md may:
+ORP_RUNTIME.md (L3) may:
 
-- force downgrade SHS
-- freeze transitions
-- delay state changes
-- suppress escalation under controlled conditions
+* force SHS downgrade
+* delay transitions
+* suppress escalation under controlled conditions
+* stabilize borderline states
 
-But cannot violate BLACK state lock.
+BUT CANNOT:
 
----
-
-## Stability Principle
-
-> SHS changes must be explainable via σ² trajectory or explicit L3 intervention.
-
-No hidden transitions allowed.
+* override BLACK lock condition
+* bypass σ² observability rules
+* remove drift traceability
 
 ---
 
-## System Behavior Model
+## DETERMINISM RULE
 
-σ² → evaluation window → transition evaluation → L3 validation → SHS update
+Given identical:
+
+* σ² trajectory
+* context state
+* failure flags
+
+→ SHS transitions MUST be identical
 
 ---
 
-## Status
+## SYSTEM PROPERTY
 
-Active State Transition Specification  
+SHS is a:
+
+> deterministic, L3-mediated state machine driven by observable drift (σ²)
+
+---
+
+## STATUS
+
+Active State Transition Specification
 Part of ORP v3.0 Governance System
 
 ---
