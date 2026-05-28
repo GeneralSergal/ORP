@@ -275,4 +275,3 @@ ORP ≡ NESS diffusion process on a learned Riemannian manifold
 ---
 
 ## END OF SPEC
-
