@@ -7,19 +7,19 @@
 
 ## Purpose
 
-This document defines how ORP runtime components are activated based on task context.
+This document defines how ORP runtime components are activated based on task context classification.
 
-It ensures that ORP operates as a **context-dependent modular system**, not a static or always-on stack.
+It ensures ORP operates as a **deterministic, context-dependent modular system**, not a static or always-on stack.
 
 ---
 
 ## Core Principle
 
-> ORP modules are activated by context classification, not by boot sequence.
+> ORP modules are activated by context classification, not by execution sequence.
 
-The system is composed of:
-- A **global governance runtime (ORP_RUNTIME.md)**  
-- Optional behavioral and execution modules activated per context  
+The system consists of:
+- A **global governance runtime (ORP_RUNTIME.md)**
+- Optional context-bound modules activated deterministically per classification
 
 No module operates outside its defined activation domain.
 
@@ -27,22 +27,35 @@ No module operates outside its defined activation domain.
 
 ## Context Classification Model
 
-All tasks are classified into one or more of the following contexts:
+Each task is assigned a **primary context** and optionally a **secondary modifier context**.
 
-### 1. CORE (Default)
+### Primary Contexts
+
+#### CORE
 General reasoning, analysis, explanation, planning.
 
-### 2. CODE
+#### CODE
 Software engineering, programming, debugging, system design.
 
-### 3. CREATIVE / RP
-Narrative, role-play, character-based output, immersive generation.
+#### CREATIVE / RP
+Narrative generation, role-play, immersive or character-based output.
 
-### 4. DEGRADED
-Low-capability environments, constrained models, performance-limited execution.
+#### DEGRADED
+Low-capability environments, constrained execution, reduced model capacity.
 
-### 5. HYBRID
-Mixed contexts (e.g. RP + CODE, or CREATIVE + DEGRADED).
+---
+
+### Secondary Modifier Context
+
+#### HYBRID
+Indicates overlapping constraints:
+- CORE + CODE
+- CREATIVE + CODE
+- CREATIVE + DEGRADED
+- CODE + DEGRADED
+
+HYBRID does not override primary context.
+It modifies execution priority only.
 
 ---
 
@@ -51,7 +64,7 @@ Mixed contexts (e.g. RP + CODE, or CREATIVE + DEGRADED).
 ### GLOBAL BASE LAYER (Always Active)
 
 #### ORP_RUNTIME.md
-**Activated in all contexts**
+Activated in all contexts.
 
 Applies:
 - drift control
@@ -62,113 +75,122 @@ Applies:
 
 ---
 
-### CODE CONTEXT
+## CONTEXT → MODULE MAPPING
 
-#### If Context = CODE
+---
+
+### CORE CONTEXT
 
 Activate:
-- ORP_RUNTIME.md (required)
-- ORP_RUNTIME_CODE.md (conditional module)
+- ORP_RUNTIME.md
+
+---
+
+### CODE CONTEXT
+
+Activate:
+- ORP_RUNTIME.md
+- ORP_RUNTIME_CODE.md (conditional domain module)
 
 Rules:
 - CODE module applies ONLY to engineering artifacts
-- RP module is disabled unless explicitly required for output formatting
+- RP module is disabled unless explicitly required for formatting output
+- CODE module must not affect non-engineering reasoning
 
 Constraint:
-> ORP_RUNTIME_CODE is NOT a runtime layer — it is a domain-specific constraint module
+> ORP_RUNTIME_CODE is a domain-specific constraint module, not a runtime layer.
 
 ---
 
 ### CREATIVE / RP CONTEXT
 
-#### If Context = CREATIVE / RP
-
 Activate:
-- ORP_RUNTIME.md (required)
+- ORP_RUNTIME.md
 - ORP_RUNTIME_RP.md (optional transform layer)
 
 Rules:
-- RP layer applies only as downstream transformation
-- Governance kernel remains authoritative
-- No modification of SHS or drift states by RP layer
+- RP layer is downstream-only transformation
+- It MUST NOT modify reasoning, drift state, or provenance tracking
+- It affects expression only, not system truth state
 
 Constraint:
-> RP layer affects expression, not truth state
+> RP layer is a transformation filter, not an authority layer.
 
 ---
 
 ### DEGRADED CONTEXT
 
-#### If Context = DEGRADED
-
 Activate:
-- ORP_RUNTIME.md (required)
-- ORP_RUNTIME_LITE.md (required or implicit based on system constraints)
+- ORP_RUNTIME.md
+- ORP_RUNTIME_LITE.md
 
 Rules:
 - Reduce reasoning overhead
 - Simplify artifact structure
-- Preserve core governance invariants
-- Avoid deep abstraction chains
+- Preserve governance invariants
+- Avoid multi-layer abstraction chains
 
 Constraint:
-> Simplicity is enforced, not optional
+> Simplicity is enforced, not optional.
 
 ---
 
 ### HYBRID CONTEXT
 
-#### If Context = HYBRID
+Resolution rule:
+- Primary context determines base activation
+- Secondary context modifies execution constraints only
 
-Activate combinations:
-
-- CODE + CREATIVE → CODE rules dominate structure, RP only affects output tone
-- CODE + DEGRADED → LITE + CODE module both active
-- CREATIVE + DEGRADED → RP-LITE mode active
-- CODE + CREATIVE + DEGRADED → RP-LITE + CODE module (CODE remains structurally dominant)
+Examples:
+- CORE + CODE → CODE rules apply only to relevant artifacts
+- CREATIVE + CODE → CODE dominates structure, RP affects tone only
+- CREATIVE + DEGRADED → RP-LITE behavior emerges via LITE constraints
+- CODE + DEGRADED → LITE + CODE module both active, CODE remains dominant
 
 ---
 
 ## Conflict Resolution Priority (Cross-Context)
 
-When modules conflict across contexts:
+When modules conflict:
 
 1. ORP_RUNTIME.md (global governance always wins)
 2. ORP_RUNTIME_CODE.md (only in CODE context)
-3. ORP_RUNTIME_RP.md (output transformation only)
+3. ORP_RUNTIME_RP.md (expression layer only)
 4. ORP_RUNTIME_LITE.md (execution compression only)
 
 ---
 
 ## Critical Rules
 
-### 1. No Global RP Contamination
-RP transformations must never affect:
+### 1. No RP Contamination
+RP transformations MUST NOT affect:
 - reasoning integrity
-- drift state
+- drift state (σ²)
 - provenance tracking
 
 ---
 
-### 2. No CODE Module Leakage
+### 2. No CODE Leakage
 ORP_RUNTIME_CODE must not:
 - activate outside CODE context
 - influence non-engineering reasoning
 - override global governance rules
+
+It may only operate on **engineering-bound artifacts**.
 
 ---
 
 ### 3. No Context Ambiguity
 If context cannot be classified:
 - default to CORE
-- apply ORP_RUNTIME.md only
+- activate ORP_RUNTIME.md only
 - explicitly mark uncertainty
 
 ---
 
 ### 4. Deterministic Activation
 Given identical context classification:
-> The same modules MUST always activate
+> The same modules MUST always activate.
 
 ---
 
@@ -176,23 +198,58 @@ Given identical context classification:
 
 ORP operates as:
 
-> Context → Module Activation → Constraint Application → Output Generation
+> Context Classification → Module Activation → Constraint Application → Output Generation
 
 Not as:
 
-> Runtime Stack → Execution → Optional Overrides
+> Runtime Stack → Optional Overrides → Post-hoc Adjustment
 
 ---
 
-## Summary Mapping
+## σ² DRIFT OBSERVABILITY CONTRACT
 
-| Context   | Active Modules |
-|----------|----------------|
-| CORE     | ORP_RUNTIME.md |
-| CODE     | ORP_RUNTIME.md + ORP_RUNTIME_CODE.md |
-| CREATIVE | ORP_RUNTIME.md + ORP_RUNTIME_RP.md |
-| DEGRADED | ORP_RUNTIME.md + ORP_RUNTIME_LITE.md |
-| HYBRID   | Combination of above with priority rules |
+σ² (Sigma Squared Drift) is defined in:
+→ ORP_SIGMA_SQUARED_DRIFT.md (L4 observational layer)
+
+---
+
+### Layer Responsibility Boundaries
+
+| Layer | σ² Role |
+|------|--------|
+| ORP_RUNTIME.md (L3) | Interprets σ² and applies SHS transitions |
+| ORP_RUNTIME_CODE.md | MAY reference derived drift indicators for debugging only |
+| ORP_RUNTIME_RP.md | MUST NOT interpret σ² in any semantic or narrative form |
+| ORP_RUNTIME_LITE.md | May operate under simplified drift awareness (non-numeric abstraction) |
+| ORP_SIGMA_SQUARED_DRIFT.md | Defines σ² only (no operational control) |
+
+---
+
+## STRICT RULE
+
+σ² is:
+
+- Observed at L4  
+- Interpreted at L3  
+- Enforced at runtime layer  
+
+Any inversion is invalid:
+
+- governance inversion  
+- drift contamination  
+- execution integrity failure  
+
+---
+
+## NO CROSS-LAYER FEEDBACK RULE
+
+σ² MUST NOT be:
+- modified by RP layer
+- used as narrative signal
+- directly consumed as control input by CODE module
+- overridden by runtime variants
+
+It is a **read-only observability signal outside control loops**.
 
 ---
 
