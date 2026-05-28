@@ -103,76 +103,93 @@
 
 </nav>
   <!-- Hero -->
-  <header class="hero">
-    <div class="container hero-grid">
-      <div>
-        <div class="badge-wrapper">
-          <div class="badge">
-            <div class="pulse"></div>
-            FRAMEWORK SPECIFICATION V3.0
-          </div>
-        </div>
-
-        <h1>Open Resonance <span style="color:var(--accent-orange);">Protocol</span></h1>
-
-        <p style="margin-top:24px; font-size:1.15rem; max-width:720px;">
-          Designed to make multi-step reasoning systems measurable instead of implicit.
-        </p>
-
-        <p style="margin:20px 0 32px; max-width:640px; color:var(--muted);">
-          ORP observes multi-step reasoning pipelines, assigns stability states (SHS), and exposes drift when outputs degrade.
-        </p>
-
-        <div class="hero-actions">
-          <a href="pipeline.html" class="btn btn-primary">Initialize Runtime</a>
-          <a href="documentation.html" class="btn btn-secondary">Explore Documentation</a>
-        </div>
-      </div>
-
-      <!-- Terminal Telemetry -->
-<div class="orp-custom-scope">
-  
-  <div class="telemetry-card">
-    <div class="telemetry-card-header">
-      <div class="header-text-container">
-        <h2 class="telemetry-title">MONITOR: TARGET_CORE</h2>
-        <span class="telemetry-subtitle">Runtime Engine Link Stack</span>
-      </div>
-
-      <div class="telemetry-chip-set">
-        <div class="telemetry-chip chip-active">
-          <span class="chip-dot dot-active"></span>
-          SHS
-        </div>
-        <div class="telemetry-chip">
-          <span class="chip-dot"></span>
-          DRIFT
-        </div>
-        <div class="telemetry-chip">
-          <span class="chip-dot"></span>
-          CRA
-        </div>
+<header class="hero">
+  <div class="container hero-grid">
+    <div>
+<div class="badge-wrapper">
+      <div class="badge">
+        <span class="pulse"></span>
+        FRAMEWORK SPECIFICATION V3.0
       </div>
     </div>
+        <div class="section-eyebrow">Designed to make multi-step reasoning systems measurable instead of implicit.</div>
+    
+    <h1 class="hero-title">
+      Open Resonance <span style="color:var(--accent-orange);">Protocol</span>
+    </h1>
 
-    <hr class="telemetry-divider">
+    <p class="hero-lead">
+      Empower your neural architectures with real-time observability. Bridge the gap between hidden chain-of-thought processing and deterministic output validation.
+    </p>
 
-    <div class="telemetry-card-body">
-      <div class="log-row">
-        <span class="log-label text-success">[SHS: GREEN]</span>
+    <p class="hero-sub">
+      ORP observes multi-step reasoning pipelines, assigns Stability Health States (SHS), and automatically exposes drift when agentic outputs begin to degrade.
+    </p>
+
+    <div class="hero-actions">
+      <a href="pipeline.html" class="btn btn-primary">Initialize Runtime</a>
+      <a href="documentation.html" class="btn btn-secondary">Explore Documentation</a>
+    </div>
+ </div>
+      <!-- Terminal Telemetry -->
+<div class="orp-compact-scope">
+  
+  <div class="mini-telemetry-card">
+    <div class="holo-scanlines"></div>
+    
+    <div class="mini-card-header">
+      <div class="header-main">
+        <h2 class="telemetry-title">MONITOR: TARGET_CORE</h2>
+        <span class="telemetry-subtitle">RUN_MATRIX_L3 // 0.51_SYNC</span>
       </div>
-      <div class="log-row">
-        <span class="log-label text-info">[DRIFT: NONE]</span>
+      <div class="status-pill">WORLD_SYNC_ACTIVE</div>
+    </div>
+
+    <div class="mini-card-layout">
+      
+      <div class="ascii-core-panel">
+    //              //
+   //              //
+  //              //
+ //              //
+ ||      __________      ||
+ ||     /          \     ||
+ ||    |  ~~~~~~~~  |    ||
+ ||    | ( ( || ) ) |    ||
+ ||    |     ||     |    ||
+  \\    \__________/    //
+   \\________||________//
+        [= STAR =]
+       / [ CORE ] \
+      /____________\</div>
+
+      <div class="data-metrics-panel">
+        <div class="metric-line">
+          <span class="label">[SHS]</span>
+          <span class="val text-success">GREEN</span>
+        </div>
+        <div class="metric-line">
+          <span class="label">[DRIFT]</span>
+          <span class="val text-red">LOW</span>
+        </div>
+        <div class="metric-line">
+          <span class="label">[CRA]</span>
+          <span class="val text-success">VALID</span>
+        </div>
+        <div class="metric-line">
+          <span class="label">[LAS]</span>
+          <span class="val text-orange">L3</span>
+        </div>
+        
+        <div class="panel-divider"></div>
+        
+        <div class="nodes-list">
+          <span class="node-tag">GROK</span>
+          <span class="node-tag">GEMINI</span>
+          <span class="node-tag">GPT</span>
+        </div>
       </div>
-      <div class="log-row">
-        <span class="log-label text-warning">[CRA: VALID]</span>
-      </div>
-      <div class="log-row">
-        <span class="log-label"><strong>ORP v3.0 Kernel: Online</strong></span>
-      </div>
-      <div class="log-row">
-        <span class="log-label text-danger">&sigma;&sup2; Drift Observability: <strong>ACTIVE</strong></span>
-      </div>
+
     </div>
   </div>
 

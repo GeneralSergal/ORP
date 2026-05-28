@@ -31,6 +31,207 @@
   --transition: 250ms cubic-bezier(0.2, 0, 0, 1);
 }
 
+/* ============================================================
+   FONT SYSTEM — HYBRID ORP PATCH
+   Drop this BELOW your current :root block
+   and BEFORE body {}
+   ============================================================ */
+
+:root {
+  /* Primary UI / readable body font */
+  --font-ui: "Space Grotesk", system-ui, sans-serif;
+
+  /* Technical / headers / tactical labels */
+  --font-display: "Oxanium", "Rajdhani", sans-serif;
+
+  /* Dense telemetry / code / metrics */
+  --font-mono: "JetBrains Mono", "IBM Plex Mono", monospace;
+
+  /* Slightly tighter typography control */
+  --tracking-tight: -0.025em;
+  --tracking-normal: 0.015em;
+  --tracking-wide: 0.08em;
+}
+
+/* ============================================================
+   GLOBAL BODY REFINEMENT
+   ============================================================ */
+
+body {
+  font-family: var(--font-ui);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+/* Improve paragraph readability */
+p,
+li {
+  font-family: var(--font-ui);
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: var(--text);
+}
+
+/* ============================================================
+   DISPLAY / TITLES
+   ============================================================ */
+
+h1,
+h2,
+h3,
+.section-title,
+.logo,
+.pipeline-step,
+.section-eyebrow,
+.release-tag,
+.author-name,
+.author-title,
+.badge,
+.mobile-nav a,
+.orp-compact-scope .telemetry-title,
+.orp-compact-scope .status-pill {
+  font-family: var(--font-display);
+  letter-spacing: var(--tracking-tight);
+  text-transform: none;
+  font-kerning: normal;
+}
+
+/* Main hero title polish */
+h1 {
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.98;
+}
+
+/* Section title readability */
+.section-title {
+  font-weight: 700;
+  line-height: 1.02;
+}
+
+/* ============================================================
+   NAVIGATION
+   ============================================================ */
+
+.nav-links a {
+  font-family: var(--font-ui);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+
+.btn {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+/* ============================================================
+   TERMINAL / TELEMETRY / ASCII
+   ============================================================ */
+
+.orp-compact-scope .telemetry-subtitle,
+.orp-compact-scope .metric-line,
+.orp-compact-scope .node-tag,
+.orp-compact-scope .ascii-core-panel,
+.avatar-fallback,
+.glyph {
+  font-family: var(--font-mono);
+  font-variant-ligatures: none;
+}
+
+/* Sharper telemetry appearance */
+.orp-compact-scope .metric-line {
+  font-size: 0.76rem;
+  letter-spacing: 0.03em;
+}
+
+/* ASCII stabilization */
+.orp-compact-scope .ascii-core-panel {
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+/* ============================================================
+   CARD TYPOGRAPHY REFINEMENT
+   ============================================================ */
+
+.pipeline-card h3,
+.doc-card h3,
+.principle h3,
+.quick-access-card h3,
+.release-card h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+}
+
+.pipeline-card p,
+.doc-card p,
+.principle p,
+.quick-access-card p,
+.release-card p,
+.section-description {
+  font-family: var(--font-ui);
+  font-weight: 400;
+  line-height: 1.75;
+}
+
+/* ============================================================
+   MOBILE TYPOGRAPHY FIXES
+   ============================================================ */
+
+@media (max-width: 640px) {
+
+  h1 {
+    font-size: 2.65rem !important;
+    line-height: 1.02;
+    letter-spacing: -0.045em;
+  }
+
+  .section-title {
+    line-height: 1.06;
+  }
+
+  .hero p,
+  .section-description,
+  p,
+  li {
+    font-size: 1rem;
+    line-height: 1.72;
+  }
+
+  .mobile-nav a {
+    letter-spacing: 0.04em;
+  }
+}
+
+/* ============================================================
+   FONT RENDERING FIXES
+   ============================================================ */
+
+h1,
+h2,
+h3,
+.section-title,
+.logo,
+.btn,
+.badge {
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Prevent overly thin rendering on Firefox */
+body,
+p,
+li,
+.nav-links a {
+  -moz-osx-font-smoothing: grayscale;
+}
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
@@ -231,7 +432,7 @@ nav.nav-hidden {
   height: 52px;
   border-radius: var(--radius-xs);
   border: 1px solid rgba(221,17,17,0.15);
-  background: var(--panel-2); /* Solid, fully opaque panel color */
+  background: var(--panel-2); 
   cursor: pointer;
   padding: 0;
   transition:
@@ -252,7 +453,7 @@ nav.nav-hidden {
   width: 22px;
   height: 2px;
   border-radius: 999px;
-  background: var(--heading); /* Flat structural crisp line color */
+  background: var(--heading); 
   transform: translateX(-50%);
   transition:
     transform 250ms ease,
@@ -291,7 +492,7 @@ nav.nav-hidden {
   pointer-events: none;
   background: 
     radial-gradient(circle at top right, rgba(255,102,0,0.08), transparent 40%),
-    var(--bg); /* Solid framework theme color background (#06080b) */
+    var(--bg); 
   transition: opacity 280ms ease, visibility 280ms ease;
 }
 
@@ -306,7 +507,7 @@ nav.nav-hidden {
   flex-direction: column;
   justify-content: center;
   min-height: 100vh;
-  padding: 120px 32px 48px;
+  padding: 120px 36px 48px;
   gap: 18px;
 }
 
@@ -368,7 +569,7 @@ h1 {
   font-size: clamp(3rem, 6vw, 4.8rem); line-height: 1.08;
   letter-spacing: -0.03em; font-weight: 800;
 }
-.hero p { max-width: 640px; margin-top: 24px; color: var(--muted); font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.6; }
+.hero p { max-width: 560px; margin-top: 24px; color: var(--muted); font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.6; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 40px; }
 
 /* ── Buttons ───────────────────────────────────────────── */
@@ -390,7 +591,6 @@ h1 {
 .btn-secondary { border: 1px solid var(--border-strong); background: rgba(15,18,23,0.4); color: var(--text); }
 .btn-secondary:hover { transform: translateY(-2px); background: var(--panel); border-color: rgba(221,17,17,0.4); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
 .btn-secondary:active { transform: translateY(0px); }
-
 
 /* ── Directives ────────────────────────────────────────── */
 .directives-list { margin: 12px 0 0 0; padding-left: 20px; list-style-type: square; }
@@ -426,13 +626,13 @@ h1 {
 }
 .pipeline-card:hover::before, .doc-card:hover::before, .principle:hover::before, .quick-access-card:hover::before, .release-card:hover::before { opacity: 1; }
 
-.pipeline-card { padding: 28px; }
+.pipeline-card { padding: 36px; }
 .pipeline-step { color: var(--accent-orange); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.78rem; font-weight: 700; margin-bottom: 12px; font-family: Oxanium, sans-serif; }
 .pipeline-card h3, .doc-card h3, .principle h3, .quick-access-card h3, .release-card h3 { margin-top: 0; color: var(--heading); font-size: 1.3rem; font-weight: 600; letter-spacing: -0.15px; }
 .pipeline-card p, .doc-card p, .principle p, .quick-access-card p, .release-card p { color: var(--muted); margin-bottom: 0; font-size: 0.98rem; }
 
 .docs-grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
-.doc-card { padding: 32px; background: var(--panel); }
+.doc-card { padding: 36px; background: var(--panel); }
 .doc-card p { margin-bottom: 24px; }
 .doc-card ul { margin: 0; padding-left: 16px; }
 .doc-card li { margin-bottom: 12px; list-style-type: square; color: rgba(221,17,17,0.4); }
@@ -440,9 +640,9 @@ h1 {
 .doc-card ul li a:hover { color: var(--accent-orange-bright); transform: translateX(3px); text-decoration: none; }
 
 .principles { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-.principle { padding: 32px; }
+.principle { padding: 36px; }
 
-.quick-access-card { padding: 32px; }
+.quick-access-card { padding: 36px; }
 .quick-access-card h3 { font-size: 1.2rem; margin-bottom: 12px; }
 .quick-access-card a { display: inline-flex; align-items: center; gap: 4px; margin-top: 16px; color: var(--accent-orange); font-weight: 600; }
 .quick-access-card a:hover { color: var(--accent-orange-bright); transform: translateX(3px); }
@@ -479,7 +679,7 @@ footer { padding: 80px 0 60px; border-top: 1px solid var(--border); background: 
 .copyright { margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--muted); text-align: center; font-size: 0.85rem; letter-spacing: 0.02em; }
 
 /* ── Scroll Utilities ──────────────────────────────────── */
-.scroll-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, #dd1111, #ff6600); z-index: 2000; }
+.scroll-progress { position: fixed; top: 0; left: 0; height: 3px; width: 0%; background: linear-gradient(90deg, #dd1111, #f25c05); z-index: 2000; }
 
 .scroll-top {
   position: fixed; bottom: 32px; right: 32px; width: 48px; height: 48px;
@@ -507,7 +707,7 @@ footer { padding: 80px 0 60px; border-top: 1px solid var(--border); background: 
 }
 .page-hero .section-eyebrow { margin-bottom: 16px; }
 .page-hero h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); }
-.page-hero p { color: var(--muted); font-size: 1.15rem; max-width: 640px; margin-top: 20px; }
+.page-hero p { color: var(--muted); font-size: 1.15rem; max-width: 560px; margin-top: 20px; }
 
 /* ── Responsive ────────────────────────────────────────── */
 @media (max-width: 980px) {
@@ -517,11 +717,9 @@ footer { padding: 80px 0 60px; border-top: 1px solid var(--border); background: 
   .hero { padding-top: 80px; }
 }
 
-
 nav {
   isolation: isolate;
 }
-
 
 nav.menu-open {
   background: rgba(6, 8, 11, 0.99) !important;
@@ -532,24 +730,22 @@ nav.menu-open {
 }
 
 @media (max-width: 640px) {
-  /* Enforce structural header safety */
   nav.menu-open {
     background: #06080b !important;
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
   }
   
-  /* Fix the full-screen layout shield */
   .mobile-nav {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 1001 !important; /* Force calculation layer over everything else */
-    background: #06080b !important; /* Deepest opaque slate base */
-    overflow-y: auto; /* Allow safe scrolling if menu buttons clip on small screens */
-    display: none; /* Controlled cleanly by active state */
+    z-index: 1001 !important; 
+    background: #06080b !important; 
+    overflow-y: auto; 
+    display: none; 
   }
 
   .mobile-nav.active {
@@ -559,18 +755,16 @@ nav.menu-open {
     pointer-events: auto !important;
   }
 
-  /* Fix inner container dimension expansion leaks */
   .mobile-nav-inner {
     display: flex;
     flex-direction: column;
     justify-content: center;
     box-sizing: border-box;
     min-height: 100%;
-    padding: 84px 24px 40px; /* Aligned safe buffer space below sticky header height */
+    padding: 84px 24px 40px; 
     gap: 14px;
   }
 
-  /* Structural element resets */
   .container {
     width: min(calc(100% - 32px), 1280px);
   }
@@ -698,180 +892,206 @@ nav.menu-open {
     scroll-behavior: auto !important;
   }
 }
-/* Terminal Improvements */
-/* All rules scoped strictly inside our unique namespace container */
-  .orp-custom-scope {
-    /* Color tokens extracted directly from your website interface */
-    --site-bg-card: rgba(22, 22, 26, 0.75);
-    --site-border: rgba(255, 255, 255, 0.08);
-    --site-text-primary: #ffffff;
-    --site-text-muted: #8a8a93;
-    --site-accent-orange: #ff4500;
-    --site-accent-orange-dim: rgba(255, 69, 0, 0.15);
-    --site-success-green: #4ade80;
-	    --site-warning-orange: #fd7e14;
-		    --site-info-cyan: #0dcaf0;
-	   --site-danger-red: #dc3545;
 
-    display: inline-block;
-    width: 100%;
-    max-width: 520px;
-    box-sizing: border-box;
-  }
+/* ============================================================
+   ORP v3.0 — Compact Integrated Telemetry Component
+   ============================================================ */
 
-  /* Scoped element resets to protect from global site layout interference */
-  .orp-custom-scope *, 
-  .orp-custom-scope *::before, 
-  .orp-custom-scope *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
+.orp-compact-scope {
+  display: inline-block;
+  width: 100%;
+  max-width: 440px;
+  box-sizing: border-box;
+}
 
-  /* Container Card integrated with your site's panel look */
-  .orp-custom-scope .telemetry-card {
-    background-color: var(--site-bg-card);
-    color: var(--site-text-primary);
-    border: 1px solid var(--site-border);
-    border-radius: 16px; 
-    padding: 24px;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    width: 100%;
-  }
+/* Scoped element structural reset */
+.orp-compact-scope *, 
+.orp-compact-scope *::before, 
+.orp-compact-scope *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  /* Header Layout */
-  .orp-custom-scope .telemetry-card-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 20px;
-    gap: 16px;
-  }
+/* Framework Integrated Card Profile */
+.orp-compact-scope .mini-telemetry-card {
+  position: relative;
+  background-color: rgba(22, 26, 34, 0.85); /* Seamlessly matches --panel-2 layout transparency */
+  color: var(--text);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-xs);
+  padding: 18px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  overflow: hidden;
+  box-shadow: 0 8px 32px var(--shadow);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
 
-  .orp-custom-scope .header-text-container {
-    display: flex;
-    flex-direction: column;
-  }
+.orp-compact-scope .mini-telemetry-card:hover {
+  border-color: rgba(221, 17, 17, 0.35);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.85), 0 0 16px rgba(221, 17, 17, 0.05);
+}
 
-  /* Title stylized to match your technical headers */
-  .orp-custom-scope .telemetry-title {
-    font-family: inherit; /* Inherits your main site font seamlessly */
-    font-size: 1.1rem;
-    font-weight: 700;
-    line-height: 1.3;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    color: var(--site-text-primary);
-  }
+/* Interactive Holographic CRT Simulation Texture */
+.orp-compact-scope .holo-scanlines {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: linear-gradient(
+    rgba(6, 8, 11, 0) 50%, 
+    rgba(221, 17, 17, 0.03) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 1;
+}
 
-  .orp-custom-scope .telemetry-subtitle {
-    font-size: 0.8rem;
-    color: var(--site-text-muted);
-    margin-top: 6px;
-    letter-spacing: 0.5px;
-  }
+/* Title Block Layout */
+.orp-compact-scope .mini-card-header {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
 
-  /* Interactive Technical Chips */
-  .orp-custom-scope .telemetry-chip-set {
-    display: flex;
-    gap: 6px;
-  }
+.orp-compact-scope .header-main {
+  display: flex;
+  flex-direction: column;
+}
 
-  .orp-custom-scope .telemetry-chip {
-    display: inline-flex;
-    align-items: center;
-    height: 26px;
-    padding: 0 10px;
-    border: 1px solid var(--site-border);
-    border-radius: 6px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: var(--site-text-muted);
-    letter-spacing: 0.5px;
-  }
+.orp-compact-scope .telemetry-title {
+  color: var(--heading);
+  font-family: Oxanium, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
 
-  /* Active State (Matches the Orange buttons/pills on your layout) */
-  .orp-custom-scope .telemetry-chip.chip-active {
-    background-color: var(--site-accent-orange-dim);
-    color: var(--site-accent-orange);
-    border-color: rgba(255, 69, 0, 0.4);
-  }
+.orp-compact-scope .telemetry-subtitle {
+  font-family: monospace;
+  font-size: 0.68rem;
+  color: var(--muted);
+  margin-top: 3px;
+  letter-spacing: 0.02em;
+}
 
-  .orp-custom-scope .chip-dot {
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background-color: var(--site-text-muted);
-    margin-right: 6px;
-  }
+/* Telemetry Component Active Status Indicator Pill */
+.orp-compact-scope .status-pill {
+  font-family: Oxanium, monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: var(--success);
+  border: 1px solid rgba(63, 185, 80, 0.25);
+  padding: 3px 8px;
+  border-radius: var(--radius-xs);
+  background: rgba(63, 185, 80, 0.06);
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 4px rgba(63, 185, 80, 0.2);
+}
 
-  .orp-custom-scope .chip-dot.dot-active {
-    background-color: var(--site-accent-orange);
-    box-shadow: 0 0 6px var(--site-accent-orange);
-  }
+/* Split Content Grid Architecture */
+.orp-compact-scope .mini-card-layout {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: space-between;
+}
 
-  /* Clean Divider */
-  .orp-custom-scope .telemetry-divider {
-    border: none;
-    height: 1px;
-    background-color: var(--site-border);
-    margin: 16px 0;
-    width: 100%;
-  }
-
-  /* Row Items Alignment */
-  .orp-custom-scope .telemetry-card-body {
-    display: flex;
+/* Anti-clipping Mobile Adapter Fallback Override */
+@media (max-width: 420px) {
+  .orp-compact-scope .mini-card-layout {
     flex-direction: column;
     gap: 14px;
+    align-items: flex-start;
   }
+  .orp-compact-scope .ascii-core-panel {
+    align-self: center;
+    transform: scale(0.95);
+  }
+  .orp-compact-scope .data-metrics-panel {
+    width: 100%;
+    max-width: 100% !important;
+  }
+}
 
-  .orp-custom-scope .log-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.85rem;
-    line-height: 1.4;
-  }
+/* Preserved Core Architectural ASCII Art Block */
+.orp-compact-scope .ascii-core-panel {
+  font-family: monospace;
+  font-size: 0.72rem; 
+  line-height: 1.15;
+  white-space: pre;
+  color: rgba(221, 17, 17, 0.4); /* Uses your brand red base */
+  user-select: none;
+  text-shadow: 0 0 6px rgba(221, 17, 17, 0.15);
+}
 
-  /* Monospace typography alignment for structural reading */
-  .orp-custom-scope .log-label {
-    font-family: monospace;
-    color: var(--site-text-muted);
-    letter-spacing: 0.25px;
-  }
+/* Metric Display Layout Block */
+.orp-compact-scope .data-metrics-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-grow: 1;
+  max-width: 190px;
+}
 
-  .orp-custom-scope .log-value {
-    font-family: monospace;
-    font-weight: 500;
-    color: var(--site-text-primary);
-  }
+.orp-compact-scope .metric-line {
+  display: flex;
+  justify-content: space-between;
+  font-family: monospace;
+  font-size: 0.78rem;
+  line-height: 1.3;
+}
 
-  /* Highlight Modifiers */
-  .orp-custom-scope .text-success {
-    color: var(--site-success-green);
-    font-weight: 600;
-  }
-  
-    /* Highlight Modifiers */
-  .orp-custom-scope .text-info {
-    color: var(--site-info-cyan);
-    font-weight: 600;
-  }
-  
-    /* Highlight Modifiers */
-  .orp-custom-scope .text-warning {
-    color: var(--site-warning-orange);
-    font-weight: 600;
-  }
+.orp-compact-scope .label {
+  color: var(--muted);
+}
 
-    /* Highlight Modifiers */
-  .orp-custom-scope .text-danger {
-    color: var(--site-danger-red);
-    font-weight: 600;
-  }
+.orp-compact-scope .val {
+  font-weight: 700;
+  color: var(--heading);
+}
 
-  .orp-custom-scope .text-bold {
-    font-weight: 700;
-  }
+.orp-compact-scope .panel-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 4px 0;
+}
+
+/* Models / Target Node Chips */
+.orp-compact-scope .nodes-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.orp-compact-scope .node-tag {
+  font-family: monospace;
+  font-size: 0.62rem;
+  font-weight: 600;
+  background: var(--panel);
+  color: var(--accent-orange);
+  padding: 2px 5px;
+  border-radius: 4px;
+  border: 1px solid var(--border-strong);
+}
+
+/* Theme Aligned Typography State Modifiers */
+.orp-compact-scope .text-success { 
+  color: var(--success); 
+}
+.orp-compact-scope .text-orange { 
+  color: var(--accent-orange-bright); 
+  text-shadow: 0 0 6px rgba(255, 136, 51, 0.25);
+}
+.orp-compact-scope .text-red { 
+  color: var(--primary-bright); 
+  text-shadow: 0 0 6px rgba(255, 51, 51, 0.3);
+}
