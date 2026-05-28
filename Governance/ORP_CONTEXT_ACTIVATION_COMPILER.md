@@ -1,175 +1,310 @@
+# ORP_BOOT_SEQUENCE.md
+**System Initialization & Valid State Entry Model**
+
+**Part of:** ORP v3.0 — Open Resonance Protocol  
+**Dependency:** ORP_CONTEXT_ACTIVATION_COMPILER.md (optional execution layer)
+
+---
+
+## PURPOSE
+
+This document defines the deterministic initialization sequence for ORP v3.0.
+
+It establishes a **valid execution-ready state** for all downstream systems, including:
+
+- ORP_CONTEXT_ACTIVATION_MATRIX.md
+- ORP_CONTEXT_ACTIVATION_COMPILER.md
+- ORP_RUNTIME.md
+- ORP_SIGMA_SQUARED_DRIFT.md
+
+Boot does NOT execute reasoning.
+
+Boot establishes **execution legality**.
+
+---
+
+## CORE PRINCIPLE
+
+> ORP does not start execution — it establishes a valid epistemic state space.
+
+---
+
+# BOOT SEQUENCE
+
+---
+
+## STEP 1 — GOVERNANCE KERNEL INITIALIZATION
+
+Activate:
+
+→ ORP_RUNTIME.md (L3 CORE)
+
+Establishes:
+- SHS state machine authority
+- epistemic governance rules
+- failure handling model
+- macro coherence constraints
+
+Constraint:
+> No other modules are active.
+
+---
+
+## STEP 2 — OBSERVABILITY LAYER INITIALIZATION
+
+Load:
+
+→ ORP_SIGMA_SQUARED_DRIFT.md (L4 OBSERVATIONAL)
+
+Establishes:
+- σ² definition (read-only)
+- drift telemetry structure
+- variance tracking model
+
+Constraint:
+> σ² is initialized in OBSERVATION-ONLY MODE.
+
+---
+
+## STEP 3 — CONTEXT SYSTEM INITIALIZATION
+
+Load:
+
+→ ORP_CONTEXT_ACTIVATION_MATRIX.md
+
+Establishes:
+- context classification model
+- module eligibility rules
+- routing constraints
+
+Constraint:
+> No compilation or execution occurs.
+
+---
+
+## STEP 4 — COMPILER REGISTRATION (L3-READY)
+
+Register (DO NOT EXECUTE):
+
+→ ORP_CONTEXT_ACTIVATION_COMPILER.md
+
+Establishes:
+- IR compilation model
+- execution graph semantics
+- module dependency resolution rules
+
+Constraint:
+> Compiler is dormant but structurally valid.
+
+---
+
+## STEP 5 — STATE MACHINE INITIALIZATION
+
+SHS MUST BE SET TO:
+
+> GREEN
+
+Defines:
+- stable epistemic baseline
+- no drift escalation active
+- full operational readiness
+
+---
+
+## STEP 6 — EXECUTION LOOP PRIMING
+
+Prepare:
+
+→ ORP_EXECUTION_LOOP.md (if present)
+
+Defines:
+- structured execution cycle
+- ordered reasoning phases
+- feedback constraints
+
+Constraint:
+> Loop is defined but NOT executed.
+
+---
+
+## STEP 7 — MODULE ELIGIBILITY REGISTRATION
+
+Register only:
+
+- ORP_RUNTIME_CODE.md (CODE context)
+- ORP_RUNTIME_RP.md (CREATIVE context)
+- ORP_RUNTIME_LITE.md (DEGRADED context)
+
+Constraint:
+> No activation occurs at boot.
+
+---
+
+# FINAL BOOT STATE
+
+After completion:
+
+- ORP_RUNTIME.md → ACTIVE
+- σ² → OBSERVATIONAL (READ-ONLY)
+- SHS → GREEN
+- CONTEXT MATRIX → READY
+- COMPILER → REGISTERED (INACTIVE)
+- MODULES → ELIGIBLE ONLY
+
+---
+
+# CRITICAL INVARIANTS
+
+### 1. NO EXECUTION DURING BOOT
+Boot never produces outputs or reasoning results.
+
+---
+
+### 2. SINGLE ACTIVE AUTHORITY RULE
+Only ORP_RUNTIME.md is active during boot.
+
+---
+
+### 3. σ² IS READ-ONLY FROM BOOT ONWARD
+σ² becomes observable immediately after initialization.
+
+---
+
+### 4. DETERMINISTIC INITIAL STATE
+Same system → same boot result → same initial graph conditions
+
+---
+
+## SYSTEM PROPERTY
+
+Boot guarantees:
+
+> A reproducible, constraint-valid epistemic execution environment.
+
+---
+
+## STATUS
+
+Active Initialization Specification  
+ORP v3.0 Core Infrastructure Layer
+
+---
+
+**END OF DOCUMENT**
+```
+
+---
+
+# ✅ ORP_CONTEXT_ACTIVATION_COMPILER.md (REFINED FINAL)
+
+```markdown
 # ORP_CONTEXT_ACTIVATION_COMPILER.md
 **Executable Context-to-Module Compilation Model**
 
 **Part of:** ORP v3.0 — Open Resonance Protocol  
-**Type:** L3 Execution Compiler Specification  
-**Dependency:** ORP_CONTEXT_ACTIVATION_MATRIX.md, ORP_RUNTIME.md, ORP_SIGMA_SQUARED_DRIFT.md
+**Dependency:** ORP_BOOT_SEQUENCE.md (MANDATORY INITIAL STATE)
 
 ---
 
-## 1. PURPOSE
+## PURPOSE
 
-This document defines ORP as a **compilable execution system**, not a descriptive framework.
+This document defines ORP as a **context compiler**, not a routing system.
 
 It transforms:
 
-> Context → Modules → Behavior
+> Context → Modules → Execution Behavior
 
-into a deterministic **compiled execution graph**:
+into a deterministic compiled graph:
 
-> Context → IR (Intermediate Representation) → Module Graph → Constraint Application → Governed Output
-
----
-
-## 2. CORE CONCEPT
-
-ORP is no longer a static routing matrix.
-
-It is a **context-to-execution compiler** that produces a runtime graph:
-
-```
-
-Input
-↓
-Context Classifier
-↓
-ORP IR (Intermediate Representation)
-↓
-Module Dependency Resolver
-↓
-Execution Graph
-↓
-Constraint Enforcement (L3)
-↓
-Output State
-
-```
+> Context → IR → Dependency DAG → Governed Execution
 
 ---
 
-## 3. COMPILATION MODEL
+## BOOT DEPENDENCY RULE (CRITICAL)
 
-### 3.1 STEP 1 — CONTEXT PARSING
+Compiler CANNOT operate unless:
 
-Input is decomposed into a structured context vector:
+> ORP_BOOT_SEQUENCE.md has completed successfully
+
+Required boot state:
+
+- ORP_RUNTIME.md = ACTIVE
+- SHS = GREEN
+- σ² = OBSERVATIONAL MODE
+- Context Matrix = READY
+
+---
+
+## COMPILATION PIPELINE
+
+---
+
+### STEP 1 — CONTEXT PARSING
+
+Input → structured context vector:
 
 ```
 
 C = {
-domain: CORE | CODE | CREATIVE | DEGRADED | HYBRID,
-complexity: float,
-risk_profile: float,
-structure_type: {linear | branching | recursive},
-artifact_type: {text | code | diagram | hybrid}
+domain,
+complexity,
+risk_profile,
+structure_type,
+artifact_type
 }
 
 ```
 
 ---
 
-### 3.2 STEP 2 — ORP INTERMEDIATE REPRESENTATION (ORP-IR)
+### STEP 2 — IR GENERATION
 
-Context is compiled into a deterministic IR graph:
+Context is compiled into IR nodes:
 
 ```
 
 IR_NODE {
-id
-context_tags[]
-required_modules[]
-optional_modules[]
-constraints[]
-output_transformers[]
+context_tags,
+required_modules,
+optional_modules,
+constraints
 }
 
 ```
 
-Example:
+---
 
-```
+### STEP 3 — MODULE RESOLUTION GRAPH
 
-IR_NODE: CODE_SYSTEM_DESIGN
+Modules are resolved as dependencies:
 
-* required_modules:
+ROOT:
+→ ORP_RUNTIME.md
 
-  * ORP_RUNTIME.md
-  * ORP_RUNTIME_CODE.md
-* constraints:
-
-  * signal > cleverness
-  * explicit reasoning required
-* output_transformers:
-
-  * structural_diff_formatter
-
-```
+Conditional:
+→ CODE → ORP_RUNTIME_CODE.md
+→ CREATIVE → ORP_RUNTIME_RP.md
+→ DEGRADED → ORP_RUNTIME_LITE.md
 
 ---
 
-### 3.3 STEP 3 — MODULE RESOLUTION GRAPH
-
-Modules are no longer “activated”.
-
-They are **resolved as dependencies**:
+### STEP 4 — EXECUTION DAG BUILD
 
 ```
 
-ORP_RUNTIME.md → ROOT GOVERNANCE NODE (always injected)
-
-CODE context:
-ORP_RUNTIME_CODE.md → dependency child
-
-CREATIVE context:
-ORP_RUNTIME_RP.md → output transformer
-
-DEGRADED context:
-ORP_RUNTIME_LITE.md → compression layer
+ExecutionGraph = DAG(IR_nodes, dependencies)
 
 ```
 
-Graph becomes:
+Constraint:
 
-```
-
-```
-  ORP_RUNTIME (ROOT)
-       |
-```
+> ORP_RUNTIME.md is always the root node.
 
 ---
 
-|         |         |
-CODE      RP        LITE
-|
-CODE_CONSTRAINTS
+### STEP 5 — CONSTRAINT INJECTION
 
-```
-
----
-
-### 3.4 STEP 4 — EXECUTION GRAPH BUILD
-
-The compiler constructs a DAG:
-
-```
-
-ExecutionGraph = DAG(
-nodes = IR_nodes,
-edges = dependency_resolution,
-root = ORP_RUNTIME.md
-)
-
-```
-
-Key property:
-
-> No node executes outside dependency constraints.
-
----
-
-### 3.5 STEP 5 — CONSTRAINT INJECTION
-
-Each node is wrapped with L3 enforcement:
+Execution is wrapped with L3 governance:
 
 ```
 
@@ -180,148 +315,89 @@ apply(module_constraints)
 
 ```
 
-Constraint priority:
+Priority:
 
-1. ORP_RUNTIME.md (absolute)
+1. ORP_RUNTIME.md
 2. Node constraints
 3. Module constraints
-4. Context heuristics (lowest priority)
 
 ---
 
-### 3.6 STEP 6 — σ² INTEGRATION (L4 OBSERVABILITY)
+### STEP 6 — σ² OBSERVABILITY BINDING
 
-σ² is injected as a **read-only telemetry stream**:
+σ² is attached as:
 
-```
-
-σ² → ExecutionGraph.monitoring_bus
-
-```
+> read-only telemetry stream
 
 Rules:
-- cannot modify execution
-- cannot influence module selection
-- cannot affect IR compilation
-- only observable by ORP_RUNTIME.md (L3)
+
+- cannot affect compilation
+- cannot affect execution graph
+- cannot modify module resolution
+- L3 only interprets σ²
 
 ---
 
-## 4. EXECUTION SEMANTICS
+## EXECUTION SEMANTICS
 
-ORP runtime now behaves like:
-
-> A compiled program rather than an interpreted policy system
-
-Execution model:
+ORP behaves as a compiled system:
 
 ```
 
-for node in ExecutionGraph.topological_order:
+for node in ExecutionGraph:
 governed_context = ORP_RUNTIME(node)
-module_context = resolve_modules(node)
-output = execute_governed(node, governed_context, module_context)
+modules = resolve(node)
+output = execute(governed_context, modules)
 
 ```
 
 ---
 
-## 5. MODULE RESOLUTION RULES
+## MODULE RULES
 
-### RULE 1 — ROOT INJECTION
+### RULE 1 — ROOT IS IMMUTABLE
 
-```
-
-ORP_RUNTIME.md is always injected first
-
-```
-
-It cannot be:
-- removed
-- overridden
-- deferred
+ORP_RUNTIME.md is always injected first.
 
 ---
 
-### RULE 2 — DOMAIN ATTACHMENT
+### RULE 2 — MODULES ARE DEPENDENCIES
 
-Modules attach based on IR classification:
+Modules do NOT execute independently.
 
-| Context | Module Binding |
-|--------|----------------|
-| CORE | ORP_RUNTIME only |
-| CODE | + ORP_RUNTIME_CODE |
-| CREATIVE | + ORP_RUNTIME_RP |
-| DEGRADED | + ORP_RUNTIME_LITE |
-| HYBRID | DAG-composed combination |
+They only modify node behavior.
 
 ---
 
-### RULE 3 — NO CROSS-MODULE EXECUTION
+### RULE 3 — NO CROSS-MODULE MUTATION
 
 Modules cannot:
-- call each other directly
-- override sibling constraints
-- mutate IR structure
-
-They only **decorate execution nodes**
+- modify each other
+- override L3
+- alter IR structure
 
 ---
 
-## 6. EXECUTION GRAPH INVARIANTS
+## COMPILER INVARIANTS
 
-The compiled graph MUST satisfy:
-
-### INVARIANT 1 — ACYCLIC GOVERNANCE
-No module can create feedback loops into ORP_RUNTIME.md.
-
----
-
-### INVARIANT 2 — CONSTRAINT MONOTONICITY
-Constraints can only:
-
-- tighten behavior
-- never relax governance rules
+- deterministic compilation
+- acyclic execution graph
+- monotonic constraint enforcement
+- σ² immutability
 
 ---
 
-### INVARIANT 3 — σ² IMMUTABILITY
-σ² is read-only and external to execution logic.
-
----
-
-### INVARIANT 4 — DETERMINISTIC COMPILATION
-Same context → same IR → same execution graph
-
----
-
-## 7. FAILURE MODES (COMPILER LEVEL)
+## FAILURE MODES
 
 ### COMPILATION FAILURE
-Occurs if:
-- context cannot be classified
-- module resolution is ambiguous
-- IR nodes conflict structurally
-
-Resolution:
-→ fallback to CORE context only
-
----
+→ fallback to CORE + ORP_RUNTIME only
 
 ### EXECUTION FAILURE
-Occurs if:
-- constraint violation detected
-- σ² spike exceeds threshold
-- module contradiction occurs
-
-Resolution:
-→ invoke ORP_RUNTIME.md fail-closed behavior
+→ SHS downgrade via ORP_RUNTIME.md
 
 ---
 
-## 8. FORMAL SYSTEM DEFINITION
-
-ORP is defined as:
+## FORMAL MODEL
 
 ```
 
@@ -329,43 +405,14 @@ ORP = Compile(Context) → ExecutionGraph → GovernedOutput
 
 ```
 
-Where:
+---
 
-- Compile = deterministic IR transformation
-- ExecutionGraph = DAG of constrained reasoning nodes
-- GovernedOutput = SHS-scored final state
+## FINAL PRINCIPLE
+
+> Governance is compiled, not interpreted.
 
 ---
 
-## 9. DESIGN SHIFT (IMPORTANT)
+**STATUS: EXECUTABLE COMPILER LAYER — ACTIVE**
 
-This upgrade introduces a fundamental change:
-
-### BEFORE:
-Rule-based runtime routing system
-
-### AFTER:
-**Compiled epistemic execution system**
-
-Meaning:
-
-> ORP is no longer interpreted at runtime — it is compiled before execution.
-
----
-
-## 10. COMPILATION PRINCIPLE
-
-> Governance is not applied. It is compiled into structure.
-
----
-
-## 11. FINAL PRINCIPLE
-
-A system is only truly governed when:
-
-> its behavior is structurally impossible to misroute at execution time
-
----
-
-**STATUS: EXECUTABLE SPEC MODEL — ACTIVE**  
-**END OF COMPILER SPECIFICATION**
+**END OF DOCUMENT**
