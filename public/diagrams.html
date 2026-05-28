@@ -238,21 +238,26 @@
     }
 
 .mermaid-wrap {
-  min-height: 180px;
+  min-height: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  overflow-x: auto; /* Adds scrollbar if a specific diagram is truly huge */
+  padding: 10px;
 }
 
-    .mermaid-wrap .mermaid {
-      width: 100%;
-      max-width: 100%;
-    }
+.mermaid-wrap .mermaid {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 
-    .mermaid-wrap svg {
-      max-width: 100%;
-      height: auto;
-    }
+.mermaid-wrap svg {
+  max-width: 100% !important; /* Prevents overflow */
+  height: auto !important;     /* Maintains aspect ratio */
+  width: auto !important;      /* Lets SVG shrink to fit width */
+}
 	
 
     /* Loading placeholder */
@@ -939,14 +944,18 @@ flowchart TD
             <div class="diagram-render-area">
               <div class="mermaid-wrap">
                 <div class="mermaid">
-flowchart TD
-    A["Signal Integrity\n(highest priority)"]
-    B["Recoverability\n> Completion"]
-    C["Provenance\nPreservation"]
-    D["Epistemic\nIsolation"]
-    E["Surface Fluency\n(lowest priority)"]
-
-    A --> B --> C --> D --> E
+%%{init: {
+  'flowchart': { 
+    'nodeSpacing': 20, 
+    'rankSpacing': 30,
+    'curve': 'linear'
+  }
+}}%%
+flowchart LR
+    A["Signal<br/>Integrity"] --> B["Recoverability<br/>> Completion"]
+    B --> C["Provenance<br/>Preservation"]
+    C --> D["Epistemic<br/>Isolation"]
+    D --> E["Surface<br/>Fluency"]
 
     style A fill:#161a22,stroke:#ff6600,color:#ff8833
     style B fill:#0f1217,stroke:#dd1111,color:#dce2eb
@@ -1073,8 +1082,8 @@ flowchart LR
       },
       flowchart: {
         curve: 'basis',
-        nodeSpacing: 48,
-        rankSpacing: 52,
+        nodeSpacing: 30,
+        rankSpacing: 40,
         htmlLabels: true,
       },
       securityLevel: 'loose',
@@ -1088,24 +1097,30 @@ document.addEventListener('DOMContentLoaded', () => {
   const tabs = document.querySelectorAll('.filter-tab');
   const sections = document.querySelectorAll('.diagram-section');
 
-  let mermaidRendered = false;
+async function renderMermaids() {
+  // 1. Find the currently active section
+  const activeSection = document.querySelector('.diagram-section.active');
+  if (!activeSection) return;
 
-  async function renderMermaids() {
-  if (mermaidRendered) return;
+  // 2. Find only the mermaid elements in this section that haven't been rendered yet
+  const unrendered = activeSection.querySelectorAll('.mermaid:not(.is-ready)');
+  
+  if (unrendered.length === 0) return;
 
   try {
-    await mermaid.run({ querySelector: '.mermaid' });
+    // 3. Render only the new ones
+    await mermaid.run({ nodes: Array.from(unrendered) });
 
-    document.querySelectorAll('.mermaid').forEach(el => {
+    // 4. Mark them as ready
+    unrendered.forEach(el => {
       el.classList.add('is-ready');
     });
 
-    document.querySelectorAll('.diagram-loading').forEach(loader => {
+    // 5. Remove any associated loading elements
+    activeSection.querySelectorAll('.diagram-loading').forEach(loader => {
       loader.style.opacity = '0';
       setTimeout(() => loader.remove(), 300);
     });
-
-    mermaidRendered = true;
 
   } catch (err) {
     console.error('Mermaid render failed:', err);
