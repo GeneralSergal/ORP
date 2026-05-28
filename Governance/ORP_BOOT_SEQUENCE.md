@@ -2,215 +2,192 @@
 **System Initialization & Valid State Entry Model**
 
 **Part of:** ORP v3.0 — Open Resonance Protocol  
-
-
----
-
-## Purpose
-
-This document defines the **initialization sequence of ORP**.
-
-It ensures that all runtime components enter a **consistent, valid, and constraint-aligned state** before execution begins.
-
-It does NOT execute runtime logic.
-
-It establishes **valid starting conditions for the ORP system loop**.
+**Dependency:** ORP_CONTEXT_ACTIVATION_COMPILER.md (optional execution layer)
 
 ---
 
-## Core Principle
+## PURPOSE
 
-> ORP does not “start execution” — it enters a valid constrained state.
+This document defines the deterministic initialization sequence for ORP v3.0.
 
-Boot sequence defines:
-- initial governance activation
-- module eligibility state
-- baseline SHS condition
-- initial σ² interpretation context
+It establishes a **valid execution-ready state** for all downstream systems, including:
+
+- ORP_CONTEXT_ACTIVATION_MATRIX.md
+- ORP_CONTEXT_ACTIVATION_COMPILER.md
+- ORP_RUNTIME.md
+- ORP_SIGMA_SQUARED_DRIFT.md
+
+Boot does NOT execute reasoning.
+
+Boot establishes **execution legality**.
 
 ---
 
-## BOOT SEQUENCE OVERVIEW
+## CORE PRINCIPLE
 
-The ORP system must initialize in the following deterministic order:
+> ORP does not start execution — it establishes a valid epistemic state space.
 
 ---
 
-### STEP 1 — GOVERNANCE KERNEL INITIALIZATION
+# BOOT SEQUENCE
+
+---
+
+## STEP 1 — GOVERNANCE KERNEL INITIALIZATION
 
 Activate:
 
-→ ORP_RUNTIME.md
+→ ORP_RUNTIME.md (L3 CORE)
 
-This establishes:
+Establishes:
+- SHS state machine authority
 - epistemic governance rules
-- drift control authority (L3)
+- failure handling model
 - macro coherence constraints
-- failure handling policies
 
 Constraint:
-> No other module is active at this stage.
+> No other modules are active.
 
 ---
 
-### STEP 2 — CONTEXT SYSTEM INITIALIZATION
+## STEP 2 — OBSERVABILITY LAYER INITIALIZATION
+
+Load:
+
+→ ORP_SIGMA_SQUARED_DRIFT.md (L4 OBSERVATIONAL)
+
+Establishes:
+- σ² definition (read-only)
+- drift telemetry structure
+- variance tracking model
+
+Constraint:
+> σ² is initialized in OBSERVATION-ONLY MODE.
+
+---
+
+## STEP 3 — CONTEXT SYSTEM INITIALIZATION
 
 Load:
 
 → ORP_CONTEXT_ACTIVATION_MATRIX.md
 
-This enables:
-- context classification logic
-- module activation rules
-- deterministic routing model
+Establishes:
+- context classification model
+- module eligibility rules
+- routing constraints
 
 Constraint:
-> No execution occurs yet — only classification readiness.
+> No compilation or execution occurs.
 
 ---
 
-### STEP 3 — OBSERVABILITY LAYER INITIALIZATION
+## STEP 4 — COMPILER REGISTRATION (L3-READY)
 
-Load:
+Register (DO NOT EXECUTE):
 
-→ ORP_SIGMA_SQUARED_DRIFT.md
+→ ORP_CONTEXT_ACTIVATION_COMPILER.md
 
-This establishes:
-- σ² definition
-- drift measurement model
-- L4 observability structure
+Establishes:
+- IR compilation model
+- execution graph semantics
+- module dependency resolution rules
 
 Constraint:
-> σ² is initialized in passive observation mode only.
+> Compiler is dormant but structurally valid.
 
 ---
 
-### STEP 4 — STATE MACHINE INITIALIZATION
+## STEP 5 — STATE MACHINE INITIALIZATION
 
-Load:
+SHS MUST BE SET TO:
 
-→ ORP_STATE_TRANSITION_MODEL.md
+> GREEN
 
-This sets:
-- SHS state space definition
-- transition rules
-- initial state defaults
-
-Initial SHS state MUST be:
-
-> GREEN (stable baseline)
+Defines:
+- stable epistemic baseline
+- no drift escalation active
+- full operational readiness
 
 ---
 
-### STEP 5 — EXECUTION LOOP PRIMING
+## STEP 6 — EXECUTION LOOP PRIMING
 
-Load:
+Prepare:
 
-→ ORP_EXECUTION_LOOP.md
+→ ORP_EXECUTION_LOOP.md (if present)
 
-This activates:
-- closed-loop execution structure
-- step ordering constraints
-- feedback cycle definition
+Defines:
+- structured execution cycle
+- ordered reasoning phases
+- feedback constraints
 
 Constraint:
-> Loop is defined but not yet executed.
+> Loop is defined but NOT executed.
 
 ---
 
-### STEP 6 — OPTIONAL MODULE ELIGIBILITY REGISTRATION
+## STEP 7 — MODULE ELIGIBILITY REGISTRATION
 
-Register but do not activate:
+Register only:
 
-- ORP_RUNTIME_CODE.md (CODE context only)
-- ORP_RUNTIME_RP.md (CREATIVE context only)
-- ORP_RUNTIME_LITE.md (DEGRADED context only)
+- ORP_RUNTIME_CODE.md (CODE context)
+- ORP_RUNTIME_RP.md (CREATIVE context)
+- ORP_RUNTIME_LITE.md (DEGRADED context)
 
-Rule:
-> Modules are eligible, not active.
-
----
-
-## FINAL BOOT STATE
-
-After completion, ORP enters:
-
-### VALID INITIAL STATE
-
-- ORP_RUNTIME.md = ACTIVE
-- Context Matrix = READY
-- σ² = OBSERVATIONAL MODE
-- SHS = GREEN
-- Execution Loop = PRIMED
-- Optional Modules = REGISTERED ONLY
+Constraint:
+> No activation occurs at boot.
 
 ---
 
-## CRITICAL BOOT INVARIANTS
+# FINAL BOOT STATE
 
-### 1. No Early Execution
-No context evaluation or output generation occurs during boot.
+After completion:
+
+- ORP_RUNTIME.md → ACTIVE
+- σ² → OBSERVATIONAL (READ-ONLY)
+- SHS → GREEN
+- CONTEXT MATRIX → READY
+- COMPILER → REGISTERED (INACTIVE)
+- MODULES → ELIGIBLE ONLY
 
 ---
 
-### 2. No Module Premature Activation
+# CRITICAL INVARIANTS
+
+### 1. NO EXECUTION DURING BOOT
+Boot never produces outputs or reasoning results.
+
+---
+
+### 2. SINGLE ACTIVE AUTHORITY RULE
 Only ORP_RUNTIME.md is active during boot.
 
 ---
 
-### 3. Deterministic Initialization
-Given identical system definition:
-
-> Boot sequence MUST always produce identical initial state.
+### 3. σ² IS READ-ONLY FROM BOOT ONWARD
+σ² becomes observable immediately after initialization.
 
 ---
 
-### 4. σ² Isolation Rule
-σ² is:
-- initialized
-- not evaluated
-- not acted upon
-
----
-
-### 5. SHS Lock Rule
-Initial SHS state is always:
-
-> GREEN
-
-No exception.
+### 4. DETERMINISTIC INITIAL STATE
+Same system → same boot result → same initial graph conditions
 
 ---
 
 ## SYSTEM PROPERTY
 
-Boot sequence guarantees:
+Boot guarantees:
 
-> A reproducible, constraint-aligned starting state for ORP execution.
-
----
-
-## RELATION TO EXECUTION LOOP
-
-Boot sequence occurs exactly once:
-
-> Before ORP_EXECUTION_LOOP begins cycling.
-
-Boot → Valid State → Execution Loop
-
----
-
-## OPTIMIZATION AXIOM
-
-> Minimize initialization complexity while preserving deterministic system validity.
+> A reproducible, constraint-valid epistemic execution environment.
 
 ---
 
 ## STATUS
 
 Active Initialization Specification  
-Part of ORP v3.0 Governance Architecture
+ORP v3.0 Core Infrastructure Layer
 
 ---
 
-**End of Document**
+**END OF DOCUMENT**
