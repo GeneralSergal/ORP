@@ -1,94 +1,90 @@
-# ORP_EXECUTION_LOOP
+# ORP_EXECUTION_LOOP.md
 **Closed-Loop Execution Model**
 
 **Part of:** ORP v3.0 — Open Resonance Protocol  
-
-
----
-
-## Purpose
-
-This document defines the **end-to-end execution cycle** of ORP.
-
-It connects all system layers into a single closed-loop model:
-
-- Context classification (routing)
-- Module activation (context matrix)
-- Drift observation (σ² model)
-- State evolution (SHS transitions)
-- Governance enforcement (ORP_RUNTIME.md)
+**Dependency:** ORP_CONTEXT_ACTIVATION_COMPILER.md
 
 ---
 
-## Core Principle
+## PURPOSE
 
-> ORP is a closed-loop cognitive control system, not a linear pipeline.
+This document defines the **closed execution cycle** of ORP.
 
-Every execution cycle must:
-- observe state
-- evaluate drift
-- apply governance constraints
-- produce output
-- feed results back into state evaluation
+It integrates:
 
----
-
-## Execution Loop Overview
-
-Each ORP cycle follows this deterministic sequence:
-
-### STEP 1 — CONTEXT CLASSIFICATION
-Input is classified into:
-
-- CORE
-- CODE
-- CREATIVE / RP
-- DEGRADED
-- HYBRID (modifier)
-
-Source:
-→ ORP_CONTEXT_ACTIVATION_MATRIX.md
+- context compilation (IR system)
+- module resolution (dependency graph)
+- σ² observability (L4)
+- SHS state machine (L3)
+- governance enforcement (ORP_RUNTIME.md)
 
 ---
 
-### STEP 2 — MODULE ACTIVATION
+## CORE PRINCIPLE
 
-Based on classification:
+> ORP is a closed-loop governed execution system operating on compiled context graphs.
 
-- ORP_RUNTIME.md (always active)
-- ORP_RUNTIME_CODE.md (if CODE context)
-- ORP_RUNTIME_RP.md (if CREATIVE context)
-- ORP_RUNTIME_LITE.md (if DEGRADED context)
+---
+
+# EXECUTION LOOP OVERVIEW
+
+Each cycle follows this deterministic sequence:
+
+---
+
+## STEP 1 — CONTEXT COMPILATION
+
+Input is first compiled via:
+
+→ ORP_CONTEXT_ACTIVATION_COMPILER.md
+
+Output:
+- ExecutionGraph (DAG)
+- IR nodes
+- module dependencies
 
 Rule:
-> Only activated modules may influence output generation.
+> The loop operates on compiled graphs, not raw context.
 
 ---
 
-### STEP 3 — σ² OBSERVATION
+## STEP 2 — MODULE ACTIVATION (DEPENDENCY RESOLUTION)
 
-Drift signal is evaluated:
+From ExecutionGraph:
+
+- ORP_RUNTIME.md (always root L3 authority)
+- ORP_RUNTIME_CODE.md (CODE nodes only)
+- ORP_RUNTIME_RP.md (CREATIVE nodes only)
+- ORP_RUNTIME_LITE.md (DEGRADED nodes only)
+
+Rule:
+> Modules are resolved as graph dependencies, not runtime toggles.
+
+---
+
+## STEP 3 — σ² OBSERVATION (L4 TELEMETRY)
 
 Source:
 → ORP_SIGMA_SQUARED_DRIFT.md
 
 Outputs:
-- σ² value (variance-based signal)
-- drift classification (NONE → HIGH)
+- σ² value (variance signal)
+- drift level classification (NONE → HIGH)
 
 Constraint:
-> σ² is observational only (no control authority at this stage)
+> σ² is READ-ONLY telemetry and cannot affect execution directly.
+
+Interpretation:
+→ performed only by ORP_RUNTIME.md (L3)
 
 ---
 
-### STEP 4 — SHS STATE EVALUATION
-
-Current system state is evaluated:
+## STEP 4 — SHS STATE EVALUATION (L3 AUTHORITY)
 
 Source:
-→ ORP_STATE_TRANSITION_MODEL.md
+→ ORP_RUNTIME.md
 
-State space:
+States:
 - GREEN
 - YELLOW
 - ORANGE
@@ -96,150 +92,163 @@ State space:
 - BLACK
 
 Rule:
-> SHS is updated only via L3 governance rules or validated σ² transitions
+> Only L3 governance may update SHS state.
 
 ---
 
-### STEP 5 — GOVERNANCE ENFORCEMENT
+## STEP 5 — GOVERNANCE ENFORCEMENT (L3 KERNEL)
 
-ORP_RUNTIME.md applies constraints:
+ORP_RUNTIME.md applies:
 
-- drift suppression
+- drift constraints
 - macro coherence enforcement
-- failure handling rules
-- output validation
+- failure handling
+- provenance validation
 
-If applicable:
-- RP transform layer modifies expression (not logic)
-- CODE module constrains engineering artifacts only
-- LITE reduces computational depth
-
----
-
-### STEP 6 — OUTPUT GENERATION
-
-Final output is produced under constraints:
-
-> Output = f(Context, Modules, SHS, σ²)
-
-Constraints:
-- Must respect ORP_RUNTIME.md
-- Must reflect current SHS state constraints
-- Must not violate module boundaries
+Module effects:
+- RP → expression transformation only
+- CODE → engineering constraint only
+- LITE → complexity reduction only
 
 ---
 
-### STEP 7 — FEEDBACK INJECTION
+## STEP 6 — EXECUTION OF GRAPH
 
-Execution results feed back into system observability:
+Execution proceeds over DAG:
 
-- σ² trend updated (L4 observation layer)
-- SHS evaluated for next cycle
-- drift trajectory updated
+```
 
-This closes the loop.
+for node in ExecutionGraph.topological_order:
+governed_context = ORP_RUNTIME(node)
+modules = resolve(node)
+output = execute(governed_context, modules)
+
+```id="v4kqz3"
+
+Constraint:
+> Execution must respect module isolation boundaries.
 
 ---
 
-## SYSTEM LOOP MODEL
+## STEP 7 — OUTPUT GENERATION
+
+Final output is computed as:
+
+```
+
+Output = f(Graph, SHS, σ², Governance)
+
+````id="g9xq2m"
+
+Rule:
+> Output must reflect SHS constraints and L3 governance rules.
+
+---
+
+## STEP 8 — FEEDBACK OBSERVATION (NOT MODIFICATION)
+
+Execution results feed back into:
+
+- σ² trend tracking (L4 observational only)
+- SHS evaluation readiness (L3 controlled)
+
+Important:
+
+> σ² is NOT updated by execution loop — it is observed externally.
+
+---
+
+# SYSTEM LOOP MODEL
 
 ```text
 Context
   ↓
-Module Activation
+Compiler (IR DAG)
   ↓
-σ² Observation
+Module Resolution
   ↓
-SHS Evaluation
+σ² Observation (L4)
+  ↓
+SHS Evaluation (L3)
   ↓
 Governance Enforcement
   ↓
-Output Generation
+Execution
   ↓
-Feedback Injection
-  ↺ (loop repeats)
-````
+Output
+  ↓
+Observability Feedback (no mutation)
+  ↺
+``` id="loop01"
 
 ---
 
-## CRITICAL INVARIANTS
+# CRITICAL INVARIANTS
 
-### 1. No Skipping Steps
-
-All steps MUST execute in order.
-
----
-
-### 2. No Direct σ² Control
-
-σ² cannot:
-
-* directly modify output
-* directly force SHS change
-* bypass L3 governance
+### 1. COMPILER-FIRST RULE
+Execution loop operates ONLY on compiled IR graphs.
 
 ---
 
-### 3. SHS Authority Rule
-
-Only ORP_RUNTIME.md (L3) may:
-
-* override SHS transitions
-* delay state changes
-* suppress escalation
+### 2. σ² IMMUTABILITY RULE
+σ²:
+- cannot be modified by runtime
+- cannot influence execution directly
+- is L4 observational only
 
 ---
 
-### 4. Module Isolation Rule
-
-Each module operates only within its defined scope:
-
-* RP → expression only
-* CODE → engineering artifacts only
-* LITE → compression only
-
-No cross-domain authority allowed.
+### 3. SHS AUTHORITY RULE
+Only ORP_RUNTIME.md (L3) may modify SHS state.
 
 ---
 
-### 5. Deterministic Loop Rule
-
-Given identical input state:
-
-> Execution loop MUST produce identical module activation + SHS evaluation path.
-
----
-
-## FAILURE MODE BEHAVIOR
-
-If loop integrity is violated:
-
-1. Halt execution path
-2. Downgrade SHS state (via L3 rules)
-3. Activate ORP_RUNTIME.md only
-4. Require re-classification of context
+### 4. MODULE ISOLATION RULE
+Modules cannot:
+- interact directly
+- override governance
+- mutate execution graph
 
 ---
 
-## SYSTEM PROPERTY
+### 5. DETERMINISTIC LOOP RULE
 
-This loop defines ORP as:
+Given identical input graph:
 
-> A closed cognitive control system with observable drift, governed state transitions, and modular constraint execution.
-
----
-
-## OPTIMIZATION AXIOM
-
-> Minimize activated modules while preserving loop integrity and SHS correctness.
+> Execution path MUST be identical.
 
 ---
 
-## STATUS
+# FAILURE MODE BEHAVIOR
 
-Active Core Execution Specification
-Part of ORP v3.0 Governance Architecture
+If loop integrity breaks:
+
+1. Halt execution
+2. Revert to ORP_RUNTIME.md only
+3. Require re-compilation of context graph
+4. Reset execution state
 
 ---
 
-**End of Document**
+# SYSTEM PROPERTY
+
+ORP_EXECUTION_LOOP defines:
+
+> A closed, deterministic, compiler-driven cognitive execution system with governed state transitions and observational drift tracking.
+
+---
+
+# OPTIMIZATION AXIOM
+
+> Minimize execution complexity while preserving graph integrity and governance invariants.
+
+---
+
+# STATUS
+
+Active Core Execution Specification  
+ORP v3.0 Governance Architecture Layer
+
+---
+
+**END OF DOCUMENT**
