@@ -1,4 +1,4 @@
-# ORP_BOOT_SEQUENCE
+# ORP_BOOT_SEQUENCE.md
 **System Initialization & Valid State Entry Model**
 
 **Part of:** ORP v3.0 — Open Resonance Protocol  
