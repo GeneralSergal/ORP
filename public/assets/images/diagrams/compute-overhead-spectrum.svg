@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 480" width="100%" height="100%" style="display: block; margin: 0 auto; background: transparent;">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@700;800&amp;family=Space+Grotesk:wght=500&amp;display=swap');
+      .runtime-v-title { font-family: 'Oxanium', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+      .runtime-v-subtitle { font-family: 'Space Grotesk', sans-serif; font-size: 10.5px; font-weight: 500; letter-spacing: 0.02em; opacity: 0.85; }
+    </style>
+
+    <marker id="runtime-arr-cyan" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#00d4ff"/>
+    </marker>
+    <marker id="runtime-arr-purple" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#6a3a8a"/>
+    </marker>
+    <marker id="runtime-arr-orange" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#ff6600"/>
+    </marker>
+    <marker id="runtime-arr-red" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#dd1111"/>
+    </marker>
+  </defs>
+
+  <g transform="translate(60, 15)">
+    <rect width="200" height="54" rx="6" fill="#0f1217" stroke="#00d4ff" stroke-width="2"/>
+    <text x="100" y="23" fill="#00d4ff" class="runtime-v-title" text-anchor="middle">ORP Runtime</text>
+    <text x="100" y="38" fill="#dce2eb" class="runtime-v-subtitle" text-anchor="middle">Full Governance</text>
+  </g>
+
+  <path d="M 160 69 L 160 108" stroke="#00d4ff" stroke-width="2" fill="none" marker-end="url(#runtime-arr-cyan)"/>
+
+  <g transform="translate(60, 110)">
+    <rect width="200" height="54" rx="6" fill="#0f1217" stroke="#6a3a8a" stroke-width="2"/>
+    <text x="100" y="23" fill="#8a5aaa" class="runtime-v-title" text-anchor="middle">ORP Runtime RP</text>
+    <text x="100" y="38" fill="#dce2eb" class="runtime-v-subtitle" text-anchor="middle">RP Transform</text>
+  </g>
+
+  <path d="M 160 164 L 160 203" stroke="#6a3a8a" stroke-width="2" fill="none" marker-end="url(#runtime-arr-purple)"/>
+
+  <g transform="translate(60, 205)">
+    <rect width="200" height="54" rx="6" fill="#0f1217" stroke="#ff6600" stroke-width="2"/>
+    <text x="100" y="23" fill="#ff8833" class="runtime-v-title" text-anchor="middle">ORP Lite</text>
+    <text x="100" y="38" fill="#dce2eb" class="runtime-v-subtitle" text-anchor="middle">Lite Execution </text>
+  </g>
+
+  <path d="M 160 259 L 160 298" stroke="#ff6600" stroke-width="2" fill="none" marker-end="url(#runtime-arr-orange)"/>
+
+  <g transform="translate(60, 300)">
+    <rect width="200" height="54" rx="6" fill="#0f1217" stroke="#ff6600" stroke-width="2"/>
+    <text x="100" y="23" fill="#ff8833" class="runtime-v-title" text-anchor="middle">ORP Lite RP</text>
+    <text x="100" y="38" fill="#dce2eb" class="runtime-v-subtitle" text-anchor="middle">RP + Lite Hybrid</text>
+  </g>
+
+  <path d="M 160 354 L 160 393" stroke="#dd1111" stroke-width="2" fill="none" marker-end="url(#runtime-arr-red)"/>
+
+  <g transform="translate(60, 395)">
+    <rect width="200" height="54" rx="6" fill="#1a0000" stroke="#dd1111" stroke-width="2"/>
+    <text x="100" y="23" fill="#ff4d4d" class="runtime-v-title" text-anchor="middle">ORP Addons</text>
+    <text x="100" y="38" fill="#ff4d4d" class="runtime-v-subtitle" text-anchor="middle">Total Re-Context</text>
+  </g>
+
+</svg>

@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 480" width="100%" height="100%" style="display: block; margin: 0 auto; background: transparent;">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@700;800&amp;family=Space+Grotesk:wght=500&amp;display=swap');
+      .gov-v-title { font-family: 'Oxanium', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; }
+      .gov-v-subtitle { font-family: 'Space Grotesk', sans-serif; font-size: 10.5px; font-weight: 500; opacity: 0.85; }
+    </style>
+
+    <marker id="gov-arr-cyan" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#00d4ff"/>
+    </marker>
+    <marker id="gov-arr-purple" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#6a3a8a"/>
+    </marker>
+    <marker id="gov-arr-orange" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#ff6600"/>
+    </marker>
+    <marker id="gov-arr-green" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#3fb950"/>
+    </marker>
+  </defs>
+
+  <g transform="translate(30, 20)">
+    <rect width="250" height="50" rx="6" fill="#0f1217" stroke="#00d4ff" stroke-width="2"/>
+    <text x="125" y="22" fill="#00d4ff" class="gov-v-title" text-anchor="middle">ORP_RUNTIME.md</text>
+    <text x="125" y="37" fill="#dce2eb" class="gov-v-subtitle" text-anchor="middle">Global Governance Core</text>
+  </g>
+
+  <path d="M 45 70 L 45 390" stroke="#00d4ff" stroke-width="1.5" fill="none"/>
+
+
+  <path d="M 45 115 L 68 115" stroke="#00d4ff" stroke-width="1.5" fill="none" marker-end="url(#gov-arr-cyan)"/>
+  
+  <g transform="translate(72, 90)">
+    <rect width="210" height="50" rx="5" fill="#0f1217" stroke="#6a3a8a" stroke-width="1.5"/>
+    <text x="15" y="22" fill="#8a5aaa" class="gov-v-title" text-anchor="start">Invariant Checks</text>
+    <text x="15" y="37" fill="#8a95a5" class="gov-v-subtitle" text-anchor="start">Continuous Constraint Verification</text>
+  </g>
+
+
+  <path d="M 45 190 L 68 190" stroke="#00d4ff" stroke-width="1.5" fill="none" marker-end="url(#gov-arr-cyan)"/>
+
+  <g transform="translate(72, 165)">
+    <rect width="210" height="50" rx="5" fill="#0f1217" stroke="#ff6600" stroke-width="1.5"/>
+    <text x="15" y="22" fill="#ff8833" class="gov-v-title" text-anchor="start">Drift Mitigation</text>
+    <text x="15" y="37" fill="#8a95a5" class="gov-v-subtitle" text-anchor="start">Coherence Correction Engine</text>
+  </g>
+
+
+  <path d="M 45 265 L 68 265" stroke="#00d4ff" stroke-width="1.5" fill="none" marker-end="url(#gov-arr-cyan)"/>
+
+  <g transform="translate(72, 240)">
+    <rect width="210" height="50" rx="5" fill="#0f1217" stroke="#ff6600" stroke-width="1.5"/>
+    <text x="15" y="22" fill="#ff8833" class="gov-v-title" text-anchor="start">Resolution Steps</text>
+    <text x="15" y="37" fill="#8a95a5" class="gov-v-subtitle" text-anchor="start">State Recovery Execution</text>
+  </g>
+
+
+  <path d="M 45 340 L 68 340" stroke="#00d4ff" stroke-width="1.5" fill="none" marker-end="url(#gov-arr-cyan)"/>
+
+  <g transform="translate(72, 315)">
+    <rect width="210" height="50" rx="5" fill="#0f1217" stroke="#ff6600" stroke-width="1.5"/>
+    <text x="15" y="22" fill="#ff8833" class="gov-v-title" text-anchor="start">SHS Evaluation</text>
+    <text x="15" y="37" fill="#8a95a5" class="gov-v-subtitle" text-anchor="start">Stability Health Assessment</text>
+  </g>
+
+
+  <path d="M 45 390 L 295 390 L 295 45 C 295 45, 290 45, 284 45" 
+        stroke="#3fb950" stroke-width="1.5" stroke-dasharray="3 3" fill="none" marker-end="url(#gov-arr-green)"/>
+        
+  <text x="285" y="382" fill="#3fb950" class="gov-v-subtitle" font-size="9" font-weight="bold" text-anchor="end">Loop Feedback Pipeline</text>
+
+</svg>

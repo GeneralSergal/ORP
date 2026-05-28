@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 620" width="100%" height="100%" style="display: block; margin: 0 auto; background: transparent;">
+  <defs>
+    <!-- Web Font Injections for Theme Cohesion -->
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@700;800&amp;family=Space+Grotesk:wght@500;700&amp;display=swap');
+      .lai-v-badge { font-family: 'Oxanium', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.05em; }
+      .lai-v-text { font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; letter-spacing: 0.02em; }
+      .lai-v-label { font-family: 'Space Grotesk', sans-serif; font-size: 10px; font-weight: 500; font-style: italic; letter-spacing: 0.01em; }
+    </style>
+
+    <!-- Flow Arrow Markers matching Layer Authority & Isolation colors -->
+    <marker id="lai-arr-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#dd1111"/>
+    </marker>
+    <marker id="lai-arr-purple" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#632ca6"/>
+    </marker>
+  </defs>
+
+  <!-- ================= LAYER 1: RAW SIGNALS ================= -->
+  <g transform="translate(28, 25)">
+    <rect width="264" height="48" rx="6" fill="#0f1217" stroke="#dd1111" stroke-width="1.5"/>
+    <text x="20" y="28" fill="#dd1111" class="lai-v-badge">L1</text>
+    <text x="58" y="29" fill="#f0f4f9" class="lai-v-text">Raw Signals</text>
+  </g>
+
+  <!-- Direct standard sequence step down (L1 -> L2) -->
+  <path d="M 85 73 L 85 134" stroke="#dd1111" stroke-width="1.5" fill="none" marker-end="url(#lai-arr-red)"/>
+
+
+  <!-- ================= LAYER 2: SNAPSHOT LAYER ================= -->
+  <g transform="translate(28, 135)">
+    <rect width="264" height="48" rx="6" fill="#0f1217" stroke="#dd1111" stroke-width="1.5"/>
+    <text x="20" y="28" fill="#dd1111" class="lai-v-badge">L2</text>
+    <text x="58" y="29" fill="#f0f4f9" class="lai-v-text">Snapshot Layer</text>
+  </g>
+
+  <!-- Step-down flow passing state to L4 Speculative Engine -->
+  <path d="M 160 183 L 160 254" stroke="#dd1111" stroke-width="1.5" fill="none" marker-end="url(#lai-arr-red)"/>
+  
+  <!-- Label overlay cleanly aligned next to the flow line -->
+  <text x="50" y="223" fill="#e70000ff" class="lai-v-label">Read-only snapshot</text>
+
+
+  <!-- ================= LAYER 4: SPECULATIVE ENGINE ================= -->
+  <g transform="translate(28, 255)">
+    <rect width="264" height="48" rx="6" fill="#0f1217" stroke="#632ca6" stroke-width="1.5"/>
+    <text x="20" y="28" fill="#632ca6" class="lai-v-badge">L4</text>
+    <text x="58" y="29" fill="#f0f4f9" class="lai-v-text">Speculative Engine</text>
+  </g>
+
+  <!-- Isolation Boundary 1: Upward constraint path back to L1 -->
+  <path d="M 235 255 L 235 74" stroke="#632ca6" stroke-width="1.25" stroke-dasharray="3,3" fill="none" marker-end="url(#lai-arr-purple)"/>
+  <text x="150" y="112" fill="#632ca6" class="lai-v-label">no direct access</text>
+
+  <!-- Isolation Boundary 2: Downward restriction path to L3 Governance -->
+  <path d="M 160 303 L 160 374" stroke="#632ca6" stroke-width="1.25" stroke-dasharray="3,3" fill="none" marker-end="url(#lai-arr-purple)"/>
+  <text x="172" y="343" fill="#632ca6" class="lai-v-label">cannot modify</text>
+
+
+  <!-- ================= LAYER 3: GOVERNANCE ================= -->
+  <g transform="translate(28, 375)">
+    <rect width="264" height="48" rx="6" fill="#0f1217" stroke="#ff6600" stroke-width="1.5"/>
+    <text x="20" y="28" fill="#ff6600" class="lai-v-badge">L3</text>
+    <text x="58" y="29" fill="#f0f4f9" class="lai-v-text">Governance</text>
+  </g>
+
+</svg>

@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 480" width="100%" height="100%" style="display: block; margin: 0 auto; background: transparent;">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@700;800&amp;family=Space+Grotesk:wght@500&amp;display=swap');
+      .priority-v-title { font-family: 'Oxanium', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+      .priority-v-subtitle { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.02em; opacity: 0.85; }
+    </style>
+
+    <marker id="prio-arr-orange" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#ff6600"/>
+    </marker>
+    <marker id="prio-arr-red" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#dd1111"/>
+    </marker>
+    <marker id="prio-arr-gray" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#4a4a4a"/>
+    </marker>
+  </defs>
+
+  <g transform="translate(60, 20)">
+    <rect width="200" height="52" rx="6" fill="#161a22" stroke="#ff6600" stroke-width="2"/>
+    <text x="100" y="24" fill="#ff8833" class="priority-v-title" text-anchor="middle">Signal</text>
+    <text x="100" y="38" fill="#ff8833" class="priority-v-title" text-anchor="middle">Integrity</text>
+  </g>
+
+  <path d="M 160 72 L 160 103" stroke="#ff6600" stroke-width="2" fill="none" marker-end="url(#prio-arr-orange)"/>
+
+  <g transform="translate(60, 105)">
+    <rect width="200" height="52" rx="6" fill="#0f1217" stroke="#dd1111" stroke-width="2"/>
+    <text x="100" y="24" fill="#dce2eb" class="priority-v-subtitle" text-anchor="middle">Recoverability</text>
+    <text x="100" y="38" fill="#dce2eb" class="priority-v-subtitle" text-anchor="middle">&gt; Completion</text>
+  </g>
+
+  <path d="M 160 157 L 160 188" stroke="#dd1111" stroke-width="2" fill="none" marker-end="url(#prio-arr-red)"/>
+
+  <g transform="translate(60, 190)">
+    <rect width="200" height="52" rx="6" fill="#0f1217" stroke="#dd1111" stroke-width="2"/>
+    <text x="100" y="24" fill="#dce2eb" class="priority-v-subtitle" text-anchor="middle">Provenance</text>
+    <text x="100" y="38" fill="#dce2eb" class="priority-v-subtitle" text-anchor="middle">Preservation</text>
+  </g>
+
+  <path d="M 160 242 L 160 273" stroke="#dd1111" stroke-width="2" fill="none" marker-end="url(#prio-arr-red)"/>
+
+  <g transform="translate(60, 275)">
+    <rect width="200" height="52" rx="6" fill="#0f1217" stroke="#dd1111" stroke-width="2"/>
+    <text x="100" y="24" fill="#dce2eb" class="priority-v-subtitle" text-anchor="middle">Epistemic</text>
+    <text x="100" y="38" fill="#dce2eb" class="priority-v-subtitle" text-anchor="middle">Isolation</text>
+  </g>
+
+  <path d="M 160 327 L 160 358" stroke="#4a4a4a" stroke-width="2" fill="none" marker-end="url(#prio-arr-gray)"/>
+
+  <g transform="translate(60, 360)">
+    <rect width="200" height="52" rx="6" fill="#0f1217" stroke="#4a4a4a" stroke-width="2"/>
+    <text x="100" y="24" fill="#8a95a5" class="priority-v-subtitle" text-anchor="middle">Surface</text>
+    <text x="100" y="38" fill="#8a95a5" class="priority-v-subtitle" text-anchor="middle">Fluency</text>
+  </g>
+
+</svg>

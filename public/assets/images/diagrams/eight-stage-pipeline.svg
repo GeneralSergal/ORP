@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 620" width="100%" height="100%" style="display: block; margin: 0 auto; background: transparent;">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@700;800&amp;family=Space+Grotesk:wght@500;700&amp;display=swap');
+      .matrix-v-step { font-family: 'Oxanium', sans-serif; font-size: 10px; font-weight: 800; letter-spacing: 0.05em; }
+      .matrix-v-text { font-family: 'Space Grotesk', sans-serif; font-size: 12px; font-weight: 700; letter-spacing: 0.02em; }
+    </style>
+
+    <marker id="matrix-arr-orange" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#ff6600"/>
+    </marker>
+    <marker id="matrix-arr-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#dd1111"/>
+    </marker>
+  </defs>
+
+  <g transform="translate(60, 15)">
+    <rect width="200" height="36" rx="18" fill="#0f1217" stroke="#ff6600" stroke-width="2"/>
+    <text x="100" y="22" fill="#ff6600" class="matrix-v-text" text-anchor="middle">Input</text>
+  </g>
+  
+  <path d="M 160 51 L 160 74" stroke="#ff6600" stroke-width="1.5" fill="none" marker-end="url(#matrix-arr-orange)"/>
+
+
+  <g transform="translate(45, 75)">
+    <rect width="230" height="42" rx="6" fill="#0f1217" stroke="#dd1111" stroke-width="1.5"/>
+    <text x="20" y="25" fill="#dd1111" class="matrix-v-step">S01</text>
+    <text x="55" y="26" fill="#f0f4f9" class="matrix-v-text">Kernel</text>
+  </g>
+  
+  <path d="M 160 117 L 160 134" stroke="#dd1111" stroke-width="1.5" fill="none" marker-end="url(#matrix-arr-red)"/>
+
+  <g transform="translate(45, 135)">
+    <rect width="230" height="42" rx="6" fill="#0f1217" stroke="#dd1111" stroke-width="1.5"/>
+    <text x="20" y="25" fill="#dd1111" class="matrix-v-step">S02</text>
+    <text x="55" y="26" fill="#f0f4f9" class="matrix-v-text">Prompt</text>
+  </g>
+  
+  <path d="M 160 177 L 160 194" stroke="#dd1111" stroke-width="1.5" fill="none" marker-end="url(#matrix-arr-red)"/>
+
+  <g transform="translate(45, 195)">
+    <rect width="230" height="42" rx="6" fill="#0f1217" stroke="#dd1111" stroke-width="1.5"/>
+    <text x="20" y="25" fill="#dd1111" class="matrix-v-step">S03</text>
+    <text x="55" y="26" fill="#f0f4f9" class="matrix-v-text">Benchmark</text>
+  </g>
+  
+  <path d="M 160 237 L 160 254" stroke="#dd1111" stroke-width="1.5" fill="none" marker-end="url(#matrix-arr-red)"/>
+
+  <g transform="translate(45, 255)">
+    <rect width="230" height="42" rx="6" fill="#0f1217" stroke="#ff6600" stroke-width="1.5"/>
+    <text x="20" y="25" fill="#ff6600" class="matrix-v-step">S04</text>
+    <text x="55" y="26" fill="#f0f4f9" class="matrix-v-text">Response</text>
+  </g>
+  
+  <path d="M 160 297 L 160 314" stroke="#ff6600" stroke-width="1.5" fill="none" marker-end="url(#matrix-arr-orange)"/>
+
+
+  <g transform="translate(45, 315)">
+    <rect width="230" height="42" rx="6" fill="#0f1217" stroke="#ff6600" stroke-width="1.5"/>
+    <text x="20" y="25" fill="#ff6600" class="matrix-v-step">S05</text>
+    <text x="55" y="26" fill="#f0f4f9" class="matrix-v-text">Evaluation</text>
+  </g>
+  
+  <path d="M 160 357 L 160 374" stroke="#ff6600" stroke-width="1.5" fill="none" marker-end="url(#matrix-arr-orange)"/>
+
+  <g transform="translate(45, 375)">
+    <rect width="230" height="42" rx="6" fill="#0f1217" stroke="#ff6600" stroke-width="1.5"/>
+    <text x="20" y="25" fill="#ff6600" class="matrix-v-step">S06</text>
+    <text x="55" y="26" fill="#f0f4f9" class="matrix-v-text">Rubric</text>
+  </g>
+  
+  <path d="M 160 417 L 160 434" stroke="#ff6600" stroke-width="1.5" fill="none" marker-end="url(#matrix-arr-orange)"/>
+
+  <g transform="translate(45, 435)">
+    <rect width="230" height="42" rx="6" fill="#0f1217" stroke="#ff6600" stroke-width="1.5"/>
+    <text x="20" y="25" fill="#ff6600" class="matrix-v-step">S07</text>
+    <text x="55" y="26" fill="#f0f4f9" class="matrix-v-text">Scoring</text>
+  </g>
+  
+  <path d="M 160 477 L 160 494" stroke="#ff6600" stroke-width="1.5" fill="none" marker-end="url(#matrix-arr-orange)"/>
+
+
+  <g transform="translate(45, 495)">
+    <rect width="230" height="46" rx="23" fill="#0f1217" stroke="#3fb950" stroke-width="1.5"/>
+    <text x="115" y="20" fill="#3fb950" class="matrix-v-step" text-anchor="middle">S08</text>
+    <text x="115" y="35" fill="#3fb950" class="matrix-v-text" text-anchor="middle">Output</text>
+  </g>
+
+</svg>

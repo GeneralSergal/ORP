@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 480" width="100%" height="100%" style="display: block; margin: 0 auto; background: transparent;">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@700;800&amp;family=Space+Grotesk:wght@500&amp;display=swap');
+      .shs-v-title { font-family: 'Oxanium', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
+      .shs-v-subtitle { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.02em; opacity: 0.85; }
+    </style>
+
+    <marker id="v-arr-yellow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#b59400"/>
+    </marker>
+    <marker id="v-arr-orange" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#d46a00"/>
+    </marker>
+    <marker id="v-arr-red" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#dd1111"/>
+    </marker>
+    <marker id="v-arr-black" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#4a4a4a"/>
+    </marker>
+
+    <marker id="v-rev-green" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#3fb950"/>
+    </marker>
+    <marker id="v-rev-yellow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#b59400"/>
+    </marker>
+  </defs>
+
+  <g transform="translate(65, 20)">
+    <rect width="140" height="50" rx="6" fill="#11361c" stroke="#3fb950" stroke-width="2"/>
+    <text x="70" y="23" fill="#63e2b7" class="shs-v-title" text-anchor="middle">GREEN</text>
+    <text x="70" y="37" fill="#dce2eb" class="shs-v-subtitle" text-anchor="middle">Nominal</text>
+  </g>
+
+  <path d="M 135 70 L 135 103" stroke="#b59400" stroke-width="2" fill="none" marker-end="url(#v-arr-yellow)"/>
+
+  <g transform="translate(65, 110)">
+    <rect width="140" height="50" rx="6" fill="#2d2a08" stroke="#b59400" stroke-width="2"/>
+    <text x="70" y="23" fill="#f2d022" class="shs-v-title" text-anchor="middle">YELLOW</text>
+    <text x="70" y="37" fill="#dce2eb" class="shs-v-subtitle" text-anchor="middle">Caution</text>
+  </g>
+
+  <path d="M 135 160 L 135 193" stroke="#d46a00" stroke-width="2" fill="none" marker-end="url(#v-arr-orange)"/>
+
+  <g transform="translate(65, 200)">
+    <rect width="140" height="50" rx="6" fill="#331c05" stroke="#d46a00" stroke-width="2"/>
+    <text x="70" y="23" fill="#ff9f43" class="shs-v-title" text-anchor="middle">ORANGE</text>
+    <text x="70" y="37" fill="#dce2eb" class="shs-v-subtitle" text-anchor="middle">Degraded</text>
+  </g>
+
+  <path d="M 135 250 L 135 283" stroke="#dd1111" stroke-width="2" fill="none" marker-end="url(#v-arr-red)"/>
+
+  <g transform="translate(65, 290)">
+    <rect width="140" height="50" rx="6" fill="#2d0a0a" stroke="#dd1111" stroke-width="2"/>
+    <text x="70" y="23" fill="#ff4d4d" class="shs-v-title" text-anchor="middle">RED</text>
+    <text x="70" y="37" fill="#dce2eb" class="shs-v-subtitle" text-anchor="middle">Critical</text>
+  </g>
+
+  <path d="M 135 340 L 135 373" stroke="#4a4a4a" stroke-width="2" fill="none" marker-end="url(#v-arr-black)"/>
+
+  <g transform="translate(65, 380)">
+    <rect width="140" height="50" rx="6" fill="#0b0d10" stroke="#3a3a3a" stroke-width="2"/>
+    <text x="70" y="23" fill="#8a95a5" class="shs-v-title" text-anchor="middle">BLACK</text>
+    <text x="70" y="37" fill="#8a95a5" class="shs-v-subtitle" text-anchor="middle">Terminal</text>
+  </g>
+
+
+  <path d="M 65 135 L 45 135 C 25 135, 25 45, 45 45 L 58 45" 
+        stroke="#3fb950" stroke-width="1.75" stroke-dasharray="3 3" fill="none" marker-end="url(#v-rev-green)"/>
+
+  <path d="M 65 225 L 45 225 C 25 225, 25 125, 45 125 L 58 125" 
+        stroke="#b59400" stroke-width="1.75" stroke-dasharray="3 3" fill="none" marker-end="url(#v-rev-yellow)"/>
+
+</svg>

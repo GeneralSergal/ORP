@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 480" width="100%" height="100%" style="display: block; margin: 0 auto; background: transparent;">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@700;800&amp;family=Space+Grotesk:wght@500&amp;display=swap');
+      .inv-v-title { font-family: 'Oxanium', sans-serif; font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+      .inv-v-subtitle { font-family: 'Space Grotesk', sans-serif; font-size: 11px; font-weight: 500; letter-spacing: 0.02em; opacity: 0.85; }
+    </style>
+
+    <marker id="inv-arr-red" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#dd1111"/>
+    </marker>
+    <marker id="inv-arr-purple" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#6a3a8a"/>
+    </marker>
+    <marker id="inv-arr-orange" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M 1 2 L 8 5 L 1 8 Z" fill="#ff6600"/>
+    </marker>
+  </defs>
+
+  <g transform="translate(60, 25)">
+    <rect width="200" height="52" rx="6" fill="#0f1217" stroke="#dd1111" stroke-width="2"/>
+    <text x="100" y="24" fill="#dce2eb" class="inv-v-subtitle" text-anchor="middle">Signal &gt;</text>
+    <text x="100" y="38" fill="#dce2eb" class="inv-v-subtitle" text-anchor="middle">Narrative</text>
+  </g>
+
+  <path d="M 160 77 L 160 128" stroke="#dd1111" stroke-width="2" fill="none" marker-end="url(#inv-arr-red)"/>
+
+  <g transform="translate(60, 130)">
+    <rect width="200" height="52" rx="6" fill="#0f1217" stroke="#dd1111" stroke-width="2"/>
+    <text x="100" y="24" fill="#dce2eb" class="inv-v-subtitle" text-anchor="middle">Recoverability &gt;</text>
+    <text x="100" y="38" fill="#dce2eb" class="inv-v-subtitle" text-anchor="middle">Completion</text>
+  </g>
+
+  <path d="M 160 182 L 160 233" stroke="#6a3a8a" stroke-width="2" fill="none" marker-end="url(#inv-arr-purple)"/>
+
+  <g transform="translate(60, 235)">
+    <rect width="200" height="52" rx="6" fill="#0f1217" stroke="#6a3a8a" stroke-width="2"/>
+    <text x="100" y="24" fill="#8a5aaa" class="inv-v-title" text-anchor="middle">Epistemic</text>
+    <text x="100" y="38" fill="#8a5aaa" class="inv-v-title" text-anchor="middle">Isolation</text>
+  </g>
+
+  <path d="M 160 287 L 160 338" stroke="#ff6600" stroke-width="2" fill="none" marker-end="url(#inv-arr-orange)"/>
+
+  <g transform="translate(60, 340)">
+    <rect width="200" height="52" rx="6" fill="#0f1217" stroke="#ff6600" stroke-width="2"/>
+    <text x="100" y="24" fill="#ff8833" class="inv-v-title" text-anchor="middle">Observable</text>
+    <text x="100" y="38" fill="#ff8833" class="inv-v-title" text-anchor="middle">Drift</text>
+  </g>
+
+</svg>
