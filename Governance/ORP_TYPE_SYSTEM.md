@@ -1,4 +1,4 @@
-# ORP_TYPE_SYSTEM
+# ORP_TYPE_SYSTEM.md
 **Type System for Epistemic Governance Architecture**
 
 **Part of:** ORP v3.0 — Open Resonance Protocol  
