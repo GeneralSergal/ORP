@@ -1,4 +1,4 @@
-# ORP_CONTEXT_ACTIVATION_MATRIX
+# ORP_CONTEXT_ACTIVATION_MATRIX.md
 **Context-Based Module Activation Rules**
 
 **Part of:** ORP v3.0 — Open Resonance Protocol
@@ -29,6 +29,8 @@ No module operates outside its defined activation domain.
 
 Each task is assigned a **primary context** and optionally a **secondary modifier context**.
 
+---
+
 ### Primary Contexts
 
 #### CORE
@@ -55,11 +57,13 @@ Indicates overlapping constraints:
 - CODE + DEGRADED
 
 HYBRID does not override primary context.
-It modifies execution priority only.
+It only modifies execution constraints.
 
 ---
 
 ## Module Activation Rules
+
+---
 
 ### GLOBAL BASE LAYER (Always Active)
 
@@ -90,15 +94,15 @@ Activate:
 
 Activate:
 - ORP_RUNTIME.md
-- ORP_RUNTIME_CODE.md (conditional domain module)
+- ORP_RUNTIME_CODE.md (domain-specific constraint module)
 
 Rules:
-- CODE module applies ONLY to engineering artifacts
-- RP module is disabled unless explicitly required for formatting output
-- CODE module must not affect non-engineering reasoning
+- Applies ONLY to engineering artifacts
+- Must NOT affect general reasoning or narrative output
+- Must NOT modify SHS or drift state directly
 
 Constraint:
-> ORP_RUNTIME_CODE is a domain-specific constraint module, not a runtime layer.
+> ORP_RUNTIME_CODE is a domain constraint module, not a runtime layer.
 
 ---
 
@@ -106,15 +110,15 @@ Constraint:
 
 Activate:
 - ORP_RUNTIME.md
-- ORP_RUNTIME_RP.md (optional transform layer)
+- ORP_RUNTIME_RP.md (optional transformation layer)
 
 Rules:
 - RP layer is downstream-only transformation
-- It MUST NOT modify reasoning, drift state, or provenance tracking
+- It MUST NOT affect reasoning integrity or provenance tracking
 - It affects expression only, not system truth state
 
 Constraint:
-> RP layer is a transformation filter, not an authority layer.
+> RP layer is a transformation filter, not a governance authority.
 
 ---
 
@@ -128,7 +132,7 @@ Rules:
 - Reduce reasoning overhead
 - Simplify artifact structure
 - Preserve governance invariants
-- Avoid multi-layer abstraction chains
+- Avoid deep abstraction chains
 
 Constraint:
 > Simplicity is enforced, not optional.
@@ -137,14 +141,15 @@ Constraint:
 
 ### HYBRID CONTEXT
 
-Resolution rule:
-- Primary context determines base activation
+Resolution model:
+
+- Primary context determines base module activation
 - Secondary context modifies execution constraints only
 
 Examples:
-- CORE + CODE → CODE rules apply only to relevant artifacts
+- CORE + CODE → CODE constraints apply only to engineering artifacts
 - CREATIVE + CODE → CODE dominates structure, RP affects tone only
-- CREATIVE + DEGRADED → RP-LITE behavior emerges via LITE constraints
+- CREATIVE + DEGRADED → RP-LITE behavior via LITE constraints
 - CODE + DEGRADED → LITE + CODE module both active, CODE remains dominant
 
 ---
@@ -154,13 +159,15 @@ Examples:
 When modules conflict:
 
 1. ORP_RUNTIME.md (global governance always wins)
-2. ORP_RUNTIME_CODE.md (only in CODE context)
+2. ORP_RUNTIME_CODE.md (only active in CODE context)
 3. ORP_RUNTIME_RP.md (expression layer only)
 4. ORP_RUNTIME_LITE.md (execution compression only)
 
 ---
 
 ## Critical Rules
+
+---
 
 ### 1. No RP Contamination
 RP transformations MUST NOT affect:
@@ -176,7 +183,7 @@ ORP_RUNTIME_CODE must not:
 - influence non-engineering reasoning
 - override global governance rules
 
-It may only operate on **engineering-bound artifacts**.
+It is strictly limited to engineering-bound artifacts.
 
 ---
 
@@ -218,10 +225,10 @@ Not as:
 | Layer | σ² Role |
 |------|--------|
 | ORP_RUNTIME.md (L3) | Interprets σ² and applies SHS transitions |
-| ORP_RUNTIME_CODE.md | MAY reference derived drift indicators for debugging only |
-| ORP_RUNTIME_RP.md | MUST NOT interpret σ² in any semantic or narrative form |
-| ORP_RUNTIME_LITE.md | May operate under simplified drift awareness (non-numeric abstraction) |
-| ORP_SIGMA_SQUARED_DRIFT.md | Defines σ² only (no operational control) |
+| ORP_RUNTIME_CODE.md | May reference derived drift indicators for debugging engineering artifacts only |
+| ORP_RUNTIME_RP.md | Must not interpret σ² in any semantic or narrative form |
+| ORP_RUNTIME_LITE.md | May operate under simplified, non-numeric drift awareness |
+| ORP_SIGMA_SQUARED_DRIFT.md | Defines σ² only (no control authority) |
 
 ---
 
@@ -262,7 +269,7 @@ It is a **read-only observability signal outside control loops**.
 ## Status
 
 Active Control Specification  
-Part of ORP v3.0 Runtime Architecture
+Part of ORP v3.0 Runtime Architecture  
 
 ---
 
