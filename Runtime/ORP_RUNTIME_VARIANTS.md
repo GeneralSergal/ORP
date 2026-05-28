@@ -32,10 +32,10 @@ flowchart TD
     D -->|Maximum Survival| H[Filtered Models]
     E -->|Best Balance| I[Small / RP-Biased Models]
 
-    click B href "Runtime/ORP_RUNTIME.md" "Open Full Runtime"
-    click C href "Runtime/ORP_RUNTIME_RP.md" "Open RP Mode"
-    click D href "Runtime/ORP_RUNTIME_LITE.md" "Open Lite Mode"
-    click E href "Runtime/ORP_RUNTIME_RP_LITE.md" "Open RP-Lite Mode"
+    click B href "ORP_RUNTIME.md" "Open Full Runtime"
+    click C href "ORP_RUNTIME_RP.md" "Open RP Mode"
+    click D href "ORP_RUNTIME_LITE.md" "Open Lite Mode"
+    click E href "ORP_RUNTIME_RP_LITE.md" "Open RP-Lite Mode"
 ```
 
 </details>
