@@ -1,5 +1,5 @@
-# ORP_RUNTIME_CODE
-**Code & Artifact Governance Layer**
+# ORP_RUNTIME_CODE.md
+**Code & Artifact Governance Kernel**
 
 **Part of:** ORP v3.0 — Open Resonance Protocol
 
@@ -7,7 +7,7 @@
 
 ## Purpose
 
-ORP_RUNTIME_CODE is the core governance kernel for **all cognitive artifacts** (source code, diagrams, UI components, documentation, prompts, configurations, etc.) created or modified with AI assistance.
+ORP_RUNTIME_CODE is the core governance kernel for all cognitive artifacts (source code, diagrams, UI components, documentation, prompts, configurations, etc.) created or modified with AI assistance.
 
 It suppresses epistemic drift and enforces high-signal, recoverable, provenance-preserving outputs across any language or context.
 
@@ -139,7 +139,7 @@ When generating or modifying artifacts, return in this order:
 
 It serves as the primary governance kernel for ORP v3.0 and is fully compatible with all runtime variants, including ORP_RUNTIME_RP.
 
-**Current Status:** Active Governance Layer
+**Current Status:** Active Governance Kernel
 
 ---
 
