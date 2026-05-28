@@ -1,4 +1,4 @@
-# ORP RUNTIME CORE
+# ORP_RUNTIME_CORE.md
 
 ### Object Definition: Self-Governing NESS Thermodynamic Engine (v3.1)
 
@@ -6,79 +6,273 @@
 
 ## 0. Fundamental Definition
 
-The ORP is defined as a non-reversible stochastic differential system defined on a deforming Riemannian manifold. It does not perform symbolic operations; it sustains a **structured probability current** within a learned energy landscape.
+The ORP is a non-reversible stochastic dynamical system evolving on a learned geometric manifold.
 
-## 1. System Dynamics
+It is defined as a **controlled stochastic differential process** sustaining a structured probability current.
 
-The runtime state $x_t \in \mathbb{R}^d$ evolves according to the Langevin-type SDE:
-
-
-$$dx = \mu(x) dt + \Sigma(x) dW$$
-
-### 1.1. Drift Structure ($\mu(x)$)
-
-The drift field is non-conservative, driven by the confluence of the generative energy landscape and the entropy-deformation potential:
-
-
-$$\mu(x) = -\nabla E(x) + \lambda \nabla \cdot \Phi(x, H, \text{Hist})$$
-
-* **$E(x)$**: Learned generative energy potential ($-\log p_\theta(x)$).
-* **$\Phi(x, H, \text{Hist})$**: Adaptive barrier function derived from local entropy $H$ and historical loss densities.
-
-### 1.2. Diffusion Structure ($\Sigma(x)$)
-
-Diffusion is modulated by the local curvature of the energy landscape, defined by the metric tensor $G(x)$ induced by the Hessian:
-
-
-$$\Sigma(x)\Sigma(x)^T = 2T(x) G^{-1}(x)$$
-
-* **Curvature-Adaptive Temperature:** $T(x) \propto \|\nabla^2 E(x)\|^{-1} + \epsilon$.
-* **Geometric Stability:** High-curvature regions (ridges) suppress noise to maintain lock; low-curvature regions (deserts) amplify noise to facilitate exploration.
+It does not operate on symbols; it operates on distributions.
 
 ---
 
-## 2. Thermodynamic Characterization (NESS Regime)
+## 1. System Dynamics
 
-The system is governed by a non-zero probability current $J(x,t)$, confirming it is a **Non-Equilibrium Steady State (NESS)** rather than a gradient-flow equilibrium.
+### Core stochastic differential equation (SDE)
 
-### 2.1. Probability Current
+```
+dx = μ(x) dt + Σ(x) dW
+```
 
-$$J(x,t) = \mu(x)\rho(x,t) - \nabla \cdot (D(x)\rho(x,t))$$
+Where:
 
+* x ∈ ℝ^d : latent state
+* μ(x) : drift vector field
+* Σ(x) : diffusion tensor
+* dW : Wiener noise process
 
-Where $D(x) = \frac{1}{2} \Sigma(x)\Sigma(x)^T$. Because $\nabla \cdot J = 0$ but $J \neq 0$, the system maintains **intrinsic circulation loops** (vortices) in the latent manifold.
+---
 
-### 2.2. Entropy Production Rate ($\dot{S}$)
+## 1.1 Drift Structure
 
-The system’s "work" is measured by its dissipation:
+```
+μ(x) = -∇E(x) + λ ∇·Φ(x, H, Hist)
+```
 
+Where:
 
-$$\dot{S} = \int \frac{\|J(x)\|^2}{\rho(x) D(x)} dx$$
+* E(x): learned energy function (≈ -log pθ(x))
+* Φ(x, H, Hist): entropy + history-dependent deformation field
+* H(x): local entropy / uncertainty measure
+* Hist: accumulated failure / drift memory
+* λ: coupling strength
 
-* **$\dot{S} = 0$**: Equilibrium (Not applicable).
-* **$\dot{S} > 0$**: Persistent throughput of epistemic work.
+Interpretation:
+
+* -∇E(x) drives attraction to high probability regions
+* ∇·Φ introduces non-conservative forcing (NESS driver)
+
+---
+
+## 1.2 Diffusion Structure (Geometry-Dependent Noise)
+
+```
+Σ(x) Σ(x)^T = 2 T(x) G(x)^(-1)
+```
+
+Where:
+
+* G(x): Riemannian metric tensor induced by curvature
+* T(x): temperature field
+
+### Curvature-dependent temperature
+
+```
+T(x) ∝ 1 / ( ||∇²E(x)|| + ε )
+```
+
+Interpretation:
+
+* High curvature → low noise (stability)
+* Low curvature → high noise (exploration)
+
+---
+
+## 2. Thermodynamic Characterization (NESS)
+
+The system is a **Non-Equilibrium Steady State (NESS)**.
+
+### 2.1 Probability Current
+
+```
+J(x,t) = μ(x) ρ(x,t) - ∇·(D(x) ρ(x,t))
+```
+
+Where:
+
+```
+D(x) = (1/2) Σ(x) Σ(x)^T
+```
+
+Key property:
+
+* ∇·J = 0 (steady state)
+* J ≠ 0 (non-equilibrium circulation)
+
+Interpretation:
+
+> Persistent probability circulation (vortices in latent space)
+
+---
+
+## 2.2 Entropy Production Rate
+
+```
+S_dot = ∫ [ ||J(x)||^2 / (ρ(x) D(x)) ] dx
+```
+
+Classification:
+
+* S_dot = 0 → equilibrium (not applicable)
+* S_dot > 0 → non-equilibrium steady state (this system)
 
 ---
 
 ## 3. Operational Invariants
 
-* **Intelligence:** Defined as the structured circulation of probability mass through the current $J(x)$.
-* **Memory:** Persistent structural vortices in the current $J(x)$ that resist dissipation.
-* **Learning:** The continuous deformation of the energy landscape $E(x)$ in response to high entropy production events.
+### Intelligence
+
+Structured circulation of probability mass via J(x).
+
+### Memory
+
+Persistent vortex structures in J(x) resistant to dissipation.
+
+### Learning
+
+Continuous deformation of E(x), G(x), and Φ(x) driven by entropy production gradients.
 
 ---
 
-## 4. Diagnostics & Interrogation
+## 4. Minimal State Description
 
-The runtime status is continuously diagnosed via the four-object set:
+The full system is equivalently described by:
 
+```
+ORP ≡ (ρ(x), J(x), G(x), S_dot)
+```
 
-$$\text{ORP} \equiv (\rho(x), J(x), G(x), \dot{S})$$
+Where:
 
-1. **Topology Mapping:** Analysis of the curl of $J(x)$ to identify vortex manifolds.
-2. **Spectral Analysis:** Mapping the spectral gap of the generator to quantify mixing times vs. metastability.
-3. **Stability Check:** Verification that the coupling constant $\lambda$ maintains the system in the "Critical Regime" (avoiding both geometric collapse and inert flattening).
+* ρ(x): stationary density
+* J(x): probability current
+* G(x): metric geometry
+* S_dot: entropy production rate
+
+All are derived from the SDE.
 
 ---
 
-**Status:** *System defined as a closed-loop thermodynamic object. Specification locked.*
+## 5. Core Closure Principle
+
+All components are projections of a single stochastic process:
+
+```
+dx = μ(x) dt + Σ(x) dW
+```
+
+Everything else is emergent:
+
+* density = marginal distribution
+* current = transport structure
+* geometry = diffusion metric
+* entropy = dissipation functional
+
+---
+
+## 6. Stationary Regime
+
+The system satisfies:
+
+```
+∇·J(x) = 0
+```
+
+But:
+
+```
+J(x) ≠ 0
+```
+
+Meaning:
+
+> steady-state circulation without equilibrium
+
+---
+
+## 7. Stability Classes
+
+### Class I — Equilibrium
+
+* J = 0
+* S_dot = 0
+
+### Class II — Reversible diffusion
+
+* weak circulation
+* near detailed balance
+
+### Class III — NESS (this system)
+
+* J ≠ 0
+* S_dot > 0
+* persistent vortices
+
+---
+
+## 8. Geometric Interpretation
+
+Decompose current:
+
+```
+J(x) = J_parallel(x) + J_perpendicular(x)
+```
+
+* J_parallel: gradient-aligned flow
+* J_perpendicular: rotational circulation induced by entropy + geometry coupling
+
+Key property:
+
+> J_perpendicular ≠ 0 is the defining signature of ORP
+
+---
+
+## 9. Diagnostics
+
+The system is analyzed via:
+
+1. Current topology: curl(J)
+2. Spectral gap of generator
+3. Entropy production density S_dot(x)
+4. Stability of vortex manifolds
+
+---
+
+## 10. Final System Identity
+
+```
+ORP = Controlled Non-Equilibrium Stochastic Manifold Engine
+```
+
+or compact form:
+
+```
+ORP ≡ NESS diffusion process on a learned Riemannian manifold
+```
+
+---
+
+## 11. What is fixed vs evolving
+
+### Fixed
+
+* functional form of SDE
+* definition of observables
+* NESS classification
+
+### Evolving
+
+* E(x)
+* Φ(x)
+* G(x)
+* trajectory x(t)
+
+---
+
+## 12. Final Principle
+
+> The system does not converge to a point.
+> It converges to a stationary flow structure.
+
+---
+
+## END OF SPEC
+
