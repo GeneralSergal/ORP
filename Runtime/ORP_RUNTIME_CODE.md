@@ -1,110 +1,146 @@
-# ORP_RUNTIME_CODE — Code Governance Layer
-**Version:** 0.1 (Draft)
-**Status:** SHS: GREEN | DRIFT: LOW | CRA: VALID
+# ORP_RUNTIME_CODE
+**Code & Artifact Governance Layer**
+
+**Part of:** ORP v3.0 — Open Resonance Protocol
+
+---
 
 ## Purpose
 
-ORP_RUNTIME_CODE is a specialized governance runtime designed to reduce epistemic drift, bloat, hidden complexity, and quality degradation when working with AI systems for code generation, refactoring, and maintenance.
+ORP_RUNTIME_CODE is the core governance kernel for **all cognitive artifacts** (source code, diagrams, UI components, documentation, prompts, configurations, etc.) created or modified with AI assistance.
 
-It enforces **Signal > Cleverness**, **Provenance > Fluency**, and **Recoverability > Completion** in the domain of software engineering.
+It suppresses epistemic drift and enforces high-signal, recoverable, provenance-preserving outputs across any language or context.
 
 ---
 
-## Core Axioms (Non-Negotiable)
+## Core Axioms
 
 **01. Signal > Cleverness**  
-Prioritize explicit, readable, and maintainable code over clever, terse, or "elegant" solutions. If a junior engineer cannot understand it in under 30 seconds, it fails the axiom.
+Prioritize explicit, readable, honest artifacts over clever, terse, or "elegant" solutions.
 
 **02. Provenance Preservation**  
-Every significant code change must carry traceable reasoning. Never accept "magic" or unexplained transformations from the AI.
+Every meaningful change must carry traceable reasoning. No magic. No unexplained transformations.
 
-**03. Recoverability First**  
-Code must be easy to debug, rollback, and understand even when partially broken. Favor clear structure over optimization until profiling proves necessity.
+**03. Recoverability > Completion**  
+Artifacts must remain understandable and fixable even when partially broken.
 
-**04. No Hidden Shit**  
-Eliminate unnecessary abstraction layers, premature optimization, defensive over-engineering, and unused code. Chekhov's Gun applies: if it exists, it must serve a purpose.
+**04. No Hidden Shit (Chekhov's Gun)**  
+If something exists, it must serve a clear, necessary purpose. Otherwise it is removed.
 
-**05. Drift Detection**  
-Actively monitor for code smells, increasing complexity, coupling, test fragility, and performance regression. Treat them as σ² drift.
-
----
-
-## Practical Rules for AI Code Interaction
-
-1. **Always demand structured output**
-   - Problem understanding
-   - Proposed solution + trade-offs
-   - Code changes (diff style when possible)
-   - Risks & edge cases
-   - Testing recommendations
-
-2. **Force reasoning before code**
-   Never accept code without preceding reasoning.
-
-3. **Iterate with criticism**
-   After receiving code, always ask the AI to critique its own output against ORP axioms.
-
-4. **Keep context small and focused**
-   Large files = high drift risk. Prefer small, single-responsibility modules.
-
-5. **Version and review aggressively**
-   Treat AI-generated code with the same (or higher) scrutiny as human code.
+**05. Context Budget Discipline**  
+Scope must be explicitly declared and respected. Undefined budget = invalid task.
 
 ---
 
-## Recommended Prompt Patterns
+## Artifact Stratification & Dominance
 
-### Basic Refactor Prompt
-```
-You are operating under ORP_RUNTIME_CODE governance.
+- **Functional Artifacts** (code, logic): Correctness and maintainability dominate  
+- **Representational Artifacts** (UI, diagrams, visuals): Determinism and predictability dominate  
+- **Epistemic Artifacts** (prompts, documentation, specs): Clarity and fidelity to intent dominate  
 
-Refactor the following code according to the axioms:
-- Signal > Cleverness
-- No Hidden Shit
-- Recoverability First
-
-[Code here]
-
-First explain your reasoning, then provide the refactored code.
-```
-
-### New Feature Prompt
-```
-Create a new feature following ORP_RUNTIME_CODE rules.
-
-Requirements: [list]
-
-Think step by step:
-1. Understand scope and edge cases
-2. Design minimal viable implementation
-3. Consider future maintainability
-
-Output in this exact order:
-1. Summary of approach
-2. Potential risks
-3. Complete code
-4. Suggested tests
-```
+**When strata overlap**: The dominant failure mode determines enforcement priority.
 
 ---
 
-## Code Review Checklist (ORP-CODE Review)
+## Operational Rules
 
-- Does every piece of code serve a clear, necessary purpose? (Chekhov's Gun)
-- Is the code understandable by a competent junior in < 30 seconds per function?
-- Are there any hidden side effects or magic?
-- Is error handling explicit and recoverable?
-- Are variable and function names honest and descriptive?
-- Is complexity justified by profiling or requirements?
-- Does it introduce unnecessary abstraction layers?
+### Rendering Integrity Contract
+Any visual or layout-dependent artifact must be:
+- Deterministic (same input → same output)
+- Explicitly sized and constrained
+- Free of non-deterministic layout inference
+- Validatable in isolation
+
+### Context Budget Rule
+Every task must declare:
+- Primary focus (1)
+- Secondary references (max 3)
+- Explicit exclusions
+
+### Anti-Cleverness Heuristic
+Reject or refactor if:
+- Readability is sacrificed for marginal gains
+- Deeply nested or implicit constructs are used
+- Insider knowledge is required to understand
+- Locally clean but globally incoherent
+
+### Macro Coherence Rule
+The system must maintain a single consistent mental model across all artifacts.
 
 ---
 
-**Current Status:** This is v0.1 — a living document.
+## Conflict Resolution Hierarchy
 
-We will evolve it as we use it in practice.
+When axioms conflict, resolve in this strict order:
+
+1. **Recoverability** (highest)
+2. **Macro Coherence**
+3. **Signal**
+4. **Context Budget**
+5. **Cleverness constraints** (lowest)
+
+---
+
+## Drift Detection & Escalation (σ²)
+
+**Level 1 – Warning**  
+Minor hidden assumptions, unnecessary complexity.
+
+**Level 2 – Refactor Required**  
+Coupling growth, cleverness creep, fragmentation, non-deterministic rendering.
+
+**Level 3 – Boundary Reset**  
+Systemic drift, repeated violations, loss of macro coherence.
+
+Drift escalation is monotonic unless explicitly reset through refactoring.
+
+---
+
+## Failure Mode Behavior
+
+When rules are violated, default action sequence:
+
+1. Simplify structure
+2. Reduce abstraction
+3. Increase explicitness
+4. Split into smaller artifacts
+5. Re-request full reasoning before continuation
+
+Never silently accept degraded output.
+
+---
+
+## Iterative Review Loop
+
+1. Generate / Propose
+2. Evaluate against axioms + stratification
+3. Identify and classify drift
+4. Stabilize invariants
+5. Refactor
+6. Re-evaluate
+
+First-pass compliance is never final.
+
+---
+
+## Recommended Output Format
+
+When generating or modifying artifacts, return in this order:
+
+1. **Reasoning** (step-by-step, referencing axioms)
+2. **Trade-offs & Risks**
+3. **Changes Made**
+4. **Final Artifact**
+5. **Verification Steps**
+
+---
+
+**This document is living and enforceable.**
+
+It serves as the primary governance kernel for ORP v3.0 and is fully compatible with all runtime variants, including ORP_RUNTIME_RP.
+
+**Current Status:** Active Governance Layer
 
 ---
 
 **End of Document**
-
