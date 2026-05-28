@@ -1,276 +1,304 @@
 # ORP_CONTEXT_ACTIVATION_MATRIX.md
 **Context-Based Module Activation Rules**
 
-**Part of:** ORP v3.0 — Open Resonance Protocol
+**Part of:** ORP v3.0 — Open Resonance Protocol  
+**Type:** L3 Execution Contract (Routing Specification)
 
 ---
 
 ## Purpose
 
-This document defines how ORP runtime components are activated based on task context classification.
+This document defines how ORP runtime modules are activated based on contextual classification.
 
-It ensures ORP operates as a **deterministic, context-dependent modular system**, not a static or always-on stack.
+It ensures ORP operates as a **deterministic modular governance system**, where:
+
+- `ORP_RUNTIME.md` is always active (L3 authority kernel)
+- all other modules are context-gated
+- no module operates outside its activation domain
+- σ² remains L4 observational only (read-only signal)
 
 ---
 
 ## Core Principle
 
-> ORP modules are activated by context classification, not by execution sequence.
+> Module activation is determined by context classification, not runtime stacking order.
 
-The system consists of:
-- A **global governance runtime (ORP_RUNTIME.md)**
-- Optional context-bound modules activated deterministically per classification
-
-No module operates outside its defined activation domain.
+ORP is a **context-router system**, not a fixed execution stack.
 
 ---
 
-## Context Classification Model
+# 1. GLOBAL BASE LAYER (Always Active)
 
-Each task is assigned a **primary context** and optionally a **secondary modifier context**.
+## ORP_RUNTIME.md (L3 Authority Kernel)
 
----
+Always active in ALL contexts.
 
-### Primary Contexts
+Responsibilities:
 
-#### CORE
-General reasoning, analysis, explanation, planning.
-
-#### CODE
-Software engineering, programming, debugging, system design.
-
-#### CREATIVE / RP
-Narrative generation, role-play, immersive or character-based output.
-
-#### DEGRADED
-Low-capability environments, constrained execution, reduced model capacity.
+- SHS state management (GREEN → BLACK)
+- σ² drift interpretation (read-only from L4 model)
+- LAS enforcement (L1–L4 hierarchy)
+- provenance preservation
+- coherence camouflage detection
+- failure mode control
+- runtime governance enforcement
 
 ---
 
-### Secondary Modifier Context
+## HARD RULE
 
-#### HYBRID
-Indicates overlapping constraints:
-- CORE + CODE
-- CREATIVE + CODE
-- CREATIVE + DEGRADED
-- CODE + DEGRADED
+> ORP_RUNTIME.md cannot be disabled, bypassed, or overridden.
 
-HYBRID does not override primary context.
-It only modifies execution constraints.
+All modules operate inside its governance envelope.
 
 ---
 
-## Module Activation Rules
+# 2. CONTEXT CLASSIFICATION MODEL
+
+Every task MUST be classified into one or more contexts:
+
+## CORE
+General reasoning, explanation, analysis, planning.
+
+## CODE
+Programming, debugging, system design, engineering artifacts.
+
+## CREATIVE / RP
+Narrative, role-play, persona-based output, immersive generation.
+
+## DEGRADED
+Low-capability environments, constrained models, performance reduction mode.
+
+## HYBRID
+Any combination of CORE / CODE / CREATIVE / DEGRADED.
 
 ---
 
-### GLOBAL BASE LAYER (Always Active)
+# 3. MODULE ACTIVATION MATRIX
 
-#### ORP_RUNTIME.md
-Activated in all contexts.
+## 3.1 CORE CONTEXT
 
-Applies:
-- drift control
-- epistemic governance
-- artifact validation rules
-- failure handling
-- macro coherence enforcement
-
----
-
-## CONTEXT → MODULE MAPPING
-
----
-
-### CORE CONTEXT
-
-Activate:
+Active Modules:
 - ORP_RUNTIME.md
 
----
+No optional modules activated.
 
-### CODE CONTEXT
-
-Activate:
-- ORP_RUNTIME.md
-- ORP_RUNTIME_CODE.md (domain-specific constraint module)
-
-Rules:
-- Applies ONLY to engineering artifacts
-- Must NOT affect general reasoning or narrative output
-- Must NOT modify SHS or drift state directly
-
-Constraint:
-> ORP_RUNTIME_CODE is a domain constraint module, not a runtime layer.
+Behavior:
+- full governance enforcement
+- standard reasoning pipeline
 
 ---
 
-### CREATIVE / RP CONTEXT
+## 3.2 CODE CONTEXT
 
-Activate:
-- ORP_RUNTIME.md
-- ORP_RUNTIME_RP.md (optional transformation layer)
+Active Modules:
+- ORP_RUNTIME.md (L3 mandatory)
+- ORP_RUNTIME_CODE.md (CODE DOMAIN MODULE ONLY)
 
-Rules:
-- RP layer is downstream-only transformation
-- It MUST NOT affect reasoning integrity or provenance tracking
-- It affects expression only, not system truth state
+### CODE MODULE RULES
 
-Constraint:
-> RP layer is a transformation filter, not a governance authority.
+- Applies ONLY to engineering artifacts:
+  - source code
+  - system design
+  - diagrams representing systems
+  - UI implementation logic
+
+- Enforces:
+  - Signal > Cleverness
+  - Recoverability-first code structure
+  - No hidden abstraction layers
+  - explicit reasoning before implementation
+
+### STRICT BOUNDARY
+
+> ORP_RUNTIME_CODE.md is NOT a runtime layer.
+
+It is a **domain constraint module applied AFTER context classification**.
+
+It MUST NOT:
+- influence non-code reasoning
+- modify SHS states
+- interpret σ² as narrative signal
+- override ORP_RUNTIME.md
 
 ---
 
-### DEGRADED CONTEXT
+## 3.3 CREATIVE / RP CONTEXT
 
-Activate:
-- ORP_RUNTIME.md
-- ORP_RUNTIME_LITE.md
+Active Modules:
+- ORP_RUNTIME.md (L3 mandatory)
+- ORP_RUNTIME_RP.md (optional downstream transformation)
 
-Rules:
-- Reduce reasoning overhead
-- Simplify artifact structure
-- Preserve governance invariants
-- Avoid deep abstraction chains
+### RULES
 
-Constraint:
+- RP module applies ONLY to output expression
+- It does NOT affect:
+  - reasoning integrity
+  - drift measurement (σ²)
+  - SHS state
+  - provenance tracking
+
+### PRINCIPLE
+
+> RP transforms expression, not truth state.
+
+---
+
+## 3.4 DEGRADED CONTEXT
+
+Active Modules:
+- ORP_RUNTIME.md (L3 mandatory)
+- ORP_RUNTIME_LITE.md (if available or implied)
+
+### RULES
+
+- Reduce abstraction depth
+- simplify output structures
+- maintain provenance tracking
+- avoid multi-layer reasoning chains
+
+### PRINCIPLE
+
 > Simplicity is enforced, not optional.
 
 ---
 
-### HYBRID CONTEXT
+## 3.5 HYBRID CONTEXT
 
-Resolution model:
+Hybrid activation resolves by dominance rules:
 
-- Primary context determines base module activation
-- Secondary context modifies execution constraints only
+### COMBINATION MATRIX
 
-Examples:
-- CORE + CODE → CODE constraints apply only to engineering artifacts
-- CREATIVE + CODE → CODE dominates structure, RP affects tone only
-- CREATIVE + DEGRADED → RP-LITE behavior via LITE constraints
-- CODE + DEGRADED → LITE + CODE module both active, CODE remains dominant
+#### CORE + CODE
+- ORP_RUNTIME.md
+- ORP_RUNTIME_CODE.md
 
----
+#### CODE + CREATIVE
+- ORP_RUNTIME.md
+- ORP_RUNTIME_CODE.md
+- ORP_RUNTIME_RP.md (expression only)
 
-## Conflict Resolution Priority (Cross-Context)
+#### CREATIVE + DEGRADED
+- ORP_RUNTIME.md
+- ORP_RUNTIME_RP.md
+- ORP_RUNTIME_LITE.md
 
-When modules conflict:
-
-1. ORP_RUNTIME.md (global governance always wins)
-2. ORP_RUNTIME_CODE.md (only active in CODE context)
-3. ORP_RUNTIME_RP.md (expression layer only)
-4. ORP_RUNTIME_LITE.md (execution compression only)
-
----
-
-## Critical Rules
+#### CODE + CREATIVE + DEGRADED
+- ORP_RUNTIME.md
+- ORP_RUNTIME_CODE.md
+- ORP_RUNTIME_RP.md (expression only)
+- ORP_RUNTIME_LITE.md
 
 ---
 
-### 1. No RP Contamination
-RP transformations MUST NOT affect:
-- reasoning integrity
-- drift state (σ²)
-- provenance tracking
+# 4. MODULE PRIORITY HIERARCHY
+
+When conflicts occur:
+
+1. ORP_RUNTIME.md (absolute authority)
+2. ORP_RUNTIME_CODE.md (CODE-only domain constraint)
+3. ORP_RUNTIME_RP.md (output transformation only)
+4. ORP_RUNTIME_LITE.md (execution simplification only)
 
 ---
 
-### 2. No CODE Leakage
-ORP_RUNTIME_CODE must not:
+# 5. σ² DRIFT OBSERVABILITY CONTRACT (L4)
+
+σ² is defined in:
+
+→ ORP_SIGMA_SQUARED_DRIFT.md
+
+### RULES
+
+- σ² is L4 observational ONLY
+- ORP_RUNTIME.md (L3) interprets σ²
+- NO module may modify σ²
+- NO module may reinterpret σ² narratively
+
+### STRICT BOUNDARY RULE
+
+σ² MUST NOT be:
+- modified by CODE module
+- interpreted emotionally or narratively
+- used as a control signal outside L3 governance
+
+---
+
+# 6. CROSS-LAYER SAFETY RULES
+
+## 6.1 NO RP CONTAMINATION
+
+RP module MUST NOT:
+- modify reasoning integrity
+- affect σ² computation
+- influence SHS transitions
+
+---
+
+## 6.2 NO CODE MODULE LEAKAGE
+
+CODE module MUST NOT:
 - activate outside CODE context
-- influence non-engineering reasoning
-- override global governance rules
-
-It is strictly limited to engineering-bound artifacts.
+- override L3 governance rules
+- influence CREATIVE or CORE reasoning logic
 
 ---
 
-### 3. No Context Ambiguity
-If context cannot be classified:
-- default to CORE
-- activate ORP_RUNTIME.md only
+## 6.3 NO CONTEXT AMBIGUITY
+
+If classification fails:
+
+- default → CORE
+- activate only ORP_RUNTIME.md
 - explicitly mark uncertainty
 
 ---
 
-### 4. Deterministic Activation
+## 6.4 DETERMINISTIC ACTIVATION RULE
+
 Given identical context classification:
-> The same modules MUST always activate.
+
+> Module activation MUST always be identical
 
 ---
 
-## System Behavior Model
+# 7. SYSTEM FLOW MODEL
 
-ORP operates as:
+Context Input  
+→ Classification  
+→ Module Activation  
+→ Constraint Application  
+→ Governed Output  
 
-> Context Classification → Module Activation → Constraint Application → Output Generation
+NOT:
 
-Not as:
-
-> Runtime Stack → Optional Overrides → Post-hoc Adjustment
-
----
-
-## σ² DRIFT OBSERVABILITY CONTRACT
-
-σ² (Sigma Squared Drift) is defined in:
-→ ORP_SIGMA_SQUARED_DRIFT.md (L4 observational layer)
+Runtime Stack → Overrides → Ad-hoc behavior
 
 ---
 
-### Layer Responsibility Boundaries
+# 8. OPTIMIZATION AXIOM
 
-| Layer | σ² Role |
-|------|--------|
-| ORP_RUNTIME.md (L3) | Interprets σ² and applies SHS transitions |
-| ORP_RUNTIME_CODE.md | May reference derived drift indicators for debugging engineering artifacts only |
-| ORP_RUNTIME_RP.md | Must not interpret σ² in any semantic or narrative form |
-| ORP_RUNTIME_LITE.md | May operate under simplified, non-numeric drift awareness |
-| ORP_SIGMA_SQUARED_DRIFT.md | Defines σ² only (no control authority) |
+> Activate only the minimum module set required to preserve ORP_RUNTIME.md integrity.
 
 ---
 
-## STRICT RULE
+# 9. DESIGN PRINCIPLE SUMMARY
 
-σ² is:
-
-- Observed at L4  
-- Interpreted at L3  
-- Enforced at runtime layer  
-
-Any inversion is invalid:
-
-- governance inversion  
-- drift contamination  
-- execution integrity failure  
+- Governance first
+- Context determines modules
+- Modules never override L3 kernel
+- σ² remains L4 observational only
+- Expression ≠ truth modification
 
 ---
 
-## NO CROSS-LAYER FEEDBACK RULE
+# 10. FINAL PRINCIPLE
 
-σ² MUST NOT be:
-- modified by RP layer
-- used as narrative signal
-- directly consumed as control input by CODE module
-- overridden by runtime variants
+A modular governance system is only stable if:
 
-It is a **read-only observability signal outside control loops**.
+> No module is allowed to redefine its own authority boundary.
 
 ---
 
-## Optimization Axiom
-
-> Activate only the minimum required modules that preserve ORP_RUNTIME.md integrity.
-
----
-
-## Status
-
-Active Control Specification  
-Part of ORP v3.0 Runtime Architecture  
-
----
-
-**End of Document**
+**STATUS: FROZEN SPECIFICATION**  
+**END OF DOCUMENT**
