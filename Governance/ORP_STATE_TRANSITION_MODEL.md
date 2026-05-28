@@ -1,4 +1,4 @@
-# ORP_STATE_TRANSITION_MODEL
+# ORP_STATE_TRANSITION_MODEL.md
 **SHS State Evolution & Transition Logic**
 
 **Part of:** ORP v3.0 — Open Resonance Protocol
