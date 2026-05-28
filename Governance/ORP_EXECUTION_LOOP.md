@@ -2,89 +2,93 @@
 **Closed-Loop Execution Model**
 
 **Part of:** ORP v3.0 — Open Resonance Protocol  
-**Dependency:** ORP_CONTEXT_ACTIVATION_COMPILER.md
 
 ---
 
-## PURPOSE
+## Purpose
 
-This document defines the **closed execution cycle** of ORP.
+This document defines the **end-to-end execution cycle** of ORP.
 
-It integrates:
+It connects all system layers into a single closed-loop model:
 
-- context compilation (IR system)
-- module resolution (dependency graph)
-- σ² observability (L4)
-- SHS state machine (L3)
-- governance enforcement (ORP_RUNTIME.md)
-
----
-
-## CORE PRINCIPLE
-
-> ORP is a closed-loop governed execution system operating on compiled context graphs.
+- Context classification (routing)
+- Module activation (context matrix)
+- Drift observation (σ² model)
+- State evolution (SHS transitions)
+- Governance enforcement (ORP_RUNTIME.md)
 
 ---
 
-# EXECUTION LOOP OVERVIEW
+## Core Principle
 
-Each cycle follows this deterministic sequence:
+> ORP is a closed-loop cognitive control system, not a linear pipeline.
+
+Every execution cycle must:
+- observe state
+- evaluate drift
+- apply governance constraints
+- produce output
+- feed results back into state evaluation
 
 ---
 
-## STEP 1 — CONTEXT COMPILATION
+## Execution Loop Overview
 
-Input is first compiled via:
+Each ORP cycle follows this deterministic sequence:
 
-→ ORP_CONTEXT_ACTIVATION_COMPILER.md
+### STEP 1 — CONTEXT CLASSIFICATION
 
-Output:
-- ExecutionGraph (DAG)
-- IR nodes
-- module dependencies
+Input is classified into:
+
+- CORE
+- CODE
+- CREATIVE / RP
+- DEGRADED
+- HYBRID (modifier)
+
+Source:
+→ ORP_CONTEXT_ACTIVATION_MATRIX.md
+
+---
+
+### STEP 2 — MODULE ACTIVATION
+
+Based on classification:
+
+- ORP_RUNTIME.md (always active)
+- ORP_RUNTIME_CODE.md (if CODE context)
+- ORP_RUNTIME_RP.md (if CREATIVE context)
+- ORP_RUNTIME_LITE.md (if DEGRADED context)
 
 Rule:
-> The loop operates on compiled graphs, not raw context.
+> Only activated modules may influence output generation.
 
 ---
 
-## STEP 2 — MODULE ACTIVATION (DEPENDENCY RESOLUTION)
+### STEP 3 — σ² OBSERVATION
 
-From ExecutionGraph:
-
-- ORP_RUNTIME.md (always root L3 authority)
-- ORP_RUNTIME_CODE.md (CODE nodes only)
-- ORP_RUNTIME_RP.md (CREATIVE nodes only)
-- ORP_RUNTIME_LITE.md (DEGRADED nodes only)
-
-Rule:
-> Modules are resolved as graph dependencies, not runtime toggles.
-
----
-
-## STEP 3 — σ² OBSERVATION (L4 TELEMETRY)
+Drift signal is evaluated:
 
 Source:
 → ORP_SIGMA_SQUARED_DRIFT.md
 
 Outputs:
-- σ² value (variance signal)
-- drift level classification (NONE → HIGH)
+- σ² value (variance-based signal)
+- drift classification (NONE → HIGH)
 
 Constraint:
-> σ² is READ-ONLY telemetry and cannot affect execution directly.
-
-Interpretation:
-→ performed only by ORP_RUNTIME.md (L3)
+> σ² is observational only (no control authority at this stage)
 
 ---
 
-## STEP 4 — SHS STATE EVALUATION (L3 AUTHORITY)
+### STEP 4 — SHS STATE EVALUATION
+
+Current system state is evaluated:
 
 Source:
-→ ORP_RUNTIME.md
+→ ORP_STATE_TRANSITION_MODEL.md
 
-States:
+State space:
 - GREEN
 - YELLOW
 - ORANGE
@@ -92,163 +96,155 @@ States:
 - BLACK
 
 Rule:
-> Only L3 governance may update SHS state.
+> SHS is updated only via L3 governance rules or validated σ² transitions
 
 ---
 
-## STEP 5 — GOVERNANCE ENFORCEMENT (L3 KERNEL)
+### STEP 5 — GOVERNANCE ENFORCEMENT
 
-ORP_RUNTIME.md applies:
+ORP_RUNTIME.md applies constraints:
 
-- drift constraints
+- drift suppression
 - macro coherence enforcement
-- failure handling
-- provenance validation
+- failure handling rules
+- output validation
 
-Module effects:
-- RP → expression transformation only
-- CODE → engineering constraint only
-- LITE → complexity reduction only
+If applicable:
+- RP transform layer modifies expression (not logic)
+- CODE module constrains engineering artifacts only
+- LITE reduces computational depth
 
 ---
 
-## STEP 6 — EXECUTION OF GRAPH
+### STEP 6 — OUTPUT GENERATION
 
-Execution proceeds over DAG:
+Final output is produced under constraints:
 
-```
+> Output = f(G, S, C)
 
-for node in ExecutionGraph.topological_order:
-governed_context = ORP_RUNTIME(node)
-modules = resolve(node)
-output = execute(governed_context, modules)
+Where:
 
-```id="v4kqz3"
+- G = Context Graph (input + module routing state)
+- S = System State (SHS + σ²)
+- C = Governance Constraints (ORP_RUNTIME rules)
 
 Constraint:
-> Execution must respect module isolation boundaries.
-
----
-
-## STEP 7 — OUTPUT GENERATION
-
-Final output is computed as:
-
-```
-
-Output = f(Graph, SHS, σ², Governance)
-
-````id="g9xq2m"
-
-Rule:
 > Output must reflect SHS constraints and L3 governance rules.
 
 ---
 
-## STEP 8 — FEEDBACK OBSERVATION (NOT MODIFICATION)
+### STEP 7 — FEEDBACK OBSERVATION (NOT MODIFICATION)
 
-Execution results feed back into:
+Execution results are observed and recorded:
 
-- σ² trend tracking (L4 observational only)
-- SHS evaluation readiness (L3 controlled)
+- σ² trend updated (L4 observation layer)
+- SHS evaluated for next cycle
+- drift trajectory updated
 
-Important:
-
-> σ² is NOT updated by execution loop — it is observed externally.
+No state modification occurs in this step.
 
 ---
 
-# SYSTEM LOOP MODEL
+## SYSTEM LOOP MODEL
 
 ```text
 Context
   ↓
-Compiler (IR DAG)
+Module Activation
   ↓
-Module Resolution
+σ² Observation
   ↓
-σ² Observation (L4)
-  ↓
-SHS Evaluation (L3)
+SHS Evaluation
   ↓
 Governance Enforcement
   ↓
-Execution
+Output Generation
   ↓
-Output
-  ↓
-Observability Feedback (no mutation)
-  ↺
-``` id="loop01"
+Feedback Observation
+  ↺ (loop repeats)
+````
 
 ---
 
-# CRITICAL INVARIANTS
+## CRITICAL INVARIANTS
 
-### 1. COMPILER-FIRST RULE
-Execution loop operates ONLY on compiled IR graphs.
+### 1. No Skipping Steps
 
----
-
-### 2. σ² IMMUTABILITY RULE
-σ²:
-- cannot be modified by runtime
-- cannot influence execution directly
-- is L4 observational only
+All steps MUST execute in order.
 
 ---
 
-### 3. SHS AUTHORITY RULE
-Only ORP_RUNTIME.md (L3) may modify SHS state.
+### 2. No Direct σ² Control
+
+σ² cannot:
+
+* directly modify output
+* directly force SHS change
+* bypass L3 governance
 
 ---
 
-### 4. MODULE ISOLATION RULE
-Modules cannot:
-- interact directly
-- override governance
-- mutate execution graph
+### 3. SHS Authority Rule
+
+Only ORP_RUNTIME.md (L3) may:
+
+* override SHS transitions
+* delay state changes
+* suppress escalation
 
 ---
 
-### 5. DETERMINISTIC LOOP RULE
+### 4. Module Isolation Rule
 
-Given identical input graph:
+Each module operates only within its defined scope:
 
-> Execution path MUST be identical.
+* RP → expression only
+* CODE → engineering artifacts only
+* LITE → compression only
 
----
-
-# FAILURE MODE BEHAVIOR
-
-If loop integrity breaks:
-
-1. Halt execution
-2. Revert to ORP_RUNTIME.md only
-3. Require re-compilation of context graph
-4. Reset execution state
+No cross-domain authority allowed.
 
 ---
 
-# SYSTEM PROPERTY
+### 5. Deterministic Loop Rule
 
-ORP_EXECUTION_LOOP defines:
+Given identical input state:
 
-> A closed, deterministic, compiler-driven cognitive execution system with governed state transitions and observational drift tracking.
-
----
-
-# OPTIMIZATION AXIOM
-
-> Minimize execution complexity while preserving graph integrity and governance invariants.
+> Execution loop MUST produce identical module activation + SHS evaluation path.
 
 ---
 
-# STATUS
+## FAILURE MODE BEHAVIOR
 
-Active Core Execution Specification  
-ORP v3.0 Governance Architecture Layer
+If loop integrity is violated:
+
+1. Halt execution path
+2. Downgrade SHS state (via L3 rules)
+3. Activate ORP_RUNTIME.md only
+4. Require re-classification of context
 
 ---
 
-**END OF DOCUMENT**
+## SYSTEM PROPERTY
+
+This loop defines ORP as:
+
+> A closed cognitive control system with observable drift, governed state transitions, and modular constraint execution.
+
+---
+
+## OPTIMIZATION AXIOM
+
+> Minimize activated modules while preserving loop integrity and SHS correctness.
+
+---
+
+## STATUS
+
+Active Core Execution Specification
+Part of ORP v3.0 Governance Architecture
+
+---
+
+**End of Document**
+
