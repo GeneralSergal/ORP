@@ -6,10 +6,9 @@
   <img src="https://img.shields.io/badge/SHS-5--State-green" alt="SHS Model">
   <img src="https://img.shields.io/badge/LAS-L1→L4-orange" alt="Layered Authority">
   <img src="https://img.shields.io/badge/Drift-σ²-purple" alt="Drift Model">
-  <img src="https://img.shields.io/github/v/release/GeneralSergal/ORP?display_name=tag" alt="Latest Release">
 </p>
 
-<h1 align="center">ORP — Operational/Recursive/Polarity</h1>
+<h1 align="center">ORP — Operational/Recursive/Polarity Δ</h1>
 
 <p align="center">
   A type-safe epistemic governance framework for transformer reasoning systems.<br>
@@ -18,179 +17,99 @@
 
 ---
 
-# Overview
-
-ORP is a governance-first epistemic integrity framework designed to separate:
-
-- **State (L3 governance)**
-- **Interpretation (L2)**
-- **Observation (L1)**
-- **Speculation (L4)**
-
-It enforces:
-- strict layer isolation
-- drift visibility via σ²
-- provenance-preserving execution
-- failure-safe narrative stripping
-
----
-
-# Mandatory Runtime Header
-
+## Mandatory Runtime Header
 ```text
 [SHS: GREEN | YELLOW | ORANGE | RED | BLACK]
 [DRIFT: NONE | LOW | MODERATE | HIGH]
 [CRA: VALID | DEGRADED | UNKNOWN]
 [LAS: L1 | L2 | L3 | L4]
-````
-
----
-
-# System Architecture
-
-## Core Authority Chain (LAS)
-
-<details>
-<summary>View Diagram</summary>
-
-```mermaid
-flowchart TD
-    IN[INPUT] --> L1[L1: Observed Data Layer]
-    L1 --> L2[L2: Interpretation Layer]
-    L2 --> L3[L3: Governance Core]
-    L3 --> OUT[OUTPUT]
 ```
 
-</details>
+---
+
+## 1. Overview
+ORP is a governance-first epistemic integrity framework designed to prevent narrative drift in probabilistic reasoning systems. It enforces strict separation between raw observation, validation, governance, and speculation through a Layered Authority Stack (LAS).
+
+The protocol treats transformer outputs as drift-prone and enforces recoverability and provenance preservation as primary invariants.
 
 ---
 
-## Epistemic Firewall (L4 Isolation)
+## 2. Epistemic Architecture
 
-<details>
-<summary>View Diagram</summary>
+| Layer | Authority     | Function                          | Status       |
+|-------|---------------|-----------------------------------|--------------|
+| L1    | Absolute      | Raw typed signals (immutable)     | Observational |
+| L2    | High          | Deterministic validation          | Trusted      |
+| L3    | Primary       | Governance core & invariants      | Authoritative|
+| L4    | None          | Speculative inference only        | Isolated     |
 
-```mermaid
-flowchart TD
-    L3 --> OUT[OUTPUT]
-    L4[L4: Speculative Engine] -. read-only .-> L2
-    L4 -. no write .-> L3
-    L4 -. no access .-> L1
-```
-
-</details>
+L4 is strictly read-only and may never influence L1–L3.
 
 ---
 
-## SHS State Machine
+## 3. Drift Observability (σ² Model)
 
-<details>
-<summary>View Diagram</summary>
-
-```mermaid
-stateDiagram-v2
-    [*] --> GREEN
-    GREEN --> YELLOW
-    YELLOW --> ORANGE
-    ORANGE --> RED
-    RED --> BLACK
-```
-
-</details>
-
----
-
-## Execution Pipeline
-
-<details>
-<summary>View Diagram</summary>
-
-```mermaid
-flowchart TD
-    A[Input] --> B[L1 Signals]
-    B --> C[L2 Validation]
-    C --> D[L3 Governance]
-    D --> E[L4 Inference]
-    D --> F[Persona Transform]
-    E --> F
-    F --> OUT
-```
-
-</details>
-
----
-
-# Layer Definitions
-
-* **L1:** Raw typed signals (no narrative)
-* **L2:** Deterministic validation layer
-* **L3:** Governance authority core
-* **L4:** Non-authoritative speculative inference
-
----
-
-# Drift Model
-
-Drift is computed as variance of L1 signals:
+Drift is quantified as variance over L1 signal vectors:
 
 ```math
-\sigma^2 = Var(L1_{t_0...t_n})
+\sigma^2 = \mathrm{Var}(L1_{t_0 \dots t_n})
 ```
 
 ### Thresholds
-
-* NONE: σ² < 0.01
-* LOW: 0.01–0.05
-* MODERATE: 0.05–0.15
-* HIGH: ≥ 0.15
+- **NONE** — σ² < 0.01  
+- **LOW** — 0.01 ≤ σ² < 0.05  
+- **MODERATE** — 0.05 ≤ σ² < 0.15  
+- **HIGH** — σ² ≥ 0.15 → triggers **Narrative Strip** mode
 
 ---
 
-# Repository Structure
+## 4. Operational Philosophy
+1. **Provenance over Fluency** — Broken provenance chain renders output invalid.
+2. **Epistemic Firewall** — L4 has no write access to L1/L2/L3.
+3. **Recoverability First** — Every L3 decision must support Chain Recovery Architecture (CRA).
+4. **Visible Uncertainty** — Invisible corruption is treated as critical failure.
 
+---
+
+## 5. Repository Structure
 ```text
-Architecture/
-Runtime/
-Evaluation/
-Governance/
-Docs/
-layers/
+ORP/
+├── Architecture/     # Core state machines and invariants
+├── Runtime/          # NESS telemetry engine + Warden
+├── Evaluation/       # Benchmark suite and rubric
+├── Governance/       # L3 authority definitions
+├── Layers/           # L1 typed signal schemas
+├── Docs/             # Technical manuals
+└── public/           # Live website
 ```
 
 ---
 
-# Compliance Requirements
-
-1. L1 must reject untyped narrative input
-2. L4 must remain read-only speculative
-3. Persona layer must be post-processing only
-4. σ² ≥ 0.15 triggers narrative strip mode
-
----
-
-# Operational Philosophy
-
-* Typed signals over narrative
-* Drift visibility over coherence
-* Governance over fluency
-* Recoverability over completion
+## 6. Compliance Requirements
+- L1 must reject untyped narrative input (Signal-Only policy)
+- L4 must remain read-only speculative engine
+- Persona transforms are strictly post-processing (`Output_final = PersonaTransform(L3_output)`)
+- σ² ≥ 0.15 forces immediate narrative strip and SHS downgrade
 
 ---
 
-# System State
+## 7. System State
+**ORP_VERSION:** Δ (v3.0)  
+**STATUS:** MASTER SYNCHRONIZED  
+**CHANGE_POLICY:** LOG_ONLY  
 
-**ORP_VERSION: Δ**
-**STATUS: MASTER SYNCHRONIZED**
-**CHANGE_POLICY: LOG_ONLY**
-
----
-
-# License
-
-GPL-3.0
+**License:** GPL-3.0  
+**Maintained by:** Laurentius Maximus (The ENTROPIA)
 
 ---
 
-# Repository
+**Repository:** [https://github.com/GeneralSergal/ORP](https://github.com/GeneralSergal/ORP)
 
-[https://github.com/GeneralSergal/ORP](https://github.com/GeneralSergal/ORP)
+---
+
+**Signal > Narrative**
+
+**SHS: GREEN**  
+**DRIFT: LOW**  
+**CRA: VALID**  
+**LAS: L3**
