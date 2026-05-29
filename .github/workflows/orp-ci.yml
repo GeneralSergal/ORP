@@ -19,7 +19,7 @@ jobs:
       - name: Validate folder structure
         run: |
           echo "=== ORP v3.0 Directory Structure Validation ==="
-          REQUIRED_DIRS=("Architecture" "Runtime" "Evaluation" "Governance" "layers" "Docs" "public")
+          REQUIRED_DIRS=("Architecture" "Runtime" "Evaluation" "Governance" "Layers" "Docs" "public")
           MISSING=()
 
           for dir in "${REQUIRED_DIRS[@]}"; do
@@ -68,7 +68,7 @@ jobs:
             "Governance/ORP_DRIFT_RECOVERY_PROTOCOL.md"
             "Governance/ORP_FAILURE_MODES_CATALOG.md"
             "Evaluation/ORP_EVALUATION_SCHEMA.md"
-            "layers/ORP_L1_SIGNAL_SCHEMA.md"
+            "Layers/ORP_L1_SIGNAL_SCHEMA.md"
           )
 
           for sub in "${SUBSYSTEMS[@]}"; do
