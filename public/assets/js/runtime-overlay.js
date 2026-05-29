@@ -49,18 +49,15 @@
     div.id = "cc-overlay";
     div.setAttribute("aria-label", "Clinical Core NESS Overlay");
     div.innerHTML = `
-      <!-- Toggle tab (always visible) -->
       <button id="cc-tab" aria-label="Toggle Clinical Core panel" aria-expanded="false">
         <span id="cc-tab-dot" class="cc-dot"></span>
         <span id="cc-tab-label">NESS</span>
         <span id="cc-tab-shs" class="cc-shs-pill green">GREEN</span>
       </button>
 
-      <!-- Collapsible panel -->
       <div id="cc-panel" aria-hidden="true">
         <div class="cc-panel-inner">
 
-          <!-- Header -->
           <div class="cc-panel-header">
             <div class="cc-panel-title">
               <span class="cc-dot orange"></span>
@@ -69,7 +66,6 @@
             <div class="cc-panel-sub" id="cc-page-label">—</div>
           </div>
 
-          <!-- Metrics row -->
           <div class="cc-metrics">
             <div class="cc-metric">
               <div class="cc-metric-label">ΔS</div>
@@ -89,7 +85,6 @@
             </div>
           </div>
 
-          <!-- Integrity bar -->
           <div class="cc-bar-row">
             <span class="cc-bar-label">INTEGRITY</span>
             <div class="cc-bar-track">
@@ -98,7 +93,6 @@
             <span class="cc-bar-pct" id="cc-rho-pct">100%</span>
           </div>
 
-          <!-- Warden bar -->
           <div class="cc-bar-row">
             <span class="cc-bar-label">WARDEN</span>
             <div class="cc-bar-track">
@@ -107,7 +101,6 @@
             <span class="cc-bar-pct" id="cc-w-pct">0%</span>
           </div>
 
-          <!-- Warden state badge -->
           <div id="cc-warden-row" class="cc-warden-row">
             <span id="cc-warden-icon" class="cc-warden-icon">⬡</span>
             <div class="cc-warden-info">
@@ -117,16 +110,13 @@
             <span id="cc-warden-badge" class="cc-badge dormant">DORMANT</span>
           </div>
 
-          <!-- Session entropy -->
           <div class="cc-session-row">
             <span class="cc-bar-label">SESSION ΔΣ</span>
             <span id="cc-session-val" class="cc-session-val">0.0000</span>
           </div>
 
-          <!-- Mini log -->
           <div class="cc-log" id="cc-log"></div>
 
-          <!-- Controls -->
           <div class="cc-controls">
             <button class="cc-btn" id="cc-inject">[ INJECT ΔS ]</button>
             <button class="cc-btn" id="cc-reset">[ RESET ]</button>
@@ -149,13 +139,19 @@
         position: fixed;
         bottom: 24px;
         left: 24px;
-        z-index: 8000;
+        /* lowered default desktop stack */
+        z-index: 1200;
         display: flex;
-        flex-direction: row;       /* tab on left, panel opens to the right */
+        flex-direction: row;
         align-items: flex-end;
         gap: 10px;
-        pointer-events: none; /* pass through by default */
+        pointer-events: none;
         font-family: "Oxanium", "Space Grotesk", sans-serif;
+        will-change: transform, opacity;
+        transition:
+          opacity 180ms ease,
+          visibility 180ms ease,
+          transform 180ms ease;
       }
       #cc-overlay * {
         pointer-events: auto; /* interactive children catch events */
@@ -197,13 +193,36 @@
         border-radius: 50%;
         background: #3fb950;
         flex-shrink: 0;
-        animation: ccPulse 2s ease infinite;
+        position: relative;          /* anchor for ::after pulse ring */
+        animation: ccDotFade 2s ease infinite;
+        will-change: opacity;
       }
       .cc-dot.orange { background: #ff6600; animation-delay: 0.4s; }
       .cc-dot.red    { background: #ff3333; animation-delay: 0.8s; }
-      @keyframes ccPulse {
-        0%,100% { opacity:1; box-shadow: 0 0 0 0 rgba(63,185,80,0.5); }
-        50%     { opacity:0.6; box-shadow: 0 0 0 5px rgba(63,185,80,0); }
+
+      /* Pulse ring — scale+opacity only (GPU composited, no paint) */
+      .cc-dot::after {
+        content: "";
+        position: absolute;
+        inset: -4px;
+        border-radius: 50%;
+        background: currentColor;
+        opacity: 0;
+        transform: scale(0.6);
+        animation: ccPulseRing 2s ease infinite;
+        will-change: transform, opacity;
+      }
+      .cc-dot.orange::after { background: #ff6600; }
+      .cc-dot.red::after    { background: #ff3333; }
+
+      @keyframes ccDotFade {
+        0%,100% { opacity: 1; }
+        50%     { opacity: 0.6; }
+      }
+      @keyframes ccPulseRing {
+        0%   { transform: scale(0.6); opacity: 0.5; }
+        70%  { transform: scale(2.2); opacity: 0; }
+        100% { transform: scale(2.2); opacity: 0; }
       }
 
       /* ── SHS pill in tab ───────────────────────────── */
@@ -339,6 +358,7 @@
         background: linear-gradient(90deg, #3fb950, #00d4ff);
         width: 100%;
         transition: width 0.9s cubic-bezier(0.2,0,0,1);
+        will-change: width;
       }
       .cc-bar-fill.degraded { background: linear-gradient(90deg, #ff8833, #ff3333); }
       .cc-bar-fill.danger   { background: linear-gradient(90deg, #dd1111, #ff6600); }
@@ -472,24 +492,53 @@
       }
       .cc-btn-link { color: rgba(138,149,165,0.7); }
 
-      /* ── Mobile: stack vertically, shift above scroll-top ─── */
+      /* ── Mobile: pin to bottom-left, panel opens upward ──── */
       @media (max-width: 640px) {
         #cc-overlay {
-          bottom: 80px;
+          bottom: 24px;          /* same row as scroll-top (right side) — no conflict */
           left: 12px;
-          right: 12px;
+          right: auto;           /* don't stretch across — stay left-pinned */
           flex-direction: column-reverse;
           align-items: flex-start;
+          z-index: 40;
+          max-width: calc(100vw - 24px);
+        }
+		#cc-tab {
+          /* Slightly smaller pill on mobile to save space */
+          padding: 6px 12px;
+          font-size: 0.68rem;
+          /* FIX: Override desktop align-end, force button to the left */
+          align-self: flex-start; 
         }
         #cc-panel {
           max-width: none;
-          width: 100%;
+          width: calc(100vw - 24px); /* full width minus left margin */
+          /* FIX: Anchor panel to the left so it opens rightward */
+          align-self: flex-start; 
         }
         #cc-panel.open {
-          max-width: none;
+          max-width: min(360px, calc(100vw - 32px));
           max-height: 600px;
         }
-        .cc-panel-inner { width: 100%; }
+        .cc-panel-inner {
+          width: 100%;
+          max-width: 360px;
+        }
+        /* your mobile nav/hamburger should exceed overlay */
+        .mobile-nav,
+        .mobile-menu,
+        .hamburger-panel,
+        .nav-drawer {
+          z-index: 200;
+        }
+      }
+
+      /* ── Explicit hidden state ───────────────────────── */
+      #cc-overlay.cc-hidden {
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        transform: translateY(12px);
       }
 
       /* ── Reduced motion ────────────────────────────── */
@@ -652,6 +701,25 @@
   function init() {
     buildStyles();
     buildOverlay();
+
+    // ── Mobile menu sync observer ─────────────────────
+    const overlay = document.getElementById("cc-overlay");
+    const menuObserver = new MutationObserver(() => {
+      const menuOpen = document.body.classList.contains("mobile-menu-open");
+      overlay?.classList.toggle("cc-hidden", menuOpen);
+      if (menuOpen && state.panelOpen) {
+        state.panelOpen = false;
+        const panel = document.getElementById("cc-panel");
+        const tab   = document.getElementById("cc-tab");
+        panel?.classList.remove("open");
+        tab?.setAttribute("aria-expanded", "false");
+        panel?.setAttribute("aria-hidden", "true");
+      }
+    });
+    menuObserver.observe(document.body, {
+      attributes: true,
+      attributeFilter: ["class"]
+    });
 
     // Tab toggle
     const tab   = document.getElementById("cc-tab");
