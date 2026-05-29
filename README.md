@@ -9,7 +9,7 @@
   <img src="https://img.shields.io/github/v/release/GeneralSergal/ORP?display_name=tag" alt="Latest Release">
 </p>
 
-<h1 align="center">ORP — Open Resonance Protocol v3.0</h1>
+<h1 align="center">ORP — Operational/Recursive/Polarity</h1>
 
 <p align="center">
   A type-safe epistemic governance framework for transformer reasoning systems.<br>
@@ -20,7 +20,7 @@
 
 # Overview
 
-ORP v3.0 is a governance-first epistemic integrity framework designed to separate:
+ORP is a governance-first epistemic integrity framework designed to separate:
 
 - **State (L3 governance)**
 - **Interpretation (L2)**
@@ -179,7 +179,7 @@ layers/
 
 # System State
 
-**ORP_VERSION: 3.0 (FROZEN)**
+**ORP_VERSION: DOES NOT MATTER (FROZEN)**
 **STATUS: MASTER SYNCHRONIZED**
 **CHANGE_POLICY: LOG_ONLY**
 
