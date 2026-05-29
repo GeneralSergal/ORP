@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<style>
+
+  </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+  <title>Runtime Console — ORP Δ</title>
+  <meta name="description" content="ORP Δ Runtime Console — live NESS telemetry, Epistemic Disagreement Engine, Warden state monitoring, and Clinical Core overlay." />
+
+  <meta name="theme-color" content="#dd1111" />
+
+  <!-- Favicon (Valknut) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' width='100' height='100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0d10'/%3E%3Cg stroke='%23dd1111' stroke-width='9' stroke-linejoin='round' fill='none'%3E%3Cpolygon points='50,18 78,62 22,62'/%3E%3Cpolygon points='50,32 70,68 30,68'/%3E%3Cpolygon points='50,47 63,80 37,80'/%3E%3C/g%3E%3C/svg%3E" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Main Styles -->
+  <link rel="stylesheet" href="assets/css/style.css" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Runtime Console — ORP Δ" />
+  <meta property="og:description" content="Live NESS telemetry, Epistemic Disagreement Engine, and Clinical Core Warden monitoring." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://generalsergal.github.io/ORP/runtime.html" />
+  <meta property="og:image" content="https://raw.githubusercontent.com/GeneralSergal/ORP/refs/heads/main/ORP.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="ORP Δ - Valknut Symbol" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Runtime Console — ORP Δ" />
+  <meta name="twitter:description" content="Live NESS telemetry, Epistemic Disagreement Engine, and Clinical Core Warden monitoring." />
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/GeneralSergal/ORP/refs/heads/main/ORP.png" />
+
+  <style>
+    /* ============================================================
+       RUNTIME CONSOLE — Page-scoped styles
+       Namespace: .rc-* to avoid bleeding into style.css
+       ============================================================ */
+
+    /* ── Top status bar ──────────────────────────────────────── */
+    .rc-status-bar {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      z-index: 2000;
+      background: linear-gradient(90deg,
+        var(--primary) 0%,
+        var(--accent-orange) 50%,
+        var(--accent-cyan) 100%
+      );
+      transform-origin: left;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+    .rc-status-bar.active { transform: scaleX(1); }
+
+    /* ── Live pulse dot ──────────────────────────────────────── */
+    @keyframes livePulse {
+      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(63,185,80,0.5); }
+      50%       { opacity: 0.6; box-shadow: 0 0 0 6px rgba(63,185,80,0); }
+    }
+    .rc-live-dot {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      animation: livePulse 2s ease infinite;
+      flex-shrink: 0;
+    }
+    .rc-live-dot.orange { background: var(--accent-orange); animation-delay: 0.5s; }
+    .rc-live-dot.red    { background: var(--danger); animation-delay: 1s; }
+
+    /* ── Section header tag ──────────────────────────────────── */
+    .rc-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--font-display, Oxanium), sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary-bright);
+      background: rgba(221,17,17,0.08);
+      border: 1px solid rgba(221,17,17,0.18);
+      border-radius: 999px;
+      padding: 4px 12px;
+    }
+
+    /* ── Primary telemetry dashboard ────────────────────────── */
+    .rc-dashboard {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 900px) {
+      .rc-dashboard { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .rc-dashboard { grid-template-columns: 1fr; }
+    }
+
+    .rc-metric-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px 24px;
+      transition: border-color var(--transition), transform var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .rc-metric-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--accent-orange));
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .rc-metric-card:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-2px);
+    }
+    .rc-metric-card:hover::before { opacity: 1; }
+
+    .rc-metric-label {
+      font-family: var(--font-mono), monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .rc-metric-value {
+      font-family: var(--font-display, Oxanium), sans-serif;
+      font-size: 2.1rem;
+      font-weight: 800;
+      color: var(--heading);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .rc-metric-value.green  { color: var(--success); }
+    .rc-metric-value.orange { color: var(--accent-orange); }
+    .rc-metric-value.red    { color: var(--danger); }
+    .rc-metric-value.cyan   { color: var(--accent-cyan); }
+
+    .rc-metric-sub {
+      font-family: var(--font-mono), monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Integrity bar ───────────────────────────────────────── */
+    .rc-integrity-bar-wrap {
+      background: rgba(6,8,11,0.6);
+      border-radius: 999px;
+      height: 6px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+    .rc-integrity-bar {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--success), var(--accent-cyan));
+      transition: width 1.2s cubic-bezier(0.2, 0, 0, 1);
+    }
+    .rc-integrity-bar.degraded {
+      background: linear-gradient(90deg, var(--accent-orange), var(--danger));
+    }
+
+    /* ── Main console terminal ───────────────────────────────── */
+    .rc-console {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .rc-console-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--panel-2);
+    }
+    .rc-console-title {
+      font-family: var(--font-display, Oxanium), sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--heading);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .rc-console-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .rc-console-dots span {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+    }
+    .rc-console-dots span:nth-child(1) { background: var(--danger); }
+    .rc-console-dots span:nth-child(2) { background: var(--warning); }
+    .rc-console-dots span:nth-child(3) { background: var(--success); }
+
+    .rc-log {
+      font-family: var(--font-mono), monospace;
+      font-size: 0.78rem;
+      line-height: 1.7;
+      color: var(--muted);
+      padding: 20px;
+      height: 240px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column-reverse;
+    }
+    .rc-log-inner { display: flex; flex-direction: column; gap: 2px; }
+    .rc-log-entry { display: flex; gap: 12px; align-items: baseline; }
+    .rc-log-time  { color: rgba(138,149,165,0.5); font-size: 0.68rem; white-space: nowrap; flex-shrink: 0; }
+    .rc-log-tag   { font-weight: 700; font-size: 0.7rem; letter-spacing: 0.06em; flex-shrink: 0; min-width: 42px; }
+    .rc-log-tag.ok  { color: var(--success); }
+    .rc-log-tag.warn{ color: var(--accent-orange); }
+    .rc-log-tag.err { color: var(--danger); }
+    .rc-log-tag.inf { color: var(--accent-cyan); }
+    .rc-log-msg { color: var(--text); }
+
+    /* ── Two-column layout: console + EDTU ──────────────────── */
+    .rc-split {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 20px;
+      align-items: start;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 1100px) {
+      .rc-split { grid-template-columns: 1fr; }
+    }
+
+    /* ── EDTU (Entropy Delta Tracking Unit) ─────────────────── */
+    .rc-edtu {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .rc-edtu-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--panel-2);
+      font-family: var(--font-display, Oxanium), sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--heading);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .rc-edtu-body { padding: 20px; }
+
+    /* ΔS bar graph rows */
+    .rc-ds-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .rc-ds-label {
+      font-family: var(--font-mono), monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      min-width: 38px;
+    }
+    .rc-ds-track {
+      flex: 1;
+      height: 8px;
+      background: rgba(6,8,11,0.6);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .rc-ds-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--primary), var(--accent-orange));
+      transition: width 0.8s cubic-bezier(0.2,0,0,1);
+    }
+    .rc-ds-val {
+      font-family: var(--font-mono), monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--accent-orange);
+      min-width: 42px;
+      text-align: right;
+    }
+
+    /* ── Warden state indicator ──────────────────────────────── */
+    .rc-warden {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 28px 32px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      flex-wrap: wrap;
+      transition: border-color var(--transition);
+    }
+    .rc-warden.alert {
+      border-color: rgba(221,17,17,0.35);
+      background: rgba(221,17,17,0.04);
+    }
+    .rc-warden-icon {
+      font-family: var(--font-mono), monospace;
+      font-size: 2.5rem;
+      color: var(--primary-bright);
+      white-space: pre;
+      line-height: 1;
+      text-shadow: 0 0 12px rgba(221,17,17,0.4);
+      user-select: none;
+    }
+    .rc-warden-body { flex: 1; min-width: 200px; }
+    .rc-warden-title {
+      font-family: var(--font-display, Oxanium), sans-serif;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--heading);
+      letter-spacing: -0.01em;
+      margin-bottom: 6px;
+    }
+    .rc-warden-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .rc-warden-state {
+      font-family: var(--font-display, Oxanium), sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 999px;
+      border: 1px solid;
+    }
+    .rc-warden-state.dormant {
+      color: var(--success);
+      border-color: rgba(63,185,80,0.3);
+      background: rgba(63,185,80,0.08);
+    }
+    .rc-warden-state.primed {
+      color: var(--accent-orange);
+      border-color: rgba(255,102,0,0.3);
+      background: rgba(255,102,0,0.08);
+    }
+    .rc-warden-state.manifest {
+      color: var(--danger);
+      border-color: rgba(221,17,17,0.4);
+      background: rgba(221,17,17,0.1);
+    }
+
+    /* ── NESS architecture layers ────────────────────────────── */
+    .rc-layers {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 32px;
+    }
+    .rc-layer-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 22px 24px;
+      transition: border-color var(--transition), transform var(--transition);
+    }
+    .rc-layer-card:hover {
+      border-color: var(--border-strong);
+      transform: translateY(-2px);
+    }
+    .rc-layer-id {
+      font-family: var(--font-mono), monospace;
+      font-size: 0.65rem;
+      color: var(--primary-bright);
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .rc-layer-name {
+      font-family: var(--font-display, Oxanium), sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--heading);
+      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+    }
+    .rc-layer-desc {
+      font-size: 0.86rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+    .rc-layer-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono), monospace;
+      font-size: 0.65rem;
+      font-weight: 700;
+      margin-top: 14px;
+      color: var(--muted);
+    }
+
+    /* ── Binding pipeline reference ──────────────────────────── */
+    .rc-pipe-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .rc-pipe-step:last-child { border-bottom: none; }
+    .rc-pipe-num {
+      font-family: var(--font-display, Oxanium), sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--primary-bright);
+      letter-spacing: 0.1em;
+      background: rgba(221,17,17,0.08);
+      border: 1px solid rgba(221,17,17,0.15);
+      border-radius: var(--radius-xs);
+      padding: 4px 10px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .rc-pipe-content {}
+    .rc-pipe-title {
+      font-family: var(--font-display, Oxanium), sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--heading);
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+    .rc-pipe-desc { font-size: 0.86rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── Control buttons ─────────────────────────────────────── */
+    .rc-btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .rc-btn {
+      font-family: var(--font-display, Oxanium), sans-serif;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 9px 20px;
+      border-radius: var(--radius-xs);
+      border: 1px solid var(--border-strong);
+      background: var(--panel-2);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all var(--transition);
+      text-transform: uppercase;
+    }
+    .rc-btn:hover {
+      border-color: rgba(255,102,0,0.4);
+      color: var(--accent-orange);
+      background: rgba(255,102,0,0.06);
+    }
+    .rc-btn.primary {
+      background: rgba(221,17,17,0.12);
+      border-color: rgba(221,17,17,0.3);
+      color: var(--primary-bright);
+    }
+    .rc-btn.primary:hover {
+      background: rgba(221,17,17,0.2);
+      border-color: rgba(221,17,17,0.5);
+    }
+
+    /* ── Vortex detection alert box ──────────────────────────── */
+    .rc-alert-box {
+      background: rgba(221,17,17,0.05);
+      border: 1px solid rgba(221,17,17,0.2);
+      border-radius: var(--radius-sm);
+      padding: 20px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 32px;
+    }
+    .rc-alert-icon {
+      font-family: var(--font-mono), monospace;
+      font-size: 1.4rem;
+      color: var(--primary-bright);
+      flex-shrink: 0;
+      line-height: 1;
+      margin-top: 2px;
+    }
+    .rc-alert-text {}
+    .rc-alert-title {
+      font-family: var(--font-display, Oxanium), sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--heading);
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .rc-alert-body { font-size: 0.83rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── Scrollbar ───────────────────────────────────────────── */
+    .rc-log::-webkit-scrollbar { width: 4px; }
+    .rc-log::-webkit-scrollbar-track { background: transparent; }
+    .rc-log::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 999px; }
+
+    /* Reveal animation hooks (matching main.js observer) */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+
+<body>
+
+  <div class="scroll-progress"></div>
+  <button class="scroll-top" id="scroll-top-btn" aria-label="Scroll back to top">↑</button>
+
+  <!-- Shared atmosphere elements -->
+  <div class="grid-bg"></div>
+  <div class="glow"></div>
+  <div class="resonance-ring"></div>
+
+  <div class="ember ember-1"></div>
+  <div class="ember ember-2"></div>
+  <div class="ember ember-3"></div>
+  <div class="ember ember-4"></div>
+  <div class="ember ember-5"></div>
+
+  <div class="glyph-layer">
+    <div class="glyph">ΔS</div>
+    <div class="glyph">ρ(x)</div>
+    <div class="glyph">J⊥</div>
+    <div class="glyph">NESS</div>
+  </div>
+
+  <!-- ── Navigation ─────────────────────────────────────── -->
+  <nav id="main-nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo" style="color:inherit;text-decoration:none;">
+        <div class="logo-mark"></div>
+        <span>Operational/Recursive/Polarity Δ</span>
+      </a>
+
+      <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-nav">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="nav-links">
+        <a href="index.html">Overview</a>
+        <a href="pipeline.html">Pipeline</a>
+        <a href="variants.html">Variants</a>
+        <a href="documentation.html">Documentation</a>
+        <a href="principles.html">Principles</a>
+        <a href="diagrams.html">Diagrams</a>
+        <a href="runtime.html">Runtime</a>
+      </div>
+    </div>
+
+    <div class="mobile-nav" id="mobile-nav">
+      <div class="mobile-nav-inner">
+        <a href="index.html">Overview</a>
+        <a href="pipeline.html">Pipeline</a>
+        <a href="variants.html">Variants</a>
+        <a href="documentation.html">Documentation</a>
+        <a href="principles.html">Principles</a>
+        <a href="diagrams.html">Diagrams</a>
+        <a href="runtime.html">Runtime</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Page Hero ──────────────────────────────────────── -->
+  <header class="page-hero">
+    <div class="container">
+      <div class="section-eyebrow">Clinical Core Layer</div>
+      <h1>Runtime <span style="color:var(--accent-orange);">Console</span></h1>
+      <p>Live NESS telemetry binding, Epistemic Disagreement Engine state, and Warden overlay monitoring. The System-Under-System runtime layer operating beneath the ORP governance pipeline.</p>
+    </div>
+  </header>
+
+  <!-- ── Primary Telemetry Dashboard ───────────────────── -->
+  <section>
+    <div class="container">
+
+      <div class="section-header">
+        <div class="section-eyebrow">Live Telemetry</div>
+        <h2 class="section-title">NESS Monitoring Surface</h2>
+        <div class="section-description" style="color:#dce2eb;">
+          Non-Equilibrium Steady-State metrics bound to live site event data. Entropy, integrity, and Warden activation thresholds update in real time.
+        </div>
+      </div>
+
+      <!-- Alert box: vortex detection -->
+      <div class="rc-alert-box" id="rc-vortex-alert">
+        <div class="rc-alert-icon">⚠</div>
+        <div class="rc-alert-text">
+          <div class="rc-alert-title">J⊥_VORTEX — DETECTION ACTIVE</div>
+          <div class="rc-alert-body">
+            Orthogonal divergence monitoring is engaged. Any coherence-masked degradation event will be logged to the provenance chain and escalated to Warden state. Signal accuracy supersedes surface fluency at all layers.
+          </div>
+        </div>
+      </div>
+
+      <!-- Metric cards -->
+      <div class="rc-dashboard">
+
+        <div class="rc-metric-card">
+          <div class="rc-metric-label">
+            <span class="rc-live-dot"></span>
+            Σ Entropy Delta (ΔS)
+          </div>
+          <div class="rc-metric-value green" id="rc-delta-s">0.0000</div>
+          <div class="rc-metric-sub" id="rc-delta-sub">baseline nominal</div>
+          <div class="rc-integrity-bar-wrap">
+            <div class="rc-integrity-bar" id="rc-entropy-bar" style="width:4%"></div>
+          </div>
+        </div>
+
+        <div class="rc-metric-card">
+          <div class="rc-metric-label">
+            <span class="rc-live-dot orange"></span>
+            ρ(x) Integrity Score
+          </div>
+          <div class="rc-metric-value cyan" id="rc-rho">100.0</div>
+          <div class="rc-metric-sub" id="rc-rho-sub">chain validated</div>
+          <div class="rc-integrity-bar-wrap">
+            <div class="rc-integrity-bar" id="rc-rho-bar" style="width:100%"></div>
+          </div>
+        </div>
+
+        <div class="rc-metric-card">
+          <div class="rc-metric-label">
+            <span class="rc-live-dot red"></span>
+            SHS — Stability State
+          </div>
+          <div class="rc-metric-value green" id="rc-shs">GREEN</div>
+          <div class="rc-metric-sub" id="rc-shs-sub">no drift detected</div>
+          <div class="rc-integrity-bar-wrap">
+            <div class="rc-integrity-bar" id="rc-shs-bar" style="width:100%"></div>
+          </div>
+        </div>
+
+        <div class="rc-metric-card">
+          <div class="rc-metric-label">
+            <span class="rc-live-dot"></span>
+            CRA — Chain Recovery
+          </div>
+          <div class="rc-metric-value green" id="rc-cra">VALID</div>
+          <div class="rc-metric-sub">provenance sealed</div>
+        </div>
+
+        <div class="rc-metric-card">
+          <div class="rc-metric-label">
+            <span class="rc-live-dot orange"></span>
+            LAS — Layer Authority
+          </div>
+          <div class="rc-metric-value orange" id="rc-las">L3</div>
+          <div class="rc-metric-sub">runtime kernel active</div>
+        </div>
+
+        <div class="rc-metric-card">
+          <div class="rc-metric-label">
+            <span class="rc-live-dot red"></span>
+            Warden Activation
+          </div>
+          <div class="rc-metric-value" id="rc-warden-pct">0%</div>
+          <div class="rc-metric-sub" id="rc-warden-sub">threshold: 72%</div>
+          <div class="rc-integrity-bar-wrap">
+            <div class="rc-integrity-bar degraded" id="rc-warden-bar" style="width:0%"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Control buttons -->
+      <div class="rc-btn-group">
+        <button class="rc-btn primary" id="rc-inject-btn">[ INJECT ΔS EVENT ]</button>
+        <button class="rc-btn" id="rc-reset-btn">[ RESET BASELINE ]</button>
+        <button class="rc-btn" id="rc-warden-btn">[ TRIGGER WARDEN ]</button>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Warden State Monitor + Entropy Log ─────────────── -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Epistemic Disagreement Engine</div>
+        <h2 class="section-title">Warden State &amp; Entropy Log</h2>
+        <div class="section-description" style="color:#dce2eb;">
+          The Warden manifests when cumulative ΔS exceeds the activation threshold. All events are written to the provenance chain in real time.
+        </div>
+      </div>
+
+      <!-- Warden status panel -->
+      <div class="rc-warden" id="rc-warden-panel">
+        <div class="rc-warden-icon" id="rc-warden-ascii">⬡</div>
+        <div class="rc-warden-body">
+          <div class="rc-warden-title" id="rc-warden-title">Warden — DORMANT</div>
+          <div class="rc-warden-desc" id="rc-warden-desc">
+            Monitoring for coherence-masked degradation. No cross-node contamination detected. All epistemic isolation borders nominal. Inject a ΔS event or trigger the Warden manually to observe state transition.
+          </div>
+        </div>
+        <div class="rc-warden-state dormant" id="rc-warden-badge">DORMANT</div>
+      </div>
+
+      <!-- Split: console + EDTU -->
+      <div class="rc-split">
+
+        <!-- Entropy log console -->
+        <div class="rc-console">
+          <div class="rc-console-header">
+            <div class="rc-console-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="rc-console-title">
+              <span class="rc-live-dot"></span>
+              ENTROPY LOG // PROVENANCE CHAIN
+            </div>
+          </div>
+          <div class="rc-log" id="rc-log">
+            <div class="rc-log-inner" id="rc-log-inner">
+              <!-- populated by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- EDTU bar chart -->
+        <div class="rc-edtu">
+          <div class="rc-edtu-header">
+            <span class="rc-live-dot orange"></span>
+            EDTU — ΔS History (last 6)
+          </div>
+          <div class="rc-edtu-body" id="rc-edtu-body">
+            <!-- populated by JS -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ── NESS Architecture Layers ───────────────────────── -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">System-Under-System</div>
+        <h2 class="section-title">NESS Architecture</h2>
+        <div class="section-description" style="color:#dce2eb;">
+          The Clinical Core operates as a parallel governance substrate beneath the standard ORP pipeline. Each layer enforces a non-negotiable epistemic constraint.
+        </div>
+      </div>
+
+            <div class="rc-layers">
+
+        <div class="rc-layer-card">
+          <div class="rc-layer-id">LAYER // 01</div>
+          <div class="rc-layer-name">Entropy Injection Interface</div>
+          <div class="rc-layer-desc">Accepts external ΔS signals from scroll events, interaction deltas, and inference latency spikes. Normalizes raw variance into the NESS model.</div>
+          <div class="rc-layer-status"><span class="rc-live-dot"></span> ACTIVE</div>
+        </div>
+
+        <div class="rc-layer-card">
+          <div class="rc-layer-id">LAYER // 02</div>
+          <div class="rc-layer-name">Coherence Camouflage Detector</div>
+          <div class="rc-layer-desc">Identifies outputs that appear structurally valid while masking underlying σ² degradation. Triggers ρ(x) recalculation on any detected surface-fluency mismatch.</div>
+          <div class="rc-layer-status"><span class="rc-live-dot orange"></span> MONITORING</div>
+        </div>
+
+        <div class="rc-layer-card">
+          <div class="rc-layer-id">LAYER // 03</div>
+          <div class="rc-layer-name">Epistemic Isolation Border</div>
+          <div class="rc-layer-desc">Maintains strict separation between execution segments. No cross-node context mutation is permitted. Violations are immediately escalated to the Warden.</div>
+          <div class="rc-layer-status"><span class="rc-live-dot"></span> ENFORCED</div>
+        </div>
+
+        <div class="rc-layer-card">
+          <div class="rc-layer-id">LAYER // 04</div>
+          <div class="rc-layer-name">Provenance Binding Engine</div>
+          <div class="rc-layer-desc">Writes every ΔS event and Warden state transition to an immutable provenance chain. Sealed at Output State (Step 08). Cannot be retroactively modified.</div>
+          <div class="rc-layer-status"><span class="rc-live-dot"></span> SEALED</div>
+        </div>
+
+        <div class="rc-layer-card">
+          <div class="rc-layer-id">LAYER // 05</div>
+          <div class="rc-layer-name">Warden Manifestation Protocol</div>
+          <div class="rc-layer-desc">The Warden is a governance entity that activates when cumulative entropy exceeds the 72% threshold. Once manifest, it halts downstream processing until CRA validation completes.</div>
+          <div class="rc-layer-status"><span class="rc-live-dot red"></span> THRESHOLD: 72%</div>
+        </div>
+
+        <div class="rc-layer-card">
+          <div class="rc-layer-id">LAYER // 06</div>
+          <div class="rc-layer-name">Drift Recovery Sequencer</div>
+          <div class="rc-layer-desc">Executes the CRA specification upon Warden deactivation. Rolls back to the last known clean provenance checkpoint and re-validates the full integrity score before resuming.</div>
+          <div class="rc-layer-status"><span class="rc-live-dot orange"></span> STANDBY</div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Binding Pipeline Reference ────────────────────── -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">NESS Data Binding Pipeline</div>
+        <h2 class="section-title">Event → Entropy → Warden</h2>
+        <div class="section-description" style="color:#dce2eb;">
+          How site-level interactions propagate through the Clinical Core and map to NESS model state changes.
+        </div>
+      </div>
+
+      <div class="entity-box" style="padding:0;margin-top:0;">
+
+        <div class="rc-pipe-step" style="padding:20px 28px;">
+          <div class="rc-pipe-num">BIND 01</div>
+          <div class="rc-pipe-content">
+            <div class="rc-pipe-title">Event Capture Layer</div>
+            <div class="rc-pipe-desc">Scroll events, interaction deltas, and section intersection triggers are captured by the site's existing IntersectionObserver. These raw signals are routed into the NESS entropy injector without modifying site behavior.</div>
+          </div>
+        </div>
+
+        <div class="rc-pipe-step" style="padding:20px 28px;">
+          <div class="rc-pipe-num">BIND 02</div>
+          <div class="rc-pipe-content">
+            <div class="rc-pipe-title">ΔS Normalization</div>
+            <div class="rc-pipe-desc">Raw event data is normalized into a ΔS value between 0.0000 and 1.0000. High-frequency scroll bursts generate elevated entropy; idle states decay toward baseline.</div>
+          </div>
+        </div>
+
+        <div class="rc-pipe-step" style="padding:20px 28px;">
+          <div class="rc-pipe-num">BIND 03</div>
+          <div class="rc-pipe-content">
+            <div class="rc-pipe-title">ρ(x) Integrity Recalculation</div>
+            <div class="rc-pipe-desc">Every new ΔS sample triggers a ρ(x) recalculation. Integrity score decreases proportionally to cumulative entropy accumulation. Decay events are written immediately to the provenance log.</div>
+          </div>
+        </div>
+
+        <div class="rc-pipe-step" style="padding:20px 28px;">
+          <div class="rc-pipe-num">BIND 04</div>
+          <div class="rc-pipe-content">
+            <div class="rc-pipe-title">SHS State Machine</div>
+            <div class="rc-pipe-desc">Stability Health State transitions from GREEN → AMBER → RED as ρ(x) degrades. Each transition is logged with a timestamp and ΔS value. Invisible drift is treated as a governance failure.</div>
+          </div>
+        </div>
+
+        <div class="rc-pipe-step" style="padding:20px 28px;border-bottom:none;">
+          <div class="rc-pipe-num">BIND 05</div>
+          <div class="rc-pipe-content">
+            <div class="rc-pipe-title">Warden Activation &amp; CRA</div>
+            <div class="rc-pipe-desc">When Warden activation percentage crosses 72%, the Warden manifests, logs a J⊥_VORTEX event, and the Drift Recovery Sequencer initiates CRA validation before the system can return to DORMANT state.</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ── Navigation CTA ─────────────────────────────────── -->
+  <section style="border-bottom:none !important;">
+    <div class="container">
+      <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;">
+        <div>
+          <div class="section-eyebrow">Continue Exploring</div>
+          <h2 class="section-title" style="font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:8px;">Drift &amp; Recovery Docs</h2>
+          <p style="color:var(--muted);max-width:520px;">Read the formal σ² Drift Model, CRA Specification, and Anti-Degradation Safeguards in the documentation index.</p>
+        </div>
+        <a href="documentation.html" class="btn btn-primary">Browse Docs →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── Footer ─────────────────────────────────────────── -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-title">ORP Δ</div>
+          <div>Operational/Recursive/Polarity</div>
+          <div style="margin-top:14px;color:var(--muted);">Governance-first epistemic reasoning framework.</div>
+        </div>
+        <div>
+          <div class="footer-title">Repository Links</div>
+          <div class="footer-links">
+            <a href="https://github.com/GeneralSergal/ORP" target="_blank" rel="noopener noreferrer">GitHub Source</a>
+            <a href="https://github.com/GeneralSergal/ORP/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">GPL-3.0 License</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-note">Signal &gt; Narrative · Recoverability &gt; Completion · Provenance &gt; Coherence</div>
+      <div class="author-section">
+        <div class="author-avatar" id="avatar-container">
+          <img src="avatar.jpg" alt="Laurentius Maximus" class="avatar-img" id="author-img" />
+          <div class="avatar-fallback">LM</div>
+        </div>
+        <div class="author-info">
+          <div class="author-name">Laurentius Maximus</div>
+          <div class="author-title">The ENTROPIA</div>
+        </div>
+      </div>
+      <div class="copyright">© 2026 Laurentius Maximus • The ENTROPIA</div>
+    </div>
+  </footer>
+
+  <!-- Shared JS (handles nav, scroll, observer) -->
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/runtime-overlay.js"></script>
+
+  <!-- ── Clinical Core: NESS Runtime Engine ─────────────── -->
+  <script>
+  (() => {
+    "use strict";
+
+    /* ── State ────────────────────────────────────────── */
+    const state = {
+      deltaS:     0,
+      rho:        100,
+      warden:     0,          // 0-100 activation %
+      wardenState: "DORMANT", // DORMANT | PRIMED | MANIFEST
+      shs:        "GREEN",
+      dsHistory:  [],         // last 6 ΔS values
+      logEntries: [],
+      eventCount: 0,
+    };
+
+    /* ── DOM refs ─────────────────────────────────────── */
+    const $ = id => document.getElementById(id);
+    const el = {
+      deltaS:     $("rc-delta-s"),
+      deltaSub:   $("rc-delta-sub"),
+      rho:        $("rc-rho"),
+      rhoSub:     $("rc-rho-sub"),
+      rhoBar:     $("rc-rho-bar"),
+      entropyBar: $("rc-entropy-bar"),
+      shs:        $("rc-shs"),
+      shsSub:     $("rc-shs-sub"),
+      shsBar:     $("rc-shs-bar"),
+      wardenPct:  $("rc-warden-pct"),
+      wardenSub:  $("rc-warden-sub"),
+      wardenBar:  $("rc-warden-bar"),
+      wardenPanel:$("rc-warden-panel"),
+      wardenIcon: $("rc-warden-ascii"),
+      wardenTitle:$("rc-warden-title"),
+      wardenDesc: $("rc-warden-desc"),
+      wardenBadge:$("rc-warden-badge"),
+      logInner:   $("rc-log-inner"),
+      edtuBody:   $("rc-edtu-body"),
+      injectBtn:  $("rc-inject-btn"),
+      resetBtn:   $("rc-reset-btn"),
+      wardenBtn:  $("rc-warden-btn"),
+    };
+
+    /* ── Helpers ──────────────────────────────────────── */
+    const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+    const fmt4  = n => n.toFixed(4);
+    const fmt1  = n => n.toFixed(1);
+    const now   = () => new Date().toLocaleTimeString("en-GB", { hour12: false });
+
+    function addLog(tag, tagClass, msg) {
+      const entry = { time: now(), tag, tagClass, msg };
+      state.logEntries.unshift(entry);
+      if (state.logEntries.length > 80) state.logEntries.pop();
+      renderLog();
+    }
+
+    function renderLog() {
+      el.logInner.innerHTML = state.logEntries.map(e =>
+        `<div class="rc-log-entry">
+          <span class="rc-log-time">${e.time}</span>
+          <span class="rc-log-tag ${e.tagClass}">${e.tag}</span>
+          <span class="rc-log-msg">${e.msg}</span>
+        </div>`
+      ).join("");
+    }
+
+    function renderEDTU() {
+      const hist = state.dsHistory.slice(-6);
+      const max  = Math.max(...hist, 0.01);
+      el.edtuBody.innerHTML = hist.map((v, i) => {
+        const pct = clamp((v / max) * 100, 2, 100);
+        return `<div class="rc-ds-row">
+          <span class="rc-ds-label">T-${hist.length - i}</span>
+          <div class="rc-ds-track"><div class="rc-ds-fill" style="width:${pct}%"></div></div>
+          <span class="rc-ds-val">${fmt4(v)}</span>
+        </div>`;
+      }).join("") || `<div style="color:var(--muted);font-family:var(--font-mono),monospace;font-size:0.75rem;">No history yet — inject a ΔS event.</div>`;
+    }
+
+    /* ── SHS state machine ────────────────────────────── */
+    function calcSHS(rho) {
+      if (rho >= 75) return "GREEN";
+      if (rho >= 45) return "AMBER";
+      return "RED";
+    }
+
+    const SHS_COLOR = { GREEN: "green", AMBER: "orange", RED: "red" };
+
+    /* ── Warden state machine ─────────────────────────── */
+    const WARDEN_STATES = {
+      DORMANT:  {
+        cls:  "dormant",
+        icon: "⬡",
+        title:"Warden — DORMANT",
+        desc: "Monitoring for coherence-masked degradation. No cross-node contamination detected. All epistemic isolation borders nominal.",
+      },
+      PRIMED:   {
+        cls:  "primed",
+        icon: "◈",
+        title:"Warden — PRIMED",
+        desc: "Entropy accumulation approaching activation threshold. Epistemic isolation borders under stress. J⊥_VORTEX detection elevated. CRA pre-validation queued.",
+      },
+      MANIFEST: {
+        cls:  "manifest",
+        icon: "⛒",
+        title:"Warden — MANIFEST",
+        desc: "Activation threshold exceeded. Downstream processing halted. CRA validation in progress. Provenance chain locked. Drift Recovery Sequencer engaged.",
+      },
+    };
+
+    function applyWardenState(s) {
+      const cfg = WARDEN_STATES[s];
+      const badge = el.wardenBadge;
+
+      el.wardenIcon.textContent  = cfg.icon;
+      el.wardenTitle.textContent = cfg.title;
+      el.wardenDesc.textContent  = cfg.desc;
+
+      badge.textContent = s;
+      badge.className   = `rc-warden-state ${cfg.cls}`;
+
+      el.wardenPanel.className = s === "MANIFEST"
+        ? "rc-warden alert"
+        : "rc-warden";
+    }
+
+    /* ── Core update ──────────────────────────────────── */
+    function update() {
+      // ΔS display
+      el.deltaS.textContent    = fmt4(state.deltaS);
+      el.deltaSub.textContent  = state.deltaS < 0.01 ? "baseline nominal" : state.deltaS < 0.05 ? "low variance" : "elevated variance";
+      el.entropyBar.style.width = clamp(state.deltaS * 800, 2, 100) + "%";
+
+      // ρ(x)
+      el.rho.textContent    = fmt1(state.rho);
+      el.rhoSub.textContent = state.rho > 90 ? "chain validated" : state.rho > 60 ? "degrading" : "critical integrity";
+      el.rhoBar.style.width = clamp(state.rho, 2, 100) + "%";
+      el.rhoBar.className   = `rc-integrity-bar${state.rho < 60 ? " degraded" : ""}`;
+
+      // SHS
+      const newSHS = calcSHS(state.rho);
+      if (newSHS !== state.shs) {
+        addLog("SHS", newSHS === "GREEN" ? "ok" : newSHS === "AMBER" ? "warn" : "err",
+          `State transition: ${state.shs} → ${newSHS}`);
+        state.shs = newSHS;
+      }
+      el.shs.textContent    = state.shs;
+      el.shs.className      = `rc-metric-value ${SHS_COLOR[state.shs]}`;
+      el.shsSub.textContent = state.shs === "GREEN" ? "no drift detected" : state.shs === "AMBER" ? "drift accumulating" : "drift critical";
+      el.shsBar.style.width = clamp(state.rho, 2, 100) + "%";
+      el.shsBar.className   = `rc-integrity-bar${state.shs !== "GREEN" ? " degraded" : ""}`;
+
+      // Warden %
+      el.wardenPct.textContent  = Math.round(state.warden) + "%";
+      el.wardenPct.className    = `rc-metric-value ${state.warden >= 72 ? "red" : state.warden >= 45 ? "orange" : ""}`;
+      el.wardenBar.style.width  = clamp(state.warden, 0, 100) + "%";
+
+      // Warden state machine
+      const newWarden = state.warden >= 72 ? "MANIFEST" : state.warden >= 45 ? "PRIMED" : "DORMANT";
+      if (newWarden !== state.wardenState) {
+        addLog(newWarden, newWarden === "MANIFEST" ? "err" : newWarden === "PRIMED" ? "warn" : "ok",
+          `Warden transition: ${state.wardenState} → ${newWarden}`);
+        if (newWarden === "MANIFEST") {
+          addLog("J⊥", "err", "VORTEX — orthogonal divergence detected, chain locked");
+        }
+        state.wardenState = newWarden;
+      }
+      applyWardenState(state.wardenState);
+
+      // EDTU
+      renderEDTU();
+    }
+
+    /* ── Entropy injection ────────────────────────────── */
+    function injectDelta(ds) {
+      state.deltaS  = clamp(ds, 0, 0.25);
+      state.rho     = clamp(state.rho - ds * 180, 0, 100);
+      state.warden  = clamp(state.warden + ds * 320, 0, 100);
+      state.dsHistory.push(ds);
+      state.eventCount++;
+      addLog("INF", "inf", `ΔS injected: ${fmt4(ds)} | ρ(x): ${fmt1(state.rho)} | W%: ${Math.round(state.warden)}`);
+      update();
+    }
+
+    /* ── Passive decay (idle recovery) ───────────────── */
+    function decay() {
+      if (state.wardenState === "MANIFEST") return; // no recovery while manifest
+      const decayR = 0.12, decayW = 0.5, decayS = 0.0002;
+      state.rho    = clamp(state.rho    + decayR, 0, 100);
+      state.warden = clamp(state.warden - decayW, 0, 100);
+      state.deltaS = clamp(state.deltaS - decayS, 0, 1);
+      update();
+    }
+    setInterval(decay, 800);
+
+    /* ── Scroll → entropy mapping ─────────────────────── */
+    let lastScrollY = window.scrollY, scrollAccum = 0;
+    window.addEventListener("scroll", () => {
+      const delta = Math.abs(window.scrollY - lastScrollY);
+      scrollAccum += delta;
+      lastScrollY  = window.scrollY;
+      if (scrollAccum > 120) {
+        const ds = clamp((scrollAccum / 10000) * 0.6, 0.001, 0.04);
+        injectDelta(ds);
+        scrollAccum = 0;
+      }
+    }, { passive: true });
+
+    /* ── Button: inject ───────────────────────────────── */
+    el.injectBtn?.addEventListener("click", () => {
+      const ds = 0.02 + Math.random() * 0.06;
+      injectDelta(ds);
+    });
+
+    /* ── Button: reset ────────────────────────────────── */
+    el.resetBtn?.addEventListener("click", () => {
+      if (state.wardenState === "MANIFEST") {
+        addLog("CRA", "ok", "Chain Recovery Architecture: validation sequence initiated");
+        setTimeout(() => {
+          state.rho = 85; state.warden = 0; state.deltaS = 0;
+          addLog("CRA", "ok", "CRA complete — provenance chain restored, Warden deactivated");
+          update();
+        }, 1200);
+      } else {
+        state.rho = 100; state.warden = 0; state.deltaS = 0;
+        addLog("OK", "ok", "Baseline reset — all metrics nominal");
+        update();
+      }
+    });
+
+    /* ── Button: force warden ─────────────────────────── */
+    el.wardenBtn?.addEventListener("click", () => {
+      state.warden = 80; state.rho = 38;
+      addLog("WARN", "err", "Manual Warden trigger invoked — bypassing threshold gate");
+      update();
+    });
+
+    /* ── Init log ─────────────────────────────────────── */
+    addLog("OK",  "ok",  "NESS engine initialized — Clinical Core active");
+    addLog("INF", "inf", "J⊥_VORTEX detection: ENGAGED");
+    addLog("OK",  "ok",  "Provenance chain: OPEN");
+    addLog("INF", "inf", "Epistemic isolation borders: NOMINAL");
+    addLog("OK",  "ok",  "SHS baseline: GREEN — no drift detected");
+    update();
+
+  })();
+  </script>
+
+</body>
+</html>
