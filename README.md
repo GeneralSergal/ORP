@@ -108,8 +108,3 @@ ORP/
 ---
 
 **Signal > Narrative**
-
-**SHS: GREEN**  
-**DRIFT: LOW**  
-**CRA: VALID**  
-**LAS: L3**
