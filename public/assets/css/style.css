@@ -376,19 +376,49 @@ nav.nav-hidden {
 }
 
 .logo-mark {
-  position: relative; 
-  width: 18px; 
-  height: 18px; 
-  transform: rotate(45deg); 
-  border-radius: 4px;
-  background: linear-gradient(135deg, var(--primary), var(--accent-orange));
-  box-shadow: 0 0 24px rgba(221,17,17,0.5), 0 0 12px rgba(255,102,0,0.25);
+  position: relative;
+  width: 18px;
+  height: 18px;
+  background: transparent;
 }
-.logo-mark::before { 
-  content: ""; 
-  position: absolute; 
-  inset: 4px; 
-  border: 1px solid rgba(255,255,255,0.25); 
+
+.logo-mark::before,
+.logo-mark::after,
+.logo-mark span {
+  content: "";
+  position: absolute;
+  border: 2px solid;
+  border-color: var(--primary);
+  border-image: linear-gradient(135deg, var(--primary), var(--accent-orange)) 1;
+}
+
+.logo-mark::before {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  transform: rotate(0deg);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.logo-mark::after {
+  width: 68%;
+  height: 68%;
+  top: 16%;
+  left: 16%;
+  transform: rotate(0deg);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+}
+
+.logo-mark span {
+  width: 36%;
+  height: 36%;
+  top: 32%;
+  left: 32%;
+  transform: rotate(0deg);
+  clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+  border-color: var(--accent-orange);
+  box-shadow: 0 0 8px rgba(221, 17, 17, 0.6);
 }
 
 .nav-links { 
