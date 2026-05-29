@@ -1,6 +1,6 @@
 <p align="center">
   <img src="https://github.com/GeneralSergal/ORP/actions/workflows/orp-ci.yml/badge.svg" alt="ORP Integrity Suite">
-  <img src="https://img.shields.io/badge/ORP-Delta-blueviolet" alt="ORP Version">
+  <img src="https://img.shields.io/badge/ORP-Δ-blueviolet" alt="ORP Version">
   <img src="https://img.shields.io/github/license/GeneralSergal/ORP" alt="License">
   <img src="https://img.shields.io/badge/status-active-success" alt="Status">
   <img src="https://img.shields.io/badge/SHS-5--State-green" alt="SHS Model">
@@ -179,7 +179,7 @@ layers/
 
 # System State
 
-**ORP_VERSION:\(\Delta \(FROZEN)**
+**ORP_VERSION: Δ**
 **STATUS: MASTER SYNCHRONIZED**
 **CHANGE_POLICY: LOG_ONLY**
 
