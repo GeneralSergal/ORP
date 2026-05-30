@@ -520,26 +520,60 @@
     .reveal.visible { opacity: 1; transform: none; }
   </style>
 
-  <!-- ── ORP v3.0 | GLOBAL SYNC LAYER ──────────────────────
-       Must be in <head> so ORP_SYNC is available to all
-       scripts on this page before they execute.
-       Provides: ORP_SYNC.save(key, value) / .load(key, default)
-       Broadcasts 'orp-settings-update' CustomEvent on every save
-       so sibling tabs/pages can react without a page reload.
+  <!-- ── ORP v3.1 | GLOBAL SYNC LAYER ──────────────────────
+       Stub that matches orp-sync.js public API surface.
+       Replace this block with:
+         <script src="assets/js/orp-sync.js"></script>
+       once orp-sync.js is served as a static asset.
+       This stub provides all public methods so other scripts
+       on this page (runtime-overlay.js, entropia-sigil.js)
+       behave identically to every other ORP page.
   ──────────────────────────────────────────────────────────── -->
   <script>
-    window.ORP_SYNC = {
-      save: function(key, value) {
-        try { localStorage.setItem('orp_' + key, JSON.stringify(value)); } catch(e) {}
-        window.dispatchEvent(new CustomEvent('orp-settings-update', { detail: { key: key, value: value } }));
-      },
-      load: function(key, defaultValue) {
-        try {
-          var raw = localStorage.getItem('orp_' + key);
-          return raw !== null ? JSON.parse(raw) : defaultValue;
-        } catch(e) { return defaultValue; }
+    (function(global) {
+      'use strict';
+      var DEFAULTS = {
+        sigil_drift: 0.5, shs_override: null, overlay_visible: true,
+        sigil_ease: 0.03, sigil_idle_ms: 3000, sigil_max_lean: 45, sigil_float: true,
+        ness_entropy: 0, ness_pressure: 'GREEN', ness_warden_active: false,
+      };
+      function _key(k) { return 'orp_' + k; }
+      function _broadcast(key, value) {
+        global.dispatchEvent(new CustomEvent('orp-settings-update', { detail: { key: key, value: value } }));
       }
-    };
+      global.ORP_SYNC = {
+        save: function(key, value) {
+          try { localStorage.setItem(_key(key), JSON.stringify(value)); } catch(e) {}
+          _broadcast(key, value);
+        },
+        load: function(key, defaultValue) {
+          try {
+            var raw = localStorage.getItem(_key(key));
+            return raw !== null ? JSON.parse(raw) : defaultValue;
+          } catch(e) { return defaultValue; }
+        },
+        remove: function(key) {
+          try { localStorage.removeItem(_key(key)); } catch(e) {}
+          _broadcast(key, null);
+        },
+        resetAll: function() {
+          Object.keys(DEFAULTS).forEach(function(k) {
+            try { localStorage.removeItem(_key(k)); } catch(e) {}
+            _broadcast(k, DEFAULTS[k]);
+          });
+        },
+        default: function(key) {
+          return Object.prototype.hasOwnProperty.call(DEFAULTS, key) ? DEFAULTS[key] : undefined;
+        },
+        snapshot: function() {
+          var self = this;
+          return Object.keys(DEFAULTS).reduce(function(acc, k) {
+            acc[k] = self.load(k, DEFAULTS[k]);
+            return acc;
+          }, {});
+        },
+      };
+    }(window));
   </script>
 </head>
 
@@ -624,18 +658,14 @@
       <h1>Runtime <span style="color:var(--accent-orange);">Console</span></h1>
       <p>Live NESS telemetry binding, Epistemic Disagreement Engine state, and Warden overlay monitoring. The System-Under-System runtime layer operating beneath the ORP governance pipeline.</p>
     </div>
-
-
+    <!-- Sigil must live inside position:relative header so absolute positioning
+         resolves correctly on mobile — matches settings.html pattern exactly. -->
+    <div class="entropia-sigil entropia-sigil--xl entropia-sigil--hero-bg"
+         id="runtime-hero-sigil"
+         data-initial-drift="0.5"
+         aria-hidden="true"
+         style="pointer-events:none;"></div>
   </header>
-
-  <!-- ── Entropia Sigil: hero background float ──────────────
-       Must be OUTSIDE the <header> stacking context so the
-       es-float-wrapper (position:fixed) is promoted correctly
-       and does not get clipped by the header's overflow.
-  ──────────────────────────────────────────────────────────── -->
-  <div class="entropia-sigil entropia-sigil--xl entropia-sigil--hero-bg"
-       id="runtime-hero-sigil"
-       data-initial-drift="0.5"></div>
   <section>
     <div class="container">
 
