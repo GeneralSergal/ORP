@@ -87,7 +87,7 @@
      updateSigilDrift(driftValue)
      Sets --drift-intensity on every .entropia-sigil element.
   ─────────────────────────────────────────────────────────── */
-  function updateSigilDrift(driftValue) {
+    function updateSigilDrift(driftValue) {
     const intensity = Math.min(Math.max(parseFloat(driftValue) || 0, 0), 1);
     const sigils    = _getSigils();
 
@@ -100,6 +100,14 @@
       sigil.style.setProperty('--drift-intensity', intensity);
       sigil.style.setProperty('--es-shs-glow', glow);
     });
+
+    if (typeof window._orpSHSState !== 'undefined') {
+      _getSigils().forEach(sigil => {
+        if (sigil.classList.contains('entropia-sigil--hero-bg') && sigil._esKinematics) {
+          sigil._esKinematics.driftWeight = intensity;
+        }
+      });
+    }
 
     return intensity;
   }
@@ -237,60 +245,65 @@
   }
 
 
-  /* ──────────────────────────────────────────────────────────
+    /* ──────────────────────────────────────────────────────────
      initSigilFloat()
-     Full-viewport waypoint-dwell float on desktop (≥ 701px).
-
-     v3.2.0 CHANGES (DWELL-1 through DWELL-4):
-     DWELL-1 — Replaced continuous Lissajous loop with a
-               waypoint-dwell system. The sigil picks a random
-               point within the usable viewport, glides to it
-               smoothly, dwells for ~10 s, then picks the next.
-     DWELL-2 — CSS transition on the wrapper drives the glide.
-               Duration = TRAVEL_MS (2 400 ms cubic-bezier ease-
-               in-out). No rAF math needed during travel — GPU
-               handles interpolation for buttery smoothness.
-               FF-1 isolation preserved: transition on wrapper div,
-               not on the SVG/filter element.
-     DWELL-3 — Dwell duration jittered ± 20 % so motion never
-               feels mechanical: base 10 000 ms ± 2 000 ms.
-     DWELL-4 — At high drift the dwell shortens (÷ (1 + drift*1.5))
-               and travel gets a subtle perturbation, consistent
-               with J⊥ vortex exploration (FLOAT-4).
-
-     FF-1 FIX preserved: transform written to .es-float-wrapper,
-     never to the sigil SVG element carrying filters.
+     Full-viewport viewport-aware float on desktop (≥ 701px).
   ─────────────────────────────────────────────────────────── */
   function initSigilFloat() {
-    const DESKTOP_BP   = 701;
-    const EDGE_INSET   = 20;
+    if (window.innerWidth < DESKTOP_BP) return;
 
-    /* DWELL-1: timing constants */
-    const TRAVEL_MS    = 2400;   /* glide duration (ms) */
-    const DWELL_BASE   = 10000;  /* nominal dwell at drift=0 (ms) */
-    const DWELL_JITTER = 2000;   /* ± random variation (ms) */
+    _getSigils().forEach(function (sigil) {
+      if (!sigil.classList.contains('entropia-sigil--hero-bg')) return;
 
-    let _paused = false;
+      const w = document.createElement('div');
+      w.className = 'es-float-wrapper';
+      sigil.parentNode.insertBefore(w, sigil);
+      w.appendChild(sigil);
+      sigil._esFloatWrapper = w;
 
-    const _navEl = document.getElementById('main-nav');
-    let _navH = _navEl ? _navEl.getBoundingClientRect().height : 0;
+      const geom = _cacheSigilGeometry(sigil);
+      const cx = geom.vw * 0.5;
+      const cy = _navH + (geom.vh - _navH) * 0.5;
 
-    /* ── Viewport dimension cache ───────────────────────────
-       Stores { vw, vh, halfW, halfH } per hero-bg sigil.
-       Refreshed on resize. Never calls getBoundingClientRect
-       inside the animation loop.
-    ─────────────────────────────────────────────────────── */
-    const _geomCache = new WeakMap();
+      w.style.position = 'fixed';
+      w.style.top  = cy.toFixed(1) + 'px';
+      w.style.left = cx.toFixed(1) + 'px';
+      w.style.transform = 'translate(-50%, -50%)';
 
-    function _cacheSigilGeometry(sigil) {
-      const rect = sigil.getBoundingClientRect();
-      _geomCache.set(sigil, {
-        halfW: rect.width  / 2,
-        halfH: rect.height / 2,
-        vw: window.innerWidth,
-        vh: window.innerHeight,
+      sigil._esKinematics = {
+        x: cx, y: cy,
+        tx: cx, ty: cy,
+        vx: 0, vy: 0,
+        leanX: 0, leanY: 0,
+        targetLeanX: 0, targetLeanY: 0,
+        lastMouseTs: 0
+      };
+    });
+
+    document.addEventListener('mousemove', function (e) {
+      const ts = performance.now();
+      _getSigils().forEach(function (sigil) {
+        if (!sigil.classList.contains('entropia-sigil--hero-bg') || !sigil._esKinematics) return;
+        const k = sigil._esKinematics;
+        
+        const dx = e.clientX - k.x;
+        const dy = e.clientY - k.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+
+        k.lastMouseTs = ts;
+
+        if (dist < 40) { 
+          k.targetLeanX = 0;
+          k.targetLeanY = 0;
+        } else {
+          k.targetLeanX = Math.min(Math.max((dx / window.innerWidth) * 30, -15), 15);
+          k.targetLeanY = Math.min(Math.max((dy / window.innerHeight) * 30, -15), 15);
+        }
       });
-    }
+    }, { passive: true });
+
+    if (!_rafId) _render();
+  }
 
     function _cacheAllHeroBg() {
       _getSigils().forEach(s => {
