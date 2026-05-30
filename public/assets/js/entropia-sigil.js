@@ -1,55 +1,38 @@
 /* ============================================================
    ENTROPIA SIGIL — JavaScript Module
-   ORP Δ v3.1.0 | entropia-sigil.js
+   ORP Δ v3.2.0 | entropia-sigil.js
 
    DROP-IN: Add <script src="assets/js/entropia-sigil.js"></script>
    to your page's <body> end, AFTER main.js and runtime-overlay.js.
 
    PUBLIC API:
-     updateSigilDrift(0.0–1.0)   — set by numeric drift score
-     updateSigilFromSHS('GREEN')  — set by SHS state string
+     updateSigilDrift(0.0–1.0)       — set by numeric drift score
+     updateSigilFromSHS('GREEN')      — set by SHS state string
+     setSigilMotion({ ease, idleMs, maxLean, float })  — runtime params
 
-   PATCH LOG (v3.1.0 — Firefox GPU + Full-Viewport Float):
-     FF-1    — Firefox: SVG feGaussianBlur triggers a GPU layer per
-               filter primitive when combined with CSS will-change:transform
-               on the same element. Fix: separate the float transform onto a
-               wrapper div (.es-float-wrapper) so the SVG filter stacking
-               context is NEVER composited. will-change removed from the
-               sigil SVG element itself; only the wrapper carries it.
-               Result: single compositing layer per sigil on FF. (Was: 4-8+)
-     FF-2    — Firefox: backdrop-filter on overlapping elements forces
-               intermediate surfaces. The sigil's CSS must not create a
-               stacking context that overlaps any backdrop-filter element.
-               Fix: z-index kept at 1 (below header content); no
-               isolation:isolate; no filter on the outermost wrapper.
-     FF-3    — CSS animation fill-mode on .es-orbit-ring: Firefox did not
-               respect animation-fill-mode:both with transform-origin on an
-               SVG element. Replaced with a wrapper <g> pattern.
-     FLOAT-1 — Float area expanded from "right side of hero" to FULL
-               viewport width × height, minus nav height and EDGE_INSET.
-               Anchor origin set to screen center instead of CSS position.
-               The sigil now covers the entire visible desktop canvas.
-     FLOAT-2 — Lissajous parameters retuned for full-screen coverage:
-               BASE_AMP_X  130 → covers ~60% of viewport width from center
-               BASE_AMP_Y   90 → covers ~60% of viewport height from center
-               Period ratio 28000/22000 → 11000/7000 (irrational-ish ratio
-               to avoid harmonic locking and produce Lissajous figures)
-     FLOAT-3 — Easing added: instead of raw sin() values, each axis is
-               passed through a smoothstep-like cubic ease. This removes
-               the "corner snap" artifact visible at the extremes of the
-               Lissajous path at large amplitudes.
-     FLOAT-4 — Drift modulation: at high drift the sigil's path becomes
-               deliberately erratic via an injected third-frequency
-               perturbation term, consistent with the NESS thermodynamic
-               model (high entropy → exploratory J⊥ circulation).
-     PERF-1  — rAF timestamp accumulator pattern replaces Date.now() for
-               period computation. All trig purely on the rAF timestamp.
-     PERF-2  — style.transform string built once per tick (no allocation for
-               intermediate objects). toFixed(1) instead of toFixed(2) for
-               sub-pixel positions (sufficient; avoids string creation cost).
-     LOW-1   — pagehide listener cancels float rAF and cleans up all observers.
-     LOW-2   — orp-sigil-glitch scoped to :not(.entropia-sigil--hero-bg)
-               in runtime-overlay.js (no change needed here).
+   RUNTIME GLOBALS (settable via ORP_SYNC or direct assignment):
+     window.SIGIL_EASE      — LERP smoothing factor (default 0.03)
+     window.SIGIL_IDLE_MS   — ms idle before drift-back (default 3000)
+     window.SIGIL_MAX_LEAN  — max px displacement (default 45)
+
+   PATCH LOG (v3.2.0 — Mouse-Tracking LERP + SHS Motion Profiles):
+     MOTION-1  — Replaced full-viewport Lissajous with mouse-tracking LERP.
+                 Sigil follows cursor with dampened, viscous lag.
+     MOTION-2  — SHS-driven motion personality:
+                   GREEN  → EASE 0.02, IDLE 4000, MAX_LEAN 30  (steady)
+                   YELLOW → EASE 0.04, IDLE 2500, MAX_LEAN 50  (restless)
+                   ORANGE → EASE 0.06, IDLE 1500, MAX_LEAN 65  (agitated)
+                   RED    → EASE 0.10, IDLE 800,  MAX_LEAN 90  (hunter)
+                   BLACK  → EASE 0.015,IDLE 5000, MAX_LEAN 120 (maximum reach, slow)
+     MOTION-3  — Viewport-edge clamping: sigil never exits visible area.
+     MOTION-4  — Top-right anchor: default spawn position upper-right quadrant.
+     MOTION-5  — setSigilMotion(params) public API for runtime config.
+     MOTION-6  — EASE, IDLE_MS, MAX_LEAN exposed as window globals for ORP_SYNC.
+     FF-1      — FF-1 fix preserved: transform on .es-float-wrapper wrapper div.
+     FF-2/3    — Firefox GPU layer guards preserved.
+     PERF-1    — rAF timestamp accumulator pattern (no Date.now() in hot path).
+     PERF-2    — Single style.transform string per tick; toFixed(1).
+     LOW-1     — pagehide cancels rAF, disconnects ResizeObserver.
    ============================================================ */
 
 (function (global) {
@@ -63,6 +46,20 @@
     'RED':    0.78,
     'BLACK':  1.00,
   };
+
+  /* ── SHS → motion personality profiles (MOTION-2) ───────── */
+  const SHS_MOTION_MAP = {
+    'GREEN':  { ease: 0.02,  idleMs: 4000, maxLean: 30  },
+    'YELLOW': { ease: 0.04,  idleMs: 2500, maxLean: 50  },
+    'ORANGE': { ease: 0.06,  idleMs: 1500, maxLean: 65  },
+    'RED':    { ease: 0.10,  idleMs: 800,  maxLean: 90  },
+    'BLACK':  { ease: 0.015, idleMs: 5000, maxLean: 120 },
+  };
+
+  /* ── Runtime-settable globals (MOTION-6, ORP_SYNC bridge) ── */
+  global.SIGIL_EASE     = global.SIGIL_EASE     ?? 0.03;
+  global.SIGIL_IDLE_MS  = global.SIGIL_IDLE_MS  ?? 3000;
+  global.SIGIL_MAX_LEAN = global.SIGIL_MAX_LEAN  ?? 45;
 
   /* ── Memoization state ────────────────────────────────────── */
   let _lastIntensity  = -1;
@@ -107,11 +104,44 @@
 
   /* ──────────────────────────────────────────────────────────
      updateSigilFromSHS(shsState)
+     Updates drift AND applies the matching motion profile.
   ─────────────────────────────────────────────────────────── */
   function updateSigilFromSHS(shsState) {
     const key       = (shsState || 'GREEN').trim().toUpperCase();
     const intensity = SHS_DRIFT_MAP[key] ?? 0;
+
+    /* Apply motion profile if one exists for this state */
+    const profile = SHS_MOTION_MAP[key];
+    if (profile) {
+      setSigilMotion(profile);
+    }
+
     return updateSigilDrift(intensity);
+  }
+
+
+  /* ──────────────────────────────────────────────────────────
+     setSigilMotion(params)
+     PUBLIC API (MOTION-5). Accepts { ease, idleMs, maxLean, float }.
+     All keys optional — only provided keys are updated.
+     Also syncs to window.SIGIL_* globals for ORP_SYNC visibility.
+  ─────────────────────────────────────────────────────────── */
+  function setSigilMotion(params) {
+    if (!params || typeof params !== 'object') return;
+    if (typeof params.ease    === 'number') global.SIGIL_EASE     = params.ease;
+    if (typeof params.idleMs  === 'number') global.SIGIL_IDLE_MS  = params.idleMs;
+    if (typeof params.maxLean === 'number') global.SIGIL_MAX_LEAN = params.maxLean;
+    if (typeof params.float   === 'boolean') {
+      /* Toggle float mode — freeze or resume wrapper */
+      document.querySelectorAll('.es-float-wrapper').forEach(w => {
+        if (!params.float) {
+          w.style.transition = 'none';
+          w.style.transform  = '';
+        } else {
+          w.style.transition = '';
+        }
+      });
+    }
   }
 
 
@@ -133,7 +163,6 @@
      initEntropiaSigils()
      Stamps the SVG from <template id="entropiaSigilTemplate">
      into every empty .entropia-sigil wrapper.
-     Wraps each sigil in .es-float-wrapper for FF-1 isolation.
   ─────────────────────────────────────────────────────────── */
   function initEntropiaSigils() {
     const template = document.getElementById('entropiaSigilTemplate');
@@ -172,8 +201,7 @@
         });
         svgEl.innerHTML = html;
 
-        /* FF-1 FIX: SVG must NOT have will-change or transform on itself.
-           Remove any inline will-change the template might carry. */
+        /* FF-1 FIX: SVG must NOT have will-change or transform on itself. */
         svgEl.style.willChange = 'auto';
         svgEl.style.transform  = '';
       }
@@ -225,70 +253,51 @@
     return p;
   }
 
-  /* ── Cubic smoothstep easing ────────────────────────────── */
-  /* Eliminates "corner snap" at Lissajous extremes (FLOAT-3).
-     Input: x ∈ [-1, 1] (raw sin output)
-     Output: eased value, same range.                         */
-  function _smoothSin(x) {
-    /* Map [-1,1] → [0,1], apply smoothstep, map back */
-    const t = (x + 1) * 0.5;
-    const s = t * t * (3 - 2 * t); // smoothstep(0,1,t)
-    return s * 2 - 1;
-  }
-
 
   /* ──────────────────────────────────────────────────────────
      initSigilFloat()
-     Full-viewport Lissajous float on desktop (≥ 701px).
+     Mouse-tracking LERP float on desktop (≥ 701px).
 
-     FLOAT-1: The sigil now floats across the ENTIRE visible
-     viewport, not just the right side. We compute a center
-     anchor (vw/2 × vh/2) and apply amplitude that reaches
-     within EDGE_INSET of all four edges.
+     MOTION-1: Replaces Lissajous with cursor-following LERP.
+     MOTION-2: Motion personality driven by SHS state.
+     MOTION-3: Hard viewport-edge clamping — sigil never exits.
+     MOTION-4: Default spawn upper-right quadrant.
+     MOTION-6: Reads EASE/IDLE_MS/MAX_LEAN from window globals each tick.
 
-     FF-1 FIX: transform is applied to the .es-float-wrapper
-     div (a plain div, no filter), never to the sigil element
-     that carries SVG filters. This prevents Firefox from
-     creating multiple GPU surfaces per filter primitive.
-
-     PERF-1: All trig driven by rAF timestamp (ts). No Date.now().
-     PERF-2: string built with template literal once; toFixed(1).
+     FF-1 FIX: transform applied to .es-float-wrapper div, never the SVG.
+     PERF-1: rAF timestamp for all timing; no Date.now() in hot path.
+     PERF-2: single style.transform write per tick.
   ─────────────────────────────────────────────────────────── */
   function initSigilFloat() {
     const DESKTOP_BP = 701;
-    const EDGE_INSET = 20;
+    const EDGE_INSET = 24; /* px buffer from viewport edges */
 
-    /* FLOAT-2: Lissajous frequency ratio.
-       ~11000ms / ~7000ms = 11/7 — near but not equal to 3/2,
-       so the figure rotates slowly, never locks to a closed loop.
-       Full viewport amplitude set at runtime from window size. */
-    const PERIOD_X   = 11000;
-    const PERIOD_Y   = 7000;
-    /* Third perturbation frequency for high-drift chaos (FLOAT-4) */
-    const PERIOD_Z   = 4300;
+    /* ── Mouse state ──────────────────────────────────────── */
+    let curX = -1;          /* raw cursor X; -1 = no movement yet */
+    let curY = -1;
+    let lastMoveTs = -Infinity;
 
+    /* ── LERP accumulator ─────────────────────────────────── */
+    let leanX = 0;          /* current interpolated offset */
+    let leanY = 0;
+
+    /* ── Float pause state ────────────────────────────────── */
     let _rafHandle = null;
     let _paused    = false;
+    let _floatEnabled = true;
 
+    /* ── Nav reference ────────────────────────────────────── */
     const _navEl = document.getElementById('main-nav');
     let _navH = _navEl ? _navEl.getBoundingClientRect().height : 0;
 
-    /* ── Viewport dimension cache ───────────────────────────
-       Stores { vw, vh, halfW, halfH } per hero-bg sigil.
-       halfW/halfH = sigil dimensions / 2 (for edge-clamping).
-       vw/vh = viewport dimensions (for amplitude calculation).
-       Refreshed on resize. Never read inside _tick via
-       getBoundingClientRect() — only the cache is used.
-    ─────────────────────────────────────────────────────── */
+    /* ── Geometry cache ───────────────────────────────────── */
     const _geomCache = new WeakMap();
 
     function _cacheSigilGeometry(sigil) {
-      /* One controlled getBoundingClientRect at init/resize only */
       const rect = sigil.getBoundingClientRect();
       _geomCache.set(sigil, {
         halfW: rect.width  / 2,
         halfH: rect.height / 2,
-        /* Viewport size captured at same time for amplitude calc */
         vw: window.innerWidth,
         vh: window.innerHeight,
       });
@@ -302,19 +311,44 @@
       });
     }
 
+    /* ── Mouse tracking ───────────────────────────────────── */
+    document.addEventListener('mousemove', e => {
+      curX = e.clientX;
+      curY = e.clientY;
+      lastMoveTs = performance.now();
+    }, { passive: true });
+
+    /* ── Visibility pause ─────────────────────────────────── */
     document.addEventListener('visibilitychange', () => {
       _paused = document.hidden;
-      if (!_paused && !_rafHandle) _schedule();
+      if (!_paused && !_rafHandle && _floatEnabled) _schedule();
     });
 
     function _schedule() {
       _rafHandle = requestAnimationFrame(_tick);
     }
 
+    /* ────────────────────────────────────────────────────────
+       _tick(ts)
+       Core LERP motion loop.
+
+       Each frame:
+         1. Read EASE/IDLE_MS/MAX_LEAN from window globals (MOTION-6).
+         2. Compute target offset from cursor position, or 0 if idle.
+         3. Dampening: clamp target to MAX_LEAN radius circle.
+         4. LERP leanX/Y toward target by EASE factor.
+         5. Hard-clamp final lean to viewport-safe bounds (MOTION-3).
+         6. Write transform to .es-float-wrapper (FF-1).
+    ──────────────────────────────────────────────────────── */
     function _tick(ts) {
       _rafHandle = null;
 
-      if (window.innerWidth < DESKTOP_BP) return;
+      if (window.innerWidth < DESKTOP_BP || !_floatEnabled) return;
+
+      /* Read current motion params from globals each tick (MOTION-6) */
+      const EASE     = Math.max(0.001, Math.min(1, global.SIGIL_EASE    || 0.03));
+      const IDLE_MS  = Math.max(100,               global.SIGIL_IDLE_MS || 3000);
+      const MAX_LEAN = Math.max(1,                 global.SIGIL_MAX_LEAN || 45);
 
       const allSigils = _getSigils();
       let hasSigil = false;
@@ -323,7 +357,7 @@
         if (!sigil.classList.contains('entropia-sigil--hero-bg')) return;
         hasSigil = true;
 
-        /* ── Get geometry from cache (zero layout read) ── */
+        /* ── Geometry from cache ──────────────────────────── */
         let geom = _geomCache.get(sigil);
         if (!geom) {
           _cacheSigilGeometry(sigil);
@@ -332,80 +366,77 @@
         }
         const { halfW, halfH, vw, vh } = geom;
 
-        /* ── Drift-responsive amplitude (FLOAT-1, FLOAT-2) ──
-           Maximum amplitude = usable viewport half-extent minus
-           edge inset and sigil half-size, so the sigil JUST
-           reaches the edges at drift=0. At drift > 0 the
-           amplitude scales slightly to push harder into edges. */
-        const drift    = parseFloat(sigil.style.getPropertyValue('--drift-intensity') || '0');
-        const driftMul = 1 + drift * 0.15;
+        /* ── Compute target offset from cursor (MOTION-1) ── */
+        const idle = curX < 0 || (performance.now() - lastMoveTs) > IDLE_MS;
 
-        /* Usable half-extents from center (viewport center is the origin) */
-        const maxAmpX = (vw * 0.5 - halfW - EDGE_INSET) * driftMul;
-        const maxAmpY = ((vh - _navH) * 0.5 - halfH - EDGE_INSET) * driftMul;
+        let targetX, targetY;
+        if (idle) {
+          /* Drift back to top-right home when idle (MOTION-4) */
+          targetX = 0;
+          targetY = 0;
+        } else {
+          /* Map cursor to [-MAX_LEAN, MAX_LEAN] offset range.
+             Cursor at center → 0 offset. At edges → ±MAX_LEAN. */
+          targetX = ((curX / vw)  - 0.5) * 2 * MAX_LEAN;
+          targetY = ((curY / vh) - 0.5) * 2 * MAX_LEAN;
+        }
 
-        /* Amplitude clamped to avoid negative values on very small screens */
-        const ampX = Math.max(maxAmpX, 0);
-        const ampY = Math.max(maxAmpY, 0);
+        /* ── Dampening: clamp target inside MAX_LEAN radius ─ */
+        const dist = Math.sqrt(targetX * targetX + targetY * targetY);
+        if (dist > MAX_LEAN) {
+          const ratio = MAX_LEAN / dist;
+          targetX *= ratio;
+          targetY *= ratio;
+        }
 
-        /* ── Lissajous coordinates (FLOAT-2, FLOAT-3) ── */
-        const tX = (ts / PERIOD_X) * Math.PI * 2;
-        const tY = (ts / PERIOD_Y) * Math.PI * 2 + 0.9; /* phase offset */
+        /* ── LERP: smooth interpolation toward target ─────── */
+        leanX += (targetX - leanX) * EASE;
+        leanY += (targetY - leanY) * EASE;
 
-        let rawX = Math.sin(tX);
-        let rawY = Math.sin(tY);
+        /* ── Hard viewport-edge clamp (MOTION-3) ─────────── */
+        /* Wrapper is anchored at top-right quadrant. Compute
+           absolute position and clamp to visible viewport. */
+        const anchorX = vw  * 0.82;            /* MOTION-4: top-right x */
+        const anchorY = _navH + halfH + 12;     /* MOTION-4: just below nav */
 
-        /* Smoothstep easing on each axis (FLOAT-3) */
-        const easedX = _smoothSin(rawX);
-        const easedY = _smoothSin(rawY);
+        /* Resulting screen position of sigil center */
+        const screenX = anchorX + leanX;
+        const screenY = anchorY + leanY;
 
-        /* FLOAT-4: High-drift perturbation — injects a third frequency
-           term that grows with drift², creating genuinely erratic motion
-           without dominating at low drift. Consistent with J⊥ vortex
-           exploration in the NESS thermodynamic model. */
-        const perturbScale = drift * drift * 0.35;
-        const tZ = (ts / PERIOD_Z) * Math.PI * 2;
-        const perturbX = Math.sin(tZ * 1.37 + 0.4) * perturbScale;
-        const perturbY = Math.cos(tZ * 0.91 + 1.2) * perturbScale;
+        /* Viewport bounds with edge inset */
+        const minScreenX = EDGE_INSET + halfW;
+        const maxScreenX = vw  - EDGE_INSET - halfW;
+        const minScreenY = _navH + EDGE_INSET + halfH;
+        const maxScreenY = vh   - EDGE_INSET - halfH;
 
-        const fx = (easedX + perturbX) * ampX;
-        const fy = (easedY + perturbY) * ampY;
+        /* Clamp screen position, convert back to lean offset */
+        const safeX = Math.min(maxScreenX, Math.max(minScreenX, screenX));
+        const safeY = Math.min(maxScreenY, Math.max(minScreenY, screenY));
+        const clampedLeanX = safeX - anchorX;
+        const clampedLeanY = safeY - anchorY;
 
-        /* ── Clamp to safe area (edge-guard) ── */
-        const cx = vw  * 0.5;   /* viewport center X */
-        const cy = (_navH + (vh - _navH) * 0.5); /* content center Y */
+        /* ── Subtle tilt mirroring the lean (atmospheric) ── */
+        const tiltX = (-clampedLeanY * 0.15).toFixed(2);
+        const tiltY = ( clampedLeanX * 0.15).toFixed(2);
 
-        const clampedX = Math.min(vw  - EDGE_INSET - halfW - cx,
-                          Math.max(EDGE_INSET + halfW - cx, fx));
-        const clampedY = Math.min(vh  - EDGE_INSET - halfH - cy,
-                          Math.max(_navH + EDGE_INSET + halfH - cy, fy));
-
-        /* ── FF-1 FIX: write transform to the WRAPPER, not the sigil
-           Find or create the float-wrapper lazily (once per sigil).
-           The wrapper is position:absolute, the sigil stays untransformed.
-           This keeps the SVG filter stacking context on a separate layer
-           that Firefox does not erroneously replicate for each filter. ── */
+        /* ── FF-1 FIX: write transform to WRAPPER, not sigil ─
+           Lazily create wrapper on first tick if not present.  */
         let wrapper = sigil._esFloatWrapper;
         if (!wrapper) {
-          /* First time: wrap the sigil element in a plain positioning div */
           const parent = sigil.parentElement;
           const w = document.createElement('div');
-          w.className       = 'es-float-wrapper';
-          /* Position: fixed so it spans the full viewport (FLOAT-1) */
-          w.style.cssText   = [
+          w.className = 'es-float-wrapper';
+
+          /* MOTION-4: anchor in top-right quadrant (position:fixed) */
+          w.style.cssText = [
             'position:fixed',
-            `top:${cy.toFixed(1)}px`,
-            `left:${cx.toFixed(1)}px`,
-            /* Center the sigil on this origin point */
-            'margin-top:0',
-            'margin-left:0',
-            /* will-change lives HERE, not on the SVG element (FF-1) */
-            'will-change:transform',
+            `top:${anchorY.toFixed(1)}px`,
+            `left:${anchorX.toFixed(1)}px`,
+            'margin:0',
+            'will-change:transform',    /* FF-1: only on wrapper */
             'pointer-events:none',
             'z-index:1',
-            /* Ensure the wrapper does not create a new stacking context
-               that interferes with backdrop-filter elements (FF-2) */
-            'isolation:auto',
+            'isolation:auto',           /* FF-2: no stacking context */
           ].join(';');
           parent?.insertBefore(w, sigil);
           w.appendChild(sigil);
@@ -413,14 +444,26 @@
           wrapper = w;
         }
 
-        /* PERF-2: single string write, toFixed(1) sufficient for display */
+        /* PERF-2: single string write */
         wrapper.style.transform =
-          `translate(-50%, -50%) translate3d(${clampedX.toFixed(1)}px,${clampedY.toFixed(1)}px,0)`;
+          `translate(-50%, -50%) translate3d(${clampedLeanX.toFixed(1)}px,${clampedLeanY.toFixed(1)}px,0) rotateX(${tiltX}deg) rotateY(${tiltY}deg)`;
       });
 
       if (!hasSigil) { if (!_paused) _schedule(); return; }
-      if (!_paused) _schedule();
+      if (!_paused && _floatEnabled) _schedule();
     }
+
+    /* ── Float toggle support ─────────────────────────────── */
+    /* setSigilMotion can pause the float by setting _floatEnabled.
+       We expose a setter on the IIFE scope via a shared flag ref.  */
+    global._sigilSetFloat = function(enabled) {
+      _floatEnabled = !!enabled;
+      if (_floatEnabled && !_rafHandle && !_paused) _schedule();
+      if (!_floatEnabled && _rafHandle) {
+        cancelAnimationFrame(_rafHandle);
+        _rafHandle = null;
+      }
+    };
 
     /* ── Resize: debounced geometry refresh ───────────────── */
     let _resizeTimer = null;
@@ -431,17 +474,14 @@
         _cacheAllHeroBg();
 
         const belowBP = window.innerWidth < DESKTOP_BP;
-        _getSigils().forEach(s => {
-          if (!s.classList.contains('entropia-sigil--hero-bg')) return;
-          const w = s._esFloatWrapper;
-          if (belowBP) {
-            /* Mobile: reset transform, wrapper stays but is inert */
+        if (belowBP) {
+          _getSigils().forEach(s => {
+            if (!s.classList.contains('entropia-sigil--hero-bg')) return;
+            const w = s._esFloatWrapper;
             if (w) w.style.transform = '';
-            if (_rafHandle) { cancelAnimationFrame(_rafHandle); _rafHandle = null; }
-          }
-        });
-
-        if (!belowBP && !_rafHandle && !_paused) {
+          });
+          if (_rafHandle) { cancelAnimationFrame(_rafHandle); _rafHandle = null; }
+        } else if (!_rafHandle && !_paused && _floatEnabled) {
           _schedule();
         }
       }, 120);
@@ -518,71 +558,58 @@
   global.updateSigilFromSHS = updateSigilFromSHS;
   global.initEntropiaSigils = initEntropiaSigils;
   global.initSigilFloat     = initSigilFloat;
+  global.setSigilMotion     = setSigilMotion;
 
 }(window));
+
+
 /* ============================================================
-   ENTROPIA SIGIL — JavaScript Module
-   ORP Δ v3.1.0 | entropia-sigil.js
+   SHS CLASS-BRIDGE — entropia-sigil.js
+   Applies .shs-* classes for CSS-driven state changes.
+   Runs after the main IIFE so updateSigilFromSHS is available.
    ============================================================ */
-
-// [Preserve your existing float/tick logic here...]
-
-/* ── SHS Integration & Coupling ────────────────────────── */
-
 (function () {
   let _lastSHS = '';
 
-  /**
-   * Updates the visual state of the sigil.
-   * Logic is decoupled from runtime.html to ensure autonomous functionality.
-   */
-  window.updateSigilFromSHS = function(shs) {
-    shs = shs.toUpperCase();
-    if (shs === _lastSHS) return;
-    _lastSHS = shs;
+  window.updateSigilFromSHS = (function (_original) {
+    return function (shs) {
+      shs = (shs || 'GREEN').toUpperCase();
 
-    // Apply specific classes to sigil wrappers for CSS-driven state changes
-    const sigilElements = document.querySelectorAll('.entropia-sigil--hero-bg, .es-float-wrapper');
-    
-    sigilElements.forEach(el => {
-      el.classList.remove('shs-green', 'shs-yellow', 'shs-orange', 'shs-red', 'shs-black', 'shs-dead');
-      
-      if (shs === 'BLACK' || shs === 'DEAD') {
-        el.classList.add('shs-black');
-      } else if (shs === 'YELLOW') {
-        el.classList.add('shs-yellow');
-      } else if (shs === 'RED') {
-        el.classList.add('shs-red');
-      } else if (shs === 'AMBER' || shs === 'ORANGE') {
-        el.classList.add('shs-orange');
-      } else {
-        el.classList.add('shs-green');
+      if (shs !== _lastSHS) {
+        _lastSHS = shs;
+
+        /* Apply CSS state classes to float wrappers + hero-bg sigils */
+        const targets = document.querySelectorAll('.entropia-sigil--hero-bg, .es-float-wrapper');
+        targets.forEach(el => {
+          el.classList.remove('shs-green', 'shs-yellow', 'shs-orange', 'shs-red', 'shs-black', 'shs-dead');
+          if      (shs === 'BLACK' || shs === 'DEAD')  el.classList.add('shs-black');
+          else if (shs === 'RED')                       el.classList.add('shs-red');
+          else if (shs === 'ORANGE' || shs === 'AMBER') el.classList.add('shs-orange');
+          else if (shs === 'YELLOW')                    el.classList.add('shs-yellow');
+          else                                          el.classList.add('shs-green');
+        });
       }
-    });
-  };
 
-  /**
-   * BRIDGE: Couple directly to runtime-overlay.js
-   * Observes the #cc-tab-shs pill injected by the overlay.
-   */
+      /* Delegate to original (sets drift + motion profile) */
+      return typeof _original === 'function' ? _original(shs) : undefined;
+    };
+  }(window.updateSigilFromSHS));
+
+  /* BRIDGE: couple to runtime-overlay.js SHS pill */
   function coupleToOverlay() {
-    // If runtime-overlay.js is already running, grab the pill directly
     const pill = window._orpSHSPill || document.getElementById('cc-tab-shs');
 
     function _onSHSChange() {
       const shs = pill.textContent.trim().toUpperCase();
-      // Handle the transition string: map legacy 'AMBER' to 'YELLOW' for v3.0 consistency
-      const normalizedSHS = (shs === 'AMBER') ? 'YELLOW' : shs;
-      window.updateSigilFromSHS(normalizedSHS);
+      window.updateSigilFromSHS(shs === 'AMBER' ? 'YELLOW' : shs);
     }
 
     if (pill) {
       _onSHSChange();
       new MutationObserver(_onSHSChange).observe(pill, {
-        childList: true, characterData: true, subtree: true
+        childList: true, characterData: true, subtree: true,
       });
     } else {
-      // Fallback: If overlay hasn't injected yet, wait for it
       const _waitObs = new MutationObserver((_, obs) => {
         const p = document.getElementById('cc-tab-shs');
         if (p) {
@@ -590,7 +617,7 @@
           window._orpSHSPill = p;
           _onSHSChange();
           new MutationObserver(_onSHSChange).observe(p, {
-            childList: true, characterData: true, subtree: true
+            childList: true, characterData: true, subtree: true,
           });
         }
       });
@@ -598,10 +625,91 @@
     }
   }
 
-  // Initialize coupling after DOM ready
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', coupleToOverlay);
   } else {
     coupleToOverlay();
   }
-})();
+}());
+
+
+/* ============================================================
+   ORP_SYNC WAKEUP BLOCK — entropia-sigil.js
+   Bridges ORP_SYNC.save('sigil_drift', …) and motion params
+   to updateSigilDrift() and setSigilMotion() here.
+   Also restores EASE/IDLE_MS/MAX_LEAN globals from persistence.
+
+   DEPENDENCY: orp-sync.js must be loaded first in <head>.
+   SILENT FAIL: all paths guard against missing ORP_SYNC.
+   ============================================================ */
+(function () {
+  'use strict';
+
+  const SIGIL_SELECTOR = '.entropia-sigil--hero-bg';
+
+  function applyDrift(val) {
+    try {
+      if (typeof window.updateSigilDrift === 'function') {
+        window.updateSigilDrift(val);
+      }
+    } catch (err) {
+      console.warn('ORP_SIGIL_WAKEUP_FAIL: Drift injection blocked.', err);
+    }
+  }
+
+  function applyMotion(key, val) {
+    try {
+      if (typeof window.setSigilMotion === 'function') {
+        const param = {};
+        if (key === 'sigil_ease')     param.ease     = val;
+        if (key === 'sigil_idle_ms')  param.idleMs   = val;
+        if (key === 'sigil_max_lean') param.maxLean  = val;
+        if (key === 'sigil_float')    param.float    = val;
+        window.setSigilMotion(param);
+      }
+    } catch (err) {
+      console.warn('ORP_SIGIL_WAKEUP_FAIL: Motion injection blocked.', err);
+    }
+  }
+
+  function init() {
+    const container = document.querySelector(SIGIL_SELECTOR);
+    if (!container) return;
+
+    if (typeof window.ORP_SYNC === 'undefined') {
+      console.warn('ORP_SIGIL_WAKEUP: ORP_SYNC not found — drift sync disabled.');
+      return;
+    }
+
+    /* Restore persisted drift */
+    const initialDrift = ORP_SYNC.load('sigil_drift', ORP_SYNC.default ? ORP_SYNC.default('sigil_drift') : 0.5);
+    applyDrift(initialDrift);
+
+    /* Restore persisted motion params */
+    ['sigil_ease', 'sigil_idle_ms', 'sigil_max_lean', 'sigil_float'].forEach(k => {
+      const stored = ORP_SYNC.load(k, null);
+      if (stored !== null) applyMotion(k, stored);
+    });
+
+    /* Subscribe to cross-tab / cross-page sync events */
+    window.addEventListener('orp-settings-update', function (e) {
+      if (!e.detail) return;
+      const { key, value } = e.detail;
+      if (key === 'sigil_drift') applyDrift(value);
+      if (['sigil_ease','sigil_idle_ms','sigil_max_lean','sigil_float'].includes(key)) {
+        applyMotion(key, value);
+      }
+    });
+  }
+
+  if (document.readyState === 'complete') {
+    init();
+  } else {
+    window.addEventListener('load', init);
+  }
+
+}());
+/* ============================================================
+   ENTROPIA SIGIL — JavaScript Module
+   ORP Δ v3.2.0 | entropia-sigil.js
+   ============================================================ */

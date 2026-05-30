@@ -9,26 +9,12 @@
      ORP_SYNC.load(key, default)   — restore from localStorage
      ORP_SYNC.remove(key)          — delete + broadcast null
      ORP_SYNC.resetAll()           — nuke all orp_* keys to defaults
+     ORP_SYNC.snapshot()           — get all current settings
 
    EVENT BUS:
      CustomEvent 'orp-settings-update' fires on window for
      every save/remove call so sibling tabs react in real time.
      e.detail = { key: string, value: any }
-
-   KEYS IN USE (ORP v3.0):
-     sigil_drift       Float  0.0–1.0  (sigil intensity / NESS drift)
-     shs_override      String GREEN | YELLOW | ORANGE | RED | null (AUTO)
-     overlay_visible   Bool   true | false  (NESS HUD visibility)
-
-   DESIGN NOTES:
-     All errors (private browsing, quota exceeded, parse fail)
-     degrade silently — the default value is always returned.
-     The CustomEvent fires even on storage failure so in-page
-     listeners see the attempted value; only persistence is lost.
-
-   PATCH LOG:
-     v3.0.0 — Initial extraction from runtime.html inline block.
-              Added remove(), resetAll(), and structured defaults.
    ============================================================ */
 
 (function (global) {
@@ -39,6 +25,11 @@
     sigil_drift:     0.5,
     shs_override:    null,
     overlay_visible: true,
+    // Motion Parameters
+    sigil_ease:      0.05,
+    sigil_idle_ms:   2000,
+    sigil_max_lean:  15,
+    sigil_float:     true
   };
 
   /* ── Prefix helper ───────────────────────────────────────── */

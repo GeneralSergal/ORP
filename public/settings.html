@@ -157,9 +157,11 @@
       border-radius: 999px;
       background: linear-gradient(90deg, var(--primary), var(--accent-orange));
       pointer-events: none;
-      margin-top: 6px;
+      margin-top: -3px;       /* overlap the range input's bottom edge visually */
+      margin-bottom: 6px;
       transition: transform 0.15s;
-      transform-origin: left;
+      transform-origin: left center;
+      width: 100%;
     }
 
     /* ── SHS state picker ─────────────────────────────────────── */
@@ -376,16 +378,19 @@
     }
     .cfg-drift-bar-wrap {
       flex: 1;
+      min-width: 0;          /* prevent flex blowout — flex children default min-width:auto */
       height: 6px;
-      background: rgba(6,8,11,0.6);
+      background: rgba(6,8,11,0.8);
+      border: 1px solid var(--border);
       border-radius: 999px;
       overflow: hidden;
     }
     .cfg-drift-bar {
       height: 100%;
+      width: 100%;            /* fill parent; scaleX drives visible portion */
       border-radius: 999px;
       background: linear-gradient(90deg, var(--success), var(--accent-orange), var(--danger));
-      transform-origin: left;
+      transform-origin: left center;
       transition: transform 0.15s cubic-bezier(0.2,0,0,1);
     }
     .cfg-drift-bar-label {
@@ -397,9 +402,124 @@
       flex-shrink: 0;
     }
 
-    /* Reveal animation (matching main.js) */
+    /* Reveal animation (matching main.js).
+       Note: .reveal is NOT hardcoded in HTML on this page — JS adds it
+       via the IntersectionObserver in main.js + the page-scoped observer
+       below. This prevents flash-of-invisible before JS runs. */
     .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.5s ease, transform 0.5s ease; }
     .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── Section 1b: Motion Dynamics card ─────────────────── */
+    .cfg-motion-card {
+      grid-column: 1 / -1; /* full-width in the grid */
+    }
+
+    /* SHS personality preview pills */
+    .cfg-motion-profiles {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+    .cfg-profile-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all var(--transition);
+      color: var(--muted);
+    }
+    .cfg-profile-pill:hover { border-color: var(--border-strong); color: var(--heading); }
+    .cfg-profile-pill[data-profile="GREEN"]  { }
+    .cfg-profile-pill[data-profile="GREEN"].active  { border-color: rgba(63,185,80,0.6);  background: rgba(63,185,80,0.12);  color: #3fb950; }
+    .cfg-profile-pill[data-profile="YELLOW"].active { border-color: rgba(250,204,21,0.6); background: rgba(250,204,21,0.12); color: #facc15; }
+    .cfg-profile-pill[data-profile="ORANGE"].active { border-color: rgba(255,102,0,0.6);  background: rgba(255,102,0,0.12);  color: var(--accent-orange); }
+    .cfg-profile-pill[data-profile="RED"].active    { border-color: rgba(221,17,17,0.6);  background: rgba(221,17,17,0.12);  color: var(--danger); }
+    .cfg-profile-pill[data-profile="BLACK"].active  { border-color: rgba(100,105,115,0.5); background: rgba(74,79,88,0.18); color: #8a95a5; }
+    .cfg-profile-pill .pill-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      flex-shrink: 0;
+    }
+
+    /* Motion sliders section */
+    .cfg-motion-sliders {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 860px) { .cfg-motion-sliders { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 540px) { .cfg-motion-sliders { grid-template-columns: 1fr; } }
+
+    .cfg-motion-param {
+      /* individual param column */
+    }
+    .cfg-motion-param-label {
+      font-family: var(--font-display);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary-bright);
+      margin-bottom: 4px;
+    }
+    .cfg-motion-param-desc {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--muted);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+    .cfg-motion-val-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+    .cfg-motion-val {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--accent-cyan);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      min-width: 56px;
+      text-align: right;
+    }
+
+    /* Float enable toggle within the motion card */
+    .cfg-motion-toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0 0;
+      border-top: 1px solid var(--border);
+      margin-top: 4px;
+    }
+    .cfg-motion-toggle-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--heading);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .cfg-motion-toggle-desc {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
   </style>
 </head>
 <body>
@@ -474,15 +594,17 @@
   <!-- ── Sigil: hero background ───────────────────────────── -->
   <header class="page-hero" style="position:relative;">
     <div class="container">
-      <div class="section-eyebrow">ORP v3.0 // Global Sync Layer</div>
+      <div class="section-eyebrow">ORP Δ // Global Sync Layer</div>
       <h1>System <span style="color:var(--accent-orange);">Configuration</span></h1>
       <p>Persistent vortex calibration, SHS state override, NESS overlay control, and cross-page state synchronization via <code style="font-family:var(--font-mono);font-size:0.9em;color:var(--accent-cyan);">ORP_SYNC</code>. All changes propagate in real time to every open page.</p>
     </div>
+    <!-- Sigil must live inside position:relative header so absolute positioning resolves correctly on mobile -->
+    <div class="entropia-sigil entropia-sigil--xl entropia-sigil--hero-bg"
+         id="settings-hero-sigil"
+         data-initial-drift="0.3"
+         aria-hidden="true"
+         style="pointer-events:none;"></div>
   </header>
-
-  <div class="entropia-sigil entropia-sigil--xl entropia-sigil--hero-bg"
-       id="settings-hero-sigil"
-       data-initial-drift="0.3"></div>
 
   <!-- ═══════════════════════════════════════════════════════
        SECTION 1 — VORTEX CALIBRATION
@@ -501,7 +623,7 @@
       <div class="cfg-grid">
 
         <!-- ── Drift slider ───────────────────────────────────── -->
-        <div class="cfg-card reveal">
+        <div class="cfg-card">
           <div class="cfg-card-title">DRIFT INTENSITY // ΔS OVERRIDE</div>
           <div class="cfg-card-subtitle">Manual control of --drift-intensity CSS variable on all .entropia-sigil elements.</div>
 
@@ -517,6 +639,8 @@
               min="0" max="1" step="0.01" value="0.5"
               aria-label="Sigil drift intensity"
             />
+            <!-- Track fills left of thumb — scaleX driven by JS matching slider value -->
+            <div class="cfg-range-track" id="drift-track" style="transform:scaleX(0.5)"></div>
             <div class="cfg-drift-preview">
               <span class="cfg-drift-bar-label">INTENSITY</span>
               <div class="cfg-drift-bar-wrap">
@@ -530,7 +654,7 @@
         </div>
 
         <!-- ── Drift reference ────────────────────────────────── -->
-        <div class="cfg-card reveal">
+        <div class="cfg-card">
           <div class="cfg-card-title">INTENSITY REFERENCE</div>
           <div class="cfg-card-subtitle">How drift values map to NESS thermodynamic states.</div>
 
@@ -542,6 +666,95 @@
             <div><span class="key">0.78–1.00</span> — <span class="val" style="color:var(--danger)">RED</span>  critical instability, Warden primed</div>
             <div style="margin-top:8px"><span class="key">1.00</span> — <span class="val-muted">BLACK</span>  terminal containment failure</div>
           </div>
+        </div>
+
+        <!-- ── Section 1b: Motion Dynamics card ──────────────── -->
+        <div class="cfg-card cfg-motion-card">
+          <div class="cfg-card-title">MOTION DYNAMICS // SIGIL BEHAVIOUR</div>
+          <div class="cfg-card-subtitle">
+            Mouse-tracking LERP constants. Apply a SHS profile preset or adjust individually.
+            Changes propagate live via <code style="font-family:var(--font-mono);font-size:0.9em;color:var(--accent-cyan);">setSigilMotion()</code> + ORP_SYNC.
+          </div>
+
+          <!-- SHS preset profiles -->
+          <div class="cfg-motion-profiles" id="motion-profile-pills" role="group" aria-label="Motion profile presets">
+            <button class="cfg-profile-pill" data-profile="GREEN"  title="EASE 0.02 · IDLE 4000ms · MAX_LEAN 30">
+              <span class="pill-dot"></span>GREEN — steady
+            </button>
+            <button class="cfg-profile-pill" data-profile="YELLOW" title="EASE 0.04 · IDLE 2500ms · MAX_LEAN 50">
+              <span class="pill-dot"></span>YELLOW — restless
+            </button>
+            <button class="cfg-profile-pill" data-profile="ORANGE" title="EASE 0.06 · IDLE 1500ms · MAX_LEAN 65">
+              <span class="pill-dot"></span>ORANGE — agitated
+            </button>
+            <button class="cfg-profile-pill" data-profile="RED"    title="EASE 0.10 · IDLE 800ms · MAX_LEAN 90">
+              <span class="pill-dot"></span>RED — hunter
+            </button>
+            <button class="cfg-profile-pill" data-profile="BLACK"  title="EASE 0.015 · IDLE 5000ms · MAX_LEAN 120">
+              <span class="pill-dot"></span>BLACK — maximum reach
+            </button>
+          </div>
+
+          <!-- Individual sliders -->
+          <div class="cfg-motion-sliders">
+
+            <!-- EASE -->
+            <div class="cfg-motion-param">
+              <div class="cfg-motion-param-label">EASE</div>
+              <div class="cfg-motion-param-desc">LERP smoothing factor. Lower = more viscous.</div>
+              <div class="cfg-motion-val-row">
+                <span class="cfg-slider-label">FACTOR</span>
+                <span class="cfg-motion-val" id="ease-display">0.030</span>
+              </div>
+              <input type="range" class="cfg-range" id="ease-slider"
+                     min="0.005" max="0.20" step="0.005" value="0.03"
+                     aria-label="LERP ease factor" />
+              <div class="cfg-range-track" id="ease-track" style="transform:scaleX(0.125)"></div>
+            </div>
+
+            <!-- IDLE_MS -->
+            <div class="cfg-motion-param">
+              <div class="cfg-motion-param-label">IDLE_MS</div>
+              <div class="cfg-motion-param-desc">ms before returning to home after stillness.</div>
+              <div class="cfg-motion-val-row">
+                <span class="cfg-slider-label">MILLISECONDS</span>
+                <span class="cfg-motion-val" id="idle-display">3000</span>
+              </div>
+              <input type="range" class="cfg-range" id="idle-slider"
+                     min="200" max="8000" step="100" value="3000"
+                     aria-label="Idle return delay in milliseconds" />
+              <div class="cfg-range-track" id="idle-track" style="transform:scaleX(0.357)"></div>
+            </div>
+
+            <!-- MAX_LEAN -->
+            <div class="cfg-motion-param">
+              <div class="cfg-motion-param-label">MAX_LEAN</div>
+              <div class="cfg-motion-param-desc">Max pixel displacement from anchor point.</div>
+              <div class="cfg-motion-val-row">
+                <span class="cfg-slider-label">PIXELS</span>
+                <span class="cfg-motion-val" id="lean-display">45</span>
+              </div>
+              <input type="range" class="cfg-range" id="lean-slider"
+                     min="10" max="160" step="5" value="45"
+                     aria-label="Max lean displacement in pixels" />
+              <div class="cfg-range-track" id="lean-track" style="transform:scaleX(0.233)"></div>
+            </div>
+
+          </div>
+
+          <!-- Float enable toggle -->
+          <div class="cfg-motion-toggle-row">
+            <div>
+              <div class="cfg-motion-toggle-label">FLOAT TRACKING</div>
+              <div class="cfg-motion-toggle-desc">Enable mouse-tracking LERP motion on desktop</div>
+            </div>
+            <label class="cfg-toggle" aria-label="Enable sigil mouse tracking">
+              <input type="checkbox" id="motion-float-toggle" checked />
+              <div class="cfg-toggle-track"></div>
+            </label>
+          </div>
+
+          <div class="cfg-feedback" id="motion-feedback">// MOTION PARAMS APPLIED</div>
         </div>
 
       </div>
@@ -564,7 +777,7 @@
         </div>
       </div>
 
-      <div class="cfg-card reveal" style="max-width:680px;">
+      <div class="cfg-card" style="max-width:680px;">
         <div class="cfg-card-title">STATE SELECTOR</div>
         <div class="cfg-card-subtitle">Select a state to override or AUTO to restore live telemetry binding.</div>
 
@@ -607,7 +820,7 @@
       <div class="cfg-grid">
 
         <!-- ── Overlay toggles ────────────────────────────────── -->
-        <div class="cfg-card reveal">
+        <div class="cfg-card">
           <div class="cfg-card-title">OVERLAY CONTROLS</div>
           <div class="cfg-card-subtitle">Manage NESS HUD and session entropy state.</div>
 
@@ -640,7 +853,7 @@
         </div>
 
         <!-- ── Overlay module info ────────────────────────────── -->
-        <div class="cfg-card reveal">
+        <div class="cfg-card">
           <div class="cfg-card-title">ARCHITECTURE NOTE</div>
           <div class="cfg-card-subtitle">Integration point documentation for <code style="font-family:var(--font-mono);color:var(--accent-cyan);font-size:0.95em;">ORP_SYNC</code>.</div>
 
@@ -677,7 +890,7 @@
         </div>
       </div>
 
-      <div class="cfg-card reveal" style="max-width:680px;">
+      <div class="cfg-card" style="max-width:680px;">
         <div class="cfg-card-title">CURRENT STATE SNAPSHOT</div>
         <div class="cfg-card-subtitle">All <code style="font-family:var(--font-mono);color:var(--accent-cyan);font-size:0.95em;">orp_*</code> keys in localStorage.</div>
 
@@ -709,7 +922,7 @@
         </div>
       </div>
 
-      <div class="cfg-danger reveal">
+      <div class="cfg-danger">
         <div class="cfg-danger-title">⚠ DESTRUCTIVE OPERATIONS</div>
         <div class="cfg-danger-desc">
           These actions cannot be undone. Resetting all settings removes all <code style="font-family:var(--font-mono);font-size:0.9em;color:var(--accent-cyan);">orp_*</code> keys from localStorage and broadcasts factory defaults to all open pages.
@@ -790,6 +1003,7 @@
       var driftSlider  = document.getElementById('drift-slider');
       var driftDisplay = document.getElementById('drift-display');
       var driftBar     = document.getElementById('drift-bar');
+      var driftTrack   = document.getElementById('drift-track');
       var driftLabel   = document.getElementById('drift-state-label');
 
       // Load persisted value
@@ -800,7 +1014,8 @@
       function _updateDriftUI(v) {
         v = parseFloat(v);
         driftDisplay.textContent = v.toFixed(2);
-        if (driftBar) driftBar.style.transform = 'scaleX(' + v + ')';
+        if (driftBar)   driftBar.style.transform   = 'scaleX(' + v + ')';
+        if (driftTrack) driftTrack.style.transform = 'scaleX(' + v + ')';
 
         driftDisplay.className = 'cfg-slider-value';
         if (v < 0.25) {
@@ -896,14 +1111,185 @@
         floatToggle.addEventListener('change', function () {
           var v = this.checked;
           if (window.ORP_SYNC) ORP_SYNC.save('sigil_float', v);
-          // Sigil float is managed by entropia-sigil.js's rAF loop —
-          // toggling off freezes the wrapper in place.
+          // Sigil float toggle — call both the rAF controller and setSigilMotion
+          if (typeof window._sigilSetFloat === 'function') window._sigilSetFloat(v);
+          if (typeof window.setSigilMotion === 'function') window.setSigilMotion({ float: v });
           document.querySelectorAll('.es-float-wrapper').forEach(function (w) {
             w.style.transition = v ? '' : 'none';
             if (!v) w.style.transform = 'translate(-50%, -50%) translate3d(0,0,0)';
           });
         });
       }
+
+      /* ── 4b. MOTION DYNAMICS (Section 1b) ───────────────── */
+      (function () {
+        /* Profile presets — must match SHS_MOTION_MAP in entropia-sigil.js */
+        var PROFILES = {
+          GREEN:  { ease: 0.02,  idleMs: 4000, maxLean: 30  },
+          YELLOW: { ease: 0.04,  idleMs: 2500, maxLean: 50  },
+          ORANGE: { ease: 0.06,  idleMs: 1500, maxLean: 65  },
+          RED:    { ease: 0.10,  idleMs: 800,  maxLean: 90  },
+          BLACK:  { ease: 0.015, idleMs: 5000, maxLean: 120 },
+        };
+
+        var easeSlider   = document.getElementById('ease-slider');
+        var easeDisplay  = document.getElementById('ease-display');
+        var easeTrack    = document.getElementById('ease-track');
+        var idleSlider   = document.getElementById('idle-slider');
+        var idleDisplay  = document.getElementById('idle-display');
+        var idleTrack    = document.getElementById('idle-track');
+        var leanSlider   = document.getElementById('lean-slider');
+        var leanDisplay  = document.getElementById('lean-display');
+        var leanTrack    = document.getElementById('lean-track');
+        var mfToggle     = document.getElementById('motion-float-toggle');
+        var profileGroup = document.getElementById('motion-profile-pills');
+
+        if (!easeSlider || !idleSlider || !leanSlider) return;
+
+        /* ── Restore persisted motion params ─────────────── */
+        var savedEase = window.ORP_SYNC ? ORP_SYNC.load('sigil_ease', 0.03)    : 0.03;
+        var savedIdle = window.ORP_SYNC ? ORP_SYNC.load('sigil_idle_ms', 3000) : 3000;
+        var savedLean = window.ORP_SYNC ? ORP_SYNC.load('sigil_max_lean', 45)  : 45;
+        var savedMF   = window.ORP_SYNC ? ORP_SYNC.load('sigil_float', true)   : true;
+
+        easeSlider.value = savedEase;
+        idleSlider.value = savedIdle;
+        leanSlider.value = savedLean;
+        if (mfToggle) mfToggle.checked = savedMF;
+
+        _updateMotionUI(savedEase, savedIdle, savedLean);
+
+        /* ── Apply + save helper ─────────────────────────── */
+        function _applyAndSave(ease, idle, lean) {
+          /* Apply to sigil live */
+          if (typeof window.setSigilMotion === 'function') {
+            window.setSigilMotion({ ease: ease, idleMs: idle, maxLean: lean });
+          }
+          /* Persist */
+          if (window.ORP_SYNC) {
+            ORP_SYNC.save('sigil_ease',     ease);
+            ORP_SYNC.save('sigil_idle_ms',  idle);
+            ORP_SYNC.save('sigil_max_lean', lean);
+          }
+        }
+
+        /* ── Update slider UI readouts ───────────────────── */
+        function _updateMotionUI(ease, idle, lean) {
+          if (easeDisplay)  easeDisplay.textContent  = parseFloat(ease).toFixed(3);
+          if (idleDisplay)  idleDisplay.textContent  = Math.round(idle);
+          if (leanDisplay)  leanDisplay.textContent  = Math.round(lean);
+
+          /* Track fill: scaleX = (val - min) / (max - min) */
+          if (easeTrack)  easeTrack.style.transform  = 'scaleX(' + (((ease - 0.005) / 0.195)).toFixed(4) + ')';
+          if (idleTrack)  idleTrack.style.transform  = 'scaleX(' + (((idle - 200)  / 7800)).toFixed(4)  + ')';
+          if (leanTrack)  leanTrack.style.transform  = 'scaleX(' + (((lean - 10)   / 150)).toFixed(4)   + ')';
+        }
+
+        /* ── Clear active pill ───────────────────────────── */
+        function _clearPills() {
+          if (profileGroup) {
+            profileGroup.querySelectorAll('.cfg-profile-pill').forEach(function (p) {
+              p.classList.remove('active');
+            });
+          }
+        }
+
+        /* ── Debounced save timer ─────────────────────────── */
+        var _motionSaveTimer = null;
+        function _debouncedApply() {
+          clearTimeout(_motionSaveTimer);
+          _motionSaveTimer = setTimeout(function () {
+            var e = parseFloat(easeSlider.value);
+            var i = parseFloat(idleSlider.value);
+            var l = parseFloat(leanSlider.value);
+            _applyAndSave(e, i, l);
+            flash('motion-feedback');
+            updateInspector();
+          }, 200);
+        }
+
+        /* ── Slider listeners ────────────────────────────── */
+        easeSlider.addEventListener('input', function () {
+          _clearPills();
+          _updateMotionUI(parseFloat(this.value), parseFloat(idleSlider.value), parseFloat(leanSlider.value));
+          _debouncedApply();
+        });
+        idleSlider.addEventListener('input', function () {
+          _clearPills();
+          _updateMotionUI(parseFloat(easeSlider.value), parseFloat(this.value), parseFloat(leanSlider.value));
+          _debouncedApply();
+        });
+        leanSlider.addEventListener('input', function () {
+          _clearPills();
+          _updateMotionUI(parseFloat(easeSlider.value), parseFloat(idleSlider.value), parseFloat(this.value));
+          _debouncedApply();
+        });
+
+        /* ── Profile pill listeners ───────────────────────── */
+        if (profileGroup) {
+          profileGroup.querySelectorAll('.cfg-profile-pill').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+              var key = this.dataset.profile;
+              var p   = PROFILES[key];
+              if (!p) return;
+
+              /* Update sliders to profile values */
+              easeSlider.value = p.ease;
+              idleSlider.value = p.idleMs;
+              leanSlider.value = p.maxLean;
+              _updateMotionUI(p.ease, p.idleMs, p.maxLean);
+              _applyAndSave(p.ease, p.idleMs, p.maxLean);
+
+              /* Mark active pill */
+              _clearPills();
+              btn.classList.add('active');
+              flash('motion-feedback');
+              updateInspector();
+            });
+          });
+        }
+
+        /* ── Float tracking toggle ───────────────────────── */
+        if (mfToggle) {
+          mfToggle.addEventListener('change', function () {
+            var v = this.checked;
+            if (window.ORP_SYNC) ORP_SYNC.save('sigil_float', v);
+            /* Tell the sigil's float loop */
+            if (typeof window._sigilSetFloat === 'function') window._sigilSetFloat(v);
+            if (typeof window.setSigilMotion === 'function') window.setSigilMotion({ float: v });
+            flash('motion-feedback');
+            updateInspector();
+          });
+        }
+
+        /* ── Cross-tab sync for motion params ─────────────── */
+        window.addEventListener('orp-settings-update', function (e) {
+          if (!e.detail) return;
+          var k = e.detail.key, v = e.detail.value;
+          if (k === 'sigil_ease'     && easeSlider) { easeSlider.value = v; _updateMotionUI(v, parseFloat(idleSlider.value), parseFloat(leanSlider.value)); }
+          if (k === 'sigil_idle_ms'  && idleSlider) { idleSlider.value = v; _updateMotionUI(parseFloat(easeSlider.value), v, parseFloat(leanSlider.value)); }
+          if (k === 'sigil_max_lean' && leanSlider) { leanSlider.value = v; _updateMotionUI(parseFloat(easeSlider.value), parseFloat(idleSlider.value), v); }
+          if (k === 'sigil_float'    && mfToggle)   { mfToggle.checked = !!v; }
+        });
+
+        /* ── Danger zone: reset includes motion params ──────── */
+        /* Patch the existing reset handler to also reset motion */
+        var _origReset = document.getElementById('reset-all-btn');
+        if (_origReset) {
+          _origReset.addEventListener('click', function () {
+            var defaults = PROFILES['GREEN'];
+            easeSlider.value = defaults.ease;
+            idleSlider.value = defaults.idleMs;
+            leanSlider.value = defaults.maxLean;
+            _updateMotionUI(defaults.ease, defaults.idleMs, defaults.maxLean);
+            _clearPills();
+            profileGroup && profileGroup.querySelector('[data-profile="GREEN"]') &&
+              profileGroup.querySelector('[data-profile="GREEN"]').classList.add('active');
+            if (mfToggle) mfToggle.checked = true;
+          });
+        }
+
+      }());
 
       /* ── 5. SESSION ENTROPY RESET ────────────────────────── */
       var entropyResetBtn = document.getElementById('entropy-reset-btn');
@@ -931,6 +1317,11 @@
           var valClass = k === 'overlay_visible' ? (v ? 'val-green' : 'val') : 'val';
           html += '<div><span class="key">orp_' + k + '</span>  →  <span class="' + valClass + '">' + JSON.stringify(v) + '</span></div>';
         });
+        /* Live motion globals (not persisted until changed) */
+        html += '<div style="margin-top:8px;border-top:1px solid var(--border);padding-top:6px;color:var(--muted);">// runtime motion globals</div>';
+        html += '<div><span class="key">SIGIL_EASE</span>     →  <span class="val">' + (window.SIGIL_EASE     !== undefined ? window.SIGIL_EASE.toFixed(3)  : '—') + '</span></div>';
+        html += '<div><span class="key">SIGIL_IDLE_MS</span>  →  <span class="val">' + (window.SIGIL_IDLE_MS  !== undefined ? window.SIGIL_IDLE_MS            : '—') + '</span></div>';
+        html += '<div><span class="key">SIGIL_MAX_LEAN</span> →  <span class="val">' + (window.SIGIL_MAX_LEAN !== undefined ? window.SIGIL_MAX_LEAN            : '—') + '</span></div>';
         html += '<div style="margin-top:6px;border-top:1px solid var(--border);padding-top:6px;">';
         html += '<span class="key">session:entropy</span>  →  <span class="val">' + sessionEntropy.toFixed(4) + '</span></div>';
         el.innerHTML = html;
@@ -981,7 +1372,36 @@
         });
       }
 
-      /* ── 8. Cross-tab sync listener ──────────────────────── */
+      /* ── 8. Settings-page reveal observer ───────────────── */
+      /* Belt-and-suspenders: main.js now includes .cfg-card in its
+         selector, but this page-scoped observer catches any cards that
+         weren't yet observed (e.g. if main.js ran before this script
+         appended new elements). Cards above the fold get .visible
+         immediately without a transition so they aren't hidden on load. */
+      (function () {
+        var cfgEls = document.querySelectorAll('.cfg-card, .cfg-danger');
+        var cfgObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+              cfgObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.01, rootMargin: '0px 0px -40px 0px' });
+
+        cfgEls.forEach(function (el) {
+          if (!el.classList.contains('reveal')) {
+            /* main.js hasn't touched this element yet — add reveal
+               ourselves so the transition is defined, then observe */
+            el.classList.add('reveal');
+          }
+          if (!el.classList.contains('visible')) {
+            cfgObserver.observe(el);
+          }
+        });
+      }());
+
+      /* ── 9. Cross-tab sync listener ──────────────────────── */
       window.addEventListener('orp-settings-update', function (e) {
         if (!e.detail) return;
         var k = e.detail.key, v = e.detail.value;
