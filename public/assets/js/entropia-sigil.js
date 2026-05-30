@@ -190,6 +190,137 @@
   }
 
 
+  /* ──────────────────────────────────────────────────────────
+     initSigilFloat()
+     ─────────────────
+     Drives a smooth, boundary-aware float on every .entropia-sigil
+     with the --hero-bg modifier on desktop (≥ 701px).
+
+     HOW IT WORKS
+     ─────────────
+     Two independent sine waves run at different periods
+     (slow horizontal ~28s, slower vertical ~22s) to produce
+     an organic Lissajous path. The resulting offset is clamped
+     to keep the sigil fully inside the visible viewport at all
+     times, accounting for:
+       • Nav bar height (read from #main-nav.getBoundingClientRect)
+       • Current sigil size (getBoundingClientRect on the element)
+       • A configurable inset margin from each viewport edge
+
+     The position is applied as translate3d() which composites on
+     the GPU without triggering layout. The rAF loop pauses
+     automatically when the tab is backgrounded (Page Visibility API)
+     and stops entirely on mobile (< 701px) to save battery.
+
+     DRIFT COUPLING
+     ───────────────
+     Amplitude and speed both scale with --drift-intensity so the
+     sigil floats more erratically at high entropy — the float
+     becomes 30% wider and 40% faster at drift = 1.0.
+  ─────────────────────────────────────────────────────────── */
+  function initSigilFloat() {
+    const DESKTOP_BP  = 701;    // px — mirrors CSS breakpoint
+    const EDGE_INSET  = 16;     // px — minimum clearance from every viewport edge
+    const BASE_AMP_X  = 38;     // px — horizontal float radius at drift=0
+    const BASE_AMP_Y  = 52;     // px — vertical float radius at drift=0
+    const PERIOD_X    = 28000;  // ms — horizontal wave period
+    const PERIOD_Y    = 22000;  // ms — vertical wave period
+
+    let _rafHandle  = null;
+    let _paused     = false;
+
+    // Pause when tab is hidden to save CPU/GPU
+    document.addEventListener('visibilitychange', () => {
+      _paused = document.hidden;
+      if (!_paused && !_rafHandle) _schedule();
+    });
+
+    function _schedule() {
+      _rafHandle = requestAnimationFrame(_tick);
+    }
+
+    function _tick(ts) {
+      _rafHandle = null;
+
+      // Stop entirely on mobile
+      if (window.innerWidth < DESKTOP_BP) {
+        return; // will restart if window resizes above bp (see resize observer below)
+      }
+
+      const sigils = document.querySelectorAll('.entropia-sigil.entropia-sigil--hero-bg');
+      if (!sigils.length) return _schedule();
+
+      sigils.forEach(sigil => {
+        // ── Read drift intensity ──────────────────────────────
+        const drift = parseFloat(
+          sigil.style.getPropertyValue('--drift-intensity') || '0'
+        );
+
+        // ── Amplitude and speed scale with drift ──────────────
+        const ampX  = BASE_AMP_X * (1 + drift * 0.30);
+        const ampY  = BASE_AMP_Y * (1 + drift * 0.30);
+        const spdMul = 1 + drift * 0.40;   // faster at high entropy
+
+        // ── Lissajous path (two offset sines) ─────────────────
+        const tx = Math.sin((ts * spdMul) / PERIOD_X * Math.PI * 2) * ampX;
+        const ty = Math.sin((ts * spdMul) / PERIOD_Y * Math.PI * 2 + 0.9) * ampY;
+
+        // ── Boundary clamping ─────────────────────────────────
+        // Read the element's current bounding rect (CSS positions it
+        // at a fixed anchor; we just need its size + anchor coords)
+        const rect    = sigil.getBoundingClientRect();
+        const navEl   = document.getElementById('main-nav');
+        const navH    = navEl ? navEl.getBoundingClientRect().height : 0;
+
+        const halfW   = rect.width  / 2;
+        const halfH   = rect.height / 2;
+
+        // Center of element in viewport (based on CSS anchor, no JS transform yet)
+        // We reconstruct it by removing any existing JS translate from the rect center
+        const cx = rect.left + halfW;
+        const cy = rect.top  + halfH;
+
+        // Allowed translate range so the sigil stays inside viewport
+        const minTx = EDGE_INSET + halfW - cx;
+        const maxTx = window.innerWidth  - EDGE_INSET - halfW - cx;
+        const minTy = navH + EDGE_INSET + halfH - cy;
+        const maxTy = window.innerHeight - EDGE_INSET - halfH - cy;
+
+        const clampedTx = Math.min(maxTx, Math.max(minTx, tx));
+        const clampedTy = Math.min(maxTy, Math.max(minTy, ty));
+
+        // ── Apply — GPU compositor only, no layout ────────────
+        sigil.style.transform =
+          `translateY(-50%) translate3d(${clampedTx.toFixed(2)}px, ${clampedTy.toFixed(2)}px, 0)`;
+      });
+
+      if (!_paused) _schedule();
+    }
+
+    // ── Start / restart on resize ─────────────────────────────
+    // Use ResizeObserver on <body> so we catch orientation changes too.
+    // Debounced to avoid firing every pixel during a drag-resize.
+    let _resizeTimer = null;
+    const _resizeObs = new ResizeObserver(() => {
+      clearTimeout(_resizeTimer);
+      _resizeTimer = setTimeout(() => {
+        // Reset transforms on mobile so CSS takes over cleanly
+        if (window.innerWidth < DESKTOP_BP) {
+          document.querySelectorAll('.entropia-sigil.entropia-sigil--hero-bg')
+            .forEach(s => { s.style.transform = ''; });
+          if (_rafHandle) { cancelAnimationFrame(_rafHandle); _rafHandle = null; }
+        } else if (!_rafHandle && !_paused) {
+          _schedule();
+        }
+      }, 120);
+    });
+    _resizeObs.observe(document.body);
+
+    // Boot
+    if (window.innerWidth >= DESKTOP_BP) _schedule();
+  }
+
+
   /* ── Auto-init on DOMContentLoaded ──────────────────────── */
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', _autoInit);
@@ -200,6 +331,7 @@
   function _autoInit() {
     initEntropiaSigils();
     bindSigilHover();
+    initSigilFloat();   // boundary-aware float — desktop only, rAF-driven
 
     // Read initial drift from a data attribute if present:
     //   <div class="entropia-sigil" data-initial-drift="0.25">
@@ -233,5 +365,6 @@
   global.updateSigilDrift    = updateSigilDrift;
   global.updateSigilFromSHS  = updateSigilFromSHS;
   global.initEntropiaSigils  = initEntropiaSigils;
+  global.initSigilFloat      = initSigilFloat;
 
 }(window));

@@ -34,7 +34,7 @@
     scrollAccum:    0,
     lastScrollY:    window.scrollY,
     panelOpen:      false,
-    decayTimer:     null,
+    _rafHandle:     null,
   };
 
   /* ── Helpers ────────────────────────────────────────────── */
@@ -139,16 +139,16 @@
         position: fixed;
         bottom: 24px;
         left: 24px;
-        /* lowered default desktop stack */
-        z-index: 1200;
+        z-index: 9995;
         display: flex;
         flex-direction: row;
         align-items: flex-end;
-        gap: 10px;
+        gap: 12px;
         pointer-events: none;
         font-family: "Oxanium", "Space Grotesk", sans-serif;
-        /* GPU: promote overlay to own layer so panel open/close
-           doesn't trigger full-page compositing */
+        /* GPU: own compositor layer — panel open/close never triggers
+           full-page stacking context recalculation */
+        will-change: transform;
         contain: layout style;
         transform: translateZ(0);
         transition:
@@ -161,6 +161,20 @@
         box-sizing: border-box;
       }
 
+      /* ── Panel closed: kill ALL pointer events inside ──────
+         The #cc-overlay * rule above re-enables events on every
+         descendant, including the panel and its children even
+         when it is visually collapsed. These two rules win by
+         specificity and ensure zero click interception when
+         the panel is not open.
+      ─────────────────────────────────────────────────────── */
+      #cc-overlay #cc-panel:not(.open) {
+        pointer-events: none !important;
+      }
+      #cc-overlay #cc-panel:not(.open) * {
+        pointer-events: none !important;
+      }
+
       /* ── Toggle tab ────────────────────────────────── */
       #cc-tab {
         display: inline-flex;
@@ -169,7 +183,7 @@
         padding: 7px 14px;
         background: rgba(15,18,23,0.92);
         border: 1px solid rgba(221,17,17,0.25);
-        border-radius: 999px;
+        border-radius: 9999px;
         color: #dce2eb;
         font-family: "Oxanium", sans-serif;
         font-size: 0.72rem;
@@ -178,15 +192,18 @@
         cursor: pointer;
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
-        transition: border-color 250ms ease, background 250ms ease, transform 250ms ease;
+        /* GPU: only transition transform+border-color — both compositor-friendly */
+        transition: transform 0.25s cubic-bezier(0.23,1,0.32,1),
+                    border-color 0.25s ease;
+        will-change: transform;
         box-shadow: 0 4px 20px rgba(0,0,0,0.6);
         margin-top: 0;
         align-self: flex-end;
       }
       #cc-tab:hover {
+        /* translateY+scale: pure GPU compositing, zero paint triggers */
+        transform: translateY(-2px) scale(1.02);
         border-color: rgba(255,102,0,0.5);
-        background: rgba(22,26,34,0.96);
-        transform: translateY(-1px);
       }
 
       /* ── Animated dot ──────────────────────────────── */
@@ -243,16 +260,20 @@
 
       /* ── Panel ─────────────────────────────────────── */
       #cc-panel {
-        width: 320px;
-        max-width: 0;
+        /* width:0 + overflow:hidden collapses the panel visually.
+           will-change:width,opacity promotes to GPU layer so the
+           open/close slide doesn't trigger ancestor layout recalc. */
+        width: 0;
         overflow: hidden;
-        transition: max-width 0.38s cubic-bezier(0.2,0,0,1), opacity 0.25s ease;
         opacity: 0;
+        transition: width 0.42s cubic-bezier(0.23,1,0.32,1),
+                    opacity 0.25s ease;
+        will-change: width, opacity;
         pointer-events: none;
         align-self: flex-end;
       }
       #cc-panel.open {
-        max-width: 340px;
+        width: 340px;
         opacity: 1;
         pointer-events: auto;
       }
@@ -515,14 +536,13 @@
           align-self: flex-start; 
         }
         #cc-panel {
-          max-width: none;
-          width: calc(100vw - 24px); /* full width minus left margin */
-          /* FIX: Anchor panel to the left so it opens rightward */
-          align-self: flex-start; 
+          width: 0;           /* collapsed by default, same as desktop */
+          align-self: flex-start;
         }
         #cc-panel.open {
-          max-width: min(360px, calc(100vw - 32px));
+          width: min(360px, calc(100vw - 32px));
           max-height: 600px;
+          align-self: flex-start;
         }
         .cc-panel-inner {
           width: 100%;
@@ -545,7 +565,37 @@
         transform: translateY(12px);
       }
 
-      /* ── Reduced motion ────────────────────────────── */
+      /* ── Hide during hamburger menu ─────────────────── */
+      body.mobile-menu-open #cc-overlay,
+      body.menu-open         #cc-overlay,
+      body.nav-open          #cc-overlay,
+      body.hamburger-open    #cc-overlay {
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+      }
+
+      /* ── Sigil GPU layer hints ───────────────────────── */
+      .entropia-sigil {
+        will-change: transform, filter, opacity;
+        transition: filter 0.4s ease, transform 0.6s cubic-bezier(0.23,1,0.32,1);
+      }
+
+      /* High-drift glitch — compositor-only transform + filter */
+      .entropia-sigil.high-drift {
+        filter: contrast(1.15) brightness(1.08) hue-rotate(8deg);
+        animation: orp-sigil-glitch 0.4s linear infinite alternate;
+      }
+
+      @keyframes orp-sigil-glitch {
+        0%   { transform: translate(0,     0); }
+        20%  { transform: translate(-2px,  2px); }
+        40%  { transform: translate( 2px, -2px); }
+        60%  { transform: translate(-1px,  1px); }
+        100% { transform: translate( 1px, -1px); }
+      }
+
+      /* ── Mobile: pin to bottom-left, panel opens upward ──── */
       @media (prefers-reduced-motion: reduce) {
         .cc-dot, #cc-tab { animation: none !important; transition: none !important; }
         #cc-panel { transition: none !important; }
@@ -668,6 +718,9 @@
       const pg = window.location.pathname.split("/").pop() || "index.html";
       pageEl.textContent = pg.replace(".html","").toUpperCase() || "INDEX";
     }
+
+    // Sync ASCII art panel on every update (drift-driven animation)
+    _syncAsciiPanel(state.shs);
   }
 
   /* ── Inject delta ───────────────────────────────────────── */
@@ -699,6 +752,92 @@
       addLog("wn", "SES", `Session pressure: ${(pressure * 100).toFixed(0)}%`);
       update();
     }
+  }
+
+  /* ── ASCII panel live sync ──────────────────────────────── */
+  // Maps SHS state → visual parameters for the ASCII art block.
+  // Called from the rAF loop whenever SHS changes.
+  const ASCII_SHS_STYLE = {
+    GREEN:  { color: '#3fb950', glow: 'rgba(63,185,80,0.45)',  char: '~', wingChar: '//',  label: '[= STAR =]',  core: '[ CORE ]' },
+    AMBER:  { color: '#ff8833', glow: 'rgba(255,136,51,0.5)', char: '≈', wingChar: '//≈', label: '[≈ STAR ≈]',  core: '[ CORE ]' },
+    RED:    { color: '#ff3333', glow: 'rgba(221,17,17,0.6)',   char: '!', wingChar: '//!', label: '[! STAR !]',  core: '[!CORE!]' },
+  };
+
+  // Glitch chars pool for RED/critical state
+  const GLITCH_POOL = ['█','▓','▒','░','╳','╬','╫','╪','║','═','╔','╗'];
+  let _asciiFrame = 0;
+
+  function _syncAsciiPanel(shs) {
+    const panel = document.querySelector('.ascii-core-panel');
+    if (!panel) return;
+
+    const key   = (shs === 'AMBER') ? 'AMBER' : (shs === 'RED') ? 'RED' : 'GREEN';
+    const cfg   = ASCII_SHS_STYLE[key];
+    _asciiFrame++;
+
+    // Glow driven by SHS
+    panel.style.color      = cfg.color;
+    panel.style.textShadow = `0 0 6px ${cfg.glow}, 0 0 14px ${cfg.glow.replace('0.45','0.2').replace('0.5','0.2').replace('0.6','0.25')}`;
+
+    // Rebuild ASCII content with live drift animation
+    const drift = parseFloat(
+      document.querySelector('.entropia-sigil')
+        ?.style.getPropertyValue('--drift-intensity') || '0'
+    );
+
+    // Inner wave chars animate each tick
+    const wave = _buildWave(cfg.char, drift, _asciiFrame);
+
+    // Wing chars flicker on RED
+    const wL = (key === 'RED' && Math.random() > 0.6)
+      ? _glitchStr('//', drift) : '//';
+    const wR = (key === 'RED' && Math.random() > 0.6)
+      ? _glitchStr('//', drift) : '//';
+
+    // Core label glitches on high drift
+    const coreLabel = (drift > 0.55 && Math.random() > 0.5)
+      ? _glitchStr(cfg.core, drift) : cfg.core;
+
+    panel.textContent =
+`    ${wL}              ${wR}
+   ${wL}              ${wR}
+  ${wL}              ${wR}
+ ${wL}              ${wR}
+ ||      __________      ||
+ ||     /          \\     ||
+ ||    |  ${wave}  |    ||
+ ||    | ( ( || ) ) |    ||
+ ||    |     ||     |    ||
+  \\\\    \\__________/    //
+   \\\\________||________//
+        ${cfg.label}
+       / ${coreLabel} \\
+      /____________\\`;
+  }
+
+  function _buildWave(char, drift, frame) {
+    // 8-char wave that shifts each tick, intensity grows with drift
+    const len   = 8;
+    const shift = frame % len;
+    let   out   = '';
+    for (let i = 0; i < len; i++) {
+      const pos = (i + shift) % len;
+      if (pos < 2 && drift > 0.25) {
+        out += char;
+      } else {
+        out += '~';
+      }
+    }
+    return out;
+  }
+
+  function _glitchStr(str, drift) {
+    if (drift < 0.4) return str;
+    return str.split('').map(c => {
+      return (Math.random() < drift * 0.4)
+        ? GLITCH_POOL[Math.floor(Math.random() * GLITCH_POOL.length)]
+        : c;
+    }).join('');
   }
 
   /* ── Init ───────────────────────────────────────────────── */
@@ -775,11 +914,55 @@
       injectDelta(0.002 + Math.random() * 0.004);
     });
 
-    // Passive decay loop
-    state.decayTimer = setInterval(decay, 900);
+    // ── rAF-capped decay + sigil sync loop ───────────────────
+    // Replaces setInterval: runs once per animation frame but
+    // only triggers decay logic every ~900ms. This caps DOM
+    // writes to the screen's own refresh rate and eliminates
+    // off-screen timer drift / layout-thrash from setInterval.
+    let _lastDecayTs = 0;
+    let _lastSigilTs = 0;
+    let _lastSigilSHS = '';
+
+    function _rafLoop(ts) {
+      // Decay tick every 900ms
+      if (ts - _lastDecayTs >= 900) {
+        decay();
+        _lastDecayTs = ts;
+      }
+
+      // Sigil + ASCII sync every 800ms
+      // (absorbs the setInterval previously inside entropia-sigil.js)
+      if (ts - _lastSigilTs >= 800) {
+        const pill = document.getElementById('cc-tab-shs');
+        if (pill) {
+          const shs = pill.textContent.trim().toUpperCase();
+          if (shs && shs !== _lastSigilSHS) {
+            _lastSigilSHS = shs;
+            if (typeof window.updateSigilFromSHS === 'function') {
+              const mapped = shs === 'AMBER' ? 'YELLOW' : shs;
+              window.updateSigilFromSHS(mapped);
+            }
+            _syncAsciiPanel(shs);
+          }
+        }
+        // Toggle high-drift class on sigil(s) based on current drift
+        const drift = clamp(state.deltaS * 4 + (100 - state.rho) / 100, 0, 1);
+        document.querySelectorAll('.entropia-sigil').forEach(s => {
+          s.classList.toggle('high-drift', drift > 0.55);
+        });
+        _lastSigilTs = ts;
+      }
+
+      state._rafHandle = requestAnimationFrame(_rafLoop);
+    }
+    state._rafHandle = requestAnimationFrame(_rafLoop);
+    window._orpRafActive = true; // signal: entropia-sigil.js needs no separate setInterval
 
     // Apply cross-page session pressure
     applySessionPressure();
+
+    // Boot ASCII panel to GREEN nominal state
+    _syncAsciiPanel('GREEN');
 
     // Initial log
     const page = (window.location.pathname.split("/").pop() || "index.html").replace(".html","").toUpperCase();

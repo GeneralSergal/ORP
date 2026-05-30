@@ -210,42 +210,47 @@
 
 
 /* ── PLACEMENT: Hero background sigil ────────────────────────
-   On desktop (≥ 701px): fixed to the viewport right side so it
-   persists while scrolling — detached from any hero container.
-   On mobile: absolute inside its hero parent, top-right corner.
-   Set pointer-events:none so it never intercepts clicks.
+   Mobile: absolute inside its hero parent, pulled fully on-screen.
+   Desktop (≥ 701px): fixed to viewport right side — position is
+   driven by JS float (initSigilFloat) via --sigil-tx / --sigil-ty
+   CSS variables set on the element. Falls back to centered-right
+   if JS hasn't run yet.
    ─────────────────────────────────────────────────────────── */
 .entropia-sigil--hero-bg {
   /* Mobile default — absolute inside position:relative hero */
   position: absolute;
   top: 16px;
-  right: -20px;
+  right: 8px;          /* was -20px — pulled fully on-screen with safe margin */
   transform: none;
-  opacity: 0.30;
+  opacity: 0.28;
   pointer-events: none !important;
   z-index: 0;
   overflow: hidden;
-  width: min(200px, 55vw) !important;
-  height: min(200px, 55vw) !important;
+  width: min(180px, 48vw) !important;   /* slightly smaller so it never clips */
+  height: min(180px, 48vw) !important;
 }
 
 @media (min-width: 701px) {
   .entropia-sigil--hero-bg {
-    /* Desktop: fixed to viewport, vertically centered,
-       right side — fully visible and clear of content */
+    /* Desktop: fixed, JS drives position via translate3d each rAF.
+       top/right establish the resting anchor; JS overrides transform. */
     position: fixed;
     top: 50vh;
-    right: 20px;                /* fully on-screen, not bleeding off edge */
+    right: 20px;
+    /* translate3d set by JS; translateY(-50%) is the pre-JS fallback */
     transform: translateY(-50%);
     opacity: 0.20;
-    z-index: 1;                 /* above bg layers, below nav/UI */
+    z-index: 1;
     width: 340px !important;
     height: 340px !important;
     overflow: visible;
-    /* Soft fade toward the edges so it reads as atmosphere */
+    /* Soft atmospheric fade at edges */
     mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, black 45%, transparent 80%);
     -webkit-mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, black 45%, transparent 80%);
-    will-change: transform;     /* own compositing layer — no page repaints */
+    /* GPU: JS writes transform every rAF — own compositor layer */
+    will-change: transform;
+    /* Smooth out the JS steps slightly — 120ms lag reads as organic */
+    transition: opacity 800ms ease;
   }
 }
 

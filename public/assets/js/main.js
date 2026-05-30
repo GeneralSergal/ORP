@@ -1,302 +1,198 @@
 /* ============================================================
    ORP v3.0 — Shared JS
+   GPU-optimized: all scroll-driven DOM writes batched into a
+   single requestAnimationFrame callback per frame. The scroll
+   event only captures the latest scroll position (a cheap
+   read); the rAF callback does all writes, running at most
+   once per display refresh cycle regardless of scroll speed.
    ============================================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ── Scroll progress bar ─────────────────────────────── */
+  /* ── Cache DOM references once ───────────────────────── */
+  const progressEl  = document.querySelector(".scroll-progress");
+  const topBtn      = document.getElementById("scroll-top-btn");
+  const navElement  = document.getElementById("main-nav");
+
+  /* ── Shared scroll state (read on event, write on rAF) ── */
+  let _scrollY       = window.scrollY;
+  let _rafPending    = false;   // guard: only one rAF in flight at a time
+  let _lastNavScrollY = window.scrollY;
+  const SCROLL_THRESHOLD = 8;
+
+  /* ── Single scroll listener — passive, zero DOM writes ── */
   window.addEventListener("scroll", () => {
-    const scrolled =
-      (window.scrollY /
-        (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-
-    const progressEl = document.querySelector(".scroll-progress");
-
-    if (progressEl) {
-      progressEl.style.width = scrolled + "%";
+    _scrollY = window.scrollY;          // cheap read, no layout trigger
+    if (!_rafPending) {
+      _rafPending = true;
+      requestAnimationFrame(_flushScrollWrites);
     }
-  });
+  }, { passive: true });
 
-  /* ── Scroll to top ───────────────────────────────────── */
-  const topBtn = document.getElementById("scroll-top-btn");
+  /* ── rAF: all DOM writes happen here, once per frame ─── */
+  function _flushScrollWrites() {
+    _rafPending = false;
 
-  if (topBtn) {
+    const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
 
-    window.addEventListener("scroll", () => {
-      topBtn.classList.toggle("visible", window.scrollY > 400);
-    });
+    // 1. Scroll progress bar (width write)
+    if (progressEl && scrollMax > 0) {
+      progressEl.style.width = ((_scrollY / scrollMax) * 100) + "%";
+    }
 
-    topBtn.addEventListener("click", () => {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
-    });
+    // 2. Scroll-to-top button visibility
+    if (topBtn) {
+      topBtn.classList.toggle("visible", _scrollY > 400);
+    }
+
+    // 3. Mobile nav hide/reveal (transform-based in CSS — GPU composited)
+    if (navElement) {
+      if (window.innerWidth <= 640) {
+        const delta = _scrollY - _lastNavScrollY;
+        if (_scrollY <= 0) {
+          navElement.classList.remove("nav-hidden");
+          _lastNavScrollY = _scrollY;
+        } else if (Math.abs(delta) > SCROLL_THRESHOLD) {
+          navElement.classList.toggle("nav-hidden", delta > 0);
+          _lastNavScrollY = _scrollY;
+        }
+      } else {
+        navElement.classList.remove("nav-hidden");
+      }
+    }
   }
 
-  /* ── Mobile navbar hide/reveal ───────────────────────── */
-  let lastScrollY = window.scrollY;
-
-  const navElement = document.getElementById("main-nav");
-
-  const scrollThreshold = 8;
-
-  window.addEventListener("scroll", () => {
-
-    if (window.innerWidth <= 640) {
-
-      const currentScrollY = window.scrollY;
-
-      const delta = currentScrollY - lastScrollY;
-
-      if (currentScrollY <= 0) {
-
-        navElement.classList.remove("nav-hidden");
-
-        lastScrollY = currentScrollY;
-
-        return;
-      }
-
-      if (Math.abs(delta) > scrollThreshold) {
-
-        navElement.classList.toggle(
-          "nav-hidden",
-          delta > 0
-        );
-
-        lastScrollY = currentScrollY;
-      }
-
-    } else {
-
-      navElement.classList.remove("nav-hidden");
-    }
-
-  }, { passive: true });
+  /* ── Scroll to top ───────────────────────────────────── */
+  if (topBtn) {
+    topBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
 
   /* ── Active nav link (multi-page) ───────────────────── */
   const currentPage =
     window.location.pathname.split("/").pop() || "index.html";
 
   document.querySelectorAll(".nav-links a").forEach(link => {
-
-    const href =
-      link.getAttribute("href").split("/").pop();
-
-    if (
-      href === currentPage ||
-      (currentPage === "" && href === "index.html")
-    ) {
+    const href = link.getAttribute("href").split("/").pop();
+    if (href === currentPage || (currentPage === "" && href === "index.html")) {
       link.classList.add("active");
     }
   });
 
-/* ── Mobile hamburger navigation ───────────────────── */
+  /* ── Mobile hamburger navigation ─────────────────────── */
+  const hamburgerBtn = document.getElementById("hamburger-btn");
+  const mobileNav    = document.getElementById("mobile-nav");
 
-const hamburgerBtn =
-  document.getElementById("hamburger-btn");
+  if (hamburgerBtn && mobileNav) {
 
-const mobileNav =
-  document.getElementById("mobile-nav");
+    const toggleMenu = () => {
+      const isActive = mobileNav.classList.toggle("active");
+      hamburgerBtn.classList.toggle("active", isActive);
+      hamburgerBtn.setAttribute("aria-expanded", isActive ? "true" : "false");
+      document.body.style.overflow = isActive ? "hidden" : "";
+      navElement?.classList.toggle("menu-open", isActive);
+    };
 
-if (hamburgerBtn && mobileNav) {
+    hamburgerBtn.addEventListener("click", toggleMenu);
 
-  const toggleMenu = () => {
-
-    const isActive =
-      mobileNav.classList.toggle("active");
-
-    hamburgerBtn.classList.toggle(
-      "active",
-      isActive
-    );
-
-    hamburgerBtn.setAttribute(
-      "aria-expanded",
-      isActive ? "true" : "false"
-    );
-
-    document.body.style.overflow =
-      isActive ? "hidden" : "";
-
-    navElement.classList.toggle(
-      "menu-open",
-      isActive
-    );
-  };
-
-  hamburgerBtn.addEventListener(
-    "click",
-    toggleMenu
-  );
-
-  mobileNav.querySelectorAll("a").forEach(link => {
-
-    const href =
-      link.getAttribute("href").split("/").pop();
-
-    if (
-      href === currentPage ||
-      (currentPage === "" && href === "index.html")
-    ) {
-      link.classList.add("active");
-    }
-
-    link.addEventListener("click", () => {
-
-      mobileNav.classList.remove("active");
-
-      navElement.classList.remove("menu-open");
-
-      hamburgerBtn.classList.remove("active");
-
-      hamburgerBtn.setAttribute(
-        "aria-expanded",
-        "false"
-      );
-
-      document.body.style.overflow = "";
+    mobileNav.querySelectorAll("a").forEach(link => {
+      const href = link.getAttribute("href").split("/").pop();
+      if (href === currentPage || (currentPage === "" && href === "index.html")) {
+        link.classList.add("active");
+      }
+      link.addEventListener("click", () => {
+        mobileNav.classList.remove("active");
+        navElement?.classList.remove("menu-open");
+        hamburgerBtn.classList.remove("active");
+        hamburgerBtn.setAttribute("aria-expanded", "false");
+        document.body.style.overflow = "";
+      });
     });
 
-  });
+    // Resize: rAF-guarded so rapid resize events don't thrash layout
+    let _resizeRaf = false;
+    window.addEventListener("resize", () => {
+      if (!_resizeRaf) {
+        _resizeRaf = true;
+        requestAnimationFrame(() => {
+          _resizeRaf = false;
+          if (window.innerWidth > 640) {
+            mobileNav.classList.remove("active");
+            navElement?.classList.remove("menu-open");
+            hamburgerBtn.classList.remove("active");
+            document.body.style.overflow = "";
+          }
+        });
+      }
+    });
+  }
 
-  window.addEventListener("resize", () => {
-
-    if (window.innerWidth > 640) {
-
-      mobileNav.classList.remove("active");
-
-      navElement.classList.remove("menu-open");
-
-      hamburgerBtn.classList.remove("active");
-
-      document.body.style.overflow = "";
-    }
-  });
-}
   /* ── Author image fallback ───────────────────────────── */
-  const authorImg =
-    document.getElementById("author-img");
-
-  const avatarContainer =
-    document.getElementById("avatar-container");
+  const authorImg      = document.getElementById("author-img");
+  const avatarContainer = document.getElementById("avatar-container");
 
   if (authorImg && avatarContainer) {
-
     authorImg.addEventListener("error", () => {
       avatarContainer.classList.add("img-error");
     });
-
     if (authorImg.naturalWidth === 0) {
       avatarContainer.classList.add("img-error");
     }
   }
 
   /* ── Telemetry console toggle ────────────────────────── */
-  const consoleToggleBtn =
-    document.getElementById("console-toggle-btn");
+  const consoleToggleBtn = document.getElementById("console-toggle-btn");
 
   if (consoleToggleBtn) {
-
     consoleToggleBtn.addEventListener("click", () => {
+      const extendedContainer = document.getElementById("extended-telemetry-container");
+      const btnText           = document.getElementById("telemetry-btn-text");
+      if (!extendedContainer || !btnText) return;
 
-      const extendedContainer =
-        document.getElementById(
-          "extended-telemetry-container"
-        );
-
-      const btnText =
-        document.getElementById(
-          "telemetry-btn-text"
-        );
-
-      if (!extendedContainer || !btnText) {
-        return;
-      }
-
-      const isHidden =
-        extendedContainer.style.display === "none";
-
-      extendedContainer.style.display =
-        isHidden ? "block" : "none";
-
-      consoleToggleBtn.setAttribute(
-        "aria-expanded",
-        isHidden ? "true" : "false"
-      );
-
-      btnText.innerText =
-        isHidden
-          ? "[ COLLAPSE SYSTEM ARTIFACTS - ]"
-          : "[ EXPAND SYSTEM ARTIFACTS + ]";
-
-      btnText.style.color =
-        isHidden
-          ? "var(--accent-orange)"
-          : "var(--muted)";
+      const isHidden = extendedContainer.style.display === "none";
+      extendedContainer.style.display = isHidden ? "block" : "none";
+      consoleToggleBtn.setAttribute("aria-expanded", isHidden ? "true" : "false");
+      btnText.innerText  = isHidden
+        ? "[ COLLAPSE SYSTEM ARTIFACTS - ]"
+        : "[ EXPAND SYSTEM ARTIFACTS + ]";
+      btnText.style.color = isHidden ? "var(--accent-orange)" : "var(--muted)";
     });
   }
 
   /* ── Variant matrix toggle ───────────────────────────── */
-  const variantToggleBtn =
-    document.getElementById("variant-toggle-btn");
+  const variantToggleBtn = document.getElementById("variant-toggle-btn");
 
   if (variantToggleBtn) {
-
     variantToggleBtn.addEventListener("click", () => {
+      const panel   = document.getElementById("variant-matrix-panel");
+      const btnSpan = variantToggleBtn.querySelector("span");
+      if (!panel || !btnSpan) return;
 
-      const panel =
-        document.getElementById(
-          "variant-matrix-panel"
-        );
-
-      const btnSpan =
-        variantToggleBtn.querySelector("span");
-
-      if (!panel || !btnSpan) {
-        return;
-      }
-
-      const isHidden =
-        panel.style.display === "none";
-
-      panel.style.display =
-        isHidden ? "block" : "none";
-
-      variantToggleBtn.setAttribute(
-        "aria-expanded",
-        isHidden ? "true" : "false"
-      );
-
-      btnSpan.innerText =
-        isHidden
-          ? "[SYSTEM // CLOSE VARIANT MATRIX]"
-          : "[SYSTEM // EXECUTE VARIANT MATRIX]";
+      const isHidden = panel.style.display === "none";
+      panel.style.display = isHidden ? "block" : "none";
+      variantToggleBtn.setAttribute("aria-expanded", isHidden ? "true" : "false");
+      btnSpan.innerText = isHidden
+        ? "[SYSTEM // CLOSE VARIANT MATRIX]"
+        : "[SYSTEM // EXECUTE VARIANT MATRIX]";
     });
   }
 
   /* ── Intersection Observer reveal ───────────────────── */
-  const observer =
-    new IntersectionObserver(entries => {
-
-      entries.forEach(entry => {
-
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-        }
-      });
-
-    }, {
-      threshold: 0.05
+  // IntersectionObserver callbacks already run at an opportune
+  // paint boundary — no additional rAF needed here.
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      }
     });
+  }, { threshold: 0.05 });
 
   document.querySelectorAll(
     "section, header, .pipeline-card, .doc-card, .principle, .quick-access-card, .release-card"
   ).forEach(el => {
-
     el.classList.add("reveal");
-
     observer.observe(el);
   });
 
