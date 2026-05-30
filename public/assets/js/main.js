@@ -15,14 +15,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const navElement  = document.getElementById("main-nav");
 
   /* ── Shared scroll state (read on event, write on rAF) ── */
-  let _scrollY       = window.scrollY;
-  let _rafPending    = false;   // guard: only one rAF in flight at a time
+  let _scrollY        = window.scrollY;
+  let _rafPending     = false;
   let _lastNavScrollY = window.scrollY;
   const SCROLL_THRESHOLD = 8;
 
   /* ── Single scroll listener — passive, zero DOM writes ── */
   window.addEventListener("scroll", () => {
-    _scrollY = window.scrollY;          // cheap read, no layout trigger
+    _scrollY = window.scrollY;
     if (!_rafPending) {
       _rafPending = true;
       requestAnimationFrame(_flushScrollWrites);
@@ -35,17 +35,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const scrollMax = document.documentElement.scrollHeight - window.innerHeight;
 
-    // 1. Scroll progress bar (width write)
     if (progressEl && scrollMax > 0) {
       progressEl.style.width = ((_scrollY / scrollMax) * 100) + "%";
     }
 
-    // 2. Scroll-to-top button visibility
     if (topBtn) {
       topBtn.classList.toggle("visible", _scrollY > 400);
     }
 
-    // 3. Mobile nav hide/reveal (transform-based in CSS — GPU composited)
     if (navElement) {
       if (window.innerWidth <= 640) {
         const delta = _scrollY - _lastNavScrollY;
@@ -69,16 +66,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  /* ── Active nav link (multi-page) ───────────────────── */
+  /* ── Active nav link helper — shared by desktop + mobile ─
+     Extracted once so the string comparison runs in one place
+     and both link sets are marked in a single pass.
+  ───────────────────────────────────────────────────────── */
   const currentPage =
     window.location.pathname.split("/").pop() || "index.html";
 
-  document.querySelectorAll(".nav-links a").forEach(link => {
+  function _markActiveLink(link) {
     const href = link.getAttribute("href").split("/").pop();
     if (href === currentPage || (currentPage === "" && href === "index.html")) {
       link.classList.add("active");
     }
-  });
+  }
+
+  document.querySelectorAll(".nav-links a").forEach(_markActiveLink);
 
   /* ── Mobile hamburger navigation ─────────────────────── */
   const hamburgerBtn = document.getElementById("hamburger-btn");
@@ -97,10 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
     hamburgerBtn.addEventListener("click", toggleMenu);
 
     mobileNav.querySelectorAll("a").forEach(link => {
-      const href = link.getAttribute("href").split("/").pop();
-      if (href === currentPage || (currentPage === "" && href === "index.html")) {
-        link.classList.add("active");
-      }
+      _markActiveLink(link);  // reuse shared helper — no duplicated comparison
       link.addEventListener("click", () => {
         mobileNav.classList.remove("active");
         navElement?.classList.remove("menu-open");
@@ -110,9 +109,11 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
 
-    // Resize: rAF-guarded so rapid resize events don't thrash layout
+    /* Resize: rAF-guarded so rapid resize events don't thrash layout.
+       Defined once outside the resize listener — no closure re-creation
+       on each event. */
     let _resizeRaf = false;
-    window.addEventListener("resize", () => {
+    const _onResize = () => {
       if (!_resizeRaf) {
         _resizeRaf = true;
         requestAnimationFrame(() => {
@@ -125,11 +126,12 @@ document.addEventListener("DOMContentLoaded", () => {
           }
         });
       }
-    });
+    };
+    window.addEventListener("resize", _onResize);
   }
 
   /* ── Author image fallback ───────────────────────────── */
-  const authorImg      = document.getElementById("author-img");
+  const authorImg       = document.getElementById("author-img");
   const avatarContainer = document.getElementById("avatar-container");
 
   if (authorImg && avatarContainer) {
@@ -145,9 +147,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const consoleToggleBtn = document.getElementById("console-toggle-btn");
 
   if (consoleToggleBtn) {
+    const extendedContainer = document.getElementById("extended-telemetry-container");
+    const btnText           = document.getElementById("telemetry-btn-text");
+
     consoleToggleBtn.addEventListener("click", () => {
-      const extendedContainer = document.getElementById("extended-telemetry-container");
-      const btnText           = document.getElementById("telemetry-btn-text");
       if (!extendedContainer || !btnText) return;
 
       const isHidden = extendedContainer.style.display === "none";
@@ -164,9 +167,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const variantToggleBtn = document.getElementById("variant-toggle-btn");
 
   if (variantToggleBtn) {
+    const panel   = document.getElementById("variant-matrix-panel");
+    const btnSpan = variantToggleBtn.querySelector("span");
+
     variantToggleBtn.addEventListener("click", () => {
-      const panel   = document.getElementById("variant-matrix-panel");
-      const btnSpan = variantToggleBtn.querySelector("span");
       if (!panel || !btnSpan) return;
 
       const isHidden = panel.style.display === "none";
@@ -179,8 +183,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   /* ── Intersection Observer reveal ───────────────────── */
-  // IntersectionObserver callbacks already run at an opportune
-  // paint boundary — no additional rAF needed here.
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
