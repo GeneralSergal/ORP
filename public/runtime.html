@@ -2,36 +2,26 @@
 <html lang="en">
 
 <head>
-  <!-- ═══════════════════════════════════════════════════════
-       Shared site assets — single source of truth
-       (favicon, fonts, theme-color, stylesheets)
-       See: assets/head-includes.html for the canonical source
-       ══════════════════════════════════════════════════════ -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#dd1111" />
 
-  <!-- Favicon: Valknut SVG (canonical — one definition for all pages) -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0d10'/%3E%3Cg stroke='%23dd1111' stroke-width='8' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='50%2C20 82%2C75 18%2C75'/%3E%3Cpolygon points='50%2C35 69%2C68 31%2C68'/%3E%3Cpolygon points='50%2C50 56%2C60 44%2C60'/%3E%3C/g%3E%3C/svg%3E" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png" />
   <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png" />
   <link rel="manifest" href="assets/site.webmanifest" />
 
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
 
-  <!-- Stylesheets -->
   <link rel="stylesheet" href="assets/css/style.css" />
   <link rel="stylesheet" href="assets/css/entropia-sigil.css" />
 
-  <!-- ── Per-page metadata ───────────────────────────────── -->
   <title>Runtime Console — ORP Δ</title>
   <meta name="description" content="ORP Δ Runtime Console — live NESS telemetry, Epistemic Disagreement Engine, Warden state monitoring, and Clinical Core overlay." />
 
-  <!-- Open Graph / Social -->
   <meta property="og:title" content="Runtime Console — ORP Δ" />
   <meta property="og:description" content="Live NESS telemetry, Epistemic Disagreement Engine, and Clinical Core Warden monitoring." />
   <meta property="og:type" content="website" />
@@ -41,7 +31,6 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="ORP Δ - Valknut Symbol" />
 
-  <!-- Twitter / X Cards -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Runtime Console — ORP Δ" />
   <meta name="twitter:description" content="Live NESS telemetry, Epistemic Disagreement Engine, and Clinical Core Warden monitoring." />
@@ -184,7 +173,7 @@
       height: 100%;
       border-radius: 999px;
       background: linear-gradient(90deg, var(--success), var(--accent-cyan));
-      transition: width 1.2s cubic-bezier(0.2, 0, 0, 1);
+      transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1);
     }
     .rc-integrity-bar.degraded {
       background: linear-gradient(90deg, var(--accent-orange), var(--danger));
@@ -217,6 +206,7 @@
     }
  
     .rc-log {
+      background: rgba(4, 5, 8, 0.85);
       font-family: var(--font-mono), monospace;
       font-size: 0.78rem;
       line-height: 1.7;
@@ -224,17 +214,15 @@
       padding: 20px;
       height: 240px;
       overflow-y: auto;
-      display: flex;
-      flex-direction: column-reverse;
     }
-    .rc-log-inner { display: flex; flex-direction: column; gap: 2px; }
+    .rc-log-inner { display: flex; flex-direction: column; gap: 4px; }
     .rc-log-entry { display: flex; gap: 12px; align-items: baseline; }
     .rc-log-time  { color: rgba(138,149,165,0.5); font-size: 0.68rem; white-space: nowrap; flex-shrink: 0; }
-    .rc-log-tag   { font-weight: 700; font-size: 0.7rem; letter-spacing: 0.06em; flex-shrink: 0; min-width: 42px; }
-    .rc-log-tag.ok  { color: var(--success); }
-    .rc-log-tag.warn{ color: var(--accent-orange); }
-    .rc-log-tag.err { color: var(--danger); }
-    .rc-log-tag.inf { color: var(--accent-cyan); }
+    .rc-log-tag   { font-weight: 700; font-size: 0.7rem; letter-spacing: 0.06em; flex-shrink: 0; min-width: 42px; text-align: center; border-radius: 2px; padding: 0 4px; }
+    .rc-log-tag.ok  { color: #0a0d10; background: var(--success); }
+    .rc-log-tag.warn{ color: #0a0d10; background: var(--accent-orange); }
+    .rc-log-tag.err { color: #fff; background: var(--danger); }
+    .rc-log-tag.inf { color: #0a0d10; background: var(--accent-cyan); }
     .rc-log-msg { color: var(--text); }
 
     /* ── Two-column layout: console + EDTU ──────────────────── */
@@ -296,7 +284,7 @@
       height: 100%;
       border-radius: 999px;
       background: linear-gradient(90deg, var(--primary), var(--accent-orange));
-      transition: width 0.8s cubic-bezier(0.2,0,0,1);
+      transition: width 0.4s ease;
     }
     .rc-ds-val {
       font-family: var(--font-mono), monospace;
@@ -538,7 +526,6 @@
   <div class="scroll-progress"></div>
   <button class="scroll-top" id="scroll-top-btn" aria-label="Scroll back to top">↑</button>
 
-  <!-- Shared atmosphere elements -->
   <div class="grid-bg"></div>
   <div class="glow"></div>
   <div class="resonance-ring"></div>
@@ -556,7 +543,6 @@
     <div class="glyph">NESS</div>
   </div>
 
-  <!-- ── Navigation ─────────────────────────────────────── -->
   <nav id="main-nav">
     <div class="container nav-inner">
       <a href="index.html" class="logo" style="color:inherit;text-decoration:none;">
@@ -567,15 +553,12 @@
               <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
             </filter>
           </defs>
-          <!-- Outer triangle -->
           <polygon points="50,8 92,80 8,80"
             fill="none" stroke="#dd1111" stroke-width="6" stroke-linejoin="round"
             filter="url(#logo-glow)"/>
-          <!-- Middle triangle -->
           <polygon points="50,26 78,72 22,72"
             fill="none" stroke="#ff4400" stroke-width="5" stroke-linejoin="round"
             filter="url(#logo-glow)"/>
-          <!-- Inner triangle -->
           <polygon points="50,44 65,65 35,65"
             fill="none" stroke="#ff6600" stroke-width="4" stroke-linejoin="round"
             filter="url(#logo-glow)"/>
@@ -611,14 +594,12 @@
     </div>
   </nav>
 
-  <!-- ── Page Hero ──────────────────────────────────────── -->
   <header class="page-hero" style="position:relative;">
     <div class="container">
       <div class="section-eyebrow">Clinical Core Layer</div>
       <h1>Runtime <span style="color:var(--accent-orange);">Console</span></h1>
       <p>Live NESS telemetry binding, Epistemic Disagreement Engine state, and Warden overlay monitoring. The System-Under-System runtime layer operating beneath the ORP governance pipeline.</p>
     </div>
-  <!-- Entropia Sigil — runtime wired to telemetry -->
   <div class="entropia-sigil entropia-sigil--xl entropia-sigil--hero-bg" style="pointer-events:none;"
        id="runtime-hero-sigil"
        data-initial-drift="0.3"
@@ -626,7 +607,6 @@
   </div>
   </header>
 
-  <!-- ── Primary Telemetry Dashboard ───────────────────── -->
   <section>
     <div class="container">
 
@@ -638,8 +618,7 @@
         </div>
       </div>
 
-      <!-- Alert box: vortex detection -->
-      <div class="rc-alert-box" id="rc-vortex-alert">
+      <div class="rc-alert-box" id="rc-vortex-alert" style="display: none;">
         <div class="rc-alert-icon">⚠</div>
         <div class="rc-alert-text">
           <div class="rc-alert-title">J⊥_VORTEX — DETECTION ACTIVE</div>
@@ -649,7 +628,6 @@
         </div>
       </div>
 
-      <!-- Metric cards -->
       <div class="rc-dashboard">
 
         <div class="rc-metric-card">
@@ -660,7 +638,7 @@
           <div class="rc-metric-value green" id="rc-delta-s">0.0000</div>
           <div class="rc-metric-sub" id="rc-delta-sub">baseline nominal</div>
           <div class="rc-integrity-bar-wrap">
-            <div class="rc-integrity-bar" id="rc-entropy-bar" style="width:100%;transform:scaleX(0.04);transform-origin:left center"></div>
+            <div class="rc-integrity-bar" id="rc-entropy-bar" style="transform:scaleX(0.001);transform-origin:left center"></div>
           </div>
         </div>
 
@@ -672,7 +650,7 @@
           <div class="rc-metric-value cyan" id="rc-rho">100.0</div>
           <div class="rc-metric-sub" id="rc-rho-sub">chain validated</div>
           <div class="rc-integrity-bar-wrap">
-            <div class="rc-integrity-bar" id="rc-rho-bar" style="width:100%;transform:scaleX(1);transform-origin:left center"></div>
+            <div class="rc-integrity-bar" id="rc-rho-bar" style="transform:scaleX(1);transform-origin:left center"></div>
           </div>
         </div>
 
@@ -684,7 +662,7 @@
           <div class="rc-metric-value green" id="rc-shs">GREEN</div>
           <div class="rc-metric-sub" id="rc-shs-sub">no drift detected</div>
           <div class="rc-integrity-bar-wrap">
-            <div class="rc-integrity-bar" id="rc-shs-bar" style="width:100%;transform:scaleX(1);transform-origin:left center"></div>
+            <div class="rc-integrity-bar" id="rc-shs-bar" style="transform:scaleX(1);transform-origin:left center"></div>
           </div>
         </div>
 
@@ -714,13 +692,12 @@
           <div class="rc-metric-value" id="rc-warden-pct">0%</div>
           <div class="rc-metric-sub" id="rc-warden-sub">threshold: 72%</div>
           <div class="rc-integrity-bar-wrap">
-            <div class="rc-integrity-bar degraded" id="rc-warden-bar" style="width:100%;transform:scaleX(0);transform-origin:left center"></div>
+            <div class="rc-integrity-bar degraded" id="rc-warden-bar" style="transform:scaleX(0);transform-origin:left center"></div>
           </div>
         </div>
 
       </div>
 
-      <!-- Control buttons -->
       <div class="rc-btn-group">
         <button class="rc-btn primary" id="rc-inject-btn">[ INJECT ΔS EVENT ]</button>
         <button class="rc-btn" id="rc-reset-btn">[ RESET BASELINE ]</button>
@@ -732,7 +709,6 @@
 
   <div class="section-divider"></div>
 
-  <!-- ── Warden State Monitor + Entropy Log ─────────────── -->
   <section>
     <div class="container">
       <div class="section-header">
@@ -743,7 +719,6 @@
         </div>
       </div>
 
-      <!-- Warden status panel -->
       <div class="rc-warden" id="rc-warden-panel">
         <div class="rc-warden-icon" id="rc-warden-ascii">⬡</div>
         <div class="rc-warden-body">
@@ -755,10 +730,8 @@
         <div class="rc-warden-state dormant" id="rc-warden-badge">DORMANT</div>
       </div>
 
-      <!-- Split: console + EDTU -->
       <div class="rc-split">
 
-        <!-- Entropy log console -->
         <div class="rc-console">
           <div class="rc-console-header">
         
@@ -769,20 +742,17 @@
           </div>
           <div class="rc-log" id="rc-log">
             <div class="rc-log-inner" id="rc-log-inner">
-              <!-- populated by JS -->
-            </div>
+              </div>
           </div>
         </div>
 
-        <!-- EDTU bar chart -->
         <div class="rc-edtu">
           <div class="rc-edtu-header">
             <span class="rc-live-dot orange"></span>
             EDTU — ΔS History (last 6)
           </div>
           <div class="rc-edtu-body" id="rc-edtu-body">
-            <!-- populated by JS -->
-          </div>
+            </div>
         </div>
 
       </div>
@@ -792,7 +762,6 @@
 
   <div class="section-divider"></div>
 
-  <!-- ── NESS Architecture Layers ───────────────────────── -->
   <section>
     <div class="container">
       <div class="section-header">
@@ -803,7 +772,7 @@
         </div>
       </div>
 
-            <div class="rc-layers">
+      <div class="rc-layers">
 
         <div class="rc-layer-card">
           <div class="rc-layer-id">LAYER // 01</div>
@@ -854,7 +823,6 @@
 
   <div class="section-divider"></div>
 
-  <!-- ── Binding Pipeline Reference ────────────────────── -->
   <section>
     <div class="container">
       <div class="section-header">
@@ -914,7 +882,6 @@
 
   <div class="section-divider"></div>
 
-  <!-- ── Navigation CTA ─────────────────────────────────── -->
   <section style="border-bottom:none !important;">
     <div class="container">
       <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;">
@@ -928,7 +895,6 @@
     </div>
   </section>
 
-  <!-- ── Footer ─────────────────────────────────────────── -->
   <footer>
     <div class="container">
       <div class="footer-grid">
@@ -960,28 +926,10 @@
     </div>
   </footer>
 
-  <!-- Shared JS (handles nav, scroll, observer) -->
   <script src="assets/js/main.js"></script>
   <script src="assets/js/runtime-overlay.js"></script>
 
-  <!-- ── Clinical Core: NESS Runtime Engine (v3.1.0) ──────────
-       SYNC PATCH: This engine now reads directly from
-       window._orpSHSState and window._orpOverlayActive, which
-       are set by runtime-overlay.js. On the runtime page,
-       runtime-overlay.js runs FIRST (it's loaded before this
-       inline script). The inline engine is now a DISPLAY BRIDGE
-       only — it reads the overlay's authoritative state and
-       renders it into the rc-* elements.
-
-       SYNC-2: setInterval(decay) is NOT started if
-       window._orpOverlayActive is true (overlay rAF handles decay).
-       SYNC-3: SHS is read from window._orpSHSPill (canonical pill)
-       via MutationObserver rather than a separate calcSHS() that
-       used a different 3-state mapping.
-
-       Bars: all width% → transform:scaleX (compositable, no layout).
-  ────────────────────────────────────────────────────────────── -->
-    <style>
+  <style>
     /* SIGIL v3.3.0 Render Matrix Context */
     .entropia-sigil--hero-bg svg {
       transform-style: preserve-3d;
@@ -994,48 +942,356 @@
   </style>
 
   <script>
-    /* ─── Sigil runtime sync — v3.3.0 ─── */
+    /* ─── Clinical Core Display Bridge & Sigil Sync — v3.3.0 ─── */
     (function() {
       'use strict';
+      
       var lastSHS  = 'GREEN';
       var lastDrift = 0;
+      
+      var lastLoggedDs = -1;
+      var lastLoggedRho = -1;
+      var lastLoggedShs = '';
+      var historyDs = [0, 0, 0, 0, 0, 0];
+
+      // Mutation monitoring context for canonical SHS element references
       function _applySHS(shs) {
         var key = (shs || 'GREEN').trim().toUpperCase();
         if (key === lastSHS) return;
         lastSHS = key;
         if (typeof window.updateSigilFromSHS === 'function') window.updateSigilFromSHS(key);
       }
+      
       function _attachToPill(pill) {
         _applySHS(pill.textContent.trim());
         new MutationObserver(function() { _applySHS(pill.textContent.trim()); })
           .observe(pill, { childList: true, characterData: true, subtree: true });
       }
+      
       function _tryAttach() {
         var pill = window._orpSHSPill || document.getElementById('cc-tab-shs');
         if (pill) { _attachToPill(pill); return true; }
         return false;
       }
+      
       if (!_tryAttach()) {
         var _obs = new MutationObserver(function(_, ob) { if (_tryAttach()) ob.disconnect(); });
         _obs.observe(document.body, { childList: true, subtree: true });
       }
-      function _syncDrift() {
+
+      // Action bridging mechanics: safely propagates interface commands down to runtime-overlay execution context hooks
+      function triggerOverlayAction(actionType) {
+        if (actionType === 'inject') {
+          if (typeof window._orpInjectDelta === 'function') { window._orpInjectDelta(); return; }
+          if (window._orpSHSState && typeof window._orpSHSState.injectDelta === 'function') { window._orpSHSState.injectDelta(); return; }
+        }
+        if (actionType === 'reset') {
+          if (typeof window._orpResetBaseline === 'function') { window._orpResetBaseline(); return; }
+          if (window._orpSHSState && typeof window._orpSHSState.reset === 'function') { window._orpSHSState.reset(); return; }
+          if (window._orpSHSState && typeof window._orpSHSState.resetBaseline === 'function') { window._orpSHSState.resetBaseline(); return; }
+        }
+        if (actionType === 'warden') {
+          if (typeof window._orpTriggerWarden === 'function') { window._orpTriggerWarden(); return; }
+          if (window._orpSHSState && typeof window._orpSHSState.triggerWarden === 'function') { window._orpSHSState.triggerWarden(); return; }
+        }
+
+        // DOM Fallback: Intercept overlay injection frames if global handles are encapsulated
+        var buttons = document.querySelectorAll('button, [role="button"]');
+        for (var i = 0; i < buttons.length; i++) {
+          var btn = buttons[i];
+          var txt = btn.textContent.toLowerCase();
+          if (actionType === 'inject' && (txt.includes('inject') || btn.id.includes('inject'))) { btn.click(); return; }
+          if (actionType === 'reset' && (txt.includes('reset') || btn.id.includes('reset'))) { btn.click(); return; }
+          if (actionType === 'warden' && (txt.includes('warden') || btn.id.includes('warden'))) { btn.click(); return; }
+        }
+      }
+
+      // Appends real-time provenance telemetry data streams directly to the dashboard log view block terminal
+      function addLogEntry(tag, msg) {
+        var logInner = document.getElementById('rc-log-inner');
+        if (!logInner) return;
+        var now = new Date();
+        var timeStr = now.toTimeString().split(' ')[0] + '.' + String(now.getMilliseconds()).padStart(3, '0');
+        var entry = document.createElement('div');
+        entry.className = 'rc-log-entry';
+        
+        var tagClass = 'inf';
+        if (tag === 'OK') tagClass = 'ok';
+        if (tag === 'WARN') tagClass = 'warn';
+        if (tag === 'ERR') tagClass = 'err';
+
+        entry.innerHTML = '<span class="rc-log-time">' + timeStr + '</span>' +
+                          '<span class="rc-log-tag ' + tagClass + '">' + tag + '</span>' +
+                          '<span class="rc-log-msg">' + msg + '</span>';
+        
+        logInner.appendChild(entry);
+        while (logInner.children.length > 50) {
+          logInner.removeChild(logInner.firstChild);
+        }
+        var logContainer = document.getElementById('rc-log');
+        if (logContainer) {
+          logContainer.scrollTop = logContainer.scrollHeight;
+        }
+      }
+
+      // Populates structured historical bar chart rows dynamically
+      function updateEdtuHistory(newDs) {
+        historyDs.unshift(newDs);
+        if (historyDs.length > 6) historyDs.pop();
+        
+        var edtuBody = document.getElementById('rc-edtu-body');
+        if (!edtuBody) return;
+        
+        var html = '';
+        for (var i = 0; i < historyDs.length; i++) {
+          var v = historyDs[i];
+          var pct = Math.min(100, Math.max(0, v * 100));
+          html += '<div class="rc-ds-row">' +
+                  '  <div class="rc-ds-label">T-' + i + '</div>' +
+                  '  <div class="rc-ds-track"><div class="rc-ds-fill" style="width: ' + pct + '%;"></div></div>' +
+                  '  <div class="rc-ds-val">+' + v.toFixed(4) + '</div>' +
+                  '</div>';
+        }
+        edtuBody.innerHTML = html;
+      }
+
+      // Authoritative synchronization rendering tick loop
+	  // NEW FIXED FUNCTION TO INSERT
+function _syncDrift() {
+  var machine = window._orpSHSState;
+  if (!machine) return;
+
+  // Pull directly from authoritative high-precision floats
+  var rho       = machine.rho !== undefined ? machine.rho : 100;
+  var ds        = machine.ds !== undefined ? machine.ds : 0;
+  var wardenPct = machine.wardenPct !== undefined ? machine.wardenPct : 0;
+
+  var synth       = Math.min(1, ds * 4 + (100 - rho) / 100);
+  var perf        = machine.perfDriftPressure || 0;
+  var jitter      = machine.jitterDrift       || 0;
+  var wardenDrift = wardenPct >= 45 ? Math.min(0.4, (wardenPct - 45) / 55 * 0.4) : 0;
+
+  var combined    = Math.min(1, synth + perf + jitter + wardenDrift);
+
+  // Tightened precision tolerance from 0.005 to 0.0001 for real-time sigil matching
+  if (Math.abs(combined - lastDrift) > 0.0001) {
+    lastDrift = combined;
+    if (typeof window.updateSigilDrift === 'function') window.updateSigilDrift(combined);
+  }
+}
+	  
+	  
+      function _syncDisplayAndDrift() {
         var machine = window._orpSHSState;
+        
+        var rhoEl = document.getElementById('cc-rho');
+        var dsEl = document.getElementById('cc-ds');
+        var wpctEl = document.getElementById('cc-wpct');
+        var shsEl = window._orpSHSPill || document.getElementById('cc-tab-shs');
+
+        var rho = rhoEl ? parseFloat(rhoEl.textContent) : (machine?.rho || machine?.integrity || 100);
+        var ds = dsEl ? parseFloat(dsEl.textContent) : (machine?.entropy || machine?.deltaS || 0);
+        var wpct = wpctEl ? parseFloat(wpctEl.textContent) : (machine?.wardenPct || machine?.wardenActivation || 0);
+        var shs = shsEl ? shsEl.textContent.trim().toUpperCase() : (machine?.shs || 'GREEN');
+
+        // 1. Sync Telemetry Card Text and Progress Scale Values
+        var rcDeltaS = document.getElementById('rc-delta-s');
+        if (rcDeltaS) {
+          rcDeltaS.textContent = ds.toFixed(4);
+          rcDeltaS.className = 'rc-metric-value ' + (ds > 0.72 ? 'red' : ds > 0.4 ? 'orange' : 'green');
+        }
+        var rcDeltaSub = document.getElementById('rc-delta-sub');
+        if (rcDeltaSub) {
+          rcDeltaSub.textContent = ds > 0.72 ? 'critical variance' : ds > 0.4 ? 'elevated drift' : 'baseline nominal';
+        }
+        var rcEntropyBar = document.getElementById('rc-entropy-bar');
+        if (rcEntropyBar) {
+          rcEntropyBar.style.transform = 'scaleX(' + Math.max(0.001, Math.min(1, ds)) + ')';
+        }
+
+        var rcRho = document.getElementById('rc-rho');
+        if (rcRho) {
+          rcRho.textContent = rho.toFixed(1);
+          rcRho.className = 'rc-metric-value ' + (rho < 50 ? 'red' : rho < 85 ? 'orange' : 'cyan');
+        }
+        var rcRhoSub = document.getElementById('rc-rho-sub');
+        if (rcRhoSub) {
+          rcRhoSub.textContent = rho < 50 ? 'severe decay' : rho < 85 ? 'proportional drift' : 'chain validated';
+        }
+        var rcRhoBar = document.getElementById('rc-rho-bar');
+        if (rcRhoBar) {
+          rcRhoBar.style.transform = 'scaleX(' + Math.max(0.001, Math.min(100, rho) / 100) + ')';
+        }
+
+// INTEGRATED LOGIC (ORP v3.0 Compliance with Inline Yellow Style Fallback)
+var rcShs = document.getElementById('rc-shs');
+if (rcShs) {
+  if (shs === 'BLACK' || shs === 'DEAD') {
+    rcShs.textContent = 'BLACK'; 
+    rcShs.className = 'rc-metric-value';
+    rcShs.style.color = '#4a4f58'; // Dark dead gray
+  } else if (shs === 'YELLOW') {
+    rcShs.textContent = shs;
+    rcShs.className = 'rc-metric-value yellow';
+    rcShs.style.color = '#facc15'; // Force vibrant yellow inline to override defaults
+  } else {
+    rcShs.textContent = shs;
+    rcShs.className = 'rc-metric-value ' + (
+      shs === 'RED' ? 'red' : 
+      (shs === 'AMBER' || shs === 'ORANGE') ? 'orange' : 
+      'green'
+    );
+    rcShs.style.color = ''; // Reset custom inline styling for standard states
+  }
+}
+
+var rcShsSub = document.getElementById('rc-shs-sub');
+if (rcShsSub) {
+  if (shs === 'BLACK' || shs === 'DEAD') {
+    rcShsSub.textContent = 'terminal containment failure';
+  } else {
+    // Aligned with ORP_STATE_TRANSITION_MODEL.md specifications
+    rcShsSub.textContent = shs === 'RED' ? 'critical instability' : 
+                           (shs === 'AMBER' || shs === 'ORANGE' ? 'structural degradation' : 
+                           shs === 'YELLOW' ? 'early drift detected' : 
+                           'stable execution'); // GREEN fallback
+  }
+}
+
+var rcShsBar = document.getElementById('rc-shs-bar');
+if (rcShsBar) {
+  // Ordered scale transitions matching degradation layers
+  var shsScale = (shs === 'BLACK' || shs === 'DEAD') ? 0.0 : 
+                 (shs === 'RED' ? 0.25 : 
+                 (shs === 'AMBER' || shs === 'ORANGE' ? 0.51 : 
+                 shs === 'YELLOW' ? 0.75 : 
+                 shs === 'GREEN' ? 1.0 : 1.0)); 
+                 
+  rcShsBar.style.transform = 'scaleX(' + shsScale + ')';
+}
+
+        var rcWardenPct = document.getElementById('rc-warden-pct');
+        if (rcWardenPct) {
+          rcWardenPct.textContent = Math.round(wpct) + '%';
+          rcWardenPct.className = 'rc-metric-value ' + (wpct >= 72 ? 'red' : wpct > 0 ? 'orange' : 'green');
+        }
+        var rcWardenBar = document.getElementById('rc-warden-bar');
+        if (rcWardenBar) {
+          rcWardenBar.style.transform = 'scaleX(' + (wpct / 100) + ')';
+        }
+
+        // 2. Sync Warden Manifestation Threshold Modules & Warning Overlays
+        var rcWardenPanel = document.getElementById('rc-warden-panel');
+        var rcWardenAscii = document.getElementById('rc-warden-ascii');
+        var rcWardenTitle = document.getElementById('rc-warden-title');
+        var rcWardenDesc = document.getElementById('rc-warden-desc');
+        var rcWardenBadge = document.getElementById('rc-warden-badge');
+        var rcVortexAlert = document.getElementById('rc-vortex-alert');
+
+        if (wpct >= 72 || shs === 'RED') {
+          if (rcWardenPanel) rcWardenPanel.className = 'rc-warden alert';
+          if (rcWardenAscii) rcWardenAscii.textContent = '⬢';
+          if (rcWardenTitle) rcWardenTitle.textContent = 'Warden — MANIFESTED';
+          if (rcWardenDesc) rcWardenDesc.textContent = 'CRITICAL ENTROPY THRESHOLD EXCEEDED. Epistemic isolation borders breached. Downstream processing halted until CRA verification succeeds.';
+          if (rcWardenBadge) {
+            rcWardenBadge.className = 'rc-warden-state manifest';
+            rcWardenBadge.textContent = 'MANIFEST';
+          }
+          if (rcVortexAlert) rcVortexAlert.style.display = 'flex';
+          var rcCra = document.getElementById('rc-cra');
+          if (rcCra) { rcCra.textContent = 'RECOVERING'; rcCra.className = 'rc-metric-value red'; }
+        } else if (wpct > 0 || shs === 'AMBER' || shs === 'ORANGE') {
+          if (rcWardenPanel) rcWardenPanel.className = 'rc-warden';
+          if (rcWardenAscii) rcWardenAscii.textContent = '⬡';
+          if (rcWardenTitle) rcWardenTitle.textContent = 'Warden — PRIMED';
+          if (rcWardenDesc) rcWardenDesc.textContent = 'Coherence-masked degradation detected. Monitoring variance accumulation metrics and checking cross-node containment.';
+          if (rcWardenBadge) {
+            rcWardenBadge.className = 'rc-warden-state primed';
+            rcWardenBadge.textContent = 'PRIMED';
+          }
+          if (rcVortexAlert) rcVortexAlert.style.display = 'none';
+          var rcCra = document.getElementById('rc-cra');
+          if (rcCra) { rcCra.textContent = 'VALID'; rcCra.className = 'rc-metric-value green'; }
+        } else {
+          if (rcWardenPanel) rcWardenPanel.className = 'rc-warden';
+          if (rcWardenAscii) rcWardenAscii.textContent = '⬡';
+          if (rcWardenTitle) rcWardenTitle.textContent = 'Warden — DORMANT';
+          if (rcWardenDesc) rcWardenDesc.textContent = 'Monitoring for coherence-masked degradation. No cross-node contamination detected. All epistemic isolation borders nominal.';
+          if (rcWardenBadge) {
+            rcWardenBadge.className = 'rc-warden-state dormant';
+            rcWardenBadge.textContent = 'DORMANT';
+          }
+          if (rcVortexAlert) rcVortexAlert.style.display = 'none';
+          var rcCra = document.getElementById('rc-cra');
+          if (rcCra) { rcCra.textContent = 'VALID'; rcCra.className = 'rc-metric-value green'; }
+        }
+
+        // 3. Log State Transitions & Flux Fluctuations to Log Grid Terminal
+        if (Math.abs(ds - lastLoggedDs) > 0.0001) {
+          if (lastLoggedDs !== -1) {
+            var deltaChange = ds - lastLoggedDs;
+            var tag = ds > 0.72 ? 'WARN' : 'INF';
+            addLogEntry(tag, 'Telemetry flux updated: ΔS = ' + ds.toFixed(4) + ' (' + (deltaChange >= 0 ? '+' : '') + deltaChange.toFixed(4) + ')');
+            updateEdtuHistory(ds);
+          } else {
+            addLogEntry('INF', 'Telemetry loop bound. DeltaS reference: ' + ds.toFixed(4));
+            updateEdtuHistory(ds);
+          }
+          lastLoggedDs = ds;
+        }
+
+        if (Math.abs(rho - lastLoggedRho) > 0.1) {
+          if (lastLoggedRho !== -1) {
+            var tag = rho < 72 ? 'ERR' : 'INF';
+            addLogEntry(tag, 'ρ(x) Integrity re-calculated: ' + rho.toFixed(1) + '%');
+          }
+          lastLoggedRho = rho;
+        }
+
+        if (shs !== lastLoggedShs) {
+          if (lastLoggedShs !== '') {
+            var tag = shs === 'RED' ? 'ERR' : shs === 'AMBER' || shs === 'ORANGE' ? 'WARN' : 'OK';
+            addLogEntry(tag, 'SHS Stability State changed: ' + lastLoggedShs + ' ➔ ' + shs);
+          }
+          lastLoggedShs = shs;
+        }
+
+        // 4. Update Hero Graphic Canvas Sigil Drift Transforms Matrix
         if (!machine) return;
-        var rho      = parseFloat(document.getElementById('cc-rho')?.textContent)  || 100;
-        var ds       = parseFloat(document.getElementById('cc-ds')?.textContent)   || 0;
-        var wardenPct = parseFloat(document.getElementById('cc-wpct')?.textContent) || 0;
         var synth    = Math.min(1, ds * 4 + (100 - rho) / 100);
         var perf     = machine.perfDriftPressure || 0;
         var jitter   = machine.jitterDrift       || 0;
-        var wardenDrift = wardenPct >= 45 ? Math.min(0.4, (wardenPct - 45) / 55 * 0.4) : 0;
+        var wardenDrift = wpct >= 45 ? Math.min(0.4, (wpct - 45) / 55 * 0.4) : 0;
         var combined = Math.min(1, synth + perf + jitter + wardenDrift);
         if (Math.abs(combined - lastDrift) > 0.005) {
           lastDrift = combined;
           if (typeof window.updateSigilDrift === 'function') window.updateSigilDrift(combined);
         }
       }
-      setInterval(_syncDrift, 200);
+
+      // Safe Button Initialization Binding Context
+      function initButtons() {
+        document.getElementById('rc-inject-btn')?.addEventListener('click', function() {
+          addLogEntry('INF', 'Manual entropy injection [INJECT ΔS] triggered from console.');
+          triggerOverlayAction('inject');
+        });
+        document.getElementById('rc-reset-btn')?.addEventListener('click', function() {
+          addLogEntry('OK', 'Baseline reset command [RESET BASELINE] broadcasted.');
+          triggerOverlayAction('reset');
+        });
+        document.getElementById('rc-warden-btn')?.addEventListener('click', function() {
+          addLogEntry('WARN', 'Emergency override: [TRIGGER WARDEN] invoked.');
+          triggerOverlayAction('warden');
+        });
+      }
+      
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initButtons);
+      } else {
+        initButtons();
+      }
+
+      setInterval(_syncDisplayAndDrift, 100);
     })();
   </script>
 
