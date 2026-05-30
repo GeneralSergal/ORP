@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const isHidden = extendedContainer.style.display === "none";
       extendedContainer.style.display = isHidden ? "block" : "none";
       consoleToggleBtn.setAttribute("aria-expanded", isHidden ? "true" : "false");
-      btnText.innerText  = isHidden
+      btnText.textContent  = isHidden
         ? "[ COLLAPSE SYSTEM ARTIFACTS - ]"
         : "[ EXPAND SYSTEM ARTIFACTS + ]";
       btnText.style.color = isHidden ? "var(--accent-orange)" : "var(--muted)";
@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const isHidden = panel.style.display === "none";
       panel.style.display = isHidden ? "block" : "none";
       variantToggleBtn.setAttribute("aria-expanded", isHidden ? "true" : "false");
-      btnSpan.innerText = isHidden
+      btnSpan.textContent = isHidden
         ? "[SYSTEM // CLOSE VARIANT MATRIX]"
         : "[SYSTEM // EXECUTE VARIANT MATRIX]";
     });

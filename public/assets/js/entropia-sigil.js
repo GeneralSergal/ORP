@@ -22,6 +22,12 @@
     'BLACK':  1.00,
   };
 
+  /* ── Memoization state ────────────────────────────────────── */
+  let _lastIntensity  = -1; // sentinel; ensures first call always writes
+  let _lastSigilCount = 0;
+  let _lastGlowDrift  = -1;
+  let _lastGlowValue  = '';
+
   /* ── Cached sigil NodeList ────────────────────────────────────
      querySelectorAll is called once after init and re-used.
      Re-queried only when initEntropiaSigils() stamps new sigils.
@@ -45,9 +51,15 @@
   ─────────────────────────────────────────────────────────── */
   function updateSigilDrift(driftValue) {
     const intensity = Math.min(Math.max(parseFloat(driftValue) || 0, 0), 1);
-    const glow      = _driftToGlow(intensity);
+    const sigils    = _getSigils();
 
-    _getSigils().forEach(sigil => {
+    // Skip DOM writes when neither the value nor the sigil set has changed
+    if (intensity === _lastIntensity && sigils.length === _lastSigilCount) return intensity;
+    _lastIntensity  = intensity;
+    _lastSigilCount = sigils.length;
+
+    const glow = _driftToGlow(intensity);
+    sigils.forEach(sigil => {
       sigil.style.setProperty('--drift-intensity', intensity);
       sigil.style.setProperty('--es-shs-glow', glow);
     });
@@ -69,11 +81,16 @@
 
   /* ── Internal: compute SHS-aware glow colour ─────────────── */
   function _driftToGlow(intensity) {
-    // Cross-fade: green (stable) → red (fractured)
-    const hue             = 120 - intensity * 120;
-    const [r, g, b]       = _hslToRgbValues(hue / 360, 0.85, 0.5);
-    const alpha           = 0.15 + intensity * 0.30;
-    return `rgba(${r},${g},${b},${alpha.toFixed(3)})`;
+    // Round to 3 dp to absorb float noise; skip rebuild when value unchanged
+    const key = Math.round(intensity * 1000) / 1000;
+    if (key === _lastGlowDrift) return _lastGlowValue;
+    _lastGlowDrift = key;
+
+    const hue           = 120 - key * 120;
+    const [r, g, b]     = _hslToRgbValues(hue / 360, 0.85, 0.5);
+    const alpha         = 0.15 + key * 0.30;
+    _lastGlowValue      = `rgba(${r},${g},${b},${alpha.toFixed(3)})`;
+    return _lastGlowValue;
   }
 
 
@@ -196,6 +213,9 @@
     // Cache the nav element lookup — it never changes
     const _navEl = document.getElementById('main-nav');
 
+    // Cache nav height — stable between resizes; avoids getBoundingClientRect per frame
+    let _navH = _navEl ? _navEl.getBoundingClientRect().height : 0;
+
     document.addEventListener('visibilitychange', () => {
       _paused = document.hidden;
       if (!_paused && !_rafHandle) _schedule();
@@ -228,7 +248,6 @@
         const ty = Math.sin((ts * spdMul) / PERIOD_Y * Math.PI * 2 + 0.9) * ampY;
 
         const rect  = sigil.getBoundingClientRect();
-        const navH  = _navEl ? _navEl.getBoundingClientRect().height : 0;
         const halfW = rect.width  / 2;
         const halfH = rect.height / 2;
         const cx    = rect.left + halfW;
@@ -237,7 +256,7 @@
         const clampedTx = Math.min(window.innerWidth  - EDGE_INSET - halfW - cx,
                            Math.max(EDGE_INSET + halfW - cx, tx));
         const clampedTy = Math.min(window.innerHeight - EDGE_INSET - halfH - cy,
-                           Math.max(navH + EDGE_INSET + halfH - cy, ty));
+                           Math.max(_navH + EDGE_INSET + halfH - cy, ty));
 
         sigil.style.transform =
           `translateY(-50%) translate3d(${clampedTx.toFixed(2)}px,${clampedTy.toFixed(2)}px,0)`;
@@ -252,6 +271,7 @@
     const _resizeObs = new ResizeObserver(() => {
       clearTimeout(_resizeTimer);
       _resizeTimer = setTimeout(() => {
+        _navH = _navEl ? _navEl.getBoundingClientRect().height : 0; // refresh cached nav height
         if (window.innerWidth < DESKTOP_BP) {
           _getSigils().forEach(s => {
             if (s.classList.contains('entropia-sigil--hero-bg')) s.style.transform = '';
@@ -286,20 +306,38 @@
     }
 
     /* SHS polling — only runs when runtime-overlay.js is absent.
-       If runtime-overlay is present it sets window._orpRafActive = true
-       and manages sigil sync itself via its own rAF loop, so this
-       setInterval never fires (the guard condition is false every check). */
+       Uses MutationObserver (fires only on DOM change) instead of
+       setInterval, eliminating 800ms periodic wakeups entirely.
+       Falls back gracefully if the pill doesn't exist yet. */
     if (!window._orpRafActive) {
       let _lastSHS = '';
-      setInterval(() => {
-        const pill = document.getElementById('cc-tab-shs');
-        if (!pill) return;
+
+      function _onSHSChange(pill) {
         const shs = pill.textContent.trim().toUpperCase();
         if (shs && shs !== _lastSHS) {
           _lastSHS = shs;
           updateSigilFromSHS(shs === 'AMBER' ? 'YELLOW' : shs);
         }
-      }, 800);
+      }
+
+      function _observeSHSPill(pill) {
+        _onSHSChange(pill); // sync immediately on attach
+        new MutationObserver(() => _onSHSChange(pill)).observe(pill, {
+          childList: true, characterData: true, subtree: true,
+        });
+      }
+
+      const pill = document.getElementById('cc-tab-shs');
+      if (pill) {
+        _observeSHSPill(pill);
+      } else {
+        // Pill not yet inserted — watch document.body for its arrival
+        const _waitObs = new MutationObserver((_, obs) => {
+          const p = document.getElementById('cc-tab-shs');
+          if (p) { obs.disconnect(); _observeSHSPill(p); }
+        });
+        _waitObs.observe(document.body, { childList: true, subtree: true });
+      }
     }
   }
 

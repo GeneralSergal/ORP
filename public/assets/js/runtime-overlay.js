@@ -43,6 +43,12 @@
   /* ── Cached DOM refs (populated after buildOverlay) ────── */
   let _domCache = null;
 
+  /* ── Cached sigil NodeList — avoids cold querySelectorAll per rAF tick ── */
+  let _sigilCache = null;
+  function _getSigils() {
+    return _sigilCache || (_sigilCache = document.querySelectorAll('.entropia-sigil'));
+  }
+
   function _dom() {
     if (_domCache) return _domCache;
     // All IDs queried exactly once after injection
@@ -177,7 +183,7 @@
         pointer-events: none;
         font-family: "Oxanium", "Space Grotesk", sans-serif;
         will-change: transform;
-        contain: layout style;
+        contain: layout style paint; /* paint: fixed overlay, nothing overflows; backdrop-filter on children samples below stack, not parent paint boundary */
         transform: translateZ(0);
         transition: opacity 180ms ease, visibility 180ms ease, transform 180ms ease;
       }
@@ -893,7 +899,7 @@
         }
 
         const drift = clamp(state.deltaS * 4 + (100 - state.rho) / 100, 0, 1);
-        document.querySelectorAll('.entropia-sigil').forEach(s => {
+        _getSigils().forEach(s => {
           s.classList.toggle('high-drift', drift > 0.55);
         });
 
