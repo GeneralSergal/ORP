@@ -321,11 +321,18 @@ a:hover { color: var(--accent-orange-bright); }
 }
 
 .glow {
-  position: fixed; width: 1000px; height: 1000px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,102,0,0.12) 0%, rgba(221,17,17,0.08) 35%, rgba(106,58,138,0.04) 55%, transparent 75%);
-  top: -350px; right: -250px; z-index: -1; pointer-events: none; filter: blur(20px);
-  transform: translateZ(0); /* promote to own GPU layer without will-change */
-  contain: layout style; /* prevent filter from triggering full-page stacking */
+  position: fixed; 
+  width: 1000px; 
+  height: 1000px; 
+  border-radius: 50%;
+  /* Slightly extended stops to simulate a smooth blur natively without processing overhead */
+  background: radial-gradient(circle, rgba(255,102,0,0.14) 0%, rgba(221,17,17,0.08) 40%, rgba(106,58,138,0.02) 65%, transparent 80%);
+  top: -350px; 
+  right: -250px; 
+  z-index: -1; 
+  pointer-events: none; 
+  transform: translateZ(0); 
+  contain: strict; /* Upgraded from layout style to strict since dimensions are static */
 }
 
 .resonance-ring {
@@ -367,14 +374,13 @@ nav {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(6, 8, 11, 0.85);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  background: rgba(6, 8, 11, 0.90); /* Bumping opacity saves fill-rate calculations */
+  backdrop-filter: blur(10px);       /* 10px is significantly cheaper to process than 20px */
+  -webkit-backdrop-filter: blur(10px);
   transition: background 300ms ease, transform 300ms ease;
-  /* GPU: nav slides up/down on mobile — own compositor layer */
+  transform: translateZ(0);          /* Ensure hardware layer context remains absolute */
   will-change: transform;
   contain: layout style;
-  isolation: isolate; /* PATCH LOW-2: merged from orphan nav block at ~line 793 */
 }
 
 nav.menu-open {
