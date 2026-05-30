@@ -67,9 +67,6 @@
   transition: opacity var(--transition);
 }
 
-.author-avatar-link:hover {
-  opacity: 0.8; /* Subtle visual feedback on hover */
-}
 /* Font Hierarchy */
 h1, h2, h3, .section-title, .logo, .pipeline-step, .section-eyebrow,
 .release-tag, .author-name, .author-title, .badge, .btn {
