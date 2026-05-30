@@ -1,0 +1,1147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#dd1111" />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0d10'/%3E%3Cg stroke='%23dd1111' stroke-width='8' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='50%2C20 82%2C75 18%2C75'/%3E%3Cpolygon points='50%2C35 69%2C68 31%2C68'/%3E%3Cpolygon points='50%2C50 56%2C60 44%2C60'/%3E%3C/g%3E%3C/svg%3E" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png" />
+  <link rel="manifest" href="assets/site.webmanifest" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/entropia-sigil.css" />
+
+  <!-- ORP Sync: must be first script so every downstream module can call ORP_SYNC -->
+  <script src="assets/js/orp-sync.js"></script>
+
+  <title>Settings — ORP Δ</title>
+  <meta name="description" content="ORP Δ System Configuration — Sigil calibration, SHS override, NESS overlay controls, and persistent state management." />
+
+  <meta property="og:title"       content="Settings — ORP Δ" />
+  <meta property="og:description" content="System configuration for the ORP Δ Entropia Sigil, NESS overlay, and drift calibration." />
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://generalsergal.github.io/ORP/settings.html" />
+  <meta property="og:image"       content="https://raw.githubusercontent.com/GeneralSergal/ORP/refs/heads/main/public/Glyph.png" />
+
+  <style>
+    /* ============================================================
+       SETTINGS PAGE — Page-scoped styles (.cfg-*)
+       ============================================================ */
+
+    /* ── Config panel wrapper ─────────────────────────────────── */
+    .cfg-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    @media (max-width: 860px) { .cfg-grid { grid-template-columns: 1fr; } }
+
+    /* ── Individual config card ───────────────────────────────── */
+    .cfg-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 28px 32px;
+      transition: border-color var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+    .cfg-card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--accent-orange));
+      opacity: 0;
+      transition: opacity var(--transition);
+    }
+    .cfg-card:focus-within::before,
+    .cfg-card:hover::before { opacity: 1; }
+
+    .cfg-card-title {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--primary-bright);
+      margin-bottom: 6px;
+    }
+    .cfg-card-subtitle {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    /* ── Drift slider ─────────────────────────────────────────── */
+    .cfg-slider-wrap {
+      margin-bottom: 20px;
+    }
+    .cfg-slider-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+    }
+    .cfg-slider-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .cfg-slider-value {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--accent-orange);
+      letter-spacing: -0.03em;
+      line-height: 1;
+      min-width: 52px;
+      text-align: right;
+      transition: color 0.2s;
+    }
+    .cfg-slider-value.low    { color: var(--success); }
+    .cfg-slider-value.mid    { color: var(--accent-orange); }
+    .cfg-slider-value.high   { color: var(--danger); }
+
+    /* Range input override */
+    input[type="range"].cfg-range {
+      width: 100%;
+      -webkit-appearance: none;
+      appearance: none;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(6,8,11,0.6);
+      outline: none;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      padding: 0;
+      margin: 0;
+    }
+    input[type="range"].cfg-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent-orange));
+      border: 2px solid rgba(255,255,255,0.12);
+      box-shadow: 0 2px 8px rgba(221,17,17,0.4);
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    input[type="range"].cfg-range::-webkit-slider-thumb:hover {
+      box-shadow: 0 0 16px rgba(255,102,0,0.6);
+      transform: scale(1.15);
+    }
+    input[type="range"].cfg-range::-moz-range-thumb {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent-orange));
+      border: 2px solid rgba(255,255,255,0.12);
+      box-shadow: 0 2px 8px rgba(221,17,17,0.4);
+      cursor: pointer;
+    }
+    .cfg-range-track {
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--primary), var(--accent-orange));
+      pointer-events: none;
+      margin-top: 6px;
+      transition: transform 0.15s;
+      transform-origin: left;
+    }
+
+    /* ── SHS state picker ─────────────────────────────────────── */
+    .cfg-shs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+    @media (max-width: 480px) { .cfg-shs-grid { grid-template-columns: 1fr 1fr; } }
+
+    .cfg-shs-btn {
+      position: relative;
+      padding: 12px 8px;
+      border-radius: var(--radius-xs);
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      color: var(--muted);
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all var(--transition);
+      text-align: center;
+    }
+    .cfg-shs-btn:hover {
+      border-color: var(--border-strong);
+      color: var(--heading);
+    }
+    .cfg-shs-btn.active {
+      color: var(--heading);
+    }
+    .cfg-shs-btn[data-shs="AUTO"].active  { border-color: rgba(138,149,165,0.4); background: rgba(138,149,165,0.08); color: var(--muted); }
+    .cfg-shs-btn[data-shs="GREEN"].active  { border-color: rgba(63,185,80,0.5);  background: rgba(63,185,80,0.1);  color: #3fb950; }
+    .cfg-shs-btn[data-shs="YELLOW"].active { border-color: rgba(250,204,21,0.5); background: rgba(250,204,21,0.1); color: #facc15; }
+    .cfg-shs-btn[data-shs="ORANGE"].active { border-color: rgba(255,102,0,0.5);  background: rgba(255,102,0,0.1);  color: var(--accent-orange); }
+    .cfg-shs-btn[data-shs="RED"].active    { border-color: rgba(221,17,17,0.5);  background: rgba(221,17,17,0.1);  color: var(--danger); }
+    .cfg-shs-btn[data-shs="BLACK"].active  { border-color: rgba(74,79,88,0.5);   background: rgba(74,79,88,0.15);  color: #4a4f58; }
+    .cfg-shs-note {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-top: 10px;
+      line-height: 1.5;
+    }
+
+    /* ── Toggle switch ────────────────────────────────────────── */
+    .cfg-toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .cfg-toggle-row:last-child { border-bottom: none; }
+    .cfg-toggle-text {}
+    .cfg-toggle-name {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--heading);
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+    .cfg-toggle-desc {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      margin-top: 3px;
+      letter-spacing: 0.02em;
+    }
+    .cfg-toggle {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+    .cfg-toggle input {
+      opacity: 0;
+      width: 0; height: 0;
+      position: absolute;
+    }
+    .cfg-toggle-track {
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background: rgba(6,8,11,0.8);
+      border: 1px solid var(--border-strong);
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .cfg-toggle-track::after {
+      content: "";
+      position: absolute;
+      top: 3px; left: 3px;
+      width: 16px; height: 16px;
+      border-radius: 50%;
+      background: var(--muted);
+      transition: transform 0.2s, background 0.2s;
+    }
+    .cfg-toggle input:checked + .cfg-toggle-track {
+      background: rgba(63,185,80,0.15);
+      border-color: rgba(63,185,80,0.4);
+    }
+    .cfg-toggle input:checked + .cfg-toggle-track::after {
+      transform: translateX(20px);
+      background: var(--success);
+    }
+
+    /* ── State inspector ──────────────────────────────────────── */
+    .cfg-inspector {
+      background: rgba(4,5,8,0.85);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xs);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--muted);
+      padding: 16px 20px;
+      line-height: 1.9;
+    }
+    .cfg-inspector .key   { color: var(--accent-cyan); }
+    .cfg-inspector .val   { color: var(--accent-orange); font-weight: 700; }
+    .cfg-inspector .val-green  { color: var(--success); font-weight: 700; }
+    .cfg-inspector .val-muted  { color: var(--muted); }
+
+    /* ── Danger zone ──────────────────────────────────────────── */
+    .cfg-danger {
+      background: rgba(221,17,17,0.03);
+      border: 1px solid rgba(221,17,17,0.15);
+      border-radius: var(--radius-sm);
+      padding: 28px 32px;
+      grid-column: 1 / -1;
+    }
+    .cfg-danger-title {
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--danger);
+      margin-bottom: 6px;
+    }
+    .cfg-danger-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 20px;
+      max-width: 520px;
+    }
+    .cfg-danger-row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* ── Buttons (destructive variant) ───────────────────────── */
+    .cfg-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 20px;
+      min-height: 40px;
+      border-radius: 999px;
+      border: 1px solid var(--border-strong);
+      background: var(--panel-2);
+      color: var(--muted);
+      font-family: var(--font-display);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .cfg-btn:hover {
+      border-color: rgba(255,102,0,0.4);
+      color: var(--accent-orange);
+      background: rgba(255,102,0,0.06);
+    }
+    .cfg-btn.danger {
+      border-color: rgba(221,17,17,0.25);
+      color: var(--danger);
+      background: rgba(221,17,17,0.06);
+    }
+    .cfg-btn.danger:hover {
+      border-color: rgba(221,17,17,0.5);
+      background: rgba(221,17,17,0.12);
+    }
+    .cfg-btn:active { transform: scale(0.97); }
+
+    /* ── Feedback flash ───────────────────────────────────────── */
+    .cfg-feedback {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--success);
+      letter-spacing: 0.06em;
+      margin-top: 10px;
+      height: 16px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .cfg-feedback.show { opacity: 1; }
+
+    /* ── Live sigil preview badge ─────────────────────────────── */
+    .cfg-drift-preview {
+      margin-top: 20px;
+      padding: 14px 18px;
+      background: rgba(6,8,11,0.6);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xs);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .cfg-drift-bar-wrap {
+      flex: 1;
+      height: 6px;
+      background: rgba(6,8,11,0.6);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .cfg-drift-bar {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--success), var(--accent-orange), var(--danger));
+      transform-origin: left;
+      transition: transform 0.15s cubic-bezier(0.2,0,0,1);
+    }
+    .cfg-drift-bar-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* Reveal animation (matching main.js) */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+  <div class="scroll-progress"></div>
+  <button class="scroll-top" id="scroll-top-btn" aria-label="Scroll back to top">↑</button>
+
+  <div class="grid-bg"></div>
+  <div class="glow"></div>
+  <div class="resonance-ring"></div>
+
+  <div class="ember ember-1"></div>
+  <div class="ember ember-2"></div>
+  <div class="ember ember-3"></div>
+  <div class="ember ember-4"></div>
+  <div class="ember ember-5"></div>
+
+  <div class="glyph-layer">
+    <div class="glyph">ΔS</div>
+    <div class="glyph">CFG</div>
+    <div class="glyph">SHS</div>
+    <div class="glyph">SYNC</div>
+  </div>
+
+  <nav id="main-nav">
+    <div class="container nav-inner">
+      <a href="index.html" class="logo" style="color:inherit;text-decoration:none;">
+        <svg class="logo-mark" width="28" height="28" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <filter id="logo-glow" x="-40%" y="-40%" width="180%" height="180%">
+              <feGaussianBlur stdDeviation="2.5" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <polygon points="50,8 92,80 8,80"   fill="none" stroke="#dd1111" stroke-width="6" stroke-linejoin="round" filter="url(#logo-glow)"/>
+          <polygon points="50,26 78,72 22,72"  fill="none" stroke="#ff4400" stroke-width="5" stroke-linejoin="round" filter="url(#logo-glow)"/>
+          <polygon points="50,44 65,65 35,65"  fill="none" stroke="#ff6600" stroke-width="4" stroke-linejoin="round" filter="url(#logo-glow)"/>
+        </svg>
+        <span>ORP Δ</span>
+      </a>
+
+      <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-nav">
+        <span></span><span></span><span></span>
+      </button>
+
+      <div class="nav-links">
+        <a href="index.html">Overview</a>
+        <a href="pipeline.html">Pipeline</a>
+        <a href="variants.html">Variants</a>
+        <a href="documentation.html">Documentation</a>
+        <a href="principles.html">Principles</a>
+        <a href="diagrams.html">Diagrams</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="settings.html">Settings</a>
+      </div>
+    </div>
+
+    <div class="mobile-nav" id="mobile-nav">
+      <div class="mobile-nav-inner">
+        <a href="index.html">Overview</a>
+        <a href="pipeline.html">Pipeline</a>
+        <a href="variants.html">Variants</a>
+        <a href="documentation.html">Documentation</a>
+        <a href="principles.html">Principles</a>
+        <a href="diagrams.html">Diagrams</a>
+        <a href="runtime.html">Runtime</a>
+        <a href="settings.html">Settings</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Sigil: hero background ───────────────────────────── -->
+  <header class="page-hero" style="position:relative;">
+    <div class="container">
+      <div class="section-eyebrow">ORP v3.0 // Global Sync Layer</div>
+      <h1>System <span style="color:var(--accent-orange);">Configuration</span></h1>
+      <p>Persistent vortex calibration, SHS state override, NESS overlay control, and cross-page state synchronization via <code style="font-family:var(--font-mono);font-size:0.9em;color:var(--accent-cyan);">ORP_SYNC</code>. All changes propagate in real time to every open page.</p>
+    </div>
+  </header>
+
+  <div class="entropia-sigil entropia-sigil--xl entropia-sigil--hero-bg"
+       id="settings-hero-sigil"
+       data-initial-drift="0.3"></div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 1 — VORTEX CALIBRATION
+  ════════════════════════════════════════════════════════ -->
+  <section>
+    <div class="container">
+
+      <div class="section-header">
+        <div class="section-eyebrow">Module 1 // Entropia Sigil</div>
+        <h2 class="section-title">Vortex Calibration</h2>
+        <div class="section-description">
+          Set the Sigil's drift intensity directly. This overrides the live NESS telemetry value until a new entropy event is received. The saved value persists across page loads.
+        </div>
+      </div>
+
+      <div class="cfg-grid">
+
+        <!-- ── Drift slider ───────────────────────────────────── -->
+        <div class="cfg-card reveal">
+          <div class="cfg-card-title">DRIFT INTENSITY // ΔS OVERRIDE</div>
+          <div class="cfg-card-subtitle">Manual control of --drift-intensity CSS variable on all .entropia-sigil elements.</div>
+
+          <div class="cfg-slider-wrap">
+            <div class="cfg-slider-header">
+              <span class="cfg-slider-label">DRIFT VALUE</span>
+              <span class="cfg-slider-value" id="drift-display">0.50</span>
+            </div>
+            <input
+              type="range"
+              class="cfg-range"
+              id="drift-slider"
+              min="0" max="1" step="0.01" value="0.5"
+              aria-label="Sigil drift intensity"
+            />
+            <div class="cfg-drift-preview">
+              <span class="cfg-drift-bar-label">INTENSITY</span>
+              <div class="cfg-drift-bar-wrap">
+                <div class="cfg-drift-bar" id="drift-bar" style="transform:scaleX(0.5)"></div>
+              </div>
+              <span class="cfg-drift-bar-label" id="drift-state-label">MID</span>
+            </div>
+          </div>
+
+          <div class="cfg-feedback" id="drift-feedback">// DRIFT SAVED TO PERSISTENCE LAYER</div>
+        </div>
+
+        <!-- ── Drift reference ────────────────────────────────── -->
+        <div class="cfg-card reveal">
+          <div class="cfg-card-title">INTENSITY REFERENCE</div>
+          <div class="cfg-card-subtitle">How drift values map to NESS thermodynamic states.</div>
+
+          <div class="cfg-inspector">
+            <div><span class="key">0.00</span> — <span class="val-green">QUIESCENT</span>  baseline nominal, no entropy</div>
+            <div><span class="key">0.00–0.25</span> — <span class="val-green">GREEN</span>  stable execution, low variance</div>
+            <div><span class="key">0.25–0.55</span> — <span class="val" style="color:#facc15">YELLOW</span>  early drift, monitoring active</div>
+            <div><span class="key">0.55–0.78</span> — <span class="val">ORANGE</span>  structural degradation detected</div>
+            <div><span class="key">0.78–1.00</span> — <span class="val" style="color:var(--danger)">RED</span>  critical instability, Warden primed</div>
+            <div style="margin-top:8px"><span class="key">1.00</span> — <span class="val-muted">BLACK</span>  terminal containment failure</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 2 — SHS OVERRIDE
+  ════════════════════════════════════════════════════════ -->
+  <section>
+    <div class="container">
+
+      <div class="section-header">
+        <div class="section-eyebrow">Module 2 // Stability Health State</div>
+        <h2 class="section-title">SHS State Override</h2>
+        <div class="section-description">
+          Force the Sigil into a specific SHS color state, bypassing live telemetry. AUTO re-enables the runtime-overlay.js event binding. Override persists across reloads.
+        </div>
+      </div>
+
+      <div class="cfg-card reveal" style="max-width:680px;">
+        <div class="cfg-card-title">STATE SELECTOR</div>
+        <div class="cfg-card-subtitle">Select a state to override or AUTO to restore live telemetry binding.</div>
+
+        <div class="cfg-shs-grid" id="shs-selector" role="group" aria-label="SHS State selector">
+          <button class="cfg-shs-btn active" data-shs="AUTO"   aria-pressed="true">AUTO</button>
+          <button class="cfg-shs-btn"        data-shs="GREEN"  aria-pressed="false">GREEN</button>
+          <button class="cfg-shs-btn"        data-shs="YELLOW" aria-pressed="false">YELLOW</button>
+          <button class="cfg-shs-btn"        data-shs="ORANGE" aria-pressed="false">ORANGE</button>
+          <button class="cfg-shs-btn"        data-shs="RED"    aria-pressed="false">RED</button>
+          <button class="cfg-shs-btn"        data-shs="BLACK"  aria-pressed="false">BLACK</button>
+        </div>
+
+        <div class="cfg-shs-note">
+          // AUTO — sigil reacts to live ΔS from runtime-overlay.js<br>
+          // MANUAL — sigil locked to selected state; overlay updates ignored
+        </div>
+
+        <div class="cfg-feedback" id="shs-feedback">// SHS OVERRIDE SAVED</div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 3 — NESS OVERLAY
+  ════════════════════════════════════════════════════════ -->
+  <section>
+    <div class="container">
+
+      <div class="section-header">
+        <div class="section-eyebrow">Module 3 // Clinical Core HUD</div>
+        <h2 class="section-title">NESS Overlay</h2>
+        <div class="section-description">
+          Control the bottom-left NESS HUD injected by <code style="font-family:var(--font-mono);font-size:0.85em;color:var(--accent-cyan);">runtime-overlay.js</code>. Visibility preference persists across page loads.
+        </div>
+      </div>
+
+      <div class="cfg-grid">
+
+        <!-- ── Overlay toggles ────────────────────────────────── -->
+        <div class="cfg-card reveal">
+          <div class="cfg-card-title">OVERLAY CONTROLS</div>
+          <div class="cfg-card-subtitle">Manage NESS HUD and session entropy state.</div>
+
+          <div class="cfg-toggle-row">
+            <div class="cfg-toggle-text">
+              <div class="cfg-toggle-name">NESS HUD Visible</div>
+              <div class="cfg-toggle-desc">Show / hide the #cc-overlay element globally</div>
+            </div>
+            <label class="cfg-toggle" aria-label="NESS HUD visibility">
+              <input type="checkbox" id="overlay-toggle" checked />
+              <div class="cfg-toggle-track"></div>
+            </label>
+          </div>
+
+          <div class="cfg-toggle-row">
+            <div class="cfg-toggle-text">
+              <div class="cfg-toggle-name">Sigil Float (Desktop)</div>
+              <div class="cfg-toggle-desc">Enable full-viewport Lissajous animation</div>
+            </div>
+            <label class="cfg-toggle" aria-label="Sigil float animation">
+              <input type="checkbox" id="float-toggle" checked />
+              <div class="cfg-toggle-track"></div>
+            </label>
+          </div>
+
+          <div style="margin-top:20px;">
+            <button class="cfg-btn" id="entropy-reset-btn">[ RESET SESSION ENTROPY ]</button>
+            <div class="cfg-feedback" id="entropy-feedback">// SESSION ENTROPY CLEARED</div>
+          </div>
+        </div>
+
+        <!-- ── Overlay module info ────────────────────────────── -->
+        <div class="cfg-card reveal">
+          <div class="cfg-card-title">ARCHITECTURE NOTE</div>
+          <div class="cfg-card-subtitle">Integration point documentation for <code style="font-family:var(--font-mono);color:var(--accent-cyan);font-size:0.95em;">ORP_SYNC</code>.</div>
+
+          <div class="cfg-inspector">
+            <div style="color:var(--heading);margin-bottom:8px;">SIGNAL CHAIN:</div>
+            <div>  ORP_SYNC.<span class="val">save</span>('sigil_drift', v)</div>
+            <div>     ↓ localStorage + CustomEvent</div>
+            <div>  entropia-sigil.js listener</div>
+            <div>     ↓ updateSigilDrift(v)</div>
+            <div>  --drift-intensity CSS var</div>
+            <div>     ↓ CSS animation layers</div>
+            <div>  <span class="val-green">Visual state update</span></div>
+            <div style="margin-top:8px;color:var(--heading);">LATENCY: &lt;1ms (same-page sync)</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 4 — PERSISTENCE STATE INSPECTOR
+  ════════════════════════════════════════════════════════ -->
+  <section>
+    <div class="container">
+
+      <div class="section-header">
+        <div class="section-eyebrow">Module 4 // State Inspector</div>
+        <h2 class="section-title">Persistence State</h2>
+        <div class="section-description">
+          Live readout of the current <code style="font-family:var(--font-mono);font-size:0.85em;color:var(--accent-cyan);">ORP_SYNC</code> localStorage state. Updates automatically when any value changes.
+        </div>
+      </div>
+
+      <div class="cfg-card reveal" style="max-width:680px;">
+        <div class="cfg-card-title">CURRENT STATE SNAPSHOT</div>
+        <div class="cfg-card-subtitle">All <code style="font-family:var(--font-mono);color:var(--accent-cyan);font-size:0.95em;">orp_*</code> keys in localStorage.</div>
+
+        <div class="cfg-inspector" id="state-inspector" aria-live="polite">
+          <!-- populated by JS -->
+        </div>
+
+        <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;">
+          <button class="cfg-btn" id="refresh-inspector-btn">[ REFRESH SNAPSHOT ]</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SECTION 5 — DANGER ZONE
+  ════════════════════════════════════════════════════════ -->
+  <section style="border-bottom:none !important;">
+    <div class="container">
+
+      <div class="section-header">
+        <div class="section-eyebrow">Nuclear Options</div>
+        <h2 class="section-title" style="color:var(--danger);">Reset Zone</h2>
+        <div class="section-description">
+          Destructive operations. All settings revert to factory defaults. The NESS overlay's session entropy is cleared. The sigil cold-starts at drift 0.5.
+        </div>
+      </div>
+
+      <div class="cfg-danger reveal">
+        <div class="cfg-danger-title">⚠ DESTRUCTIVE OPERATIONS</div>
+        <div class="cfg-danger-desc">
+          These actions cannot be undone. Resetting all settings removes all <code style="font-family:var(--font-mono);font-size:0.9em;color:var(--accent-cyan);">orp_*</code> keys from localStorage and broadcasts factory defaults to all open pages.
+        </div>
+        <div class="cfg-danger-row">
+          <button class="cfg-btn danger" id="reset-all-btn">[ RESET ALL SETTINGS ]</button>
+          <button class="cfg-btn danger" id="clear-storage-btn">[ CLEAR ALL ORP STORAGE ]</button>
+        </div>
+        <div class="cfg-feedback" id="reset-feedback">// ALL ORP SETTINGS RESET TO FACTORY DEFAULTS</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Continue CTA ──────────────────────────────────────── -->
+  <section style="border-top:1px solid var(--border);border-bottom:none !important;">
+    <div class="container">
+      <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;">
+        <div>
+          <div class="section-eyebrow">Next Step</div>
+          <h2 class="section-title" style="font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:8px;">Watch It Live</h2>
+          <p style="color:var(--muted);max-width:520px;">See your drift calibration reflected in real time on the Runtime Console — live NESS telemetry, Warden state, and entropy log.</p>
+        </div>
+        <a href="runtime.html" class="btn btn-primary">Open Runtime Console →</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-title">ORP Δ</div>
+          <div>Operational/Recursive/Polarity</div>
+          <div style="margin-top:14px;color:var(--muted);">Governance-first epistemic reasoning framework.</div>
+        </div>
+        <div>
+          <div class="footer-title">Repository Links</div>
+          <div class="footer-links">
+            <a href="https://github.com/GeneralSergal/ORP" target="_blank" rel="noopener noreferrer">GitHub Source</a>
+            <a href="https://github.com/GeneralSergal/ORP/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">GPL-3.0 License</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-note">Signal &gt; Narrative · Recoverability &gt; Completion · Provenance &gt; Coherence</div>
+      <div class="author-section">
+        <div class="author-avatar" id="avatar-container">
+          <img src="avatar.png" alt="Laurentius Maximus" class="avatar-img" id="author-img" />
+          <div class="avatar-fallback">LM</div>
+        </div>
+        <div class="author-info">
+          <div class="author-name">Laurentius Maximus</div>
+          <div class="author-title">The ENTROPIA</div>
+        </div>
+      </div>
+      <div class="copyright">© 2026 Laurentius Maximus • The ENTROPIA</div>
+    </div>
+  </footer>
+
+  <!-- ── Scripts ────────────────────────────────────────────── -->
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/runtime-overlay.js"></script>
+
+  <!-- ── Settings page logic ───────────────────────────────── -->
+  <script>
+    (function () {
+      'use strict';
+
+      /* ── Helpers ──────────────────────────────────────────── */
+      function flash(id) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        el.classList.add('show');
+        setTimeout(function () { el.classList.remove('show'); }, 2400);
+      }
+
+      /* ── 1. DRIFT SLIDER ─────────────────────────────────── */
+      var driftSlider  = document.getElementById('drift-slider');
+      var driftDisplay = document.getElementById('drift-display');
+      var driftBar     = document.getElementById('drift-bar');
+      var driftLabel   = document.getElementById('drift-state-label');
+
+      // Load persisted value
+      var savedDrift = window.ORP_SYNC ? ORP_SYNC.load('sigil_drift', 0.5) : 0.5;
+      driftSlider.value = savedDrift;
+      _updateDriftUI(savedDrift);
+
+      function _updateDriftUI(v) {
+        v = parseFloat(v);
+        driftDisplay.textContent = v.toFixed(2);
+        if (driftBar) driftBar.style.transform = 'scaleX(' + v + ')';
+
+        driftDisplay.className = 'cfg-slider-value';
+        if (v < 0.25) {
+          driftDisplay.classList.add('low');
+          if (driftLabel) driftLabel.textContent = 'LOW';
+        } else if (v < 0.70) {
+          driftDisplay.classList.add('mid');
+          if (driftLabel) driftLabel.textContent = 'MID';
+        } else {
+          driftDisplay.classList.add('high');
+          if (driftLabel) driftLabel.textContent = 'HIGH';
+        }
+
+        // Apply to sigil immediately
+        if (typeof window.updateSigilDrift === 'function') window.updateSigilDrift(v);
+      }
+
+      driftSlider.addEventListener('input', function () {
+        _updateDriftUI(parseFloat(this.value));
+      });
+
+      // Debounced save — avoid spamming localStorage on every pixel of drag
+      var _driftSaveTimer = null;
+      driftSlider.addEventListener('input', function () {
+        clearTimeout(_driftSaveTimer);
+        _driftSaveTimer = setTimeout(function () {
+          if (window.ORP_SYNC) {
+            ORP_SYNC.save('sigil_drift', parseFloat(driftSlider.value));
+            flash('drift-feedback');
+          }
+          updateInspector();
+        }, 250);
+      });
+
+      /* ── 2. SHS SELECTOR ─────────────────────────────────── */
+      var shsSelector = document.getElementById('shs-selector');
+      var currentSHS  = window.ORP_SYNC ? ORP_SYNC.load('shs_override', null) : null;
+      _activateSHSBtn(currentSHS || 'AUTO');
+
+      shsSelector && shsSelector.querySelectorAll('.cfg-shs-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var val = this.dataset.shs;
+          _activateSHSBtn(val);
+
+          var override = val === 'AUTO' ? null : val;
+          if (window.ORP_SYNC) {
+            ORP_SYNC.save('shs_override', override);
+            flash('shs-feedback');
+          }
+          // Apply immediately
+          if (override !== null && typeof window.updateSigilFromSHS === 'function') {
+            window.updateSigilFromSHS(override);
+          }
+          updateInspector();
+        });
+      });
+
+      function _activateSHSBtn(shs) {
+        if (!shsSelector) return;
+        shsSelector.querySelectorAll('.cfg-shs-btn').forEach(function (b) {
+          var isThis = b.dataset.shs === shs;
+          b.classList.toggle('active', isThis);
+          b.setAttribute('aria-pressed', isThis ? 'true' : 'false');
+        });
+      }
+
+      /* ── 3. OVERLAY TOGGLE ───────────────────────────────── */
+      var overlayToggle = document.getElementById('overlay-toggle');
+      if (overlayToggle) {
+        var savedOverlay = window.ORP_SYNC ? ORP_SYNC.load('overlay_visible', true) : true;
+        overlayToggle.checked = savedOverlay;
+        _applyOverlayVisibility(savedOverlay);
+
+        overlayToggle.addEventListener('change', function () {
+          var v = this.checked;
+          if (window.ORP_SYNC) ORP_SYNC.save('overlay_visible', v);
+          _applyOverlayVisibility(v);
+          updateInspector();
+        });
+      }
+
+      function _applyOverlayVisibility(visible) {
+        var overlay = document.getElementById('cc-overlay');
+        if (overlay) overlay.style.display = visible ? '' : 'none';
+      }
+
+      /* ── 4. FLOAT TOGGLE ─────────────────────────────────── */
+      var floatToggle = document.getElementById('float-toggle');
+      if (floatToggle) {
+        var savedFloat = window.ORP_SYNC ? ORP_SYNC.load('sigil_float', true) : true;
+        floatToggle.checked = savedFloat;
+
+        floatToggle.addEventListener('change', function () {
+          var v = this.checked;
+          if (window.ORP_SYNC) ORP_SYNC.save('sigil_float', v);
+          // Sigil float is managed by entropia-sigil.js's rAF loop —
+          // toggling off freezes the wrapper in place.
+          document.querySelectorAll('.es-float-wrapper').forEach(function (w) {
+            w.style.transition = v ? '' : 'none';
+            if (!v) w.style.transform = 'translate(-50%, -50%) translate3d(0,0,0)';
+          });
+        });
+      }
+
+      /* ── 5. SESSION ENTROPY RESET ────────────────────────── */
+      var entropyResetBtn = document.getElementById('entropy-reset-btn');
+      if (entropyResetBtn) {
+        entropyResetBtn.addEventListener('click', function () {
+          try { sessionStorage.removeItem('orp_session_entropy'); } catch (e) {}
+          if (typeof window._orpResetBaseline === 'function') window._orpResetBaseline();
+          if (window._orpSHSState && typeof window._orpSHSState.reset === 'function') window._orpSHSState.reset();
+          flash('entropy-feedback');
+          updateInspector();
+        });
+      }
+
+      /* ── 6. STATE INSPECTOR ──────────────────────────────── */
+      function updateInspector() {
+        var el = document.getElementById('state-inspector');
+        if (!el) return;
+        var snap = window.ORP_SYNC ? ORP_SYNC.snapshot() : {};
+        var sessionEntropy = 0;
+        try { sessionEntropy = parseFloat(sessionStorage.getItem('orp_session_entropy') || 0); } catch(e) {}
+
+        var html = '';
+        Object.entries(snap).forEach(function (pair) {
+          var k = pair[0], v = pair[1];
+          var valClass = k === 'overlay_visible' ? (v ? 'val-green' : 'val') : 'val';
+          html += '<div><span class="key">orp_' + k + '</span>  →  <span class="' + valClass + '">' + JSON.stringify(v) + '</span></div>';
+        });
+        html += '<div style="margin-top:6px;border-top:1px solid var(--border);padding-top:6px;">';
+        html += '<span class="key">session:entropy</span>  →  <span class="val">' + sessionEntropy.toFixed(4) + '</span></div>';
+        el.innerHTML = html;
+      }
+
+      document.getElementById('refresh-inspector-btn') &&
+        document.getElementById('refresh-inspector-btn').addEventListener('click', function () {
+          updateInspector();
+        });
+
+      // Auto-update on any sync event
+      window.addEventListener('orp-settings-update', updateInspector);
+
+      // Initial render
+      updateInspector();
+
+      /* ── 7. DANGER ZONE ──────────────────────────────────── */
+      var resetAllBtn = document.getElementById('reset-all-btn');
+      if (resetAllBtn) {
+        resetAllBtn.addEventListener('click', function () {
+          if (window.ORP_SYNC) ORP_SYNC.resetAll();
+          // Re-sync UI to defaults
+          driftSlider.value = 0.5;
+          _updateDriftUI(0.5);
+          _activateSHSBtn('AUTO');
+          if (overlayToggle) overlayToggle.checked = true;
+          _applyOverlayVisibility(true);
+          flash('reset-feedback');
+          updateInspector();
+        });
+      }
+
+      var clearStorageBtn = document.getElementById('clear-storage-btn');
+      if (clearStorageBtn) {
+        clearStorageBtn.addEventListener('click', function () {
+          // Remove all orp_* keys manually
+          try {
+            var keysToRemove = [];
+            for (var i = 0; i < localStorage.length; i++) {
+              var k = localStorage.key(i);
+              if (k && k.startsWith('orp_')) keysToRemove.push(k);
+            }
+            keysToRemove.forEach(function (k) { localStorage.removeItem(k); });
+          } catch (e) {}
+          if (window.ORP_SYNC) ORP_SYNC.resetAll();
+          flash('reset-feedback');
+          updateInspector();
+        });
+      }
+
+      /* ── 8. Cross-tab sync listener ──────────────────────── */
+      window.addEventListener('orp-settings-update', function (e) {
+        if (!e.detail) return;
+        var k = e.detail.key, v = e.detail.value;
+
+        if (k === 'sigil_drift' && v !== null) {
+          driftSlider.value = v;
+          _updateDriftUI(v);
+        }
+        if (k === 'shs_override') {
+          _activateSHSBtn(v || 'AUTO');
+        }
+        if (k === 'overlay_visible' && overlayToggle) {
+          overlayToggle.checked = !!v;
+          _applyOverlayVisibility(!!v);
+        }
+      });
+
+    })();
+  </script>
+
+  <!-- ── Sigil template + init ─────────────────────────────── -->
+  <template id="entropiaSigilTemplate">
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="esGlowCore" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="3" result="blur1"/>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur2"/>
+      <feMerge><feMergeNode in="blur2"/><feMergeNode in="blur1"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="esGlowOuter" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="esGlowCyan" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="esGlowSoft" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <radialGradient id="esCoreFill" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#ff4400" stop-opacity="0.25"/>
+      <stop offset="60%"  stop-color="#dd1111" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#dd1111" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="esAuraGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#ff6600" stop-opacity="0.12"/>
+      <stop offset="70%"  stop-color="#dd1111" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="transparent"/>
+    </radialGradient>
+    <linearGradient id="esWingGradL" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"   stop-color="#dd1111" stop-opacity="0.7"/>
+      <stop offset="50%"  stop-color="#ff4400" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#ff6600" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="esWingGradR" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#dd1111" stop-opacity="0.7"/>
+      <stop offset="50%"  stop-color="#ff4400" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#ff6600" stop-opacity="0.1"/>
+    </linearGradient>
+    <linearGradient id="esCyanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#00d4ff" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#00d4ff" stop-opacity="0.3"/>
+    </linearGradient>
+    <clipPath id="esScanClip"><rect x="0" y="0" width="200" height="200"/></clipPath>
+  </defs>
+  <circle cx="100" cy="100" r="92" fill="url(#esAuraGrad)"/>
+  <g class="es-orbit-ring" style="transform-origin:100px 100px;">
+    <circle cx="100" cy="100" r="85" fill="none" stroke="#dd1111" stroke-width="0.5" stroke-opacity="0.20" stroke-dasharray="4 8"/>
+    <circle cx="100" cy="15"  r="2.2" fill="#dd1111" fill-opacity="0.55" filter="url(#esGlowSoft)"/>
+    <circle cx="185" cy="100" r="2.2" fill="#ff6600" fill-opacity="0.55" filter="url(#esGlowSoft)"/>
+    <circle cx="100" cy="185" r="2.2" fill="#dd1111" fill-opacity="0.55" filter="url(#esGlowSoft)"/>
+    <circle cx="15"  cy="100" r="2.2" fill="#ff6600" fill-opacity="0.55" filter="url(#esGlowSoft)"/>
+    <line x1="157" y1="26"  x2="161" y2="22"  stroke="#dd1111" stroke-width="1" stroke-opacity="0.35"/>
+    <line x1="174" y1="157" x2="178" y2="161" stroke="#dd1111" stroke-width="1" stroke-opacity="0.35"/>
+    <line x1="43"  y1="174" x2="39"  y2="178" stroke="#dd1111" stroke-width="1" stroke-opacity="0.35"/>
+    <line x1="26"  y1="43"  x2="22"  y2="39"  stroke="#dd1111" stroke-width="1" stroke-opacity="0.35"/>
+  </g>
+  <g class="es-wing-l" style="transform-origin:100px 100px;">
+    <polygon points="100,100  30,55   18,82   55,95"  fill="url(#esWingGradL)" stroke="#dd1111" stroke-width="0.6" stroke-opacity="0.5"  filter="url(#esGlowOuter)"/>
+    <polygon points="100,100  20,80   14,110  50,110" fill="url(#esWingGradL)" stroke="#dd1111" stroke-width="0.6" stroke-opacity="0.4" fill-opacity="0.7" filter="url(#esGlowOuter)"/>
+    <polygon points="100,100  30,110  22,138  60,125" fill="url(#esWingGradL)" stroke="#ff6600" stroke-width="0.5" stroke-opacity="0.3" fill-opacity="0.5"/>
+    <line x1="100" y1="100" x2="22"  y2="68"  stroke="#ff4400" stroke-width="0.7" stroke-opacity="0.4"/>
+    <line x1="100" y1="100" x2="16"  y2="96"  stroke="#dd1111" stroke-width="0.7" stroke-opacity="0.35"/>
+    <line x1="100" y1="100" x2="25"  y2="125" stroke="#ff4400" stroke-width="0.6" stroke-opacity="0.3"/>
+    <polyline points="30,55  16,95  22,138" fill="none" stroke="#dd1111" stroke-width="1" stroke-opacity="0.3" filter="url(#esGlowSoft)"/>
+  </g>
+  <g class="es-wing-r" style="transform-origin:100px 100px;">
+    <polygon points="100,100  170,55  182,82  145,95"  fill="url(#esWingGradR)" stroke="#dd1111" stroke-width="0.6" stroke-opacity="0.5"  filter="url(#esGlowOuter)"/>
+    <polygon points="100,100  180,80  186,110  150,110" fill="url(#esWingGradR)" stroke="#dd1111" stroke-width="0.6" stroke-opacity="0.4" fill-opacity="0.7" filter="url(#esGlowOuter)"/>
+    <polygon points="100,100  170,110  178,138  140,125" fill="url(#esWingGradR)" stroke="#ff6600" stroke-width="0.5" stroke-opacity="0.3" fill-opacity="0.5"/>
+    <line x1="100" y1="100" x2="178" y2="68"  stroke="#ff4400" stroke-width="0.7" stroke-opacity="0.4"/>
+    <line x1="100" y1="100" x2="184" y2="96"  stroke="#dd1111" stroke-width="0.7" stroke-opacity="0.35"/>
+    <line x1="100" y1="100" x2="175" y2="125" stroke="#ff4400" stroke-width="0.6" stroke-opacity="0.3"/>
+    <polyline points="170,55  184,95  178,138" fill="none" stroke="#dd1111" stroke-width="1" stroke-opacity="0.3" filter="url(#esGlowSoft)"/>
+  </g>
+  <g class="es-core-group" style="transform-origin:100px 100px;">
+    <polygon points="100,52  141,76  141,124  100,148  59,124  59,76" fill="none" stroke="#dd1111" stroke-width="1" stroke-opacity="0.25" stroke-dasharray="6 4"/>
+    <circle cx="100" cy="100" r="46" fill="url(#esCoreFill)"/>
+    <polygon points="100,60  132,112  68,112"  fill="rgba(221,17,17,0.08)" stroke="#dd1111" stroke-width="2.2" stroke-linejoin="round" filter="url(#esGlowCore)"/>
+    <polygon points="100,72  124,108  76,108"  fill="rgba(255,102,0,0.06)"  stroke="#ff6600" stroke-width="1.8" stroke-linejoin="round" filter="url(#esGlowCore)"/>
+    <polygon points="100,83  115,105  85,105"  fill="rgba(0,212,255,0.04)"  stroke="#00d4ff" stroke-width="1.4" stroke-linejoin="round" filter="url(#esGlowCyan)"/>
+    <polygon points="100,92  105,100  100,108  95,100" fill="#ff4400" fill-opacity="0.9" filter="url(#esGlowCore)"/>
+    <circle cx="100" cy="100" r="2.5" fill="#ffffff" fill-opacity="0.85" filter="url(#esGlowCore)"/>
+    <line x1="100" y1="54"  x2="100" y2="60"  stroke="#dd1111" stroke-width="1" stroke-opacity="0.6"/>
+    <line x1="100" y1="140" x2="100" y2="146" stroke="#dd1111" stroke-width="1" stroke-opacity="0.6"/>
+    <line x1="55"  y1="100" x2="61"  y2="100" stroke="#dd1111" stroke-width="1" stroke-opacity="0.6"/>
+    <line x1="139" y1="100" x2="145" y2="100" stroke="#dd1111" stroke-width="1" stroke-opacity="0.6"/>
+  </g>
+  <g class="es-fracture">
+    <polygon points="72,62  62,54  66,68"   fill="#dd1111" fill-opacity="0.6" stroke="#dd1111" stroke-width="0.5" filter="url(#esGlowSoft)"/>
+    <polygon points="80,58  70,50  73,61"   fill="#ff6600" fill-opacity="0.5" stroke="#ff6600" stroke-width="0.4"/>
+    <line x1="62" y1="54" x2="56" y2="48"  stroke="#dd1111" stroke-width="0.8" stroke-opacity="0.8"/>
+    <line x1="70" y1="50" x2="65" y2="43"  stroke="#ff6600" stroke-width="0.6" stroke-opacity="0.7"/>
+    <polygon points="128,62  138,54  134,68" fill="#dd1111" fill-opacity="0.6" stroke="#dd1111" stroke-width="0.5" filter="url(#esGlowSoft)"/>
+    <polygon points="120,58  130,50  127,61" fill="#ff6600" fill-opacity="0.5" stroke="#ff6600" stroke-width="0.4"/>
+    <line x1="138" y1="54" x2="144" y2="48" stroke="#dd1111" stroke-width="0.8" stroke-opacity="0.8"/>
+    <line x1="130" y1="50" x2="135" y2="43" stroke="#ff6600" stroke-width="0.6" stroke-opacity="0.7"/>
+    <polygon points="90,145  82,155  94,152"  fill="#dd1111" fill-opacity="0.5" stroke="#dd1111" stroke-width="0.5" filter="url(#esGlowSoft)"/>
+    <polygon points="110,145 118,155 106,152" fill="#dd1111" fill-opacity="0.5" stroke="#dd1111" stroke-width="0.5" filter="url(#esGlowSoft)"/>
+    <line x1="88"  y1="150" x2="84"  y2="160" stroke="#ff4400" stroke-width="0.8" stroke-opacity="0.7"/>
+    <line x1="112" y1="150" x2="116" y2="160" stroke="#ff4400" stroke-width="0.8" stroke-opacity="0.7"/>
+    <circle cx="48"  cy="90"  r="1.2" fill="#dd1111" fill-opacity="0.7"/>
+    <circle cx="152" cy="75"  r="1.0" fill="#ff6600" fill-opacity="0.6"/>
+    <circle cx="55"  cy="130" r="0.8" fill="#00d4ff" fill-opacity="0.8"/>
+    <circle cx="148" cy="130" r="1.2" fill="#dd1111" fill-opacity="0.6"/>
+    <circle cx="100" cy="32"  r="1.0" fill="#ff4400" fill-opacity="0.7"/>
+    <circle cx="100" cy="168" r="1.2" fill="#dd1111" fill-opacity="0.6"/>
+    <line x1="100" y1="83"  x2="88"  y2="62"  stroke="#dd1111" stroke-width="0.7" stroke-opacity="0.65"/>
+    <line x1="100" y1="83"  x2="112" y2="62"  stroke="#dd1111" stroke-width="0.7" stroke-opacity="0.65"/>
+    <line x1="68"  y1="112" x2="52"  y2="118" stroke="#ff4400" stroke-width="0.6" stroke-opacity="0.55"/>
+    <line x1="132" y1="112" x2="148" y2="118" stroke="#ff4400" stroke-width="0.6" stroke-opacity="0.55"/>
+  </g>
+  <g class="es-glitch-layer">
+    <polygon points="102,60  134,112  70,112" fill="none" stroke="#00d4ff" stroke-width="0.9" stroke-opacity="0.55" transform="translate(2, -1)" filter="url(#esGlowCyan)"/>
+    <polygon points="98,60  130,112  66,112"  fill="none" stroke="#ff3333" stroke-width="0.9" stroke-opacity="0.45" transform="translate(-2, 1)"/>
+  </g>
+  <g class="es-scanline" clip-path="url(#esScanClip)">
+    <rect x="59" y="91"  width="82" height="1.5" fill="#dd1111" fill-opacity="0.3"/>
+    <rect x="59" y="99"  width="82" height="1.0" fill="#00d4ff" fill-opacity="0.25"/>
+    <rect x="59" y="106" width="82" height="1.5" fill="#ff6600" fill-opacity="0.2"/>
+    <rect x="82" y="62"  width="36" height="2"   fill="#dd1111" fill-opacity="0.4"/>
+    <rect x="74" y="138" width="52" height="1.5" fill="#ff4400" fill-opacity="0.35"/>
+  </g>
+</svg>
+  </template>
+
+  <script src="assets/js/entropia-sigil.js"></script>
+
+  <!-- ── Sigil persistence restore ─────────────────────────── -->
+  <script>
+    (function () {
+      if (!window.ORP_SYNC || typeof window.updateSigilDrift !== 'function') return;
+      var drift = ORP_SYNC.load('sigil_drift', 0.5);
+      window.updateSigilDrift(drift);
+      window.addEventListener('orp-settings-update', function (e) {
+        if (e.detail && e.detail.key === 'sigil_drift') window.updateSigilDrift(e.detail.value);
+      });
+    })();
+  </script>
+</body>
+</html>
