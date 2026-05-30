@@ -1070,47 +1070,8 @@ function _syncDrift() {
 }
 	  
 	  
-      function _syncDisplayAndDrift() {
-        var machine = window._orpSHSState;
-        
-        var rhoEl = document.getElementById('cc-rho');
-        var dsEl = document.getElementById('cc-ds');
-        var wpctEl = document.getElementById('cc-wpct');
-        var shsEl = window._orpSHSPill || document.getElementById('cc-tab-shs');
-
-        var rho = rhoEl ? parseFloat(rhoEl.textContent) : (machine?.rho || machine?.integrity || 100);
-        var ds = dsEl ? parseFloat(dsEl.textContent) : (machine?.entropy || machine?.deltaS || 0);
-        var wpct = wpctEl ? parseFloat(wpctEl.textContent) : (machine?.wardenPct || machine?.wardenActivation || 0);
-        var shs = shsEl ? shsEl.textContent.trim().toUpperCase() : (machine?.shs || 'GREEN');
-
-        // 1. Sync Telemetry Card Text and Progress Scale Values
-        var rcDeltaS = document.getElementById('rc-delta-s');
-        if (rcDeltaS) {
-          rcDeltaS.textContent = ds.toFixed(4);
-          rcDeltaS.className = 'rc-metric-value ' + (ds > 0.72 ? 'red' : ds > 0.4 ? 'orange' : 'green');
-        }
-        var rcDeltaSub = document.getElementById('rc-delta-sub');
-        if (rcDeltaSub) {
-          rcDeltaSub.textContent = ds > 0.72 ? 'critical variance' : ds > 0.4 ? 'elevated drift' : 'baseline nominal';
-        }
-        var rcEntropyBar = document.getElementById('rc-entropy-bar');
-        if (rcEntropyBar) {
-          rcEntropyBar.style.transform = 'scaleX(' + Math.max(0.001, Math.min(1, ds)) + ')';
-        }
-
-        var rcRho = document.getElementById('rc-rho');
-        if (rcRho) {
-          rcRho.textContent = rho.toFixed(1);
-          rcRho.className = 'rc-metric-value ' + (rho < 50 ? 'red' : rho < 85 ? 'orange' : 'cyan');
-        }
-        var rcRhoSub = document.getElementById('rc-rho-sub');
-        if (rcRhoSub) {
-          rcRhoSub.textContent = rho < 50 ? 'severe decay' : rho < 85 ? 'proportional drift' : 'chain validated';
-        }
-        var rcRhoBar = document.getElementById('rc-rho-bar');
-        if (rcRhoBar) {
-          rcRhoBar.style.transform = 'scaleX(' + Math.max(0.001, Math.min(100, rho) / 100) + ')';
-        }
+      // Instead of the setInterval block, use this when an event triggers:
+window.ORP_SYNC.save('sigil_drift', combined);
 
 // INTEGRATED LOGIC (ORP v3.0 Compliance with Inline Yellow Style Fallback)
 var rcShs = document.getElementById('rc-shs');
