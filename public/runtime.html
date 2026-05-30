@@ -2,26 +2,36 @@
 <html lang="en">
 
 <head>
+  <!-- ═══════════════════════════════════════════════════════
+       Shared site assets — single source of truth
+       (favicon, fonts, theme-color, stylesheets)
+       See: assets/head-includes.html for the canonical source
+       ══════════════════════════════════════════════════════ -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-
-  <title>Runtime Console — ORP Δ</title>
-  <meta name="description" content="ORP Δ Runtime Console — live NESS telemetry, Epistemic Disagreement Engine, Warden state monitoring, and Clinical Core overlay." />
-
   <meta name="theme-color" content="#dd1111" />
 
-  <!-- Favicon (Valknut) -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0d10'/%3E%3Cg stroke='%23dd1111' stroke-width='8' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='50,20 82,75 18,75'/%3E%3Cpolygon points='50,35 69,68 31,68'/%3E%3Cpolygon points='50,50 56,60 44,60'/%3E%3C/g%3E%3C/svg%3E" />
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Favicon: Valknut SVG (canonical — one definition for all pages) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0d10'/%3E%3Cg stroke='%23dd1111' stroke-width='8' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='50%2C20 82%2C75 18%2C75'/%3E%3Cpolygon points='50%2C35 69%2C68 31%2C68'/%3E%3Cpolygon points='50%2C50 56%2C60 44%2C60'/%3E%3C/g%3E%3C/svg%3E" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png" />
+  <link rel="manifest" href="assets/site.webmanifest" />
 
-  <!-- Main Styles -->
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Oxanium:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
   <link rel="stylesheet" href="assets/css/style.css" />
   <link rel="stylesheet" href="assets/css/entropia-sigil.css" />
 
-  <!-- Open Graph -->
+  <!-- ── Per-page metadata ───────────────────────────────── -->
+  <title>Runtime Console — ORP Δ</title>
+  <meta name="description" content="ORP Δ Runtime Console — live NESS telemetry, Epistemic Disagreement Engine, Warden state monitoring, and Clinical Core overlay." />
+
+  <!-- Open Graph / Social -->
   <meta property="og:title" content="Runtime Console — ORP Δ" />
   <meta property="og:description" content="Live NESS telemetry, Epistemic Disagreement Engine, and Clinical Core Warden monitoring." />
   <meta property="og:type" content="website" />
@@ -31,12 +41,11 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="ORP Δ - Valknut Symbol" />
 
-  <!-- Twitter -->
+  <!-- Twitter / X Cards -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Runtime Console — ORP Δ" />
   <meta name="twitter:description" content="Live NESS telemetry, Epistemic Disagreement Engine, and Clinical Core Warden monitoring." />
   <meta name="twitter:image" content="https://raw.githubusercontent.com/GeneralSergal/ORP/refs/heads/main/public/Glyph.png" />
-
   <style>
     /* ============================================================
        RUNTIME CONSOLE — Page-scoped styles
@@ -955,26 +964,42 @@
   <script src="assets/js/main.js"></script>
   <script src="assets/js/runtime-overlay.js"></script>
 
-  <!-- ── Clinical Core: NESS Runtime Engine ─────────────── -->
+  <!-- ── Clinical Core: NESS Runtime Engine (v3.1.0) ──────────
+       SYNC PATCH: This engine now reads directly from
+       window._orpSHSState and window._orpOverlayActive, which
+       are set by runtime-overlay.js. On the runtime page,
+       runtime-overlay.js runs FIRST (it's loaded before this
+       inline script). The inline engine is now a DISPLAY BRIDGE
+       only — it reads the overlay's authoritative state and
+       renders it into the rc-* elements.
+
+       SYNC-2: setInterval(decay) is NOT started if
+       window._orpOverlayActive is true (overlay rAF handles decay).
+       SYNC-3: SHS is read from window._orpSHSPill (canonical pill)
+       via MutationObserver rather than a separate calcSHS() that
+       used a different 3-state mapping.
+
+       Bars: all width% → transform:scaleX (compositable, no layout).
+  ────────────────────────────────────────────────────────────── -->
   <script>
   (() => {
     "use strict";
 
-    /* ── State ────────────────────────────────────────── */
-    const state = {
-      deltaS:     0,
-      rho:        100,
-      warden:     0,          // 0-100 activation %
-      wardenState: "DORMANT", // DORMANT | PRIMED | MANIFEST
+    /* ── Local display state ──────────────────────────── */
+    /* NOTE: rho/warden/deltaS are MIRRORED from the overlay state
+       on each update tick. We never maintain them independently
+       to avoid the double-decay bug (SYNC-2). */
+    const rcState = {
       shs:        "GREEN",
-      dsHistory:  [],         // last 6 ΔS values
+      wardenState:"DORMANT",
+      dsHistory:  [],
       logEntries: [],
       eventCount: 0,
     };
 
     /* ── DOM refs ─────────────────────────────────────── */
-    const $ = id => document.getElementById(id);
-    const el = {
+    const $   = id => document.getElementById(id);
+    const el  = {
       deltaS:     $("rc-delta-s"),
       deltaSub:   $("rc-delta-sub"),
       rho:        $("rc-rho"),
@@ -997,209 +1022,327 @@
       injectBtn:  $("rc-inject-btn"),
       resetBtn:   $("rc-reset-btn"),
       wardenBtn:  $("rc-warden-btn"),
+      statusBar:  document.querySelector('.rc-status-bar'),
     };
 
     /* ── Helpers ──────────────────────────────────────── */
-    const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
-    const fmt4  = n => n.toFixed(4);
-    const fmt1  = n => n.toFixed(1);
-    const now   = () => new Date().toLocaleTimeString("en-GB", { hour12: false });
+    const clamp   = (v, mn, mx) => Math.min(mx, Math.max(mn, v));
+    const fmt4    = n => n.toFixed(4);
+    const fmt1    = n => n.toFixed(1);
+    const nowStr  = () => new Date().toLocaleTimeString("en-GB", { hour12: false });
 
-    function addLog(tag, tagClass, msg) {
-      const entry = { time: now(), tag, tagClass, msg };
-      state.logEntries.unshift(entry);
-      if (state.logEntries.length > 80) state.logEntries.pop();
-      renderLog();
+    /* BARS: GPU-compositable scaleX instead of width% */
+    function setBarScale(barEl, pct) {
+      if (!barEl) return;
+      barEl.style.transform = `scaleX(${clamp(pct, 0, 100) / 100})`;
+      barEl.style.transformOrigin = 'left center';
     }
 
-    function renderLog() {
-      el.logInner.innerHTML = state.logEntries.map(e =>
-        `<div class="rc-log-entry">
-          <span class="rc-log-time">${e.time}</span>
-          <span class="rc-log-tag ${e.tagClass}">${e.tag}</span>
-          <span class="rc-log-msg">${e.msg}</span>
-        </div>`
-      ).join("");
+    /* ── Inline log (independent display — rc-log is runtime-only) */
+    function addLog(tag, tagClass, msg) {
+      const entry = { time: nowStr(), tag, tagClass, msg };
+      rcState.logEntries.unshift(entry);
+      if (rcState.logEntries.length > 80) rcState.logEntries.pop();
+      _renderLogEntry(entry);
+    }
+
+    /* GFXFIX-4 equivalent: prepend single node, no full innerHTML rebuild */
+    function _renderLogEntry(e) {
+      if (!el.logInner) return;
+      const row  = document.createElement("div");
+      row.className = "rc-log-entry";
+      const t = document.createElement("span");
+      t.className = "rc-log-time";
+      t.textContent = e.time;
+      const tg = document.createElement("span");
+      tg.className = `rc-log-tag ${e.tagClass}`;
+      tg.textContent = e.tag;
+      const m = document.createElement("span");
+      m.className = "rc-log-msg";
+      m.textContent = e.msg;
+      row.append(t, tg, m);
+      el.logInner.prepend(row);
+      while (el.logInner.children.length > 80) el.logInner.removeChild(el.logInner.lastChild);
     }
 
     function renderEDTU() {
-      const hist = state.dsHistory.slice(-6);
+      if (!el.edtuBody) return;
+      const hist = rcState.dsHistory.slice(-6);
       const max  = Math.max(...hist, 0.01);
-      el.edtuBody.innerHTML = hist.map((v, i) => {
-        const pct = clamp((v / max) * 100, 2, 100);
-        return `<div class="rc-ds-row">
-          <span class="rc-ds-label">T-${hist.length - i}</span>
-          <div class="rc-ds-track"><div class="rc-ds-fill" style="width:${pct}%"></div></div>
-          <span class="rc-ds-val">${fmt4(v)}</span>
-        </div>`;
-      }).join("") || `<div style="color:var(--muted);font-family:var(--font-mono),monospace;font-size:0.75rem;">No history yet — inject a ΔS event.</div>`;
+      const frag = document.createDocumentFragment();
+      if (hist.length === 0) {
+        const p = document.createElement("div");
+        p.style.cssText = "color:var(--muted);font-family:var(--font-mono),monospace;font-size:0.75rem;";
+        p.textContent = "No history yet — inject a ΔS event.";
+        frag.appendChild(p);
+      } else {
+        hist.forEach((v, i) => {
+          const pct = clamp((v / max) * 100, 2, 100);
+          const row  = document.createElement("div"); row.className = "rc-ds-row";
+          const lbl  = document.createElement("span"); lbl.className = "rc-ds-label"; lbl.textContent = `T-${hist.length - i}`;
+          const trk  = document.createElement("div"); trk.className = "rc-ds-track";
+          const fill = document.createElement("div"); fill.className = "rc-ds-fill";
+          /* Use scaleX on EDTU bars too */
+          fill.style.cssText = `width:100%;transform:scaleX(${pct/100});transform-origin:left center;transition:transform 0.8s cubic-bezier(0.2,0,0,1);`;
+          const val  = document.createElement("span"); val.className = "rc-ds-val"; val.textContent = fmt4(v);
+          trk.appendChild(fill);
+          row.append(lbl, trk, val);
+          frag.appendChild(row);
+        });
+      }
+      el.edtuBody.textContent = "";
+      el.edtuBody.appendChild(frag);
     }
 
-    /* ── SHS state machine ────────────────────────────── */
-    function calcSHS(rho) {
-      if (rho >= 75) return "GREEN";
-      if (rho >= 45) return "AMBER";
-      return "RED";
-    }
+    /* ──────────────────────────────────────────────────────────
+       SYNC-3: 5-state SHS mapping (aligned with overlay v3.0.2)
+       Old inline engine used 3-state: GREEN / AMBER / RED
+       New: GREEN / YELLOW / ORANGE / RED / BLACK (+ NUCLEAR display)
+    ─────────────────────────────────────────────────────────── */
+    const SHS_COLOR = {
+      GREEN:  "green",
+      YELLOW: "yellow",
+      ORANGE: "orange",
+      RED:    "red",
+      BLACK:  "red",   /* black renders as deep red in rc-metric-value */
+    };
+    const SHS_SUB = {
+      GREEN:  "no drift detected",
+      YELLOW: "low drift accumulating",
+      ORANGE: "drift: moderate",
+      RED:    "drift critical",
+      BLACK:  "TERMINAL — reset required",
+    };
 
-    const SHS_COLOR = { GREEN: "green", AMBER: "orange", RED: "red" };
-
-    /* ── Warden state machine ─────────────────────────── */
+    /* ── Warden state config ─────────────────────────── */
     const WARDEN_STATES = {
-      DORMANT:  {
-        cls:  "dormant",
-        icon: "⬡",
+      DORMANT: {
+        cls:"dormant", icon:"⬡",
         title:"Warden — DORMANT",
-        desc: "Monitoring for coherence-masked degradation. No cross-node contamination detected. All epistemic isolation borders nominal.",
+        desc:"Monitoring for coherence-masked degradation. No cross-node contamination detected. All epistemic isolation borders nominal.",
       },
-      PRIMED:   {
-        cls:  "primed",
-        icon: "◈",
+      PRIMED: {
+        cls:"primed", icon:"◈",
         title:"Warden — PRIMED",
-        desc: "Entropy accumulation approaching activation threshold. Epistemic isolation borders under stress. J⊥_VORTEX detection elevated. CRA pre-validation queued.",
+        desc:"Entropy accumulation approaching activation threshold. Epistemic isolation borders under stress. J⊥_VORTEX detection elevated. CRA pre-validation queued.",
       },
       MANIFEST: {
-        cls:  "manifest",
-        icon: "⛒",
+        cls:"manifest", icon:"⛒",
         title:"Warden — MANIFEST",
-        desc: "Activation threshold exceeded. Downstream processing halted. CRA validation in progress. Provenance chain locked. Drift Recovery Sequencer engaged.",
+        desc:"Activation threshold exceeded. Downstream processing halted. CRA validation in progress. Provenance chain locked. Drift Recovery Sequencer engaged.",
       },
     };
 
     function applyWardenState(s) {
-      const cfg = WARDEN_STATES[s];
-      const badge = el.wardenBadge;
-
-      el.wardenIcon.textContent  = cfg.icon;
-      el.wardenTitle.textContent = cfg.title;
-      el.wardenDesc.textContent  = cfg.desc;
-
-      badge.textContent = s;
-      badge.className   = `rc-warden-state ${cfg.cls}`;
-
-      el.wardenPanel.className = s === "MANIFEST"
-        ? "rc-warden alert"
-        : "rc-warden";
+      const cfg = WARDEN_STATES[s] || WARDEN_STATES.DORMANT;
+      if (el.wardenIcon)  el.wardenIcon.textContent  = cfg.icon;
+      if (el.wardenTitle) el.wardenTitle.textContent = cfg.title;
+      if (el.wardenDesc)  el.wardenDesc.textContent  = cfg.desc;
+      if (el.wardenBadge) {
+        el.wardenBadge.textContent = s;
+        el.wardenBadge.className   = `rc-warden-state ${cfg.cls}`;
+      }
+      if (el.wardenPanel) {
+        el.wardenPanel.className = s === "MANIFEST" ? "rc-warden alert" : "rc-warden";
+      }
     }
 
-    /* ── Core update ──────────────────────────────────── */
+    /* ──────────────────────────────────────────────────────────
+       Core display update — reads from the overlay's shared state.
+       When _orpOverlayActive is true, window._orpSHSState and
+       the cc-* elements are the authoritative source of truth.
+    ─────────────────────────────────────────────────────────── */
     function update() {
-      // ΔS display
-      el.deltaS.textContent    = fmt4(state.deltaS);
-      el.deltaSub.textContent  = state.deltaS < 0.01 ? "baseline nominal" : state.deltaS < 0.05 ? "low variance" : "elevated variance";
-      el.entropyBar.style.width = clamp(state.deltaS * 800, 2, 100) + "%";
+      /* Read from overlay shared state if available */
+      const overlayActive = !!window._orpOverlayActive;
+      const machine       = window._orpSHSState;
 
-      // ρ(x)
-      el.rho.textContent    = fmt1(state.rho);
-      el.rhoSub.textContent = state.rho > 90 ? "chain validated" : state.rho > 60 ? "degrading" : "critical integrity";
-      el.rhoBar.style.width = clamp(state.rho, 2, 100) + "%";
-      el.rhoBar.className   = `rc-integrity-bar${state.rho < 60 ? " degraded" : ""}`;
+      /* Source of truth depends on whether overlay is running */
+      let rho     = overlayActive && machine ? (parseFloat(document.getElementById('cc-rho')?.textContent) || 100) : 100;
+      let warden  = overlayActive && machine ? (parseFloat(document.getElementById('cc-wpct')?.textContent) || 0)   : 0;
+      let deltaS  = overlayActive && machine ? (parseFloat(document.getElementById('cc-ds')?.textContent)  || 0)   : 0;
+      let shs     = overlayActive && machine ? (machine.currentState || "GREEN") : rcState.shs;
 
-      // SHS
-      const newSHS = calcSHS(state.rho);
-      if (newSHS !== state.shs) {
-        addLog("SHS", newSHS === "GREEN" ? "ok" : newSHS === "AMBER" ? "warn" : "err",
-          `State transition: ${state.shs} → ${newSHS}`);
-        state.shs = newSHS;
+      /* ── ΔS ── */
+      if (el.deltaS)    el.deltaS.textContent   = fmt4(deltaS);
+      if (el.deltaSub)  el.deltaSub.textContent = deltaS < 0.01 ? "baseline nominal" : deltaS < 0.05 ? "low variance" : "elevated variance";
+      setBarScale(el.entropyBar, clamp(deltaS * 800, 2, 100));
+
+      /* ── ρ(x) ── */
+      if (el.rho)    el.rho.textContent    = fmt1(rho);
+      if (el.rhoSub) el.rhoSub.textContent = rho > 90 ? "chain validated" : rho > 60 ? "degrading" : "critical integrity";
+      setBarScale(el.rhoBar, rho);
+      if (el.rhoBar) el.rhoBar.className   = `rc-integrity-bar${rho < 60 ? " degraded" : ""}`;
+
+      /* ── SHS (5-state) ── */
+      if (shs !== rcState.shs) {
+        const isDegrade = ['YELLOW','ORANGE','RED','BLACK'].indexOf(shs) >
+                          ['YELLOW','ORANGE','RED','BLACK'].indexOf(rcState.shs);
+        addLog("SHS", shs === "GREEN" ? "ok" : shs === "BLACK" ? "err" : isDegrade ? "warn" : "ok",
+          `State: ${rcState.shs} → ${shs}`);
+        rcState.shs = shs;
       }
-      el.shs.textContent    = state.shs;
-      el.shs.className      = `rc-metric-value ${SHS_COLOR[state.shs]}`;
-      el.shsSub.textContent = state.shs === "GREEN" ? "no drift detected" : state.shs === "AMBER" ? "drift accumulating" : "drift critical";
-      el.shsBar.style.width = clamp(state.rho, 2, 100) + "%";
-      el.shsBar.className   = `rc-integrity-bar${state.shs !== "GREEN" ? " degraded" : ""}`;
+      if (el.shs) {
+        el.shs.textContent = shs;
+        el.shs.className   = `rc-metric-value ${SHS_COLOR[shs] || 'green'}`;
+      }
+      if (el.shsSub) el.shsSub.textContent = SHS_SUB[shs] || "no drift detected";
+      setBarScale(el.shsBar, rho);
+      if (el.shsBar) el.shsBar.className   = `rc-integrity-bar${shs !== "GREEN" ? " degraded" : ""}`;
 
-      // Warden %
-      el.wardenPct.textContent  = Math.round(state.warden) + "%";
-      el.wardenPct.className    = `rc-metric-value ${state.warden >= 72 ? "red" : state.warden >= 45 ? "orange" : ""}`;
-      el.wardenBar.style.width  = clamp(state.warden, 0, 100) + "%";
+      /* ── Warden % ── */
+      if (el.wardenPct) {
+        el.wardenPct.textContent = Math.round(warden) + "%";
+        el.wardenPct.className   = `rc-metric-value ${warden >= 72 ? "red" : warden >= 45 ? "orange" : ""}`;
+      }
+      if (el.wardenSub) el.wardenSub.textContent = `threshold: 72% | current: ${Math.round(warden)}%`;
+      setBarScale(el.wardenBar, warden);
 
-      // Warden state machine
-      const newWarden = state.warden >= 72 ? "MANIFEST" : state.warden >= 45 ? "PRIMED" : "DORMANT";
-      if (newWarden !== state.wardenState) {
+      /* ── Warden state ── */
+      const newWarden = warden >= 72 ? "MANIFEST" : warden >= 45 ? "PRIMED" : "DORMANT";
+      if (newWarden !== rcState.wardenState) {
         addLog(newWarden, newWarden === "MANIFEST" ? "err" : newWarden === "PRIMED" ? "warn" : "ok",
-          `Warden transition: ${state.wardenState} → ${newWarden}`);
+          `Warden: ${rcState.wardenState} → ${newWarden}`);
         if (newWarden === "MANIFEST") {
           addLog("J⊥", "err", "VORTEX — orthogonal divergence detected, chain locked");
         }
-        state.wardenState = newWarden;
+        rcState.wardenState = newWarden;
       }
-      applyWardenState(state.wardenState);
+      applyWardenState(rcState.wardenState);
 
-      // EDTU
-      renderEDTU();
+      /* ── Status bar ── */
+      if (el.statusBar) {
+        el.statusBar.classList.toggle("active", deltaS > 0.005 || warden > 10);
+      }
     }
 
-    /* ── Entropy injection ────────────────────────────── */
+    /* ──────────────────────────────────────────────────────────
+       Entropy injection — delegates to overlay when running,
+       otherwise runs standalone logic.
+    ─────────────────────────────────────────────────────────── */
     function injectDelta(ds) {
-      state.deltaS  = clamp(ds, 0, 0.25);
-      state.rho     = clamp(state.rho - ds * 180, 0, 100);
-      state.warden  = clamp(state.warden + ds * 320, 0, 100);
-      state.dsHistory.push(ds);
-      state.eventCount++;
-      addLog("INF", "inf", `ΔS injected: ${fmt4(ds)} | ρ(x): ${fmt1(state.rho)} | W%: ${Math.round(state.warden)}`);
+      /* Push ΔS history for EDTU regardless of overlay mode */
+      rcState.dsHistory.push(ds);
+      if (rcState.dsHistory.length > 20) rcState.dsHistory.shift();
+      rcState.eventCount++;
+
+      if (window._orpOverlayActive && typeof window._orpInjectDelta === 'function') {
+        /* Delegate to overlay (avoids double-mutation) */
+        window._orpInjectDelta(ds);
+      }
+      /* Always log locally for rc-log visibility */
+      addLog("INF", "inf", `ΔS injected: ${fmt4(ds)}`);
+      renderEDTU();
       update();
     }
 
-    /* ── Passive decay (idle recovery) ───────────────── */
-    function decay() {
-      if (state.wardenState === "MANIFEST") return; // no recovery while manifest
-      const decayR = 0.12, decayW = 0.5, decayS = 0.0002;
-      state.rho    = clamp(state.rho    + decayR, 0, 100);
-      state.warden = clamp(state.warden - decayW, 0, 100);
-      state.deltaS = clamp(state.deltaS - decayS, 0, 1);
-      update();
+    /* Standalone decay: only run when overlay is NOT active (SYNC-2) */
+    function _standaloneDecay() {
+      if (window._orpOverlayActive) return; /* overlay handles decay */
     }
-    setInterval(decay, 800);
 
-    /* ── Scroll → entropy mapping ─────────────────────── */
+    /* ──────────────────────────────────────────────────────────
+       SYNC-2: Only start the standalone interval if the overlay
+       is not running. The overlay's rAF loop handles all decay.
+    ─────────────────────────────────────────────────────────── */
+    if (!window._orpOverlayActive) {
+      setInterval(_standaloneDecay, 800);
+    }
+
+    /* ──────────────────────────────────────────────────────────
+       SYNC-3: Observe the overlay's canonical SHS pill.
+       When the overlay updates the pill, we update rc-* display.
+       Falls back to a polling interval if the overlay isn't ready.
+    ─────────────────────────────────────────────────────────── */
+    function _attachSHSObserver() {
+      const pill = window._orpSHSPill || document.getElementById('cc-tab-shs');
+      if (!pill) return false;
+
+      new MutationObserver(() => {
+        update();
+        renderEDTU();
+      }).observe(pill, { childList: true, characterData: true, subtree: true });
+
+      return true;
+    }
+
+    /* Try immediately; if pill isn't ready, retry after DOMContentLoaded */
+    if (!_attachSHSObserver()) {
+      const _waitForPill = setInterval(() => {
+        if (_attachSHSObserver()) clearInterval(_waitForPill);
+      }, 200);
+      /* Give up after 10s */
+      setTimeout(() => clearInterval(_waitForPill), 10000);
+    }
+
+    /* ── Scroll → entropy (standalone fallback only) ─────── */
     let lastScrollY = window.scrollY, scrollAccum = 0;
     window.addEventListener("scroll", () => {
+      if (window._orpOverlayActive) return; /* overlay handles scroll */
       const delta = Math.abs(window.scrollY - lastScrollY);
       scrollAccum += delta;
       lastScrollY  = window.scrollY;
       if (scrollAccum > 120) {
-        const ds = clamp((scrollAccum / 10000) * 0.6, 0.001, 0.04);
-        injectDelta(ds);
+        injectDelta(clamp((scrollAccum / 10000) * 0.6, 0.001, 0.04));
         scrollAccum = 0;
       }
     }, { passive: true });
 
-    /* ── Button: inject ───────────────────────────────── */
+    /* ── Buttons ──────────────────────────────────────── */
     el.injectBtn?.addEventListener("click", () => {
-      const ds = 0.02 + Math.random() * 0.06;
-      injectDelta(ds);
+      injectDelta(0.02 + Math.random() * 0.06);
     });
 
-    /* ── Button: reset ────────────────────────────────── */
     el.resetBtn?.addEventListener("click", () => {
-      if (state.wardenState === "MANIFEST") {
-        addLog("CRA", "ok", "Chain Recovery Architecture: validation sequence initiated");
-        setTimeout(() => {
-          state.rho = 85; state.warden = 0; state.deltaS = 0;
-          addLog("CRA", "ok", "CRA complete — provenance chain restored, Warden deactivated");
-          update();
-        }, 1200);
+      if (window._orpOverlayActive) {
+        /* Delegate to the overlay reset button to keep state in sync */
+        document.getElementById('cc-reset')?.click();
+        setTimeout(() => { rcState.shs = "GREEN"; rcState.wardenState = "DORMANT"; update(); renderEDTU(); }, 1300);
       } else {
-        state.rho = 100; state.warden = 0; state.deltaS = 0;
         addLog("OK", "ok", "Baseline reset — all metrics nominal");
+        rcState.shs = "GREEN";
+        rcState.wardenState = "DORMANT";
         update();
       }
     });
 
-    /* ── Button: force warden ─────────────────────────── */
     el.wardenBtn?.addEventListener("click", () => {
-      state.warden = 80; state.rho = 38;
-      addLog("WARN", "err", "Manual Warden trigger invoked — bypassing threshold gate");
+      if (window._orpOverlayActive) {
+        /* Inject a large ΔS burst to drive the overlay warden above 72% */
+        for (let i = 0; i < 4; i++) injectDelta(0.06 + Math.random() * 0.04);
+        addLog("WARN", "err", "Manual Warden trigger — high ΔS burst injected");
+      } else {
+        addLog("WARN", "err", "Manual Warden trigger invoked — bypassing threshold gate");
+      }
       update();
     });
 
+    /* ── Periodic display sync (rAF-capped, 1fps) ────────── */
+    /* Lightweight rAF loop that just reads overlay state and
+       refreshes the rc-* display. No heavy computation here —
+       all entropy math lives in the overlay. */
+    let _lastSyncTs = 0;
+    function _displaySync(ts) {
+      if (ts - _lastSyncTs >= 1000) {
+        _lastSyncTs = ts;
+        update();
+        renderEDTU();
+      }
+      requestAnimationFrame(_displaySync);
+    }
+    requestAnimationFrame(_displaySync);
+
     /* ── Init log ─────────────────────────────────────── */
-    addLog("OK",  "ok",  "NESS engine initialized — Clinical Core active");
-    addLog("INF", "inf", "J⊥_VORTEX detection: ENGAGED");
+    addLog("OK",  "ok",  "Runtime console initialized");
+    addLog("INF", "inf", "Linking to Clinical Core overlay...");
+    addLog("OK",  "ok",  "J⊥_VORTEX detection: ENGAGED");
     addLog("OK",  "ok",  "Provenance chain: OPEN");
-    addLog("INF", "inf", "Epistemic isolation borders: NOMINAL");
-    addLog("OK",  "ok",  "SHS baseline: GREEN — no drift detected");
+    addLog("INF", "inf", "SHS machine: 5-state monotonic hysteresis active");
     update();
+    renderEDTU();
+
+    /* Expose injectDelta for overlay delegation check */
+    window._orpRcInjectDelta = injectDelta;
 
   })();
   </script>
@@ -1554,32 +1697,73 @@
 </template>
   <script src="assets/js/entropia-sigil.js"></script>
   <script>
-    // Wire sigil to live SHS updates from the runtime console
+    /* ──────────────────────────────────────────────────────────
+       Sigil SHS sync — v3.1.0
+       Uses MutationObserver on the overlay's canonical cc-tab-shs
+       pill instead of a polling interval. Zero CPU cost between
+       state changes; responds within one animation frame of the
+       pill text update.
+
+       entropia-sigil.js already installs a MutationObserver in its
+       _autoInit() via window._orpRafActive check. This block is a
+       RUNTIME-PAGE-SPECIFIC supplement that also wires the sigil
+       drift to the combined telemetry from window._orpSHSState.
+    ─────────────────────────────────────────────────────────── */
     (function() {
+      'use strict';
       var SHS_MAP = { 'GREEN':0, 'YELLOW':0.25, 'ORANGE':0.55, 'RED':0.78, 'BLACK':1.0 };
       var lastSHS = 'GREEN';
-      function syncSigil() {
-        // Read from the SHS badge rendered by runtime-overlay
-        var badge = document.querySelector('.shs-badge, .rc-shs-val, [data-shs]');
-        if (!badge) {
-          // Fallback: scan for SHS state keywords in status elements
-          var els = document.querySelectorAll('.rc-status-value, .status-dot + span, .metric-val');
-          els.forEach(function(el) {
-            var t = el.textContent.trim().toUpperCase();
-            ['BLACK','RED','ORANGE','YELLOW','GREEN'].forEach(function(s) {
-              if (t === s && s !== lastSHS) { lastSHS = s; updateSigilFromSHS(s); }
-            });
-          });
-        } else {
-          var t = badge.textContent.trim().toUpperCase();
-          if (t !== lastSHS && SHS_MAP[t] !== undefined) {
-            lastSHS = t;
-            updateSigilFromSHS(t);
-          }
+
+      function _apply(shs) {
+        var key = (shs || 'GREEN').trim().toUpperCase();
+        if (key === lastSHS) return;
+        lastSHS = key;
+        if (typeof window.updateSigilFromSHS === 'function') {
+          window.updateSigilFromSHS(key);
         }
       }
-      // Poll every 1.5 s — lightweight given the 2s telemetry cycle
-      setInterval(syncSigil, 1500);
+
+      function _attachToPill(pill) {
+        /* Sync immediately on attach */
+        _apply(pill.textContent.trim());
+        new MutationObserver(function() {
+          _apply(pill.textContent.trim());
+        }).observe(pill, { childList: true, characterData: true, subtree: true });
+      }
+
+      /* SYNC-3: use _orpSHSPill if already exposed by overlay */
+      function _tryAttach() {
+        var pill = window._orpSHSPill || document.getElementById('cc-tab-shs');
+        if (pill) { _attachToPill(pill); return true; }
+        return false;
+      }
+
+      if (!_tryAttach()) {
+        /* Pill not yet in DOM — wait for it */
+        var _obs = new MutationObserver(function(_, ob) {
+          if (_tryAttach()) ob.disconnect();
+        });
+        _obs.observe(document.body, { childList: true, subtree: true });
+      }
+
+      /* Also wire combined drift from window._orpSHSState every ~800ms
+         (matches the overlay sigil-sync cadence). This drives the float
+         perturbation and fracture visibility even without SHS transitions. */
+      function _syncDrift() {
+        var machine = window._orpSHSState;
+        if (!machine) return;
+        var rho     = parseFloat(document.getElementById('cc-rho')?.textContent)  || 100;
+        var ds      = parseFloat(document.getElementById('cc-ds')?.textContent)   || 0;
+        var synth   = Math.min(1, ds * 4 + (100 - rho) / 100);
+        var perf    = machine.perfDriftPressure || 0;
+        var jitter  = machine.jitterDrift       || 0;
+        var combined= Math.min(1, synth + perf + jitter);
+        if (typeof window.updateSigilDrift === 'function') {
+          window.updateSigilDrift(combined);
+        }
+      }
+      setInterval(_syncDrift, 820);
+
     })();
   </script>
 
