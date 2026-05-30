@@ -660,7 +660,7 @@
           <div class="rc-metric-value green" id="rc-delta-s">0.0000</div>
           <div class="rc-metric-sub" id="rc-delta-sub">baseline nominal</div>
           <div class="rc-integrity-bar-wrap">
-            <div class="rc-integrity-bar" id="rc-entropy-bar" style="width:4%"></div>
+            <div class="rc-integrity-bar" id="rc-entropy-bar" style="width:100%;transform:scaleX(0.04);transform-origin:left center"></div>
           </div>
         </div>
 
@@ -672,7 +672,7 @@
           <div class="rc-metric-value cyan" id="rc-rho">100.0</div>
           <div class="rc-metric-sub" id="rc-rho-sub">chain validated</div>
           <div class="rc-integrity-bar-wrap">
-            <div class="rc-integrity-bar" id="rc-rho-bar" style="width:100%"></div>
+            <div class="rc-integrity-bar" id="rc-rho-bar" style="width:100%;transform:scaleX(1);transform-origin:left center"></div>
           </div>
         </div>
 
@@ -684,7 +684,7 @@
           <div class="rc-metric-value green" id="rc-shs">GREEN</div>
           <div class="rc-metric-sub" id="rc-shs-sub">no drift detected</div>
           <div class="rc-integrity-bar-wrap">
-            <div class="rc-integrity-bar" id="rc-shs-bar" style="width:100%"></div>
+            <div class="rc-integrity-bar" id="rc-shs-bar" style="width:100%;transform:scaleX(1);transform-origin:left center"></div>
           </div>
         </div>
 
@@ -714,7 +714,7 @@
           <div class="rc-metric-value" id="rc-warden-pct">0%</div>
           <div class="rc-metric-sub" id="rc-warden-sub">threshold: 72%</div>
           <div class="rc-integrity-bar-wrap">
-            <div class="rc-integrity-bar degraded" id="rc-warden-bar" style="width:0%"></div>
+            <div class="rc-integrity-bar degraded" id="rc-warden-bar" style="width:100%;transform:scaleX(0);transform-origin:left center"></div>
           </div>
         </div>
 
@@ -1323,7 +1323,7 @@
        all entropy math lives in the overlay. */
     let _lastSyncTs = 0;
     function _displaySync(ts) {
-      if (ts - _lastSyncTs >= 1000) {
+      if (ts - _lastSyncTs >= 250) {  /* 4fps display refresh — more reactive */
         _lastSyncTs = ts;
         update();
         renderEDTU();
@@ -1347,6 +1347,16 @@
   })();
   </script>
 
+
+  <style>
+    /* SIGIL WATCH: perspective needed for rotateX/Y to show depth */
+    .entropia-sigil--hero-bg svg {
+      perspective: 600px;
+      transform-style: preserve-3d;
+      will-change: transform;
+      transition: none;
+    }
+  </style>
 
 <!-- Entropia Sigil Template -->
 <template id="entropiaSigilTemplate">
@@ -1765,6 +1775,86 @@
       setInterval(_syncDrift, 820);
 
     })();
+  </script>
+
+  <script>
+  /* ──────────────────────────────────────────────────────────
+     SIGIL WATCH — v1.0
+     Makes the hero-bg Sigil subtly "watch" the user's cursor.
+     The sigil wrapper already floats via entropia-sigil.js
+     (waypoint-dwell system). This layer adds a secondary lean:
+     a small CSS transform offset on the SVG itself that tilts
+     toward the mouse, giving the illusion of gaze-tracking.
+
+     Implementation notes:
+     - Offset applied to the SVG element (not the float wrapper)
+       to avoid interfering with the FF-1 compositing fix.
+     - Max lean: 18px; eased toward target at 6% per frame (~4°).
+     - Idle after 4s of no movement → sigil drifts back to neutral.
+     - Respects prefers-reduced-motion.
+  ─────────────────────────────────────────────────────────── */
+  (function () {
+    'use strict';
+    var REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (REDUCED) return;
+
+    var MAX_LEAN  = 18;   /* px */
+    var EASE      = 0.06; /* lerp factor per frame */
+    var IDLE_MS   = 4000; /* ms before drift-back to center */
+
+    var curX = window.innerWidth  * 0.5;
+    var curY = window.innerHeight * 0.5;
+    var leanX = 0, leanY = 0;
+    var lastMoveTs = 0;
+    var rafHandle  = null;
+
+    document.addEventListener('mousemove', function (e) {
+      curX = e.clientX;
+      curY = e.clientY;
+      lastMoveTs = performance.now();
+    }, { passive: true });
+
+    function _getSigilSvg() {
+      /* The SVG lives inside .entropia-sigil--hero-bg */
+      var host = document.querySelector('.entropia-sigil--hero-bg');
+      return host ? host.querySelector('svg') : null;
+    }
+
+    function _tick(ts) {
+      var svgEl = _getSigilSvg();
+      if (!svgEl) { rafHandle = requestAnimationFrame(_tick); return; }
+
+      /* Compute target lean from cursor relative to viewport center */
+      var idle = (ts - lastMoveTs) > IDLE_MS;
+      var targetX = idle ? 0 : ((curX / window.innerWidth)  - 0.5) * 2 * MAX_LEAN;
+      var targetY = idle ? 0 : ((curY / window.innerHeight) - 0.5) * 2 * MAX_LEAN;
+
+      /* Lerp current lean toward target */
+      leanX += (targetX - leanX) * EASE;
+      leanY += (targetY - leanY) * EASE;
+
+      /* Apply as a subtle perspective-like translate + scale hint.
+         Small rotate3d gives slight tilt without needing perspective: */
+      var tiltX = (-leanY * 0.3).toFixed(2); /* degrees */
+      var tiltY = ( leanX * 0.3).toFixed(2);
+
+      svgEl.style.transform = [
+        'translate(' + leanX.toFixed(1) + 'px,' + leanY.toFixed(1) + 'px)',
+        'rotateX(' + tiltX + 'deg)',
+        'rotateY(' + tiltY + 'deg)',
+      ].join(' ');
+
+      rafHandle = requestAnimationFrame(_tick);
+    }
+
+    /* Start after sigil initializes */
+    rafHandle = requestAnimationFrame(_tick);
+
+    window.addEventListener('pagehide', function () {
+      if (rafHandle) { cancelAnimationFrame(rafHandle); rafHandle = null; }
+    }, { once: true });
+
+  })();
   </script>
 
 </body>
