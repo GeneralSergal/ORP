@@ -1240,6 +1240,12 @@
        it directly without polling */
     window._orpSHSPill = _dom().pill;
 
+    /* SYNC-4: Expose injectDelta so runtime.html buttons can delegate
+       into the overlay's authoritative state rather than running a
+       second mutation path. Without this, the Warden bar never fills
+       from the rc-inject / rc-warden buttons. */
+    window._orpInjectDelta = injectDelta;
+
     window.addEventListener('pagehide', () => {
       if (state._rafHandle) { cancelAnimationFrame(state._rafHandle); state._rafHandle = null; }
       if (_saveTimer) { clearTimeout(_saveTimer); saveSessionEntropy(state.sessionEntropy); }
