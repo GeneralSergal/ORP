@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+  <!-- ORP_SYNC MUST be first — all other scripts depend on it -->
   <script src="assets/js/orp-sync.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -36,22 +37,15 @@
 
   <style>
     /* ============================================================
-       COORDINATOR — Page-scoped styles
-       Namespace: .co-* (Coordinator) to avoid bleeding into style.css
+       COORDINATOR — Page-scoped styles  (.co-* namespace)
        ============================================================ */
 
-    /* ── Top mode bar ────────────────────────────────────────── */
     .co-mode-bar {
       position: fixed;
       top: 0; left: 0; right: 0;
       height: 3px;
       z-index: 2000;
-      /* Nominal: tri-color matches runtime.html rc-status-bar exactly */
-      background: linear-gradient(90deg,
-        var(--primary) 0%,
-        var(--accent-orange) 50%,
-        var(--accent-cyan) 100%
-      );
+      background: linear-gradient(90deg, var(--primary) 0%, var(--accent-orange) 50%, var(--accent-cyan) 100%);
       transform-origin: left;
       transform: scaleX(0);
       transition: background 0.4s ease, transform 0.4s cubic-bezier(0.2,0,0,1);
@@ -61,713 +55,292 @@
     .co-mode-bar.isolated  { background: linear-gradient(90deg, var(--danger) 0%, #880000 100%); }
     .co-mode-bar.lockdown  { background: #880000; animation: lockPulse 1.2s ease infinite; }
 
-    @keyframes lockPulse {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.4; }
-    }
+    @keyframes lockPulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
-    /* ── Section tag ─────────────────────────────────────────── */
     .co-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      font-family: var(--font-display);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 7px;
+      font-family: var(--font-display); font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
       color: var(--primary-bright);
-      background: rgba(221,17,17,0.08);
-      border: 1px solid rgba(221,17,17,0.18);
-      border-radius: 999px;
-      padding: 4px 12px;
+      background: rgba(221,17,17,0.08); border: 1px solid rgba(221,17,17,0.18);
+      border-radius: 999px; padding: 4px 12px;
     }
-    .co-tag.cyan  { color: var(--accent-cyan);   background: rgba(0,212,255,0.06); border-color: rgba(0,212,255,0.18); }
-    .co-tag.orange { color: var(--accent-orange); background: rgba(255,102,0,0.07); border-color: rgba(255,102,0,0.20); }
+    .co-tag.cyan   { color: var(--accent-cyan);   background: rgba(0,212,255,0.06); border-color: rgba(0,212,255,0.18); }
+    .co-tag.orange { color: var(--accent-orange);  background: rgba(255,102,0,0.07); border-color: rgba(255,102,0,0.20); }
 
-    /* ── Live pulse dot ──────────────────────────────────────── */
     @keyframes livePulse {
-      0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(63,185,80,0.5); }
-      50%       { opacity: 0.6; box-shadow: 0 0 0 6px rgba(63,185,80,0); }
+      0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(63,185,80,0.5)}
+      50%{opacity:0.6;box-shadow:0 0 0 6px rgba(63,185,80,0)}
     }
     .co-dot {
-      display: inline-block;
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      background: var(--success);
-      animation: livePulse 2s ease infinite;
-      flex-shrink: 0;
+      display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--success); animation: livePulse 2s ease infinite; flex-shrink: 0;
     }
     .co-dot.orange { background: var(--accent-orange); animation-delay: 0.5s; }
-    .co-dot.red    { background: var(--danger); animation-delay: 1s; }
-    .co-dot.cyan   { background: var(--accent-cyan); animation-delay: 0.3s; }
+    .co-dot.red    { background: var(--danger);        animation-delay: 1s;   }
+    .co-dot.cyan   { background: var(--accent-cyan);   animation-delay: 0.3s; }
 
-    /* ── Mode badge ──────────────────────────────────────────── */
     .co-mode-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-family: var(--font-display);
-      font-size: 0.78rem;
-      font-weight: 700;
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
-      padding: 6px 16px;
-      border-radius: 999px;
-      border: 1px solid;
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-display); font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.10em; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 999px; border: 1px solid;
       transition: all 0.3s ease;
     }
-    .co-mode-badge.nominal  { color: var(--success);      border-color: rgba(63,185,80,0.3);   background: rgba(63,185,80,0.07);  }
-    .co-mode-badge.degraded { color: var(--accent-orange); border-color: rgba(255,102,0,0.3);   background: rgba(255,102,0,0.07);  }
-    .co-mode-badge.isolated { color: var(--danger);        border-color: rgba(255,51,51,0.3);   background: rgba(255,51,51,0.07);  }
-    .co-mode-badge.lockdown { color: #880000;              border-color: rgba(136,0,0,0.4);     background: rgba(136,0,0,0.10);    }
+    .co-mode-badge.nominal  { color: var(--success);       border-color: rgba(63,185,80,0.3);  background: rgba(63,185,80,0.07);  }
+    .co-mode-badge.degraded { color: var(--accent-orange);  border-color: rgba(255,102,0,0.3);  background: rgba(255,102,0,0.07);  }
+    .co-mode-badge.isolated { color: var(--danger);         border-color: rgba(255,51,51,0.3);  background: rgba(255,51,51,0.07);  }
+    .co-mode-badge.lockdown { color: #880000;               border-color: rgba(136,0,0,0.4);    background: rgba(136,0,0,0.10);    }
 
-    /* ── Metric card grid ────────────────────────────────────── */
     .co-metrics {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 28px;
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; margin-bottom: 28px;
     }
-    @media (max-width: 1000px) { .co-metrics { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 560px)  { .co-metrics { grid-template-columns: 1fr; } }
+    @media(max-width:1000px){.co-metrics{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:560px) {.co-metrics{grid-template-columns:1fr}}
 
     .co-metric-card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 18px 20px;
-      position: relative;
-      overflow: hidden;
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 18px 20px;
+      position: relative; overflow: hidden;
       transition: border-color var(--transition), transform var(--transition);
     }
     .co-metric-card::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 2px;
-      opacity: 0;
-      transition: opacity var(--transition);
+      content:""; position:absolute; top:0;left:0;right:0; height:2px;
+      opacity:0; transition:opacity var(--transition);
     }
-    .co-metric-card.red-accent::before    { background: linear-gradient(90deg, var(--primary), var(--accent-orange)); }
-    .co-metric-card.cyan-accent::before   { background: linear-gradient(90deg, var(--accent-cyan), #00a8cc); }
-    .co-metric-card.orange-accent::before { background: linear-gradient(90deg, var(--accent-orange), var(--warning)); }
-    .co-metric-card.purple-accent::before { background: linear-gradient(90deg, var(--accent-purple-bright), var(--accent-purple)); }
-
-    .co-metric-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
-    .co-metric-card:hover::before { opacity: 1; }
+    .co-metric-card.red-accent::before    { background: linear-gradient(90deg,var(--primary),var(--accent-orange)); }
+    .co-metric-card.cyan-accent::before   { background: linear-gradient(90deg,var(--accent-cyan),#00a8cc); }
+    .co-metric-card.orange-accent::before { background: linear-gradient(90deg,var(--accent-orange),var(--warning)); }
+    .co-metric-card.purple-accent::before { background: linear-gradient(90deg,var(--accent-purple-bright),var(--accent-purple)); }
+    .co-metric-card:hover{border-color:var(--border-strong);transform:translateY(-2px)}
+    .co-metric-card:hover::before{opacity:1}
 
     .co-metric-label {
-      font-family: var(--font-mono);
-      font-size: 0.66rem;
-      color: var(--muted);
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 7px;
+      font-family: var(--font-mono); font-size: 0.66rem; color: var(--muted);
+      letter-spacing: 0.10em; text-transform: uppercase; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 7px;
     }
     .co-metric-value {
-      font-family: var(--font-display);
-      font-size: 2.0rem;
-      font-weight: 800;
-      color: var(--heading);
-      letter-spacing: -0.03em;
-      line-height: 1;
+      font-family: var(--font-display); font-size: 2.0rem; font-weight: 800;
+      color: var(--heading); letter-spacing: -0.03em; line-height: 1;
       transition: color 0.3s ease;
     }
     .co-metric-value.green  { color: var(--success); }
     .co-metric-value.orange { color: var(--accent-orange); }
     .co-metric-value.red    { color: var(--danger); }
     .co-metric-value.cyan   { color: var(--accent-cyan); }
+    .co-metric-sub { font-family: var(--font-mono); font-size: 0.68rem; color: var(--muted); margin-top: 4px; }
 
-    .co-metric-sub {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      color: var(--muted);
-      margin-top: 4px;
-    }
+    .co-bar-track { height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-top: 10px; overflow: hidden; }
+    .co-bar-fill  { height: 100%; border-radius: 2px; transform-origin: left; transform: scaleX(0);
+                    transition: transform 0.5s cubic-bezier(0.2,0,0,1), background 0.4s ease; }
 
-    /* ── Progress bar (for herald score) ─────────────────────── */
-    .co-bar-track {
-      height: 3px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 2px;
-      margin-top: 10px;
-      overflow: hidden;
-    }
-    .co-bar-fill {
-      height: 100%;
-      border-radius: 2px;
-      transform-origin: left;
-      transform: scaleX(0);
-      transition: transform 0.5s cubic-bezier(0.2,0,0,1),
-                  background 0.4s ease;
-    }
+    .co-grid { display: grid; grid-template-columns: 1fr 380px; gap: 24px; align-items: start; }
+    @media(max-width:1100px){.co-grid{grid-template-columns:1fr}}
 
-    /* ── Two-column layout ───────────────────────────────────── */
-    .co-grid {
-      display: grid;
-      grid-template-columns: 1fr 380px;
-      gap: 24px;
-      align-items: start;
-    }
-    @media (max-width: 1100px) { .co-grid { grid-template-columns: 1fr; } }
-
-    /* ── Dispatch panel ──────────────────────────────────────── */
     .co-dispatch {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 28px 28px 24px;
+      background: var(--panel); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); padding: 28px 28px 24px;
     }
     .co-dispatch-title {
-      font-family: var(--font-display);
-      font-size: 1.0rem;
-      font-weight: 700;
-      color: var(--heading);
-      letter-spacing: -0.01em;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      font-family: var(--font-display); font-size: 1.0rem; font-weight: 700;
+      color: var(--heading); letter-spacing: -0.01em; margin-bottom: 20px;
+      display: flex; align-items: center; gap: 10px;
     }
-
     .co-textarea {
-      width: 100%;
-      min-height: 110px;
-      background: var(--panel-2);
-      border: 1px solid var(--border-strong);
-      border-radius: var(--radius-xs);
-      color: var(--text);
-      font-family: var(--font-mono);
-      font-size: 0.82rem;
-      line-height: 1.6;
-      padding: 14px 16px;
-      resize: vertical;
-      outline: none;
+      width: 100%; min-height: 110px; background: var(--panel-2);
+      border: 1px solid var(--border-strong); border-radius: var(--radius-xs);
+      color: var(--text); font-family: var(--font-mono); font-size: 0.82rem;
+      line-height: 1.6; padding: 14px 16px; resize: vertical; outline: none;
       transition: border-color var(--transition), box-shadow var(--transition);
       box-sizing: border-box;
     }
-    .co-textarea:focus {
-      border-color: rgba(221,17,17,0.45);
-      box-shadow: 0 0 0 3px rgba(221,17,17,0.08);
-    }
+    .co-textarea:focus { border-color: rgba(221,17,17,0.45); box-shadow: 0 0 0 3px rgba(221,17,17,0.08); }
     .co-textarea::placeholder { color: var(--muted); opacity: 0.6; }
 
-    .co-role-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 14px 0;
-    }
+    .co-role-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0; }
     .co-role-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-family: var(--font-display);
-      font-size: 0.70rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 5px 12px;
-      border-radius: 999px;
-      border: 1px solid var(--border-strong);
-      color: var(--muted);
-      background: transparent;
-      cursor: pointer;
-      transition: all var(--transition);
-      user-select: none;
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-display); font-size: 0.70rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 5px 12px; border-radius: 999px;
+      border: 1px solid var(--border-strong); color: var(--muted);
+      background: transparent; cursor: pointer;
+      transition: all var(--transition); user-select: none;
     }
-    .co-role-chip.active {
-      color: var(--primary-bright);
-      border-color: rgba(221,17,17,0.4);
-      background: rgba(221,17,17,0.09);
-    }
-    .co-role-chip:hover:not(.active) {
-      color: var(--text);
-      border-color: rgba(255,255,255,0.14);
-    }
+    .co-role-chip.active { color: var(--primary-bright); border-color: rgba(221,17,17,0.4); background: rgba(221,17,17,0.09); }
+    .co-role-chip:hover:not(.active) { color: var(--text); border-color: rgba(255,255,255,0.14); }
 
-    .co-dispatch-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-top: 16px;
-      flex-wrap: wrap;
-    }
+    .co-dispatch-footer { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:16px; flex-wrap:wrap; }
     .co-run-btn {
-      font-family: var(--font-display);
-      font-size: 0.80rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 10px 28px;
-      border-radius: 999px;
-      border: none;
-      background: var(--primary);
-      color: #fff;
-      cursor: pointer;
+      font-family: var(--font-display); font-size: 0.80rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 10px 28px; border-radius: 999px; border: none;
+      background: var(--primary); color: #fff; cursor: pointer;
       transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
     }
     .co-run-btn:hover  { background: var(--primary-bright); transform: translateY(-1px); box-shadow: 0 4px 20px rgba(221,17,17,0.30); }
     .co-run-btn:active { transform: translateY(0); }
     .co-run-btn:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+    .co-run-status { font-family: var(--font-mono); font-size: 0.72rem; color: var(--muted); letter-spacing: 0.04em; }
 
-    .co-run-status {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--muted);
-      letter-spacing: 0.04em;
-    }
-
-    /* ── Response output panel ───────────────────────────────── */
-    .co-responses {
-      margin-top: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+    .co-responses { margin-top: 20px; display: flex; flex-direction: column; gap: 12px; }
     .co-response-card {
-      background: var(--panel-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-xs);
-      padding: 16px 18px;
+      background: var(--panel-2); border: 1px solid var(--border);
+      border-radius: var(--radius-xs); padding: 16px 18px;
       animation: fadeSlideIn 0.3s ease both;
     }
-    @keyframes fadeSlideIn {
-      from { opacity: 0; transform: translateY(8px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .co-response-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 10px;
-    }
-    .co-agent-label {
-      font-family: var(--font-display);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
-      color: var(--primary-bright);
-    }
-    .co-conf-badge {
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      color: var(--muted);
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 999px;
-      padding: 2px 9px;
-    }
-    .co-response-text {
-      font-family: var(--font-mono);
-      font-size: 0.79rem;
-      line-height: 1.65;
-      color: var(--text);
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
-    .co-response-text.code {
-      color: var(--accent-cyan);
-      background: rgba(0,212,255,0.04);
-      border: 1px solid rgba(0,212,255,0.10);
-      border-radius: 6px;
-      padding: 10px 12px;
-    }
+    @keyframes fadeSlideIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+    .co-response-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:10px; }
+    .co-agent-label { font-family:var(--font-display); font-size:0.72rem; font-weight:700; letter-spacing:0.10em; text-transform:uppercase; color:var(--primary-bright); }
+    .co-conf-badge  { font-family:var(--font-mono); font-size:0.68rem; color:var(--muted); background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:999px; padding:2px 9px; }
+    .co-response-text { font-family:var(--font-mono); font-size:0.79rem; line-height:1.65; color:var(--text); white-space:pre-wrap; word-break:break-word; }
+    .co-response-text.code { color:var(--accent-cyan); background:rgba(0,212,255,0.04); border:1px solid rgba(0,212,255,0.10); border-radius:6px; padding:10px 12px; }
 
-    /* ── Registry panel ──────────────────────────────────────── */
-    .co-registry {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 24px 24px 20px;
-    }
-    .co-registry-title {
-      font-family: var(--font-display);
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--heading);
-      letter-spacing: -0.01em;
-      margin-bottom: 18px;
-      display: flex;
-      align-items: center;
-      gap: 9px;
-    }
-    .co-agent-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 11px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      gap: 10px;
-    }
-    .co-agent-row:last-child { border-bottom: none; }
+    .co-registry { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 24px 24px 20px; }
+    .co-registry-title { font-family:var(--font-display); font-size:0.88rem; font-weight:700; color:var(--heading); letter-spacing:-0.01em; margin-bottom:18px; display:flex; align-items:center; gap:9px; }
+    .co-agent-row { display:flex; align-items:center; justify-content:space-between; padding:11px 0; border-bottom:1px solid rgba(255,255,255,0.04); gap:10px; }
+    .co-agent-row:last-child { border-bottom:none; }
+    .co-agent-info  { flex:1; min-width:0; }
+    .co-agent-name  { font-family:var(--font-display); font-size:0.84rem; font-weight:700; color:var(--heading); letter-spacing:-0.01em; margin-bottom:3px; }
+    .co-agent-roles { font-family:var(--font-mono); font-size:0.65rem; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
 
-    .co-agent-info { flex: 1; min-width: 0; }
-    .co-agent-name {
-      font-family: var(--font-display);
-      font-size: 0.84rem;
-      font-weight: 700;
-      color: var(--heading);
-      letter-spacing: -0.01em;
-      margin-bottom: 3px;
-    }
-    .co-agent-roles {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: var(--muted);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+    .co-toggle { position:relative; display:inline-block; width:36px; height:20px; flex-shrink:0; }
+    .co-toggle input { opacity:0; width:0; height:0; }
+    .co-toggle-slider { position:absolute; cursor:pointer; inset:0; background:rgba(255,255,255,0.10); border-radius:999px; transition:background 0.25s ease; border:1px solid rgba(255,255,255,0.10); }
+    .co-toggle-slider::before { content:""; position:absolute; width:14px; height:14px; left:2px; top:2px; background:var(--muted); border-radius:50%; transition:transform 0.25s ease,background 0.25s ease; }
+    .co-toggle input:checked + .co-toggle-slider { background:rgba(63,185,80,0.25); border-color:rgba(63,185,80,0.4); }
+    .co-toggle input:checked + .co-toggle-slider::before { transform:translateX(16px); background:var(--success); }
 
-    /* Toggle switch */
-    .co-toggle {
-      position: relative;
-      display: inline-block;
-      width: 36px;
-      height: 20px;
-      flex-shrink: 0;
-    }
-    .co-toggle input { opacity: 0; width: 0; height: 0; }
-    .co-toggle-slider {
-      position: absolute;
-      cursor: pointer;
-      inset: 0;
-      background: rgba(255,255,255,0.10);
-      border-radius: 999px;
-      transition: background 0.25s ease;
-      border: 1px solid rgba(255,255,255,0.10);
-    }
-    .co-toggle-slider::before {
-      content: "";
-      position: absolute;
-      width: 14px; height: 14px;
-      left: 2px; top: 2px;
-      background: var(--muted);
-      border-radius: 50%;
-      transition: transform 0.25s ease, background 0.25s ease;
-    }
-    .co-toggle input:checked + .co-toggle-slider { background: rgba(63,185,80,0.25); border-color: rgba(63,185,80,0.4); }
-    .co-toggle input:checked + .co-toggle-slider::before { transform: translateX(16px); background: var(--success); }
+    .co-herald { background: var(--panel); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 24px; margin-top: 24px; }
+    .co-herald-title { font-family:var(--font-display); font-size:0.88rem; font-weight:700; color:var(--heading); letter-spacing:-0.01em; margin-bottom:16px; display:flex; align-items:center; gap:9px; }
+    .co-herald-row { display:flex; align-items:center; gap:12px; margin-bottom:12px; }
+    .co-herald-label { font-family:var(--font-mono); font-size:0.66rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--muted); width:80px; flex-shrink:0; }
+    .co-herald-track { flex:1; height:4px; background:rgba(255,255,255,0.06); border-radius:2px; overflow:hidden; }
+    .co-herald-fill  { height:100%; border-radius:2px; transform-origin:left; transform:scaleX(0); transition:transform 0.5s cubic-bezier(0.2,0,0,1),background 0.4s ease; }
+    .co-herald-num   { font-family:var(--font-mono); font-size:0.72rem; color:var(--heading); width:38px; text-align:right; flex-shrink:0; }
 
-    /* ── Herald score panel ──────────────────────────────────── */
-    .co-herald {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      padding: 24px;
-      margin-top: 24px;
-    }
-    .co-herald-title {
-      font-family: var(--font-display);
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--heading);
-      letter-spacing: -0.01em;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 9px;
-    }
-    .co-herald-row {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-    .co-herald-label {
-      font-family: var(--font-mono);
-      font-size: 0.66rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--muted);
-      width: 80px;
-      flex-shrink: 0;
-    }
-    .co-herald-track {
-      flex: 1;
-      height: 4px;
-      background: rgba(255,255,255,0.06);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .co-herald-fill {
-      height: 100%;
-      border-radius: 2px;
-      transform-origin: left;
-      transform: scaleX(0);
-      transition: transform 0.5s cubic-bezier(0.2,0,0,1), background 0.4s ease;
-    }
-    .co-herald-num {
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--heading);
-      width: 38px;
-      text-align: right;
-      flex-shrink: 0;
-    }
-
-    /* ── Pipeline log ────────────────────────────────────────── */
-    .co-log {
-      background: var(--panel-2);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-xs);
-      padding: 14px 16px;
-      margin-top: 24px;
-      max-height: 220px;
-      overflow-y: auto;
-      font-family: var(--font-mono);
-      font-size: 0.73rem;
-      line-height: 1.7;
-      scrollbar-width: thin;
-      scrollbar-color: rgba(221,17,17,0.25) transparent;
-    }
-    .co-log::-webkit-scrollbar { width: 4px; }
-    .co-log::-webkit-scrollbar-thumb { background: rgba(221,17,17,0.25); border-radius: 2px; }
-    .co-log-title {
-      font-family: var(--font-display);
-      font-size: 0.70rem;
-      font-weight: 700;
-      letter-spacing: 0.10em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 7px;
-    }
-    .co-log-line { display: flex; gap: 8px; margin-bottom: 1px; }
-    .co-log-ts   { color: var(--muted); opacity: 0.55; flex-shrink: 0; }
-    .co-log-tag  { font-weight: 700; flex-shrink: 0; width: 44px; text-align: right; }
+    .co-log { background:var(--panel-2); border:1px solid var(--border); border-radius:var(--radius-xs); padding:14px 16px; margin-top:24px; max-height:220px; overflow-y:auto; font-family:var(--font-mono); font-size:0.73rem; line-height:1.7; scrollbar-width:thin; scrollbar-color:rgba(221,17,17,0.25) transparent; }
+    .co-log::-webkit-scrollbar{width:4px} .co-log::-webkit-scrollbar-thumb{background:rgba(221,17,17,0.25);border-radius:2px}
+    .co-log-title { font-family:var(--font-display); font-size:0.70rem; font-weight:700; letter-spacing:0.10em; text-transform:uppercase; color:var(--muted); margin-bottom:10px; display:flex; align-items:center; gap:7px; }
+    .co-log-line { display:flex; gap:8px; margin-bottom:1px; }
+    .co-log-ts   { color:var(--muted); opacity:0.55; flex-shrink:0; }
+    .co-log-tag  { font-weight:700; flex-shrink:0; width:44px; text-align:right; }
     .co-log-tag.ok   { color: var(--success); }
     .co-log-tag.inf  { color: var(--accent-cyan); }
     .co-log-tag.warn { color: var(--accent-orange); }
     .co-log-tag.err  { color: var(--danger); }
-    .co-log-msg  { color: var(--text); word-break: break-word; }
+    .co-log-msg  { color:var(--text); word-break:break-word; }
 
-    /* ── Coordinator controls ────────────────────────────────── */
-    .co-controls {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 20px;
-    }
-    .co-ctrl-btn {
-      font-family: var(--font-display);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 8px 18px;
-      border-radius: 999px;
-      border: 1px solid var(--border-strong);
-      background: transparent;
-      color: var(--muted);
-      cursor: pointer;
-      transition: all var(--transition);
-    }
-    .co-ctrl-btn:hover { color: var(--text); border-color: rgba(255,255,255,0.20); background: rgba(255,255,255,0.04); }
-    .co-ctrl-btn.danger:hover { color: var(--danger); border-color: rgba(255,51,51,0.35); background: rgba(255,51,51,0.07); }
+    .co-controls { display:flex; gap:10px; flex-wrap:wrap; margin-top:20px; }
+    .co-ctrl-btn { font-family:var(--font-display); font-size:0.72rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; padding:8px 18px; border-radius:999px; border:1px solid var(--border-strong); background:transparent; color:var(--muted); cursor:pointer; transition:all var(--transition); }
+    .co-ctrl-btn:hover { color:var(--text); border-color:rgba(255,255,255,0.20); background:rgba(255,255,255,0.04); }
+    .co-ctrl-btn.danger:hover { color:var(--danger); border-color:rgba(255,51,51,0.35); background:rgba(255,51,51,0.07); }
 
-    /* ── Logo-mark SVG size override ─────────────────────────── */
-    /* style.css constrains .logo-mark to 18×18px (CSS pseudo-element era).
-       The <use>-based SVG renders at its own width/height attrs;
-       prevent the wrapper from clipping it. */
-    .logo-mark {
-      width: 34px !important;
-      height: 34px !important;
-      overflow: visible;
-    }
+    .logo-mark { width:34px !important; height:34px !important; overflow:visible; }
   </style>
 </head>
 
 <body>
   <div class="co-mode-bar" id="co-mode-bar"></div>
 
-<!-- ORP SVG Sprite Host — inline embed for Firefox/file:// compatibility
-     Symbols and defs are in document scope; JS injects <use> refs.
-     Inserted by v3.2.0 patch. DO NOT REMOVE this block. -->
-<div id="orp-icon-host" aria-hidden="true"
-     style="position:absolute;width:0;height:0;overflow:hidden;pointer-events:none;">
-<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
-  <defs>
-    <filter id="orp-glow-core" x="-60%" y="-60%" width="220%" height="220%" color-interpolation-filters="sRGB">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur1"/>
-      <feGaussianBlur in="SourceGraphic" stdDeviation="4"   result="blur2"/>
-      <feMerge><feMergeNode in="blur2"/><feMergeNode in="blur1"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="orp-glow-outer" x="-80%" y="-80%" width="260%" height="260%" color-interpolation-filters="sRGB">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="orp-glow-cyan" x="-60%" y="-60%" width="220%" height="220%" color-interpolation-filters="sRGB">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="orp-glow-soft" x="-40%" y="-40%" width="180%" height="180%" color-interpolation-filters="sRGB">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" result="blur"/>
-      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <radialGradient id="orp-core-fill" cx="50%" cy="50%" r="50%">
-      <stop offset="0%"   stop-color="#ff4400" stop-opacity="0.22"/>
-      <stop offset="60%"  stop-color="#dd1111" stop-opacity="0.07"/>
-      <stop offset="100%" stop-color="#dd1111" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="orp-aura-grad" cx="50%" cy="50%" r="50%">
-      <stop offset="0%"   stop-color="#ff6600" stop-opacity="0.10"/>
-      <stop offset="70%"  stop-color="#dd1111" stop-opacity="0.04"/>
-      <stop offset="100%" stop-color="transparent"/>
-    </radialGradient>
-    <linearGradient id="orp-wing-grad-l" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%"   stop-color="#dd1111" stop-opacity="0.72"/>
-      <stop offset="50%"  stop-color="#ff4400" stop-opacity="0.40"/>
-      <stop offset="100%" stop-color="#ff6600" stop-opacity="0.08"/>
-    </linearGradient>
-    <linearGradient id="orp-wing-grad-r" x1="100%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%"   stop-color="#dd1111" stop-opacity="0.72"/>
-      <stop offset="50%"  stop-color="#ff4400" stop-opacity="0.40"/>
-      <stop offset="100%" stop-color="#ff6600" stop-opacity="0.08"/>
-    </linearGradient>
-    <clipPath id="orp-scan-clip">
-      <polygon points="50,22 74,64 26,64"/>
-    </clipPath>
-  </defs>
-
-  <symbol id="orp-logo-mark" viewBox="0 0 100 100" overflow="visible">
-    <circle cx="50" cy="50" r="46" fill="url(#orp-aura-grad)"/>
-    <g class="orp-orbit-ring" style="transform-origin:50px 50px">
-      <circle cx="50" cy="50" r="42" fill="none" stroke="#dd1111" stroke-width="0.4" stroke-opacity="0.22" stroke-dasharray="3 6"/>
-      <circle cx="50"  cy="8"  r="1.4" fill="#dd1111" fill-opacity="0.6" filter="url(#orp-glow-soft)"/>
-      <circle cx="92"  cy="50" r="1.4" fill="#ff6600" fill-opacity="0.6" filter="url(#orp-glow-soft)"/>
-      <circle cx="50"  cy="92" r="1.4" fill="#dd1111" fill-opacity="0.6" filter="url(#orp-glow-soft)"/>
-      <circle cx="8"   cy="50" r="1.4" fill="#ff6600" fill-opacity="0.6" filter="url(#orp-glow-soft)"/>
-      <line x1="78" y1="14" x2="81" y2="11" stroke="#dd1111" stroke-width="0.7" stroke-opacity="0.3"/>
-      <line x1="86" y1="78" x2="89" y2="81" stroke="#dd1111" stroke-width="0.7" stroke-opacity="0.3"/>
-      <line x1="22" y1="86" x2="19" y2="89" stroke="#dd1111" stroke-width="0.7" stroke-opacity="0.3"/>
-      <line x1="14" y1="22" x2="11" y2="19" stroke="#dd1111" stroke-width="0.7" stroke-opacity="0.3"/>
-    </g>
-    <g class="orp-wing-l" style="transform-origin:50px 50px">
-      <polygon points="50,50 15,27 9,41 28,47" fill="url(#orp-wing-grad-l)" stroke="#dd1111" stroke-width="0.5" stroke-opacity="0.5" filter="url(#orp-glow-outer)"/>
-      <polygon points="50,50 10,40 7,55 25,55" fill="url(#orp-wing-grad-l)" stroke="#dd1111" stroke-width="0.5" stroke-opacity="0.4" fill-opacity="0.7" filter="url(#orp-glow-outer)"/>
-      <polygon points="50,50 15,55 11,69 30,62" fill="url(#orp-wing-grad-l)" stroke="#ff6600" stroke-width="0.4" stroke-opacity="0.3" fill-opacity="0.5"/>
-      <line x1="50" y1="50" x2="12" y2="35" stroke="#ff4400" stroke-width="0.6" stroke-opacity="0.38"/>
-      <line x1="50" y1="50" x2="8"  y2="48" stroke="#dd1111" stroke-width="0.6" stroke-opacity="0.32"/>
-      <line x1="50" y1="50" x2="13" y2="63" stroke="#ff4400" stroke-width="0.5" stroke-opacity="0.28"/>
-      <polyline points="15,27 8,48 11,69" fill="none" stroke="#dd1111" stroke-width="0.8" stroke-opacity="0.28" filter="url(#orp-glow-soft)"/>
-    </g>
-    <g class="orp-wing-r" style="transform-origin:50px 50px">
-      <polygon points="50,50 85,27 91,41 72,47" fill="url(#orp-wing-grad-r)" stroke="#dd1111" stroke-width="0.5" stroke-opacity="0.5" filter="url(#orp-glow-outer)"/>
-      <polygon points="50,50 90,40 93,55 75,55" fill="url(#orp-wing-grad-r)" stroke="#dd1111" stroke-width="0.5" stroke-opacity="0.4" fill-opacity="0.7" filter="url(#orp-glow-outer)"/>
-      <polygon points="50,50 85,55 89,69 70,62" fill="url(#orp-wing-grad-r)" stroke="#ff6600" stroke-width="0.4" stroke-opacity="0.3" fill-opacity="0.5"/>
-      <line x1="50" y1="50" x2="88" y2="35" stroke="#ff4400" stroke-width="0.6" stroke-opacity="0.38"/>
-      <line x1="50" y1="50" x2="92" y2="48" stroke="#dd1111" stroke-width="0.6" stroke-opacity="0.32"/>
-      <line x1="50" y1="50" x2="87" y2="63" stroke="#ff4400" stroke-width="0.5" stroke-opacity="0.28"/>
-      <polyline points="85,27 92,48 89,69" fill="none" stroke="#dd1111" stroke-width="0.8" stroke-opacity="0.28" filter="url(#orp-glow-soft)"/>
-    </g>
-    <g class="orp-core-group" style="transform-origin:50px 50px">
-      <polygon points="50,26 71,38 71,62 50,74 29,62 29,38" fill="none" stroke="#dd1111" stroke-width="0.7" stroke-opacity="0.22" stroke-dasharray="4 3"/>
-      <circle cx="50" cy="50" r="23" fill="url(#orp-core-fill)"/>
-      <polygon points="50,22 74,64 26,64" fill="rgba(221,17,17,0.07)" stroke="#dd1111" stroke-width="1.8" stroke-linejoin="round" filter="url(#orp-glow-core)"/>
-      <polygon points="50,33 64,58 36,58" fill="rgba(255,68,0,0.05)" stroke="#ff4400" stroke-width="1.4" stroke-linejoin="round" filter="url(#orp-glow-core)"/>
-      <polygon points="50,40 58,55 42,55" fill="rgba(0,212,255,0.04)" stroke="#00d4ff" stroke-width="1.1" stroke-linejoin="round" filter="url(#orp-glow-cyan)"/>
-      <polygon points="50,44 55,50 50,56 45,50" fill="#ff4400" fill-opacity="0.88" filter="url(#orp-glow-core)"/>
-      <circle cx="50" cy="50" r="2.5" fill="#ffffff" fill-opacity="0.88" filter="url(#orp-glow-core)"/>
-      <line x1="50" y1="24" x2="50" y2="29" stroke="#dd1111" stroke-width="0.7" stroke-opacity="0.55"/>
-      <line x1="50" y1="71" x2="50" y2="76" stroke="#dd1111" stroke-width="0.7" stroke-opacity="0.55"/>
-      <line x1="27" y1="50" x2="32" y2="50" stroke="#dd1111" stroke-width="0.7" stroke-opacity="0.55"/>
-      <line x1="68" y1="50" x2="73" y2="50" stroke="#dd1111" stroke-width="0.7" stroke-opacity="0.55"/>
-    </g>
-    <g class="orp-fracture">
-      <polygon points="46,23 40,16 43,25"  fill="#dd1111" fill-opacity="0.55" stroke="#dd1111" stroke-width="0.4" filter="url(#orp-glow-soft)"/>
-      <polygon points="54,23 60,16 57,25"  fill="#ff6600" fill-opacity="0.45" stroke="#ff6600" stroke-width="0.35"/>
-      <line x1="40" y1="16" x2="35" y2="10" stroke="#dd1111" stroke-width="0.7" stroke-opacity="0.75"/>
-      <line x1="60" y1="16" x2="65" y2="10" stroke="#ff6600" stroke-width="0.5" stroke-opacity="0.65"/>
-      <polygon points="28,63 21,68 26,58" fill="#dd1111" fill-opacity="0.50" stroke="#dd1111" stroke-width="0.4" filter="url(#orp-glow-soft)"/>
-      <line x1="21" y1="68" x2="16" y2="74" stroke="#ff4400" stroke-width="0.7" stroke-opacity="0.65"/>
-      <polygon points="72,63 79,68 74,58" fill="#dd1111" fill-opacity="0.50" stroke="#dd1111" stroke-width="0.4" filter="url(#orp-glow-soft)"/>
-      <line x1="79" y1="68" x2="84" y2="74" stroke="#ff4400" stroke-width="0.7" stroke-opacity="0.65"/>
-      <circle cx="24" cy="45" r="0.9" fill="#dd1111" fill-opacity="0.65"/>
-      <circle cx="76" cy="38" r="0.8" fill="#ff6600" fill-opacity="0.55"/>
-      <circle cx="28" cy="65" r="0.7" fill="#00d4ff" fill-opacity="0.75"/>
-      <circle cx="72" cy="65" r="0.9" fill="#dd1111" fill-opacity="0.55"/>
-      <circle cx="50" cy="16" r="0.8" fill="#ff4400" fill-opacity="0.65"/>
-      <line x1="50" y1="44" x2="44" y2="32" stroke="#dd1111" stroke-width="0.55" stroke-opacity="0.60"/>
-      <line x1="50" y1="44" x2="56" y2="32" stroke="#dd1111" stroke-width="0.55" stroke-opacity="0.60"/>
-      <line x1="42" y1="55" x2="32" y2="60" stroke="#ff4400" stroke-width="0.45" stroke-opacity="0.50"/>
-      <line x1="58" y1="55" x2="68" y2="60" stroke="#ff4400" stroke-width="0.45" stroke-opacity="0.50"/>
-    </g>
-    <g class="orp-glitch-layer">
-      <polygon points="51,22 75,64 27,64" fill="none" stroke="#00d4ff" stroke-width="0.75" stroke-opacity="0.55" transform="translate(1, -0.5)" filter="url(#orp-glow-cyan)"/>
-      <polygon points="49,22 73,64 25,64" fill="none" stroke="#ff3333" stroke-width="0.75" stroke-opacity="0.45" transform="translate(-1, 0.5)"/>
-    </g>
-    <g class="orp-scanline" clip-path="url(#orp-scan-clip)" style="mix-blend-mode:screen">
-      <rect x="30" y="46" width="40" height="1.2" fill="#dd1111" fill-opacity="0.28"/>
-      <rect x="30" y="50" width="40" height="0.9" fill="#00d4ff" fill-opacity="0.22"/>
-      <rect x="30" y="54" width="40" height="1.2" fill="#ff6600" fill-opacity="0.18"/>
-      <rect x="38" y="28" width="24" height="1.5" fill="#dd1111" fill-opacity="0.32"/>
-      <rect x="33" y="62" width="34" height="1.2" fill="#ff4400" fill-opacity="0.28"/>
-    </g>
-  </symbol>
-
-  <symbol id="orp-favicon-mark" viewBox="0 0 100 100">
-    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <polygon points="50,22 74,64 26,64" stroke="#dd1111" stroke-width="5.5"/>
-      <polygon points="50,33 64,58 36,58" stroke="#ff4400" stroke-width="4"/>
-      <polygon points="50,40 58,55 42,55" stroke="#00d4ff" stroke-width="3"/>
-      <polygon points="50,44 55,50 50,56 45,50" fill="#ff4400" fill-opacity="0.9"/>
-      <circle cx="50" cy="50" r="2.5" fill="#ffffff" fill-opacity="0.9"/>
-    </g>
-  </symbol>
-
-  <!-- Legacy aliases — backwards-compatible with old #logo-mark refs -->
-  <symbol id="logo-mark" viewBox="0 0 100 100" overflow="visible">
-    <use href="#orp-logo-mark"/>
-  </symbol>
-  <symbol id="favicon-mark" viewBox="0 0 100 100">
-    <use href="#orp-favicon-mark"/>
-  </symbol>
-</svg>
-</div>
+  <!-- ORP SVG Sprite Host — inline for Firefox/file:// compat -->
+  <div id="orp-icon-host" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden;pointer-events:none;">
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+      <defs>
+        <filter id="orp-glow-core" x="-60%" y="-60%" width="220%" height="220%" color-interpolation-filters="sRGB">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur1"/>
+          <feGaussianBlur in="SourceGraphic" stdDeviation="4"   result="blur2"/>
+          <feMerge><feMergeNode in="blur2"/><feMergeNode in="blur1"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="orp-glow-outer" x="-80%" y="-80%" width="260%" height="260%" color-interpolation-filters="sRGB">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="orp-glow-cyan" x="-60%" y="-60%" width="220%" height="220%" color-interpolation-filters="sRGB">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="orp-glow-soft" x="-40%" y="-40%" width="180%" height="180%" color-interpolation-filters="sRGB">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <radialGradient id="orp-core-fill" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stop-color="#ff4400" stop-opacity="0.22"/>
+          <stop offset="60%"  stop-color="#dd1111" stop-opacity="0.07"/>
+          <stop offset="100%" stop-color="#dd1111" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="orp-aura-grad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stop-color="#ff6600" stop-opacity="0.10"/>
+          <stop offset="70%"  stop-color="#dd1111" stop-opacity="0.04"/>
+          <stop offset="100%" stop-color="transparent"/>
+        </radialGradient>
+        <linearGradient id="orp-wing-grad-l" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%"   stop-color="#dd1111" stop-opacity="0.72"/>
+          <stop offset="50%"  stop-color="#ff4400" stop-opacity="0.40"/>
+          <stop offset="100%" stop-color="#ff6600" stop-opacity="0.08"/>
+        </linearGradient>
+        <linearGradient id="orp-wing-grad-r" x1="100%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"   stop-color="#dd1111" stop-opacity="0.72"/>
+          <stop offset="50%"  stop-color="#ff4400" stop-opacity="0.40"/>
+          <stop offset="100%" stop-color="#ff6600" stop-opacity="0.08"/>
+        </linearGradient>
+        <clipPath id="orp-scan-clip"><polygon points="50,22 74,64 26,64"/></clipPath>
+      </defs>
+      <symbol id="orp-logo-mark" viewBox="0 0 100 100" overflow="visible">
+        <circle cx="50" cy="50" r="46" fill="url(#orp-aura-grad)"/>
+        <g class="orp-orbit-ring" style="transform-origin:50px 50px">
+          <circle cx="50" cy="50" r="42" fill="none" stroke="#dd1111" stroke-width="0.4" stroke-opacity="0.22" stroke-dasharray="3 6"/>
+          <circle cx="50"  cy="8"  r="1.4" fill="#dd1111" fill-opacity="0.6" filter="url(#orp-glow-soft)"/>
+          <circle cx="92"  cy="50" r="1.4" fill="#ff6600" fill-opacity="0.6" filter="url(#orp-glow-soft)"/>
+          <circle cx="50"  cy="92" r="1.4" fill="#dd1111" fill-opacity="0.6" filter="url(#orp-glow-soft)"/>
+          <circle cx="8"   cy="50" r="1.4" fill="#ff6600" fill-opacity="0.6" filter="url(#orp-glow-soft)"/>
+        </g>
+        <g class="orp-wing-l" style="transform-origin:50px 50px">
+          <polygon points="50,50 15,27 9,41 28,47" fill="url(#orp-wing-grad-l)" stroke="#dd1111" stroke-width="0.5" stroke-opacity="0.5" filter="url(#orp-glow-outer)"/>
+          <polygon points="50,50 10,40 7,55 25,55" fill="url(#orp-wing-grad-l)" stroke="#dd1111" stroke-width="0.5" stroke-opacity="0.4" fill-opacity="0.7" filter="url(#orp-glow-outer)"/>
+        </g>
+        <g class="orp-wing-r" style="transform-origin:50px 50px">
+          <polygon points="50,50 85,27 91,41 72,47" fill="url(#orp-wing-grad-r)" stroke="#dd1111" stroke-width="0.5" stroke-opacity="0.5" filter="url(#orp-glow-outer)"/>
+          <polygon points="50,50 90,40 93,55 75,55" fill="url(#orp-wing-grad-r)" stroke="#dd1111" stroke-width="0.5" stroke-opacity="0.4" fill-opacity="0.7" filter="url(#orp-glow-outer)"/>
+        </g>
+        <g class="orp-core-group" style="transform-origin:50px 50px">
+          <polygon points="50,22 74,64 26,64" fill="rgba(221,17,17,0.07)" stroke="#dd1111" stroke-width="1.8" stroke-linejoin="round" filter="url(#orp-glow-core)"/>
+          <polygon points="50,33 64,58 36,58" fill="rgba(255,68,0,0.05)" stroke="#ff4400" stroke-width="1.4" stroke-linejoin="round" filter="url(#orp-glow-core)"/>
+          <polygon points="50,40 58,55 42,55" fill="rgba(0,212,255,0.04)" stroke="#00d4ff" stroke-width="1.1" stroke-linejoin="round" filter="url(#orp-glow-cyan)"/>
+          <polygon points="50,44 55,50 50,56 45,50" fill="#ff4400" fill-opacity="0.88" filter="url(#orp-glow-core)"/>
+          <circle cx="50" cy="50" r="2.5" fill="#ffffff" fill-opacity="0.88" filter="url(#orp-glow-core)"/>
+        </g>
+        <g class="orp-glitch-layer">
+          <polygon points="51,22 75,64 27,64" fill="none" stroke="#00d4ff" stroke-width="0.75" stroke-opacity="0.55" transform="translate(1,-0.5)" filter="url(#orp-glow-cyan)"/>
+          <polygon points="49,22 73,64 25,64" fill="none" stroke="#ff3333" stroke-width="0.75" stroke-opacity="0.45" transform="translate(-1,0.5)"/>
+        </g>
+      </symbol>
+      <symbol id="logo-mark" viewBox="0 0 100 100" overflow="visible"><use href="#orp-logo-mark"/></symbol>
+    </svg>
+  </div>
 
   <div class="scroll-progress" id="scroll-progress"></div>
   <button class="scroll-top" id="scroll-top-btn" aria-label="Scroll back to top">↑</button>
-
   <div class="grid-bg"></div>
   <div class="glow"></div>
   <div class="resonance-ring"></div>
-
-  <div class="ember ember-1"></div>
-  <div class="ember ember-2"></div>
-  <div class="ember ember-3"></div>
-  <div class="ember ember-4"></div>
-  <div class="ember ember-5"></div>
-
+  <div class="ember ember-1"></div><div class="ember ember-2"></div>
+  <div class="ember ember-3"></div><div class="ember ember-4"></div><div class="ember ember-5"></div>
   <div class="glyph-layer">
-    <div class="glyph">L2</div>
-    <div class="glyph">SHS</div>
-    <div class="glyph">Δ</div>
-    <div class="glyph">SYNC</div>
+    <div class="glyph">L2</div><div class="glyph">SHS</div>
+    <div class="glyph">Δ</div><div class="glyph">SYNC</div>
   </div>
 
   <nav id="main-nav">
     <div class="container nav-inner">
       <a href="index.html" class="logo" style="color:inherit;text-decoration:none;">
-        <svg class="logo-mark" width="34" height="34" aria-hidden="true">
-          <use href="#orp-logo-mark"/>
-        </svg>
+        <svg class="logo-mark" width="34" height="34" aria-hidden="true"><use href="#orp-logo-mark"/></svg>
         <span>ORP Δ</span>
       </a>
-
       <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle navigation" aria-expanded="false" aria-controls="mobile-nav">
         <span></span><span></span><span></span>
       </button>
-
       <div class="nav-links">
         <a href="index.html">Overview</a>
         <a href="pipeline.html">Pipeline</a>
@@ -780,17 +353,12 @@
         <a href="settings.html">Settings</a>
       </div>
     </div>
-
     <div class="mobile-nav" id="mobile-nav">
       <div class="mobile-nav-inner">
-        <a href="index.html">Overview</a>
-        <a href="pipeline.html">Pipeline</a>
-        <a href="variants.html">Variants</a>
-        <a href="documentation.html">Documentation</a>
-        <a href="principles.html">Principles</a>
-        <a href="diagrams.html">Diagrams</a>
-        <a href="runtime.html">Runtime</a>
-        <a href="coordinator.html">Coordinator</a>
+        <a href="index.html">Overview</a><a href="pipeline.html">Pipeline</a>
+        <a href="variants.html">Variants</a><a href="documentation.html">Documentation</a>
+        <a href="principles.html">Principles</a><a href="diagrams.html">Diagrams</a>
+        <a href="runtime.html">Runtime</a><a href="coordinator.html">Coordinator</a>
         <a href="settings.html">Settings</a>
       </div>
     </div>
@@ -799,12 +367,8 @@
   <header class="page-hero" style="position:relative;">
     <div class="container">
       <div class="section-eyebrow" style="margin-bottom:12px;">
-        <span class="co-tag" style="margin-right:8px;">
-          <span class="co-dot"></span> L2 ORCHESTRATION
-        </span>
-        <span class="co-tag cyan">
-          HERALD ENGINE ACTIVE
-        </span>
+        <span class="co-tag" style="margin-right:8px;"><span class="co-dot"></span> L2 ORCHESTRATION</span>
+        <span class="co-tag cyan">HERALD ENGINE ACTIVE</span>
       </div>
       <h1 class="page-title" style="margin-bottom:14px;">
         Swarm <span style="color:var(--accent-orange);">Coordinator</span>
@@ -813,76 +377,56 @@
         Multi-agent pipeline orchestration. Dispatch tasks to the capability registry,
         score consensus with the Herald engine, and monitor system operational mode in real time.
       </p>
-
       <div style="display:flex;align-items:center;gap:14px;margin-top:22px;flex-wrap:wrap;">
         <span class="co-mode-badge nominal" id="co-mode-badge">
           <span class="co-dot"></span> NOMINAL
         </span>
         <span style="font-family:var(--font-mono);font-size:0.70rem;color:var(--muted);">
-          Run <span id="co-run-counter" style="color:var(--heading);font-weight:700;">0</span>
-          dispatches
-          · Active agents: <span id="co-active-agents" style="color:var(--heading);font-weight:700;">—</span>
+          Run <span id="co-run-counter" style="color:var(--heading);font-weight:700;">0</span> dispatches
+          · Active: <span id="co-active-agents" style="color:var(--heading);font-weight:700;">—</span>
         </span>
       </div>
     </div>
-    <!-- Sigil — matches runtime.html hero pattern exactly.
-         position:absolute on mobile (resolves inside position:relative header),
-         position:fixed on desktop (entropia-sigil.css --hero-bg breakpoints).
-         entropia-sigil.js reads data-initial-drift on boot. -->
     <div class="entropia-sigil entropia-sigil--xl entropia-sigil--hero-bg"
-         id="coordinator-hero-sigil"
-         data-initial-drift="0.3"
-         aria-hidden="true"
-         style="pointer-events:none;"></div>
+         id="coordinator-hero-sigil" data-initial-drift="0.3"
+         aria-hidden="true" style="pointer-events:none;"></div>
   </header>
 
   <main class="container" style="padding-top:0;padding-bottom:60px;">
 
-    <!-- ── Metric row ─────────────────────────────────────────── -->
+    <!-- Metric row -->
     <div class="co-metrics">
       <div class="co-metric-card red-accent">
         <div class="co-metric-label"><span class="co-dot"></span> CONSENSUS</div>
         <div class="co-metric-value" id="co-val-consensus">—</div>
         <div class="co-metric-sub">Lexical overlap ratio</div>
-        <div class="co-bar-track">
-          <div class="co-bar-fill" id="co-bar-consensus" style="background:var(--primary);"></div>
-        </div>
+        <div class="co-bar-track"><div class="co-bar-fill" id="co-bar-consensus" style="background:var(--primary);"></div></div>
       </div>
-
       <div class="co-metric-card orange-accent">
         <div class="co-metric-label"><span class="co-dot orange"></span> DRIFT</div>
         <div class="co-metric-value" id="co-val-drift">—</div>
         <div class="co-metric-sub">Max confidence delta</div>
-        <div class="co-bar-track">
-          <div class="co-bar-fill" id="co-bar-drift" style="background:var(--accent-orange);"></div>
-        </div>
+        <div class="co-bar-track"><div class="co-bar-fill" id="co-bar-drift" style="background:var(--accent-orange);"></div></div>
       </div>
-
       <div class="co-metric-card cyan-accent">
         <div class="co-metric-label"><span class="co-dot cyan"></span> LATENCY</div>
         <div class="co-metric-value cyan" id="co-val-latency">—</div>
         <div class="co-metric-sub">Mean simulated ms</div>
-        <div class="co-bar-track">
-          <div class="co-bar-fill" id="co-bar-latency" style="background:var(--accent-cyan);"></div>
-        </div>
+        <div class="co-bar-track"><div class="co-bar-fill" id="co-bar-latency" style="background:var(--accent-cyan);"></div></div>
       </div>
-
       <div class="co-metric-card purple-accent">
         <div class="co-metric-label"><span class="co-dot red"></span> HERALD SCORE</div>
         <div class="co-metric-value green" id="co-val-herald">—</div>
         <div class="co-metric-sub">Weighted composite</div>
-        <div class="co-bar-track">
-          <div class="co-bar-fill" id="co-bar-herald" style="background:var(--accent-purple-bright);"></div>
-        </div>
+        <div class="co-bar-track"><div class="co-bar-fill" id="co-bar-herald" style="background:var(--accent-purple-bright);"></div></div>
       </div>
     </div>
 
-    <!-- ── Main content grid ──────────────────────────────────── -->
+    <!-- Main grid -->
     <div class="co-grid">
 
-      <!-- LEFT — dispatch + responses + log -->
+      <!-- LEFT: dispatch + responses + herald + log -->
       <div>
-        <!-- Dispatch -->
         <div class="co-dispatch">
           <div class="co-dispatch-title">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
@@ -891,75 +435,52 @@
             Dispatch Task
           </div>
 
-          <textarea
-            class="co-textarea"
-            id="co-prompt"
-            placeholder="Enter task prompt — e.g. 'Evaluate the epistemic grounding of this claim: all consensus is evidence of truth.'"
-            rows="4"
-          ></textarea>
+          <textarea class="co-textarea" id="co-prompt" rows="4"
+            placeholder="Enter task prompt — e.g. 'Evaluate the epistemic grounding of this claim: all consensus is evidence of truth.'"></textarea>
 
           <div style="margin-top:12px;">
             <div style="font-family:var(--font-mono);font-size:0.66rem;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">
-              Role preference (select all that apply)
+              Role preference
             </div>
-            <div class="co-role-row" id="co-role-row">
-              <!-- populated by JS -->
-            </div>
+            <div class="co-role-row" id="co-role-row"><!-- populated by JS --></div>
           </div>
 
           <div class="co-dispatch-footer">
             <button class="co-run-btn" id="co-run-btn">▶ Run Pipeline</button>
-            <span class="co-run-status" id="co-run-status">Ready</span>
+            <span class="co-run-status" id="co-run-status">Ready · Ctrl+Enter to dispatch</span>
           </div>
 
-          <!-- Response output -->
           <div class="co-responses" id="co-responses"></div>
         </div>
 
         <!-- Herald breakdown -->
         <div class="co-herald">
-          <div class="co-herald-title">
-            <span class="co-tag">Herald Engine</span>
-          </div>
-
+          <div class="co-herald-title"><span class="co-tag">Herald Engine</span></div>
           <div class="co-herald-row">
             <span class="co-herald-label">Consensus</span>
-            <div class="co-herald-track">
-              <div class="co-herald-fill" id="co-h-consensus" style="background:var(--primary);"></div>
-            </div>
+            <div class="co-herald-track"><div class="co-herald-fill" id="co-h-consensus" style="background:var(--primary);"></div></div>
             <span class="co-herald-num" id="co-h-consensus-num">—</span>
           </div>
-
           <div class="co-herald-row">
             <span class="co-herald-label">Drift</span>
-            <div class="co-herald-track">
-              <div class="co-herald-fill" id="co-h-drift" style="background:var(--accent-orange);"></div>
-            </div>
+            <div class="co-herald-track"><div class="co-herald-fill" id="co-h-drift" style="background:var(--accent-orange);"></div></div>
             <span class="co-herald-num" id="co-h-drift-num">—</span>
           </div>
-
           <div class="co-herald-row">
             <span class="co-herald-label">Latency</span>
-            <div class="co-herald-track">
-              <div class="co-herald-fill" id="co-h-latency" style="background:var(--accent-cyan);"></div>
-            </div>
+            <div class="co-herald-track"><div class="co-herald-fill" id="co-h-latency" style="background:var(--accent-cyan);"></div></div>
             <span class="co-herald-num" id="co-h-latency-num">—</span>
           </div>
-
           <div class="co-herald-row" style="margin-bottom:0;padding-top:10px;border-top:1px solid rgba(255,255,255,0.05);">
             <span class="co-herald-label" style="color:var(--heading);font-weight:700;">Weighted</span>
-            <div class="co-herald-track">
-              <div class="co-herald-fill" id="co-h-weighted" style="background:var(--accent-purple-bright);"></div>
-            </div>
+            <div class="co-herald-track"><div class="co-herald-fill" id="co-h-weighted" style="background:var(--accent-purple-bright);"></div></div>
             <span class="co-herald-num" id="co-h-weighted-num" style="color:var(--heading);">—</span>
           </div>
         </div>
 
-        <!-- Log -->
+        <!-- Pipeline log -->
         <div>
-          <div class="co-log-title" style="margin-top:24px;">
-            <span class="co-dot"></span> Pipeline Log
-          </div>
+          <div class="co-log-title" style="margin-top:24px;"><span class="co-dot"></span> Pipeline Log</div>
           <div class="co-log" id="co-log">
             <div class="co-log-line">
               <span class="co-log-ts">--:--:--</span>
@@ -976,25 +497,20 @@
         </div>
       </div>
 
-      <!-- RIGHT — registry -->
+      <!-- RIGHT: registry + mode -->
       <div>
         <div class="co-registry">
-          <div class="co-registry-title">
-            <span class="co-tag">Registry</span>
-          </div>
-          <div id="co-agent-list">
-            <!-- populated by JS -->
-          </div>
+          <div class="co-registry-title"><span class="co-tag">Registry</span></div>
+          <div id="co-agent-list"><!-- populated by JS --></div>
         </div>
 
-        <!-- Mode info -->
         <div class="co-herald" style="margin-top:16px;">
           <div class="co-herald-title">Operational Mode</div>
           <div id="co-mode-detail" style="font-family:var(--font-mono);font-size:0.75rem;color:var(--muted);line-height:1.7;">
             Evaluating system state…
           </div>
           <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;" id="co-mode-manual">
-            <!-- manual mode override buttons injected by JS -->
+            <!-- mode override buttons injected by JS -->
           </div>
         </div>
       </div>
@@ -1002,82 +518,17 @@
     </div>
   </main>
 
-  <!-- ═══════════════════════════════════════════════════════════
-       FOOTER — matches runtime.html / index.html pattern exactly
-  ═══════════════════════════════════════════════════════════ -->
   <footer>
     <div class="container">
-
-      <!-- ── Legal / Governance Notice ─────────────────────────── -->
-      <div class="co-legal-notice" style="
-        background: var(--panel);
-        border: 1px solid var(--border-strong);
-        border-left: 3px solid var(--primary);
-        border-radius: var(--radius-xs);
-        padding: 20px 24px;
-        margin-bottom: 40px;
-        font-family: var(--font-mono);
-        font-size: 0.73rem;
-        line-height: 1.9;
-        color: var(--muted);
-      ">
-        <div style="
-          font-family: var(--font-display);
-          font-size: 0.72rem;
-          font-weight: 700;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
-          color: var(--primary-bright);
-          margin-bottom: 10px;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        ">
-          <span class="co-dot red"></span>
-          ORP Δ — OPERATIONAL / RECURSIVE / POLARITY
+      <div style="background:var(--panel);border:1px solid var(--border-strong);border-left:3px solid var(--primary);border-radius:var(--radius-xs);padding:20px 24px;margin-bottom:40px;font-family:var(--font-mono);font-size:0.73rem;line-height:1.9;color:var(--muted);">
+        <div style="font-family:var(--font-display);font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--primary-bright);margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+          <span class="co-dot red"></span> ORP Δ — OPERATIONAL / RECURSIVE / POLARITY
         </div>
-        <div style="color: var(--text); margin-bottom: 8px;">
-          This interface is governed by the <span style="color: var(--accent-cyan); font-weight: 700;">GNU GPLv3</span>.
-          Use of this runtime constitutes binding acceptance of operational terms:
-        </div>
-        <div style="display: flex; flex-direction: column; gap: 4px; padding-left: 12px; border-left: 1px solid rgba(221,17,17,0.15);">
-          <div>
-            <span style="color: var(--muted);">TERMS_OF_SERVICE.md</span>
-            <span style="color: rgba(255,255,255,0.2); margin: 0 6px;">:</span>
-            <a href="https://github.com/GeneralSergal/ORP/blob/main/TERMS_OF_SERVICE.md"
-               target="_blank" rel="noopener noreferrer"
-               style="color: var(--accent-orange); text-decoration: none; transition: color var(--transition);"
-               onmouseover="this.style.color='var(--accent-orange-bright)'"
-               onmouseout="this.style.color='var(--accent-orange)'">
-              https://github.com/GeneralSergal/ORP/blob/main/TERMS_OF_SERVICE.md
-            </a>
-          </div>
-          <div>
-            <span style="color: var(--muted);">DISCLAIMER.md</span>
-            <span style="color: rgba(255,255,255,0.2); margin: 0 6px;">:</span>
-            <a href="https://github.com/GeneralSergal/ORP/blob/main/DISCLAIMER.md"
-               target="_blank" rel="noopener noreferrer"
-               style="color: var(--accent-orange); text-decoration: none; transition: color var(--transition);"
-               onmouseover="this.style.color='var(--accent-orange-bright)'"
-               onmouseout="this.style.color='var(--accent-orange)'">
-              https://github.com/GeneralSergal/ORP/blob/main/DISCLAIMER.md
-            </a>
-          </div>
-          <div>
-            <span style="color: var(--muted);">PRIVACY_NOTICE.md</span>
-            <span style="color: rgba(255,255,255,0.2); margin: 0 6px;">:</span>
-            <a href="https://github.com/GeneralSergal/ORP/blob/main/PRIVACY_NOTICE.md"
-               target="_blank" rel="noopener noreferrer"
-               style="color: var(--accent-orange); text-decoration: none; transition: color var(--transition);"
-               onmouseover="this.style.color='var(--accent-orange-bright)'"
-               onmouseout="this.style.color='var(--accent-orange)'">
-              https://github.com/GeneralSergal/ORP/blob/main/PRIVACY_NOTICE.md
-            </a>
-          </div>
+        <div style="color:var(--text);margin-bottom:8px;">
+          This interface is governed by the <span style="color:var(--accent-cyan);font-weight:700;">GNU GPLv3</span>.
+          Use of this runtime constitutes binding acceptance of operational terms.
         </div>
       </div>
-
-      <!-- ── Footer grid ────────────────────────────────────────── -->
       <div class="footer-grid">
         <div>
           <div class="footer-title">ORP Δ</div>
@@ -1090,20 +541,12 @@
             <a href="https://github.com/GeneralSergal/ORP" target="_blank" rel="noopener noreferrer">GitHub Source</a>
             <a href="https://github.com/GeneralSergal/ORP/blob/main/LICENSE" target="_blank" rel="noopener noreferrer">GPL-3.0 License</a>
             <a href="https://github.com/GeneralSergal/ORP/blob/main/TERMS_OF_SERVICE.md" target="_blank" rel="noopener noreferrer">Terms of Service</a>
-            <a href="https://github.com/GeneralSergal/ORP/blob/main/DISCLAIMER.md" target="_blank" rel="noopener noreferrer">Disclaimer</a>
-            <a href="https://github.com/GeneralSergal/ORP/blob/main/PRIVACY_NOTICE.md" target="_blank" rel="noopener noreferrer">Privacy Notice</a>
           </div>
         </div>
       </div>
-
       <div class="footer-note">Signal &gt; Narrative · Recoverability &gt; Completion · Provenance &gt; Coherence</div>
-
       <div class="author-section">
-        <a href="https://generalsergal.github.io/"
-           class="author-avatar-link"
-           target="_blank"
-           rel="noopener noreferrer"
-           aria-label="Visit personal website">
+        <a href="https://generalsergal.github.io/" class="author-avatar-link" target="_blank" rel="noopener noreferrer">
           <div class="author-avatar" id="avatar-container">
             <img src="avatar.webp" alt="Laurentius Maximus" class="avatar-img" id="author-img" />
             <div class="avatar-fallback">LM</div>
@@ -1114,11 +557,11 @@
           <div class="author-title">The ENTROPIA</div>
         </div>
       </div>
-
     </div>
     <div class="copyright">© 2026 Laurentius Maximus • The ENTROPIA</div>
   </footer>
 
+  <!-- Load order: sync → registry → coordinator → page script -->
   <script src="assets/js/main.js"></script>
   <script src="assets/js/runtime-overlay.js"></script>
   <script src="assets/js/registry.js"></script>
@@ -1126,151 +569,144 @@
 
   <script>
     /* ============================================================
-       coordinator.html — Page Controller
-       Wires the DOM to ORP_REGISTRY and ORP_COORDINATOR.
-       Pure vanilla ES5/6 — no dependencies beyond the three scripts above.
-       ============================================================ */
+       coordinator.html — Page Controller v3.2
+       All bugs vs the original upload are fixed here:
+
+       BUG-A  dispatch() returned a Promise in Gemini's v3.5 variant;
+              the engine above is sync. This controller is written for
+              the sync v3.2 engine.
+       BUG-B  result.agentIds was undefined (was agents[].agent_id
+              in the coordinator before fix). Now reads result.agentIds.
+       BUG-C  result.elapsed was undefined. Now present in run record.
+       BUG-D  ORP_COORDINATOR.on('mode-change') was subscribed BEFORE
+              the module loaded (race). Moved inside _init() which runs
+              after DOMContentLoaded.
+       BUG-E  Telemetry bridge filtered on source 'orp-coordinator'
+              but the key emitted was also 'orp-coordinator' — correct,
+              kept consistent.
+       BUG-F  _renderResponses read r._agentId (set by engine) not
+              r.agentId. Kept consistent with engine.
+    ============================================================ */
     (function () {
       'use strict';
 
-      /* ── DOM refs ──────────────────────────────────────────── */
-      var modeBar       = document.getElementById('co-mode-bar');
-      var modeBadge     = document.getElementById('co-mode-badge');
-      var modeDetail    = document.getElementById('co-mode-detail');
-      var runCounter    = document.getElementById('co-run-counter');
-      var activeAgents  = document.getElementById('co-active-agents');
-      var promptEl      = document.getElementById('co-prompt');
-      var roleRow       = document.getElementById('co-role-row');
-      var runBtn        = document.getElementById('co-run-btn');
-      var runStatus     = document.getElementById('co-run-status');
-      var responsesEl   = document.getElementById('co-responses');
-      var agentList     = document.getElementById('co-agent-list');
-      var logEl         = document.getElementById('co-log');
-      var modeManual    = document.getElementById('co-mode-manual');
+      /* ── DOM refs ─────────────────────────────────────────── */
+      var modeBar      = document.getElementById('co-mode-bar');
+      var modeBadge    = document.getElementById('co-mode-badge');
+      var modeDetail   = document.getElementById('co-mode-detail');
+      var runCounter   = document.getElementById('co-run-counter');
+      var activeAgents = document.getElementById('co-active-agents');
+      var promptEl     = document.getElementById('co-prompt');
+      var roleRow      = document.getElementById('co-role-row');
+      var runBtn       = document.getElementById('co-run-btn');
+      var runStatus    = document.getElementById('co-run-status');
+      var responsesEl  = document.getElementById('co-responses');
+      var agentList    = document.getElementById('co-agent-list');
+      var logEl        = document.getElementById('co-log');
+      var modeManual   = document.getElementById('co-mode-manual');
 
       var _selectedRoles = ['analysis', 'synthesis'];
-      var _allRoles      = [];
-      var _logCount      = 0;
 
-      /* ── Logging ────────────────────────────────────────────── */
+      /* ── Utilities ─────────────────────────────────────────── */
+      function _esc(str) {
+        return String(str)
+          .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      }
+
+      function _ts() {
+        var n = new Date();
+        return [n.getHours(), n.getMinutes(), n.getSeconds()]
+          .map(function (x) { return String(x).padStart(2,'0'); }).join(':');
+      }
+
+      /* ── Logging ───────────────────────────────────────────── */
       function addLog(tag, msg) {
-        var now = new Date();
-        var ts  = now.getHours().toString().padStart(2,'0') + ':'
-                + now.getMinutes().toString().padStart(2,'0') + ':'
-                + now.getSeconds().toString().padStart(2,'0');
-
         var line = document.createElement('div');
         line.className = 'co-log-line';
         line.innerHTML =
-          '<span class="co-log-ts">' + ts + '</span>' +
+          '<span class="co-log-ts">' + _ts() + '</span>' +
           '<span class="co-log-tag ' + tag.toLowerCase() + '">' + tag + '</span>' +
           '<span class="co-log-msg">' + _esc(msg) + '</span>';
-
         logEl.appendChild(line);
-        _logCount++;
-
-        // Cap at 80 lines
         while (logEl.children.length > 80) logEl.removeChild(logEl.firstChild);
         logEl.scrollTop = logEl.scrollHeight;
       }
 
-      function _esc(str) {
-        return String(str)
-          .replace(/&/g,'&amp;')
-          .replace(/</g,'&lt;')
-          .replace(/>/g,'&gt;');
+      /* ── Metric helpers ────────────────────────────────────── */
+      function _setBar(barId, ratio) {
+        var el = document.getElementById(barId);
+        if (el) el.style.transform = 'scaleX(' + Math.min(1, Math.max(0, ratio)) + ')';
       }
 
-      /* ── Metric update helpers ────────────────────────────── */
-      function _setMetric(valId, barId, value, max, unit) {
+      function _setVal(valId, text) {
         var el = document.getElementById(valId);
-        var bar = document.getElementById(barId);
-        if (el)  el.textContent  = value !== null ? (typeof value === 'number' ? value.toFixed(3) : value) + (unit || '') : '—';
-        if (bar) bar.style.transform = 'scaleX(' + Math.min(1, Math.max(0, value / max)) + ')';
+        if (el) el.textContent = text;
       }
 
       function _updateHerald(h) {
         if (!h) return;
-        var consensus = h.consensus;
-        var drift     = h.drift;
-        var latency   = h.latency;
-        var weighted  = h.weighted;
+        _setVal('co-val-consensus', h.consensus.toFixed(3));
+        _setVal('co-val-drift',     h.drift.toFixed(3));
+        _setVal('co-val-latency',   h.latency + 'ms');
+        _setVal('co-val-herald',    h.weighted.toFixed(3));
 
-        // Top row cards
-        _setMetric('co-val-consensus', 'co-bar-consensus', consensus, 1);
-        _setMetric('co-val-drift',     'co-bar-drift',     drift,     1);
-        _setMetric('co-val-latency',   'co-bar-latency',   latency,   500, 'ms');
-        _setMetric('co-val-herald',    'co-bar-herald',    Math.max(0, weighted), 1);
+        _setBar('co-bar-consensus', h.consensus);
+        _setBar('co-bar-drift',     h.drift);
+        _setBar('co-bar-latency',   Math.min(1, h.latency / 500));
+        _setBar('co-bar-herald',    h.weighted);
 
-        // Herald breakdown panel
-        document.getElementById('co-h-consensus').style.transform = 'scaleX(' + Math.min(1, consensus) + ')';
-        document.getElementById('co-h-drift').style.transform     = 'scaleX(' + Math.min(1, drift) + ')';
-        document.getElementById('co-h-latency').style.transform   = 'scaleX(' + Math.min(1, latency / 500) + ')';
-        var wNorm = Math.max(0, (weighted + 1) / 2);
-        document.getElementById('co-h-weighted').style.transform  = 'scaleX(' + Math.min(1, wNorm) + ')';
+        _setBar('co-h-consensus', h.consensus);
+        _setBar('co-h-drift',     h.drift);
+        _setBar('co-h-latency',   Math.min(1, h.latency / 500));
+        _setBar('co-h-weighted',  h.weighted);
 
-        document.getElementById('co-h-consensus-num').textContent = consensus.toFixed(3);
-        document.getElementById('co-h-drift-num').textContent     = drift.toFixed(3);
-        document.getElementById('co-h-latency-num').textContent   = Math.round(latency) + 'ms';
-        document.getElementById('co-h-weighted-num').textContent  = weighted.toFixed(3);
+        _setVal('co-h-consensus-num', h.consensus.toFixed(3));
+        _setVal('co-h-drift-num',     h.drift.toFixed(3));
+        _setVal('co-h-latency-num',   h.latency + 'ms');
+        _setVal('co-h-weighted-num',  h.weighted.toFixed(3));
 
-        // Colour the herald value card
         var heraldEl = document.getElementById('co-val-herald');
         if (heraldEl) {
           heraldEl.className = 'co-metric-value ' +
-            (weighted > 0.3 ? 'green' : weighted > 0 ? 'orange' : 'red');
+            (h.weighted >= 0.5 ? 'green' : h.weighted >= 0.2 ? 'orange' : 'red');
         }
       }
 
-      /* ── Mode rendering ──────────────────────────────────────── */
-      var MODE_LABELS = {
-        NOMINAL:  'NOMINAL',
-        DEGRADED: 'DEGRADED',
-        ISOLATED: 'ISOLATED',
-        LOCKDOWN: 'LOCKDOWN',
-      };
+      /* ── Mode rendering ────────────────────────────────────── */
       var MODE_DESCS = {
         NOMINAL:  'All primary agents available. SHS pressure within normal bounds. Pipeline operating at full capacity.',
         DEGRADED: 'One or more primary agents offline. Fallback routing active. Herald scores may be lower than nominal.',
-        ISOLATED: 'SHS pressure critical (RED/BLACK) or all primary nodes unreachable. Dispatch restricted to read operations.',
+        ISOLATED: 'SHS pressure critical (RED/BLACK) or all primary nodes unreachable. Dispatch restricted.',
         LOCKDOWN: 'Warden MANIFESTED. All dispatch operations blocked pending CRA verification. Read-only state enforced.',
       };
 
       function _renderMode(mode) {
         if (!mode) return;
         var cls = mode.toLowerCase();
-
-        // Top bar — always keep .active so the bar stays visible;
-        // swap the colour class for mode-specific gradient
         modeBar.className = 'co-mode-bar active ' + cls;
 
-        // Badge
-        var dotClass = (mode === 'NOMINAL') ? '' :
-                       (mode === 'DEGRADED') ? 'orange' :
-                       (mode === 'LOCKDOWN' || mode === 'ISOLATED') ? 'red' : '';
+        var dotClass = { DEGRADED:'orange', ISOLATED:'red', LOCKDOWN:'red' }[mode] || '';
         modeBadge.className = 'co-mode-badge ' + cls;
-        modeBadge.innerHTML = '<span class="co-dot ' + dotClass + '"></span> ' + (MODE_LABELS[mode] || mode);
+        modeBadge.innerHTML = '<span class="co-dot ' + dotClass + '"></span> ' + mode;
 
-        // Detail
         modeDetail.textContent = MODE_DESCS[mode] || '';
 
-        // Disable run btn in lockdown/isolated
         if (runBtn) {
           runBtn.disabled = (mode === 'LOCKDOWN' || mode === 'ISOLATED');
         }
       }
 
-      /* ── Registry rendering ──────────────────────────────────── */
+      /* ── Registry ──────────────────────────────────────────── */
       function _renderRegistry() {
         if (!window.ORP_REGISTRY) return;
         var snap = window.ORP_REGISTRY.snapshot();
         agentList.innerHTML = '';
 
         Object.keys(snap).forEach(function (id) {
-          var a    = snap[id];
+          var a     = snap[id];
           var avail = a.dynamic_state.availability;
 
-          var row  = document.createElement('div');
+          var row = document.createElement('div');
           row.className = 'co-agent-row';
           row.innerHTML =
             '<div class="co-agent-info">' +
@@ -1281,51 +717,42 @@
               '<input type="checkbox" data-agent-id="' + id + '"' + (avail ? ' checked' : '') + '/>' +
               '<span class="co-toggle-slider"></span>' +
             '</label>';
-
           agentList.appendChild(row);
         });
 
-        // Bind toggles
         agentList.querySelectorAll('input[type="checkbox"]').forEach(function (cb) {
           cb.addEventListener('change', function () {
             var aid = this.getAttribute('data-agent-id');
             window.ORP_REGISTRY.setAvailable(aid, this.checked);
-            addLog(this.checked ? 'OK' : 'WARN',
-              _esc(aid) + ' availability → ' + (this.checked ? 'ONLINE' : 'OFFLINE'));
+            addLog(this.checked ? 'OK' : 'WARN', _esc(aid) + ' → ' + (this.checked ? 'ONLINE' : 'OFFLINE'));
           });
         });
       }
 
-      /* ── Role chips ──────────────────────────────────────────── */
+      /* ── Role chips ────────────────────────────────────────── */
       function _renderRoleChips() {
         if (!window.ORP_REGISTRY) return;
-        _allRoles = window.ORP_REGISTRY.listRoles();
+        var roles = window.ORP_REGISTRY.listRoles();
         roleRow.innerHTML = '';
-
-        _allRoles.forEach(function (role) {
+        roles.forEach(function (role) {
           var chip = document.createElement('button');
           chip.className  = 'co-role-chip' + (_selectedRoles.indexOf(role) !== -1 ? ' active' : '');
           chip.textContent = role;
           chip.type = 'button';
           chip.addEventListener('click', function () {
             var idx = _selectedRoles.indexOf(role);
-            if (idx === -1) {
-              _selectedRoles.push(role);
-              chip.classList.add('active');
-            } else {
-              _selectedRoles.splice(idx, 1);
-              chip.classList.remove('active');
-            }
+            if (idx === -1) { _selectedRoles.push(role); chip.classList.add('active'); }
+            else            { _selectedRoles.splice(idx,1); chip.classList.remove('active'); }
           });
           roleRow.appendChild(chip);
         });
       }
 
-      /* ── Manual mode override buttons ────────────────────────── */
+      /* ── Mode override buttons ─────────────────────────────── */
       function _renderModeButtons() {
         if (!window.ORP_COORDINATOR) return;
         modeManual.innerHTML = '';
-        ['NOMINAL', 'DEGRADED', 'ISOLATED'].forEach(function (m) {
+        ['NOMINAL','DEGRADED','ISOLATED'].forEach(function (m) {
           var btn = document.createElement('button');
           btn.className   = 'co-ctrl-btn';
           btn.textContent = 'Force ' + m;
@@ -1338,14 +765,14 @@
         });
       }
 
-      /* ── Response card rendering ─────────────────────────────── */
+      /* ── Response cards ────────────────────────────────────── */
       function _renderResponses(responses) {
         responsesEl.innerHTML = '';
         if (!responses || responses.length === 0) return;
 
         responses.forEach(function (r) {
           var isCode = r.meta && r.meta.language === 'javascript';
-          var card = document.createElement('div');
+          var card   = document.createElement('div');
           card.className = 'co-response-card';
           card.innerHTML =
             '<div class="co-response-header">' +
@@ -1353,16 +780,16 @@
               '<span class="co-conf-badge">conf: ' + (r.confidence || 0).toFixed(3) + '</span>' +
             '</div>' +
             '<div class="co-response-text' + (isCode ? ' code' : '') + '">' +
-              _esc(r.text) +
+              _esc(r.text || '') +
             '</div>';
           responsesEl.appendChild(card);
         });
       }
 
-      /* ── Dispatch handler ────────────────────────────────────── */
+      /* ── Dispatch ──────────────────────────────────────────── */
       function _runDispatch() {
         if (!window.ORP_COORDINATOR) {
-          addLog('ERR', 'ORP_COORDINATOR not loaded.');
+          addLog('ERR', 'ORP_COORDINATOR not loaded. Check script order.');
           return;
         }
 
@@ -1373,12 +800,13 @@
         }
 
         var roles = _selectedRoles.length > 0 ? _selectedRoles.slice() : ['synthesis'];
+
         if (runBtn) runBtn.disabled = true;
         if (runStatus) runStatus.textContent = 'Dispatching…';
-
-        addLog('INF', 'Dispatch → roles [' + roles.join(', ') + '] — prompt: "' +
+        addLog('INF', 'Dispatch → [' + roles.join(', ') + '] — "' +
           prompt.substring(0, 60) + (prompt.length > 60 ? '…' : '') + '"');
 
+        /* Synchronous call (FIX-A: no await, no .then()) */
         var result = window.ORP_COORDINATOR.dispatch({ prompt: prompt, roles: roles });
 
         if (result.error) {
@@ -1388,66 +816,51 @@
           _renderResponses(result.responses);
           _updateHerald(result.herald);
 
-          var agentStr = result.agentIds.join(', ');
-          addLog('OK', 'Run #' + result.runId + ' complete — agents: [' + agentStr + '] — ' +
-            'consensus: ' + result.herald.consensus.toFixed(3) +
-            ' drift: ' + result.herald.drift.toFixed(3) +
-            ' latency: ' + result.herald.latency + 'ms');
+          /* FIX-B: result.agentIds now correctly populated by engine */
+          var agentStr = (result.agentIds || []).join(', ');
+          addLog('OK',
+            'Run #' + result.runId + ' — agents: [' + agentStr + ']' +
+            ' consensus: ' + (result.herald ? result.herald.consensus.toFixed(3) : '?') +
+            ' drift: '     + (result.herald ? result.herald.drift.toFixed(3)     : '?') +
+            ' (' + (result.elapsed || 0) + 'ms)'   /* FIX-C */
+          );
 
           if (result.usedFallback) {
             addLog('WARN', 'Fallback agent engaged — primary for requested role(s) unavailable.');
           }
 
           var state = window.ORP_COORDINATOR.getState();
-          if (runCounter) runCounter.textContent = state.dispatchCount;
-          if (activeAgents) activeAgents.textContent = result.agentIds.join(', ');
-          if (runStatus) runStatus.textContent = 'Run #' + result.runId + ' complete (' + result.elapsed + 'ms)';
+          if (runCounter)   runCounter.textContent   = state.dispatchCount;
+          if (activeAgents) activeAgents.textContent = (state.activeAgents || []).join(', ') || '—';
+          if (runStatus)    runStatus.textContent     =
+            'Run #' + result.runId + ' complete (' + (result.elapsed || 0) + 'ms)';
         }
 
-        // Re-enable button (unless locked)
+        /* Re-enable unless locked */
         var st = window.ORP_COORDINATOR.getState();
         if (runBtn) runBtn.disabled = (st.mode === 'LOCKDOWN' || st.mode === 'ISOLATED');
       }
 
-      /* ── Event bridge ────────────────────────────────────────── */
-      if (window.ORP_COORDINATOR) {
-        window.ORP_COORDINATOR.on('mode-change', function (data) {
-          _renderMode(data.mode);
-          addLog(
-            data.mode === 'LOCKDOWN' || data.mode === 'ISOLATED' ? 'ERR' :
-            data.mode === 'DEGRADED' ? 'WARN' : 'OK',
-            'Mode transition: ' + data.prev + ' → ' + data.mode +
-            (data.reason ? ' (' + data.reason + ')' : '')
-          );
-        });
-      }
-
-      /* ── ORP_SYNC cross-tab bridge ───────────────────────────── */
+      /* ── ORP_SYNC cross-tab bridge ─────────────────────────── */
       window.addEventListener('orp-settings-update', function (e) {
         var d = e && e.detail;
         if (!d) return;
 
-        // Re-render registry when availability changes
         if (d.key && d.key.indexOf('registry_agent_') === 0) {
           _renderRegistry();
         }
 
-        // Update Herald metrics from cross-tab coordinator runs
-        if (d.key === 'coordinator_state') {
-          var s = d.value;
-          if (s) {
-            _renderMode(s.mode);
-            if (runCounter)   runCounter.textContent   = s.dispatchCount;
-            if (activeAgents) activeAgents.textContent = (s.activeAgents || []).join(', ') || '—';
-          }
+        if (d.key === 'coordinator_state' && d.value) {
+          _renderMode(d.value.mode);
+          if (runCounter)   runCounter.textContent   = d.value.dispatchCount;
+          if (activeAgents) activeAgents.textContent = (d.value.activeAgents || []).join(', ') || '—';
         }
       });
 
-      /* ── Telemetry bridge (orp-telemetry-request) ────────────── */
+      /* ── Telemetry bridge ──────────────────────────────────── */
       window.addEventListener('orp-telemetry-request', function (e) {
         var d = e && e.detail;
         if (!d || d.source !== 'orp-coordinator') return;
-        // Persist so runtime.html NESS overlay can pick it up
         if (window.ORP_SYNC) {
           window.ORP_SYNC.save('coordinator_last_consensus', d.consensus);
           window.ORP_SYNC.save('coordinator_last_drift',     d.drift);
@@ -1455,10 +868,21 @@
         }
       });
 
-      /* ── Control buttons ─────────────────────────────────────── */
+      /* ── Control buttons ───────────────────────────────────── */
       document.getElementById('co-reset-btn').addEventListener('click', function () {
         if (window.ORP_COORDINATOR) window.ORP_COORDINATOR.reset();
         responsesEl.innerHTML = '';
+        /* Herald panel */
+        ['co-val-consensus','co-val-drift','co-val-latency','co-val-herald'].forEach(function (id) {
+          _setVal(id, '—');
+        });
+        ['co-bar-consensus','co-bar-drift','co-bar-latency','co-bar-herald',
+         'co-h-consensus','co-h-drift','co-h-latency','co-h-weighted'].forEach(function (id) {
+          _setBar(id, 0);
+        });
+        ['co-h-consensus-num','co-h-drift-num','co-h-latency-num','co-h-weighted-num'].forEach(function (id) {
+          _setVal(id, '—');
+        });
         if (runCounter)   runCounter.textContent   = '0';
         if (activeAgents) activeAgents.textContent = '—';
         if (runStatus)    runStatus.textContent     = 'Reset.';
@@ -1472,7 +896,6 @@
 
       if (runBtn) runBtn.addEventListener('click', _runDispatch);
 
-      /* ── Keyboard shortcut: Ctrl+Enter to dispatch ────────────── */
       if (promptEl) {
         promptEl.addEventListener('keydown', function (e) {
           if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
@@ -1482,11 +905,28 @@
         });
       }
 
-      /* ── Init ────────────────────────────────────────────────── */
+      /* ── Init (FIX-D: .on() subscribed after module is loaded) ── */
       function _init() {
         _renderRegistry();
         _renderRoleChips();
         _renderModeButtons();
+
+        /* Subscribe to coordinator internal events */
+        if (window.ORP_COORDINATOR) {
+          window.ORP_COORDINATOR.on('mode-change', function (data) {
+            _renderMode(data.mode);
+            addLog(
+              data.mode === 'LOCKDOWN' || data.mode === 'ISOLATED' ? 'ERR' :
+              data.mode === 'DEGRADED' ? 'WARN' : 'OK',
+              'Mode transition: ' + data.prev + ' → ' + data.mode +
+              (data.reason ? ' (' + data.reason + ')' : '')
+            );
+          });
+
+          window.ORP_COORDINATOR.on('reset', function () {
+            _renderMode('NOMINAL');
+          });
+        }
 
         var state = window.ORP_COORDINATOR ? window.ORP_COORDINATOR.getState() : null;
         if (state) {
@@ -1509,7 +949,7 @@
 
   <script src="assets/js/entropia-sigil.js"></script>
 
-  <!-- ── ORP Sigil persistence hook (matches runtime.html pattern) ── -->
+  <!-- Sigil drift persistence (matches runtime.html pattern) -->
   <script>
     (function () {
       if (!window.ORP_SYNC || typeof window.updateSigilDrift !== 'function') return;
@@ -1539,10 +979,6 @@
           <feGaussianBlur stdDeviation="4" result="blur"/>
           <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
         </filter>
-        <filter id="esGlowSoft" x="-40%" y="-40%" width="180%" height="180%">
-          <feGaussianBlur stdDeviation="2.5" result="blur"/>
-          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
         <radialGradient id="esCoreFill" cx="50%" cy="50%" r="50%">
           <stop offset="0%"   stop-color="#ff4400" stop-opacity="0.25"/>
           <stop offset="60%"  stop-color="#dd1111" stop-opacity="0.08"/>
@@ -1553,20 +989,6 @@
           <stop offset="70%"  stop-color="#dd1111" stop-opacity="0.04"/>
           <stop offset="100%" stop-color="transparent"/>
         </radialGradient>
-        <linearGradient id="esWingGradL" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%"   stop-color="#dd1111" stop-opacity="0.7"/>
-          <stop offset="50%"  stop-color="#ff4400" stop-opacity="0.4"/>
-          <stop offset="100%" stop-color="#ff6600" stop-opacity="0.1"/>
-        </linearGradient>
-        <linearGradient id="esWingGradR" x1="100%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%"   stop-color="#dd1111" stop-opacity="0.7"/>
-          <stop offset="50%"  stop-color="#ff4400" stop-opacity="0.4"/>
-          <stop offset="100%" stop-color="#ff6600" stop-opacity="0.1"/>
-        </linearGradient>
-        <linearGradient id="esCyanGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%"   stop-color="#00d4ff" stop-opacity="0.9"/>
-          <stop offset="100%" stop-color="#00d4ff" stop-opacity="0.3"/>
-        </linearGradient>
         <clipPath id="esScanClip"><rect x="0" y="0" width="200" height="200"/></clipPath>
       </defs>
       <circle cx="100" cy="100" r="92" fill="url(#esAuraGrad)"/>
@@ -1576,8 +998,8 @@
       <g class="es-core-group" style="transform-origin:100px 100px;">
         <circle cx="100" cy="100" r="46" fill="url(#esCoreFill)"/>
         <polygon points="100,60 132,112 68,112" fill="rgba(221,17,17,0.08)" stroke="#dd1111" stroke-width="2.2" stroke-linejoin="round" filter="url(#esGlowCore)"/>
-        <polygon points="100,72 124,108 76,108" fill="rgba(255,102,0,0.06)"  stroke="#ff6600" stroke-width="1.8" stroke-linejoin="round" filter="url(#esGlowCore)"/>
-        <polygon points="100,83 115,105 85,105" fill="rgba(0,212,255,0.04)"  stroke="#00d4ff" stroke-width="1.4" stroke-linejoin="round" filter="url(#esGlowCyan)"/>
+        <polygon points="100,72 124,108 76,108" fill="rgba(255,102,0,0.06)" stroke="#ff6600" stroke-width="1.8" stroke-linejoin="round" filter="url(#esGlowCore)"/>
+        <polygon points="100,83 115,105 85,105" fill="rgba(0,212,255,0.04)" stroke="#00d4ff" stroke-width="1.4" stroke-linejoin="round" filter="url(#esGlowCyan)"/>
         <polygon points="100,92 105,100 100,108 95,100" fill="#ff4400" fill-opacity="0.9" filter="url(#esGlowCore)"/>
         <circle cx="100" cy="100" r="2.5" fill="#ffffff" fill-opacity="0.85" filter="url(#esGlowCore)"/>
       </g>
