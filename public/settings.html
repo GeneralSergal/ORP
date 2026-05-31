@@ -31,6 +31,16 @@
   <meta property="og:image"       content="https://raw.githubusercontent.com/GeneralSergal/ORP/refs/heads/main/public/Glyph.webp" />
 
   <style>
+    /* ── Logo-mark SVG size override ─────────────────────────── */
+    /* style.css sets .logo-mark to 18×18 (CSS pseudo-element era).
+       The SVG <use> version is rendered at its own width/height attrs;
+       ensure the wrapper doesn't clip it. */
+    .logo-mark {
+      width: 34px !important;
+      height: 34px !important;
+      overflow: visible;
+    }
+
     /* ============================================================
        SETTINGS PAGE — Page-scoped styles (.cfg-*)
        ============================================================ */
@@ -547,7 +557,7 @@
   <nav id="main-nav">
     <div class="container nav-inner">
       <a href="index.html" class="logo" style="color:inherit;text-decoration:none;">
-        <svg class="logo-mark" width="28" height="28" aria-hidden="true">
+        <svg class="logo-mark" width="34" height="34" aria-hidden="true">
           <use href="assets/icons.svg#logo-mark"/>
         </svg>
         <span>ORP Δ</span>
