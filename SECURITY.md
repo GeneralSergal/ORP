@@ -40,7 +40,7 @@ For third‑party deployments, contact the operator of that instance.
 If you discover a security vulnerability, please report it **privately** using the following channel:
 
 **Security Contact**  
-Email: **[INSERT YOUR CONTACT EMAIL HERE]**
+Email: **the_virus_ua@hotmail.com**
 
 Please include:
 
