@@ -1,64 +1,85 @@
-# ORP — CONTRIBUTING
-## ORP v3.0 — Governance‑Aligned Contribution Protocol
-
-This document defines contribution rules and architectural expectations for the ORP repository.  
-Its purpose is to preserve:
-
-- epistemic integrity  
-- provenance preservation  
-- structural consistency  
-- isolation‑safe modification  
-- drift‑resistant behavior  
-- alignment with the ORP v3.0 governance model  
-
-This document governs repository modifications only.  
-It does not redefine system behavior.
+# **CONTRIBUTING.md**  
+### **ORP v3.0 — Governance‑Aligned Contribution Protocol**  
+*(Liability‑Safe, Architecture‑Preserving, DCO‑Compliant)*
 
 ---
 
-## Before Contributing
+## **0. Purpose of This Document**
 
-Review the following core documents:
+This document defines the rules, expectations, and legal boundaries for contributing to the ORP repository.
 
-- core/ORP_RUNTIME.md  
-- core/ORP_CORE_SPEC.md  
-- core/ORP_SYSTEM_MAP.md  
-- core/ORP_SYSTEM_ARCHITECTURE.md  
-- constraints/ORP_PROMPT.md  
-- docs/!REPO_CHECKLIST.md  
-- docs/RELEASE_NOTES.md  
+It ensures that all contributions:
 
-Contributors must understand the separation between:
+- preserve epistemic integrity  
+- maintain architectural invariants  
+- avoid provenance corruption  
+- remain aligned with ORP v3.0 governance  
+- comply with the repository’s legal framework  
+- do not introduce liability for the maintainers or operators  
 
-- runtime governance (L3 authority)  
-- structural contracts (evaluation schema)  
-- epistemic isolation (L1–L4 boundaries)  
-- drift observability (σ² model)  
-- anti‑degradation constraints  
-
-before modifying any core subsystem.
+This document governs **repository modifications only**.  
+It does **not** redefine runtime behavior or system authority.
 
 ---
 
-## Contribution Areas
+## **1. Legal Requirements for Contributors**
 
-### 1. Governance‑Aligned Improvements
+By submitting a contribution (PR, issue, patch, or code), you agree that:
+
+1. **Your contribution is submitted under the terms of the Developer Certificate of Origin (DCO) v1.1**, certifying that you created the work or have the explicit chain of custody to contribute it under the project’s open‑source license.  
+2. **Your contribution is licensed under GPL‑3.0**, consistent with the repository.  
+3. **You grant the maintainers the right to modify, redistribute, or reject your contribution.**  
+4. **You do not submit sensitive, personal, or regulated data.**  
+5. **You do not submit copyrighted material without permission.**  
+6. **You do not submit code that introduces legal obligations beyond GPL‑3.0.**  
+7. **You do not submit patented algorithms unless you grant an irrevocable, royalty‑free license.**
+
+This protects both you and the maintainers.
+
+---
+
+## **2. Before Contributing**
+
+Contributors must review and understand the **entire repository**, including all runtime definitions, specifications, architectural documents, constraints, evaluation schemas, and governance materials.
+
+ORP is a governance‑first epistemic architecture.  
+To contribute safely, you must understand:
+
+- the full runtime governance model  
+- the L1–L4 epistemic boundary system  
+- the evaluation schema and structural contracts  
+- provenance and drift‑tracking mechanisms  
+- anti‑degradation and fail‑closed constraints  
+- the system map and architectural topology  
+- all documents defining ORP v3.0 behavior  
+
+**There is no static file list.**  
+The repository evolves, and contributors are responsible for reading and understanding the current state of the entire codebase and documentation before submitting changes.
+
+---
+
+## **3. Contribution Areas**
+
+### **3.1 Governance‑Aligned Improvements**
 Examples:
+
 - stronger provenance preservation  
 - improved uncertainty surfacing  
 - enhanced epistemic separation  
 - refined drift‑detection logic  
 - improved fail‑closed behavior  
 
-### 2. Evaluation & Benchmark Expansion
+### **3.2 Evaluation & Benchmark Expansion**
 Examples:
+
 - adversarial reasoning tests  
 - drift‑induction scenarios  
 - coherence‑camouflage detection cases  
 - provenance‑corruption stress tests  
 
-### 3. Infrastructure & Tooling
+### **3.3 Infrastructure & Tooling**
 Examples:
+
 - reproducibility tooling  
 - traceability utilities  
 - local evaluation helpers  
@@ -66,7 +87,7 @@ Examples:
 
 ---
 
-## Architectural Constraints
+## **4. Architectural Constraints**
 
 All contributions must preserve:
 
@@ -88,7 +109,7 @@ No contribution may:
 
 ---
 
-## Runtime Alignment Requirement
+## **5. Runtime Alignment Requirement**
 
 Changes affecting:
 
@@ -99,40 +120,71 @@ Changes affecting:
 - governance logic  
 - evaluation structure  
 
-must remain aligned with:
+must remain aligned with **the project’s core runtime definitions, core specifications, and system manifests**, wherever they are located in the repository.
 
-- core/ORP_RUNTIME.md  
-- core/ORP_CORE_SPEC.md  
-- core/ORP_SYSTEM_MAP.manifest.json  
-
-Architecture drift between documents is considered a structural regression.
+Architecture drift between implementation and documentation is considered a **structural regression**.
 
 ---
 
-## Pull Request Guidance
+## **6. Pull Request Requirements**
 
-### Use the Full PR Template for:
-- runtime changes  
-- schema modifications  
-- governance logic updates  
-- evaluation pipeline changes  
-- drift or provenance rule adjustments  
+Contributors must provide sufficient documentation for maintainers to evaluate:
 
-Template:  
-`.github/PULL_REQUEST_TEMPLATE/orp-pr-full.md`
+- runtime impact  
+- architectural alignment  
+- governance implications  
+- drift and provenance effects  
 
-### Use the Trivial PR Template for:
-- typo fixes  
-- formatting cleanup  
-- documentation clarification  
-- non‑structural examples  
+**Contributors are expected to fulfill the documentation requirements outlined in the project’s PR templates** (located in `.github/` or repository documentation).  
+Regardless of the platform or submission mechanism (GitHub, GitLab, email patches, etc.), **all disclosures required by the templates must be explicitly included**.
 
-Template:  
-`.github/PULL_REQUEST_TEMPLATE/orp-pr-trivial.md`
+This ensures legal and architectural consistency without binding the project to a specific hosting platform.
 
 ---
 
-## Validation Rule
+## **7. Security & Responsible Disclosure**
+
+Contributors must follow:
+
+- `SECURITY.md`  
+
+Unauthorized scanning, exploitation, or testing is prohibited.  
+Good‑faith research must follow the responsible disclosure guidelines.
+
+---
+
+## **8. Data Protection & Privacy Compliance**
+
+Contributors must not submit:
+
+- personal data  
+- regulated data  
+- sensitive data  
+- logs containing user identifiers  
+- data that violates GDPR/CCPA  
+
+See:
+
+- `PRIVACY_NOTICE.md`  
+- `GDPR_CCPA_ADDENDUM.md`
+
+---
+
+## **9. Copyright & DMCA Compliance**
+
+Contributors must not submit:
+
+- copyrighted material without permission  
+- proprietary datasets  
+- third‑party code without proper licensing  
+
+See:
+
+- `DMCA_POLICY.md`
+
+---
+
+## **10. Validation Rule**
 
 A contribution is valid only if it:
 
@@ -147,7 +199,7 @@ Usability improvements must not compromise structural integrity.
 
 ---
 
-## Roadmap Note
+## **11. Roadmap Alignment**
 
 ORP v3.0 development is governance‑driven and community‑guided.
 
@@ -159,19 +211,20 @@ Current areas of interest include:
 - benchmark generation systems  
 - future Python package infrastructure  
 
-See `docs/ORP_ROADMAP.md` for directional planning.
+Directional planning is documented throughout the repository.
 
 ---
 
-## Design Principle
+## **12. Design Principle**
 
-> Visible uncertainty is preferable to invisible corruption.
-
-Signal integrity overrides stylistic convenience.
+> **Visible uncertainty is preferable to invisible corruption.**  
+> Signal integrity overrides stylistic convenience.
 
 ---
 
-## Final Note
+## **13. Final Note**
 
 ORP is a governance‑first epistemic architecture, not a conversational framework.  
 Contributions should strengthen structural reliability, not narrative fluency.
+
+---
