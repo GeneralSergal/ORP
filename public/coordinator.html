@@ -237,88 +237,12 @@
     .co-ctrl-btn:hover { color:var(--text); border-color:rgba(255,255,255,0.20); background:rgba(255,255,255,0.04); }
     .co-ctrl-btn.danger:hover { color:var(--danger); border-color:rgba(255,51,51,0.35); background:rgba(255,51,51,0.07); }
 
-    .logo-mark { width:34px !important; height:34px !important; overflow:visible; }
   </style>
 </head>
 
 <body>
   <div class="co-mode-bar" id="co-mode-bar"></div>
 
-  <!-- ORP SVG Sprite Host — inline for Firefox/file:// compat -->
-  <div id="orp-icon-host" aria-hidden="true" style="position:absolute;width:0;height:0;overflow:hidden;pointer-events:none;">
-    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
-      <defs>
-        <filter id="orp-glow-core" x="-60%" y="-60%" width="220%" height="220%" color-interpolation-filters="sRGB">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="1.5" result="blur1"/>
-          <feGaussianBlur in="SourceGraphic" stdDeviation="4"   result="blur2"/>
-          <feMerge><feMergeNode in="blur2"/><feMergeNode in="blur1"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <filter id="orp-glow-outer" x="-80%" y="-80%" width="260%" height="260%" color-interpolation-filters="sRGB">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur"/>
-          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <filter id="orp-glow-cyan" x="-60%" y="-60%" width="220%" height="220%" color-interpolation-filters="sRGB">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="2" result="blur"/>
-          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <filter id="orp-glow-soft" x="-40%" y="-40%" width="180%" height="180%" color-interpolation-filters="sRGB">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" result="blur"/>
-          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
-        <radialGradient id="orp-core-fill" cx="50%" cy="50%" r="50%">
-          <stop offset="0%"   stop-color="#ff4400" stop-opacity="0.22"/>
-          <stop offset="60%"  stop-color="#dd1111" stop-opacity="0.07"/>
-          <stop offset="100%" stop-color="#dd1111" stop-opacity="0"/>
-        </radialGradient>
-        <radialGradient id="orp-aura-grad" cx="50%" cy="50%" r="50%">
-          <stop offset="0%"   stop-color="#ff6600" stop-opacity="0.10"/>
-          <stop offset="70%"  stop-color="#dd1111" stop-opacity="0.04"/>
-          <stop offset="100%" stop-color="transparent"/>
-        </radialGradient>
-        <linearGradient id="orp-wing-grad-l" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%"   stop-color="#dd1111" stop-opacity="0.72"/>
-          <stop offset="50%"  stop-color="#ff4400" stop-opacity="0.40"/>
-          <stop offset="100%" stop-color="#ff6600" stop-opacity="0.08"/>
-        </linearGradient>
-        <linearGradient id="orp-wing-grad-r" x1="100%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%"   stop-color="#dd1111" stop-opacity="0.72"/>
-          <stop offset="50%"  stop-color="#ff4400" stop-opacity="0.40"/>
-          <stop offset="100%" stop-color="#ff6600" stop-opacity="0.08"/>
-        </linearGradient>
-        <clipPath id="orp-scan-clip"><polygon points="50,22 74,64 26,64"/></clipPath>
-      </defs>
-      <symbol id="orp-logo-mark" viewBox="0 0 100 100" overflow="visible">
-        <circle cx="50" cy="50" r="46" fill="url(#orp-aura-grad)"/>
-        <g class="orp-orbit-ring" style="transform-origin:50px 50px">
-          <circle cx="50" cy="50" r="42" fill="none" stroke="#dd1111" stroke-width="0.4" stroke-opacity="0.22" stroke-dasharray="3 6"/>
-          <circle cx="50"  cy="8"  r="1.4" fill="#dd1111" fill-opacity="0.6" filter="url(#orp-glow-soft)"/>
-          <circle cx="92"  cy="50" r="1.4" fill="#ff6600" fill-opacity="0.6" filter="url(#orp-glow-soft)"/>
-          <circle cx="50"  cy="92" r="1.4" fill="#dd1111" fill-opacity="0.6" filter="url(#orp-glow-soft)"/>
-          <circle cx="8"   cy="50" r="1.4" fill="#ff6600" fill-opacity="0.6" filter="url(#orp-glow-soft)"/>
-        </g>
-        <g class="orp-wing-l" style="transform-origin:50px 50px">
-          <polygon points="50,50 15,27 9,41 28,47" fill="url(#orp-wing-grad-l)" stroke="#dd1111" stroke-width="0.5" stroke-opacity="0.5" filter="url(#orp-glow-outer)"/>
-          <polygon points="50,50 10,40 7,55 25,55" fill="url(#orp-wing-grad-l)" stroke="#dd1111" stroke-width="0.5" stroke-opacity="0.4" fill-opacity="0.7" filter="url(#orp-glow-outer)"/>
-        </g>
-        <g class="orp-wing-r" style="transform-origin:50px 50px">
-          <polygon points="50,50 85,27 91,41 72,47" fill="url(#orp-wing-grad-r)" stroke="#dd1111" stroke-width="0.5" stroke-opacity="0.5" filter="url(#orp-glow-outer)"/>
-          <polygon points="50,50 90,40 93,55 75,55" fill="url(#orp-wing-grad-r)" stroke="#dd1111" stroke-width="0.5" stroke-opacity="0.4" fill-opacity="0.7" filter="url(#orp-glow-outer)"/>
-        </g>
-        <g class="orp-core-group" style="transform-origin:50px 50px">
-          <polygon points="50,22 74,64 26,64" fill="rgba(221,17,17,0.07)" stroke="#dd1111" stroke-width="1.8" stroke-linejoin="round" filter="url(#orp-glow-core)"/>
-          <polygon points="50,33 64,58 36,58" fill="rgba(255,68,0,0.05)" stroke="#ff4400" stroke-width="1.4" stroke-linejoin="round" filter="url(#orp-glow-core)"/>
-          <polygon points="50,40 58,55 42,55" fill="rgba(0,212,255,0.04)" stroke="#00d4ff" stroke-width="1.1" stroke-linejoin="round" filter="url(#orp-glow-cyan)"/>
-          <polygon points="50,44 55,50 50,56 45,50" fill="#ff4400" fill-opacity="0.88" filter="url(#orp-glow-core)"/>
-          <circle cx="50" cy="50" r="2.5" fill="#ffffff" fill-opacity="0.88" filter="url(#orp-glow-core)"/>
-        </g>
-        <g class="orp-glitch-layer">
-          <polygon points="51,22 75,64 27,64" fill="none" stroke="#00d4ff" stroke-width="0.75" stroke-opacity="0.55" transform="translate(1,-0.5)" filter="url(#orp-glow-cyan)"/>
-          <polygon points="49,22 73,64 25,64" fill="none" stroke="#ff3333" stroke-width="0.75" stroke-opacity="0.45" transform="translate(-1,0.5)"/>
-        </g>
-      </symbol>
-      <symbol id="logo-mark" viewBox="0 0 100 100" overflow="visible"><use href="#orp-logo-mark"/></symbol>
-    </svg>
-  </div>
 
  
   <button class="scroll-top" id="scroll-top-btn" aria-label="Scroll back to top">↑</button>
