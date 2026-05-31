@@ -1,17 +1,39 @@
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
   <symbol id="icon-matrix-node" viewBox="0 0 24 24">
-    <path fill="currentColor" d="M3 3h6v6H3V3zm12 0h6v6h-6V3zM3 15h6v6H3v-6zm12 0h6v6h-6v-6zM5 5v2h2V5H5zm12 0v2h2V5h-2zM5 17v2h2v-2H5zm12 0v2h2v-2h-2z"/>
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2" stroke-width="1.5" stroke-opacity="0.85"/>
+      <line x1="12" y1="3" x2="12" y2="21" stroke-width="0.8" stroke-opacity="0.4" stroke-dasharray="2 2"/>
+      <line x1="3" y1="12" x2="21" y2="12" stroke-width="0.8" stroke-opacity="0.4" stroke-dasharray="2 2"/>
+      <circle cx="12" cy="12" r="3" stroke-width="1.2"/>
+      <circle cx="12" cy="12" r="0.5" fill="currentColor"/>
+    </g>
   </symbol>
 
   <symbol id="icon-clinical-core" viewBox="0 0 24 24">
-    <path fill="currentColor" d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.8l7.2 3.6v7.2L12 19.2l-7.2-3.6V8.4L12 4.8zM12 7l-5 2.5v5L12 17l5-2.5v-5L12 7z"/>
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <polygon points="12,2 22,7.5 22,16.5 12,22 2,16.5 2,7.5" stroke-width="1.5" stroke-opacity="0.85"/>
+      <polygon points="12,6 17.5,9.2 17.5,14.8 12,18 6.5,14.8 6.5,9.2" stroke-width="0.8" stroke-opacity="0.5"/>
+      <circle cx="12" cy="12" r="1.5" stroke-width="1.2"/>
+    </g>
   </symbol>
 
   <symbol id="icon-visual-env" viewBox="0 0 24 24">
-    <path fill="currentColor" d="M12 2s-6 7.2-6 10.8C6 16.5 8.7 19 12 19s6-2.5 6-6.2C18 9.2 12 2 12 2zm0 14.5c-1.9 0-3.5-1.3-3.5-3.2 0-1.8 1.8-4.2 3.5-6.2 1.7 2 3.5 4.4 3.5 6.2 0 1.9-1.6 3.2-3.5 3.2z"/>
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2" stroke-width="1.5" stroke-opacity="0.85"/>
+      <path d="M4,18 C8,18 9,6 13,6 C17,6 16,14 20,14" stroke-width="1.2"/>
+      <path d="M4,14 C8,14 10,10 14,10 C18,10 18,18 20,18" stroke-width="0.8" stroke-opacity="0.4" stroke-dasharray="1 1"/>
+    </g>
   </symbol>
 
   <symbol id="icon-ui-profile" viewBox="0 0 24 24">
-    <path fill="currentColor" d="M19.4 13c0-.3.1-.6.1-.9s0-.6-.1-.9l2.1-1.7c.2-.2.2-.4.1-.6l-2-3.5c-.1-.2-.4-.3-.6-.2l-2.5 1c-.5-.4-1.1-.7-1.7-1l-.4-2.6c0-.2-.2-.4-.5-.4h-4c-.3 0-.5.2-.5.4l-.4 2.6c-.6.3-1.2.6-1.7 1l-2.5-1c-.2-.1-.5 0-.6.2l-2 3.5c-.1.2-.1.4.1.6l2.1 1.7c0 .3-.1.6-.1.9s0 .6.1.9l-2.1 1.7c-.2.2-.2.4-.1.6l2 3.5c.1.2.4.3.6.2l2.5-1c.5.4 1.1.7 1.7 1l.4 2.6c0 .2.2.4.5.4h4c.3 0 .5-.2.5-.4l.4-2.6c.6-.3 1.2-.6 1.7-1l2.5 1c.2.1.5 0 .6-.2l2-3.5c.1-.2.1-.4-.1-.6l-2.1-1.7zm-7.4 2.5c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5-1.6 3.5-3.5 3.5z"/>
+    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2" stroke-width="1.5" stroke-opacity="0.85"/>
+      <line x1="7" y1="6" x2="7" y2="18" stroke-width="0.8" stroke-opacity="0.4"/>
+      <circle cx="7" cy="10" r="2" stroke-width="1.2" fill="#0a0d10"/>
+      <line x1="12" y1="6" x2="12" y2="18" stroke-width="0.8" stroke-opacity="0.4"/>
+      <circle cx="12" cy="15" r="2" stroke-width="1.2" fill="#0a0d10"/>
+      <line x1="17" y1="6" x2="17" y2="18" stroke-width="0.8" stroke-opacity="0.4"/>
+      <circle cx="17" cy="8" r="2" stroke-width="1.2" fill="#0a0d10"/>
+    </g>
   </symbol>
 </svg>
