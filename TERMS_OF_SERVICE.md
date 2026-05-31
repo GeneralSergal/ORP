@@ -198,3 +198,17 @@ Email: **the_virus_ua@hotmail.com**
 For all other deployments, contact the operator of that instance.
 
 ---
+
+
+### SECTION X — Publicly-Hosted Instance vs. Self-Hosted Deployments
+
+#### A. Users of the Publicly-Hosted Platform
+If you access or use the official ORP Δ web interface operated by the project maintainers:
+*   **Zero Data Liability:** The public instance provides no guarantees regarding data persistence, confidentiality, backup, or long-term storage. All data is processed at your own risk.
+*   **Acceptable Use:** You agree not to submit illegal, harmful, or structurally destabilizing inputs. Users are strictly prohibited from submitting third-party personal data, protected health information, or regulated sensitive datasets that violate regional privacy regulations (e.g., GDPR, CCPA).
+*   **Termination Rights:** The maintainers may restrict, block, or terminate access to the public service at any time, without notice, for any reason, including system integrity protection.
+
+#### B. Self-Hosted Deployments & Node Administrators
+If you download, deploy, or operate your own ORP instance:
+*   **Independent Administration:** You become the sole “Data Controller” and “Host” under applicable laws. You are responsible for compliance, security, logging, and user data handling.
+*   **No Upstream Liability:** The project maintainers, contributors, and developers bear no responsibility for liabilities arising from your deployment, including data leaks, system misuse, ungrounded inference outputs, security failures, or regulatory violations. Self-hosting transfers 100% of operational risk to the operator.
