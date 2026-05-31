@@ -1,5 +1,5 @@
 # **CONTRIBUTING.md**  
-### **ORP v3.0 — Governance‑Aligned Contribution Protocol**  
+### **ORP Δ — Governance‑Aligned Contribution Protocol**  
 *(Liability‑Safe, Architecture‑Preserving, DCO‑Compliant)*
 
 ---
@@ -13,7 +13,7 @@ It ensures that all contributions:
 - preserve epistemic integrity  
 - maintain architectural invariants  
 - avoid provenance corruption  
-- remain aligned with ORP v3.0 governance  
+- remain aligned with ORP Δ governance  
 - comply with the repository’s legal framework  
 - do not introduce liability for the maintainers or operators  
 
@@ -51,7 +51,7 @@ To contribute safely, you must understand:
 - provenance and drift‑tracking mechanisms  
 - anti‑degradation and fail‑closed constraints  
 - the system map and architectural topology  
-- all documents defining ORP v3.0 behavior  
+- all documents defining ORP Δ behavior  
 
 **There is no static file list.**  
 The repository evolves, and contributors are responsible for reading and understanding the current state of the entire codebase and documentation before submitting changes.
@@ -201,7 +201,7 @@ Usability improvements must not compromise structural integrity.
 
 ## **11. Roadmap Alignment**
 
-ORP v3.0 development is governance‑driven and community‑guided.
+ORP Δ development is governance‑driven and community‑guided.
 
 Current areas of interest include:
 
