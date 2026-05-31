@@ -41,6 +41,25 @@
                pages where ORP_SYNC is absent.
      LOGO-4  — initLogoMark() is idempotent: skips containers that
                already contain an <svg> child (hot-reload / PJAX safe).
+
+   PATCH LOG (v3.2.0 — Firefox file:// + strict-CSP Fix):
+     LOGO-5  — Three-tier sprite loading strategy replaces the single
+               fetch() call that failed silently in Firefox on file://
+               (CORS security block) and under strict CSPs:
+               Tier 1: If <div id="orp-icon-host"> or #orp-logo-mark
+                       already exists in the document (inline embed
+                       pattern), skip all network loading entirely.
+               Tier 2: XMLHttpRequest with overrideMimeType("image/svg+xml")
+                       — succeeds on file:// in Firefox where fetch() is
+                       blocked. xhr.status === 0 is treated as success for
+                       file:// protocol.
+               Tier 3: fetch() fallback for environments where XHR fails.
+               All three tiers feed the same Step 3 + 4 injection path.
+     LOGO-6  — _loadSVGText() helper encapsulates XHR->fetch waterfall,
+               returns a Promise<string> of raw SVG text.
+     LOGO-7  — _injectLogoUses() extracted as a pure DOM function so
+               Tier 1 (inline path) can call it without touching the
+               network loader.
    ============================================================ */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -274,45 +293,133 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ── LOGO-1: Static SVG injection ──────────────────────── */
   /*
-     PATCH v3.1.1 — LOGO-4 FIX:
-       OLD guard `if (container.querySelector("svg")) return` fired when the
-       HTML already had `<svg><use href="assets/icons.svg#logo-mark">` inside
-       .logo-mark. This prevented BOTH the defs-host injection AND the inline
-       <use> rewrite — leaving url(#orp-*) IDs out of document scope.
-       Result: filters failed silently in Firefox/Safari, icon rendered blank.
+     PATCH v3.2.0 — FIREFOX / file:// FIX:
 
-       Fix: Remove the skip guard. Always clear .logo-mark and re-inject a
-       fresh <svg><use href="#orp-logo-mark"> pointing at the inline-hoisted
-       sprite. The defs-host guard (getElementById) is kept — it still
-       prevents double-insertion on PJAX re-runs.
+     ROOT CAUSE: fetch() is blocked by Firefox on file:// (CORS/security
+     policy) and by strict CSPs on http(s)://. When fetch() throws, the
+     old code returned early — leaving every .logo-mark blank.
+
+     STRATEGY (three-tier, in priority order):
+       Tier 1 — Inline host already present in DOM (fastest, zero network):
+         If the HTML page embeds <div id="orp-icon-host"> with the full
+         sprite (recommended pattern for production), skip fetch entirely.
+         The symbols are already in document scope; just inject <use> refs.
+
+       Tier 2 — XMLHttpRequest (works on file:// in Firefox):
+         XHR with overrideMimeType("image/svg+xml") succeeds on file://
+         where fetch() is blocked. Used as primary network loader.
+
+       Tier 3 — fetch() (HTTP/HTTPS, modern CSP-friendly environments):
+         Falls back to fetch if XHR somehow fails (unusual).
+
+     In all tiers, once the sprite SVG is in document scope the
+     container injection and interactivity wiring are identical.
+
+     PATCH LOG:
+       v3.1.1 — Removed skip guard; always clear+re-inject containers.
+       v3.2.0 — Added Tier 1 inline-host detection; replaced fetch with
+                XHR primary + fetch fallback to fix file:// in Firefox.
   */
+
+  /* Helper: load SVG text cross-browser (XHR → fetch) */
+  function _loadSVGText(url) {
+    return new Promise((resolve, reject) => {
+      /* --- Tier 2: XHR (survives file:// in Firefox) --- */
+      try {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", url, true);
+        /* overrideMimeType prevents Firefox from rejecting SVG as
+           "not well-formed XML" when served without a Content-Type */
+        if (xhr.overrideMimeType) xhr.overrideMimeType("image/svg+xml");
+        xhr.onload = () => {
+          if (xhr.status === 0 /* file:// */ || (xhr.status >= 200 && xhr.status < 300)) {
+            resolve(xhr.responseText);
+          } else {
+            reject(new Error(`XHR ${xhr.status}`));
+          }
+        };
+        xhr.onerror = () => reject(new Error("XHR network error"));
+        xhr.send();
+      } catch (xhrErr) {
+        /* --- Tier 3: fetch fallback --- */
+        fetch(url)
+          .then(r => { if (!r.ok) throw new Error(`fetch ${r.status}`); return r.text(); })
+          .then(resolve)
+          .catch(reject);
+      }
+    });
+  }
+
+  /* Step 4 (shared): inject <svg><use> into each .logo-mark container */
+  function _injectLogoUses() {
+    document.querySelectorAll(".logo-mark").forEach(container => {
+      /* Always clear stale external <use href="assets/icons.svg#...">
+         children that cannot reach the inline-hoisted defs — LOGO-4 FIX */
+      container.innerHTML = "";
+
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute("viewBox",  "0 0 100 100");
+      svg.setAttribute("width",    "34");
+      svg.setAttribute("height",   "34");
+      svg.setAttribute("overflow", "visible");
+      svg.setAttribute("aria-hidden", "true");
+      svg.style.cssText        = "display:block;width:100%;height:100%;overflow:visible;";
+      svg.style.willChange     = "transform, opacity";
+      svg.style.backfaceVisibility = "hidden";
+
+      const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+      /* Inline fragment reference — resolves in document scope, not external file */
+      use.setAttribute("href", "#orp-logo-mark");
+      svg.appendChild(use);
+      container.appendChild(svg);
+
+      container.dataset.shsLive = "true"; /* LOGO-3 SHS bridge hook */
+    });
+  }
+
   async function initLogoMark() {
     const containers = document.querySelectorAll(".logo-mark");
     if (containers.length === 0) return;
 
-    let svgSprite;
+    /* ── Tier 1: Inline host already present ─────────────────
+       Pages that embed <div id="orp-icon-host"> with the full
+       icons.svg content skip all network loading entirely.
+       The symbols (#orp-logo-mark etc.) are already in document
+       scope — just clear containers and inject <use> refs.      */
+    if (document.getElementById("orp-icon-host") ||
+        document.getElementById("orp-logo-mark")) {
+      _injectLogoUses();
+      _logoHoverBind();
+      _logoSHSBridge();
+      return;
+    }
+
+    /* ── Tiers 2 + 3: Load sprite via XHR / fetch ─────────── */
+    let svgText;
     try {
-      const res = await fetch("assets/icons.svg");
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const text = await res.text();
-
-      /* Parse into a live DOM tree */
-      const parser = new DOMParser();
-      const doc    = parser.parseFromString(text, "image/svg+xml");
-      svgSprite    = doc.querySelector("svg");
-      if (!svgSprite) throw new Error("No <svg> root found in icons.svg");
-
+      svgText = await _loadSVGText("assets/icons.svg");
     } catch (err) {
       console.warn("ORP_LOGO: Failed to load icons.svg —", err.message);
       return;
     }
 
-    /* Step 3: Hoist the full sprite (root <defs> + all symbols) into
-       <body> as the first child so every url(#orp-*) ID is in document
-       scope before any painting occurs.
-       WHY: External <use href="file.svg#id"> cannot reach <defs> inside
-       a display:none sprite fetched as a separate network resource in
-       Firefox/Safari. Inline hosting is the only cross-browser fix. */
+    let svgSprite;
+    try {
+      const parser = new DOMParser();
+      const doc    = parser.parseFromString(svgText, "image/svg+xml");
+      /* DOMParser returns an <parsererror> doc on failure */
+      const parseErr = doc.querySelector("parsererror");
+      if (parseErr) throw new Error("SVG parse error");
+      svgSprite = doc.querySelector("svg");
+      if (!svgSprite) throw new Error("No <svg> root in icons.svg");
+    } catch (err) {
+      console.warn("ORP_LOGO: SVG parse failed —", err.message);
+      return;
+    }
+
+    /* Step 3: Hoist full sprite (root <defs> + all symbols) into <body>
+       so every url(#orp-*) ID is in document scope.
+       Guard prevents double-insertion on PJAX / hot-reload. */
     if (!document.getElementById("orp-icon-host")) {
       const host = document.createElement("div");
       host.id            = "orp-icon-host";
@@ -322,39 +429,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.insertBefore(host, document.body.firstChild);
     }
 
-    /* Step 4: Clear each .logo-mark container (removes stale external
-       <use> refs that triggered the old bug) and inject an inline
-       <svg><use href="#orp-logo-mark"> pointing at the hoisted sprite. */
-    containers.forEach(container => {
-      /* Always clear — removes any pre-existing static <svg> child
-         that would have used the external href="assets/icons.svg#..."
-         pattern which can't see the inline-hoisted defs — LOGO-4 FIX */
-      container.innerHTML = "";
-
-      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      svg.setAttribute("viewBox",  "0 0 100 100");
-      svg.setAttribute("width",    "34");
-      svg.setAttribute("height",   "34");
-      svg.setAttribute("overflow", "visible");
-      svg.setAttribute("aria-hidden", "true");
-      svg.style.cssText = "display:block;width:100%;height:100%;overflow:visible;";
-
-      /* GPU layer promotion — container will be animated by CSS */
-      svg.style.willChange         = "transform, opacity";
-      svg.style.backfaceVisibility = "hidden";
-
-      const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
-      /* Inline reference — resolves against document scope, not external file */
-      use.setAttribute("href", "#orp-logo-mark");
-
-      svg.appendChild(use);
-      container.appendChild(svg);
-
-      /* Mark container as live for SHS bridge — LOGO-3 */
-      container.dataset.shsLive = "true";
-    });
-
-    /* Wire interactivity once injection is done */
+    _injectLogoUses();
     _logoHoverBind();
     _logoSHSBridge();
   }

@@ -1802,3 +1802,12 @@ nav .logo-mark {
   height: 80px;
 }
 
+.logo-mark,
+.logo-mark::before,
+.logo-mark::after,
+.logo-mark span {
+  opacity: 1 !important;
+  visibility: visible !important;
+  border-color: var(--primary) !important;
+}
+
