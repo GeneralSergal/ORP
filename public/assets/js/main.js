@@ -273,6 +273,19 @@ document.addEventListener("DOMContentLoaded", () => {
   ──────────────────────────────────────────────────────────── */
 
   /* ── LOGO-1: Static SVG injection ──────────────────────── */
+  /*
+     PATCH v3.1.1 — LOGO-4 FIX:
+       OLD guard `if (container.querySelector("svg")) return` fired when the
+       HTML already had `<svg><use href="assets/icons.svg#logo-mark">` inside
+       .logo-mark. This prevented BOTH the defs-host injection AND the inline
+       <use> rewrite — leaving url(#orp-*) IDs out of document scope.
+       Result: filters failed silently in Firefox/Safari, icon rendered blank.
+
+       Fix: Remove the skip guard. Always clear .logo-mark and re-inject a
+       fresh <svg><use href="#orp-logo-mark"> pointing at the inline-hoisted
+       sprite. The defs-host guard (getElementById) is kept — it still
+       prevents double-insertion on PJAX re-runs.
+  */
   async function initLogoMark() {
     const containers = document.querySelectorAll(".logo-mark");
     if (containers.length === 0) return;
@@ -294,43 +307,44 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    /* LOGO-1 Step 3: Hoist the sprite (with its root <defs>) into
-       document body so filter IDs resolve in document scope.
-       The sprite itself is display:none — it's a def container, not visible. */
+    /* Step 3: Hoist the full sprite (root <defs> + all symbols) into
+       <body> as the first child so every url(#orp-*) ID is in document
+       scope before any painting occurs.
+       WHY: External <use href="file.svg#id"> cannot reach <defs> inside
+       a display:none sprite fetched as a separate network resource in
+       Firefox/Safari. Inline hosting is the only cross-browser fix. */
     if (!document.getElementById("orp-icon-host")) {
       const host = document.createElement("div");
-      host.id           = "orp-icon-host";
+      host.id            = "orp-icon-host";
       host.style.cssText = "position:absolute;width:0;height:0;overflow:hidden;pointer-events:none;";
       host.setAttribute("aria-hidden", "true");
       host.appendChild(svgSprite.cloneNode(true));
       document.body.insertBefore(host, document.body.firstChild);
     }
 
-    /* LOGO-1 Step 4: Inject <use> references into each container */
+    /* Step 4: Clear each .logo-mark container (removes stale external
+       <use> refs that triggered the old bug) and inject an inline
+       <svg><use href="#orp-logo-mark"> pointing at the hoisted sprite. */
     containers.forEach(container => {
-      /* Idempotency guard — LOGO-4 */
-      if (container.querySelector("svg")) return;
-
-      /* Determine render size from container's computed dimensions
-         or fall back to 32×32. Reading offsetWidth/Height here is
-         safe: we're in DOMContentLoaded, layout has already run for
-         static elements. Not called on every frame. */
-      const w = container.offsetWidth  || 32;
-      const h = container.offsetHeight || 32;
+      /* Always clear — removes any pre-existing static <svg> child
+         that would have used the external href="assets/icons.svg#..."
+         pattern which can't see the inline-hoisted defs — LOGO-4 FIX */
+      container.innerHTML = "";
 
       const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
       svg.setAttribute("viewBox",  "0 0 100 100");
-      svg.setAttribute("width",    w);
-      svg.setAttribute("height",   h);
+      svg.setAttribute("width",    "34");
+      svg.setAttribute("height",   "34");
       svg.setAttribute("overflow", "visible");
       svg.setAttribute("aria-hidden", "true");
-      svg.style.cssText = "display:block;width:100%;height:100%;";
+      svg.style.cssText = "display:block;width:100%;height:100%;overflow:visible;";
 
       /* GPU layer promotion — container will be animated by CSS */
-      svg.style.willChange      = "transform, opacity";
+      svg.style.willChange         = "transform, opacity";
       svg.style.backfaceVisibility = "hidden";
 
       const use = document.createElementNS("http://www.w3.org/2000/svg", "use");
+      /* Inline reference — resolves against document scope, not external file */
       use.setAttribute("href", "#orp-logo-mark");
 
       svg.appendChild(use);
@@ -468,6 +482,178 @@ document.addEventListener("DOMContentLoaded", () => {
       if (override) _applyLogoSHS(override);
     }
   }
+
+
+  /* ════════════════════════════════════════════════════════════
+     TELEMETRY HUD — index.html live metrics
+     ════════════════════════════════════════════════════════════
+     Drives the [SHS] / [DRIFT] / [CRA] / [LAS] values in the
+     mini-telemetry-card on index.html dynamically from ORP_SYNC.
+
+     Elements targeted by ID:
+       #hud-shs-val   — SHS state string + colour class
+       #hud-drift-val — drift level label + colour class
+       #hud-cra-val   — CRA validity + colour class
+       #hud-las-val   — LAS level + colour class
+
+     Colour class vocabulary (maps to .orp-compact-scope rules):
+       text-success  — green  (#3fb950)
+       text-orange   — orange (#ff8833)
+       text-red      — red    (#ff3333)
+       (no class)    — default --text colour
+
+     Update triggers:
+       1. Boot: reads current ORP_SYNC persisted values.
+       2. orp-settings-update event: live sync across tabs/pages.
+       3. MutationObserver on #cc-tab-shs: local SHS pill changes.
+
+     Graceful degradation: if ORP_SYNC is absent the values stay
+     at their HTML defaults (GREEN / LOW / VALID / L3).
+  ──────────────────────────────────────────────────────────── */
+  (function initTelemetryHUD() {
+
+    /* ── Element refs (all nullable — only on index.html) ── */
+    const elSHS   = document.getElementById("hud-shs-val");
+    const elDrift = document.getElementById("hud-drift-val");
+    const elCRA   = document.getElementById("hud-cra-val");
+    const elLAS   = document.getElementById("hud-las-val");
+
+    /* If none of the HUD elements exist, this isn't index.html — bail */
+    if (!elSHS && !elDrift && !elCRA && !elLAS) return;
+
+    /* ── Colour class helpers ─────────────────────────────── */
+    const TEXT_CLASSES = ["text-success", "text-orange", "text-red"];
+
+    function _setVal(el, text, cls) {
+      if (!el) return;
+      el.textContent = text;
+      el.classList.remove(...TEXT_CLASSES);
+      if (cls) el.classList.add(cls);
+    }
+
+    /* ── SHS → display map ────────────────────────────────── */
+    /* Maps SHS state string to { label, cls } for the HUD cell */
+    function _shsDisplay(shs) {
+      const s = (shs || "GREEN").toUpperCase();
+      if (s === "GREEN")                   return { label: "GREEN",  cls: "text-success" };
+      if (s === "YELLOW")                  return { label: "YELLOW", cls: "text-orange"  };
+      if (s === "ORANGE" || s === "AMBER") return { label: "ORANGE", cls: "text-orange"  };
+      if (s === "RED")                     return { label: "RED",    cls: "text-red"     };
+      if (s === "BLACK" || s === "DEAD")   return { label: "BLACK",  cls: "text-red"     };
+      return { label: s, cls: "" };
+    }
+
+    /* ── Drift intensity → label map ─────────────────────── */
+    /* Maps numeric 0–1 drift value to a display label + colour */
+    function _driftDisplay(intensity) {
+      const v = parseFloat(intensity) || 0;
+      if (v <= 0.15) return { label: "LOW",      cls: "text-success" };
+      if (v <= 0.40) return { label: "LOW",      cls: "text-red"     };  // low but warning colour
+      if (v <= 0.65) return { label: "MODERATE", cls: "text-orange"  };
+      if (v <= 0.85) return { label: "HIGH",     cls: "text-orange"  };
+      return              { label: "CRITICAL",   cls: "text-red"     };
+    }
+
+    /* ── CRA (Contextual Reasoning Accuracy) display ──────── */
+    /* Derived from drift + SHS — no independent ORP_SYNC key exists yet.
+       Green SHS / low drift → VALID; degraded states → DEGRADED / FAIL */
+    function _craDisplay(shs, intensity) {
+      const s = (shs || "GREEN").toUpperCase();
+      const v = parseFloat(intensity) || 0;
+      if (s === "GREEN"  && v <= 0.25) return { label: "VALID",    cls: "text-success" };
+      if (s === "YELLOW" || v <= 0.55) return { label: "VALID",    cls: "text-success" };
+      if (s === "ORANGE" || v <= 0.75) return { label: "DEGRADED", cls: "text-orange"  };
+      return                            { label: "FAIL",     cls: "text-red"     };
+    }
+
+    /* ── LAS (Layer Activation State) display ─────────────── */
+    /* Maps ness_entropy cumulative score → LAS tier label.
+       ORP_SYNC key: ness_entropy (default 0).
+       L1 = stable, L4 = maximum coherence pressure */
+    function _lasDisplay(entropy) {
+      const e = parseFloat(entropy) || 0;
+      if (e <= 10)  return { label: "L1", cls: "text-success" };
+      if (e <= 30)  return { label: "L2", cls: "text-success" };
+      if (e <= 60)  return { label: "L3", cls: "text-orange"  };
+      return               { label: "L4", cls: "text-red"     };
+    }
+
+    /* ── Apply a full snapshot of all four values ─────────── */
+    function _applyAll(shs, intensity, entropy) {
+      const shsD   = _shsDisplay(shs);
+      const driftD = _driftDisplay(intensity);
+      const craD   = _craDisplay(shs, intensity);
+      const lasD   = _lasDisplay(entropy);
+
+      _setVal(elSHS,   shsD.label,   shsD.cls);
+      _setVal(elDrift, driftD.label, driftD.cls);
+      _setVal(elCRA,   craD.label,   craD.cls);
+      _setVal(elLAS,   lasD.label,   lasD.cls);
+    }
+
+    /* ── State cache (avoids unnecessary DOM writes) ──────── */
+    let _shs      = "GREEN";
+    let _drift    = 0;
+    let _entropy  = 0;
+
+    function _refresh() { _applyAll(_shs, _drift, _entropy); }
+
+    /* ── 1. Boot from ORP_SYNC persisted values ───────────── */
+    if (typeof window.ORP_SYNC !== "undefined") {
+      _shs     = ORP_SYNC.load("ness_pressure", ORP_SYNC.default("ness_pressure")) || "GREEN";
+      _drift   = ORP_SYNC.load("sigil_drift",   ORP_SYNC.default("sigil_drift"))   || 0;
+      _entropy = ORP_SYNC.load("ness_entropy",  ORP_SYNC.default("ness_entropy"))  || 0;
+    }
+    _refresh();
+
+    /* ── 2. orp-settings-update event (cross-tab / cross-page) */
+    window.addEventListener("orp-settings-update", (e) => {
+      if (!e.detail) return;
+      let changed = false;
+      if (e.detail.key === "ness_pressure" && e.detail.value != null) {
+        _shs = e.detail.value; changed = true;
+      }
+      if (e.detail.key === "shs_override"  && e.detail.value != null) {
+        _shs = e.detail.value; changed = true;
+      }
+      if (e.detail.key === "sigil_drift"   && e.detail.value != null) {
+        _drift = parseFloat(e.detail.value) || 0; changed = true;
+      }
+      if (e.detail.key === "ness_entropy"  && e.detail.value != null) {
+        _entropy = parseFloat(e.detail.value) || 0; changed = true;
+      }
+      if (changed) _refresh();
+    });
+
+    /* ── 3. MutationObserver on #cc-tab-shs pill ──────────── */
+    function _watchSHSPill(pill) {
+      function _onPillChange() {
+        const raw = pill.textContent.trim().toUpperCase();
+        const normalized = raw === "AMBER" ? "YELLOW" : raw;
+        if (normalized && normalized !== _shs) {
+          _shs = normalized;
+          _refresh();
+        }
+      }
+      _onPillChange(); /* apply immediately */
+      new MutationObserver(_onPillChange).observe(pill, {
+        childList: true, characterData: true, subtree: true,
+      });
+    }
+
+    const pill = document.getElementById("cc-tab-shs");
+    if (pill) {
+      _watchSHSPill(pill);
+    } else {
+      /* runtime-overlay.js may inject the pill after DOMContentLoaded */
+      const _waitObs = new MutationObserver((_, obs) => {
+        const p = document.getElementById("cc-tab-shs");
+        if (p) { obs.disconnect(); _watchSHSPill(p); }
+      });
+      _waitObs.observe(document.body, { childList: true, subtree: true });
+    }
+
+  }()); /* end initTelemetryHUD IIFE */
 
 
   /* ── Boot: run logo injection ───────────────────────────── */
