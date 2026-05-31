@@ -184,7 +184,7 @@ The maintainers are not liable for security incidents on hosted instances.
 If the project maintainers operate a specific public deployment, privacy‑related inquiries for that deployment may be sent to:
 
 **Privacy Contact**  
-Email: **[INSERT YOUR CONTACT EMAIL HERE]**
+Email: **the_virus_ua@hotmail.com**
 
 For all other deployments, contact the operator of that instance.
 
