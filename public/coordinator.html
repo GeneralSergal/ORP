@@ -46,14 +46,20 @@
       top: 0; left: 0; right: 0;
       height: 3px;
       z-index: 2000;
-      background: linear-gradient(90deg, var(--primary) 0%, var(--accent-cyan) 100%);
+      /* Nominal: tri-color matches runtime.html rc-status-bar exactly */
+      background: linear-gradient(90deg,
+        var(--primary) 0%,
+        var(--accent-orange) 50%,
+        var(--accent-cyan) 100%
+      );
       transform-origin: left;
-      transform: scaleX(1);
-      transition: background 0.4s ease, transform 0.3s ease;
+      transform: scaleX(0);
+      transition: background 0.4s ease, transform 0.4s cubic-bezier(0.2,0,0,1);
     }
-    .co-mode-bar.degraded  { background: linear-gradient(90deg, var(--accent-orange), var(--warning)); }
-    .co-mode-bar.isolated  { background: linear-gradient(90deg, var(--danger), #880000); }
-    .co-mode-bar.lockdown  { background: #880000; transform: scaleX(1); animation: lockPulse 1.2s ease infinite; }
+    .co-mode-bar.active    { transform: scaleX(1); }
+    .co-mode-bar.degraded  { background: linear-gradient(90deg, var(--accent-orange) 0%, var(--warning) 100%); }
+    .co-mode-bar.isolated  { background: linear-gradient(90deg, var(--danger) 0%, #880000 100%); }
+    .co-mode-bar.lockdown  { background: #880000; animation: lockPulse 1.2s ease infinite; }
 
     @keyframes lockPulse {
       0%, 100% { opacity: 1; }
@@ -636,7 +642,7 @@
         </span>
       </div>
       <h1 class="page-title" style="margin-bottom:14px;">
-        Swarm Coordinator
+        Swarm <span style="color:var(--accent-orange);">Coordinator</span>
       </h1>
       <p class="page-subtitle" style="max-width:600px;">
         Multi-agent pipeline orchestration. Dispatch tasks to the capability registry,
@@ -654,6 +660,15 @@
         </span>
       </div>
     </div>
+    <!-- Sigil — matches runtime.html hero pattern exactly.
+         position:absolute on mobile (resolves inside position:relative header),
+         position:fixed on desktop (entropia-sigil.css --hero-bg breakpoints).
+         entropia-sigil.js reads data-initial-drift on boot. -->
+    <div class="entropia-sigil entropia-sigil--xl entropia-sigil--hero-bg"
+         id="coordinator-hero-sigil"
+         data-initial-drift="0.3"
+         aria-hidden="true"
+         style="pointer-events:none;"></div>
   </header>
 
   <main class="container" style="padding-top:0;padding-bottom:60px;">
@@ -823,6 +838,7 @@
   </main>
 
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/runtime-overlay.js"></script>
   <script src="assets/js/registry.js"></script>
   <script src="assets/js/orp-coordinator.js"></script>
 
@@ -942,8 +958,9 @@
         if (!mode) return;
         var cls = mode.toLowerCase();
 
-        // Top bar
-        modeBar.className = 'co-mode-bar ' + cls;
+        // Top bar — always keep .active so the bar stays visible;
+        // swap the colour class for mode-specific gradient
+        modeBar.className = 'co-mode-bar active ' + cls;
 
         // Badge
         var dotClass = (mode === 'NOMINAL') ? '' :
