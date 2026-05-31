@@ -1,3 +1,4 @@
+# **README.md — ORP Δ**  
 <p align="center">
   <img src="https://img.shields.io/badge/ORP-Δ-blueviolet" alt="ORP Version">
   <img src="https://img.shields.io/badge/status-active-success" alt="Status">
@@ -6,16 +7,18 @@
   <img src="https://img.shields.io/badge/Drift-σ²-purple" alt="Drift Model">
 </p>
 
-<h1 align="center">ORP — Operational/Recursive/Polarity Δ</h1>
+<h1 align="center">ORP — Operational / Recursive / Polarity Δ</h1>
 
 <p align="center">
-  A type-safe epistemic governance framework for transformer reasoning systems.<br>
+  A type‑safe epistemic governance framework for transformer reasoning systems.<br>
   <strong>Signal > Narrative · Recoverability > Completion · Provenance > Coherence</strong>
 </p>
 
 ---
 
-## Mandatory Runtime Header
+## **Mandatory Runtime Header**
+Every ORP‑aligned runtime must emit the following header **before** any reasoning:
+
 ```text
 [SHS: GREEN | YELLOW | ORANGE | RED | BLACK]
 [DRIFT: NONE | LOW | MODERATE | HIGH]
@@ -23,86 +26,134 @@
 [LAS: L1 | L2 | L3 | L4]
 ```
 
----
-
-## 1. Overview
-ORP is a governance-first epistemic integrity framework designed to prevent narrative drift in probabilistic reasoning systems. It enforces strict separation between raw observation, validation, governance, and speculation through a Layered Authority Stack (LAS).
-
-The protocol treats transformer outputs as drift-prone and enforces recoverability and provenance preservation as primary invariants.
+This header is a **non‑negotiable invariant**.  
+If a runtime cannot produce it, the output is considered **invalid**.
 
 ---
 
-## 2. Epistemic Architecture
+## **1. Overview**
 
-| Layer | Authority     | Function                          | Status       |
-|-------|---------------|-----------------------------------|--------------|
-| L1    | Absolute      | Raw typed signals (immutable)     | Observational |
-| L2    | High          | Deterministic validation          | Trusted      |
-| L3    | Primary       | Governance core & invariants      | Authoritative|
-| L4    | None          | Speculative inference only        | Isolated     |
+ORP is a **governance‑first epistemic integrity framework** designed to prevent narrative drift in probabilistic reasoning systems.
 
-L4 is strictly read-only and may never influence L1–L3.
+It enforces strict separation between:
+
+- raw observation  
+- deterministic validation  
+- governance and invariants  
+- speculative inference  
+
+This separation is implemented through the **Layered Authority Stack (LAS)**, ensuring higher‑risk reasoning layers cannot corrupt foundational signals.
+
+ORP treats transformer outputs as **drift‑prone** and prioritizes:
+
+- recoverability  
+- provenance preservation  
+- structural correctness  
+- epistemic isolation  
+
+over fluency or narrative coherence.
 
 ---
 
-## 3. Drift Observability (σ² Model)
+## **2. Epistemic Architecture (LAS)**
+
+| Layer | Authority     | Function                          | Status        |
+|-------|---------------|-----------------------------------|---------------|
+| **L1** | Absolute      | Raw typed signals (immutable)     | Observational |
+| **L2** | High          | Deterministic validation          | Trusted       |
+| **L3** | Primary       | Governance core & invariants      | Authoritative |
+| **L4** | None          | Speculative inference only        | Isolated      |
+
+**L4 is strictly read‑only.**  
+It may never influence L1–L3.
+
+Any violation of LAS boundaries is treated as **structural corruption**.
+
+---
+
+## **3. Drift Observability (σ² Model)**
 
 Drift is quantified as variance over L1 signal vectors:
 
-```math
-\sigma^2 = \mathrm{Var}(L1_{t_0 \dots t_n})
-```
+$$\sigma^2 = \mathrm{Var}(L1_{t_0 \dots t_n})$$
 
-### Thresholds
+### **Thresholds**
 - **NONE** — σ² < 0.01  
 - **LOW** — 0.01 ≤ σ² < 0.05  
 - **MODERATE** — 0.05 ≤ σ² < 0.15  
-- **HIGH** — σ² ≥ 0.15 → triggers **Narrative Strip** mode
+- **HIGH** — σ² ≥ 0.15 → triggers **Narrative Strip** mode  
+
+Narrative Strip removes all speculative content and forces the system back to L1/L2 grounding.
 
 ---
 
-## 4. Operational Philosophy
-1. **Provenance over Fluency** — Broken provenance chain renders output invalid.
-2. **Epistemic Firewall** — L4 has no write access to L1/L2/L3.
-3. **Recoverability First** — Every L3 decision must support Chain Recovery Architecture (CRA).
-4. **Visible Uncertainty** — Invisible corruption is treated as critical failure.
+## **4. Operational Philosophy**
+
+1. **Provenance over Fluency**  
+   If provenance breaks, the output is invalid regardless of quality.
+
+2. **Epistemic Firewall**  
+   L4 cannot write to L1/L2/L3 under any circumstances.
+
+3. **Recoverability First**  
+   Every L3 decision must support the **Chain Recovery Architecture (CRA)**.
+
+4. **Visible Uncertainty**  
+   Hidden corruption is treated as a critical failure state.
 
 ---
 
-## 5. Repository Structure
+## **5. Repository Structure (Conceptual)**
+
+ORP does not rely on a fixed directory layout.  
+However, the repository is conceptually organized into:
+
 ```text
 ORP/
-├── Architecture/     # Core state machines and invariants
+├── Architecture/     # State machines, invariants, LAS definitions
 ├── Runtime/          # NESS telemetry engine + Warden
-├── Evaluation/       # Benchmark suite and rubric
-├── Governance/       # L3 authority definitions
-├── Layers/           # L1 typed signal schemas
-├── Docs/             # Technical manuals
-└── public/           # Live website
+├── Evaluation/       # Benchmark suite, rubric, drift tests
+├── Governance/       # L3 authority definitions & constraints
+├── Layers/           # L1 typed signal schemas & validators
+├── Docs/             # Technical manuals & governance specs
+└── public/           # Live website (Δ state)
 ```
 
----
-
-## 6. Compliance Requirements
-- L1 must reject untyped narrative input (Signal-Only policy)
-- L4 must remain read-only speculative engine
-- Persona transforms are strictly post-processing (`Output_final = PersonaTransform(L3_output)`)
-- σ² ≥ 0.15 forces immediate narrative strip and SHS downgrade
+This structure is descriptive, not prescriptive.  
+ORP Δ evolves continuously.
 
 ---
 
-## 7. System State
-**ORP_VERSION:** Δ (v3.0)  
+## **6. Compliance Requirements**
+
+To remain ORP‑aligned:
+
+- **L1 must reject untyped narrative input**  
+- **L4 must remain read‑only**  
+- **Persona transforms must occur *after* L3**  
+  ```
+  Output_final = PersonaTransform(L3_output)
+  ```
+- **σ² ≥ 0.15 requires immediate Narrative Strip**  
+- **SHS must degrade deterministically under uncertainty**  
+- **CRA must remain valid unless explicitly degraded**
+
+---
+
+## **7. System State**
+
+**ORP_VERSION:** Δ (non‑versioned, continuous)  
 **STATUS:** MASTER SYNCHRONIZED  
 **CHANGE_POLICY:** LOG_ONLY  
 
-**License:** GPL-3.0  
-**Maintained by:** Laurentius Maximus (The ENTROPIA)
+**License:** GPL‑3.0  
+**Maintained by:** The Project Maintainers  
 
 ---
 
-**Repository:** [https://github.com/GeneralSergal/ORP](https://github.com/GeneralSergal/ORP)
+## **Repository**
+[https://github.com/GeneralSergal/ORP](https://github.com/GeneralSergal/ORP)
 
 ---
 
-**Signal > Narrative**
+<p align="center"><strong>Signal > Narrative</strong></p>
