@@ -283,10 +283,9 @@ body {
   -webkit-font-smoothing: antialiased;
   letter-spacing: 0.15px;
 }
-
 a { color: var(--accent-orange); text-decoration: none; transition:
-  background var(--transition),
-  border-color var(--transition),
+  transform var(--transition),
+  opacity var(--transition); cursor: pointer; }
   transform var(--transition),
   opacity var(--transition); cursor: pointer; }
 a:hover { color: var(--accent-orange-bright); }
@@ -548,7 +547,6 @@ nav.nav-hidden {
 .hamburger-btn span:nth-child(3) { top: 33px; }
 
 .hamburger-btn.active span:nth-child(1) {
-  top: 25px;
   transform: translateX(-50%) rotate(45deg);
   background: var(--accent-orange);
 }
@@ -558,7 +556,6 @@ nav.nav-hidden {
 }
 
 .hamburger-btn.active span:nth-child(3) {
-  top: 25px;
   transform: translateX(-50%) rotate(-45deg);
   background: var(--accent-orange);
 }
@@ -1381,6 +1378,7 @@ h2, h3, .section-title {
   background: rgba(22, 26, 34, 0.95);
   border: 1px solid rgba(221, 17, 17, 0.45);
   min-height: 260px;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .rc-layer-card:hover {
