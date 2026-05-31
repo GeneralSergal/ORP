@@ -95,3 +95,12 @@ Such terms are **independent** of the GPL‑3.0 license and are the responsibili
 
 ---
 
+
+### SPECIAL EPISTEMIC & RUNTIME DISCLAIMER
+
+ORP is an experimental epistemic governance and runtime verification framework. While it employs the Layered Authority Stack (LAS), Drift Observability ($\sigma^2$), and Narrative Strip mode to regulate speculative inference, the system does not guarantee factual correctness, absolute truth, or unbroken provenance.
+
+By interacting with ORP, you acknowledge that:
+*   The Drift Observability model ($\sigma^2$) is analytical and statistical; it cannot detect all forms of hallucination or reasoning failure.
+*   A degraded System Health Status (SHS) or active Narrative Strip mode does not create liability for the maintainers if outputs cause personal, financial, or systemic harm.
+*   Persona Transformations applied after L3 governance are outside the scope of ORP’s safety guarantees. The maintainers hold no liability for any post-L3 transformations applied by users or third-party wrappers.
