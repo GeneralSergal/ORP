@@ -1663,7 +1663,9 @@ h2, h3, .section-title {
   to   { opacity: 0.80; transform: scaleY(1.04); }
 }
 
-
+.orb-pulse, .scanline {
+  will-change: transform, opacity;
+}
 /* ── Core group: breathe + micro-rotate ──────────────────────
    Fixed 3.5s (PERF-1). Hover override applied in --active block.
    ────────────────────────────────────────────────────────── */
