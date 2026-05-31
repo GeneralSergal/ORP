@@ -959,6 +959,7 @@
         <a href="principles.html">Principles</a>
         <a href="diagrams.html">Diagrams</a>
         <a href="runtime.html">Runtime</a>
+        <a href="coordinator.html">Coordinator</a>
         <a href="settings.html">Settings</a>
       </div>
     </div>
@@ -972,6 +973,7 @@
         <a href="principles.html">Principles</a>
         <a href="diagrams.html">Diagrams</a>
         <a href="runtime.html">Runtime</a>
+        <a href="coordinator.html">Coordinator</a>
         <a href="settings.html">Settings</a>
       </div>
     </div>
@@ -1703,6 +1705,95 @@ if (rcShsBar) {
           window.updateSigilDrift(e.detail.value);
         }
       });
+    })();
+  </script>
+
+  <!-- ── ORP Coordinator Bridge (runtime.html patch v1.1) ─────────
+       Listens for orp-runtime-mode-change events emitted by
+       orp-coordinator.js so the Runtime Console reflects Control
+       Plane mode shifts without polling.
+       Fires when: agent availability changes, SHS pressure shifts,
+       or Warden MANIFESTS — all sourced from coordinator.html or any
+       tab running ORP_COORDINATOR.dispatch().
+  ──────────────────────────────────────────────────────────────── -->
+  <script>
+    (function () {
+      'use strict';
+
+      /* Mode → SHS state mapping: Coordinator mode drives sigil colour
+         and log entries on the Runtime Console as a secondary display. */
+      var MODE_SHS = {
+        NOMINAL:  'GREEN',
+        DEGRADED: 'YELLOW',
+        ISOLATED: 'ORANGE',
+        LOCKDOWN: 'RED',
+      };
+
+      window.addEventListener('orp-runtime-mode-change', function (e) {
+        if (!e.detail || !e.detail.mode) return;
+        var mode = e.detail.mode;
+        var prev = e.detail.prev || '—';
+        var reason = e.detail.reason || '';
+
+        /* 1. Update any coordinator-mode indicator element if present */
+        var statusEl = document.getElementById('rc-coordinator-mode');
+        if (statusEl) {
+          statusEl.textContent = 'COORDINATOR: ' + mode;
+          statusEl.className   = 'rc-metric-value mode-' + mode.toLowerCase();
+        }
+
+        /* 2. Drive sigil personality from coordinator mode when SHS
+              override is not already active from local NESS telemetry */
+        var shsOverride = window.ORP_SYNC
+          ? window.ORP_SYNC.load('shs_override', null)
+          : null;
+        if (!shsOverride && typeof window.updateSigilFromSHS === 'function') {
+          var mappedSHS = MODE_SHS[mode] || 'GREEN';
+          window.updateSigilFromSHS(mappedSHS);
+        }
+
+        /* 3. Log the transition to the Runtime Console log grid */
+        var logEl = document.getElementById('rc-log');
+        if (logEl) {
+          var now = new Date();
+          var ts  = now.getHours().toString().padStart(2, '0') + ':'
+                  + now.getMinutes().toString().padStart(2, '0') + ':'
+                  + now.getSeconds().toString().padStart(2, '0');
+          var tag  = (mode === 'LOCKDOWN' || mode === 'ISOLATED') ? 'ERR'
+                   : mode === 'DEGRADED' ? 'WARN' : 'OK';
+          var tagColors = { OK: '#3fb950', WARN: '#ff8833', ERR: '#ff3333', INF: '#00d4ff' };
+          var line = document.createElement('div');
+          line.style.cssText = 'display:flex;gap:8px;margin-bottom:1px;font-family:var(--font-mono,monospace);font-size:0.73rem;';
+          line.innerHTML =
+            '<span style="color:rgba(138,149,165,0.55);flex-shrink:0">' + ts + '</span>' +
+            '<span style="color:' + (tagColors[tag] || '#dce2eb') + ';font-weight:700;flex-shrink:0;width:38px;text-align:right">' + tag + '</span>' +
+            '<span style="color:var(--text,#dce2eb)">Coordinator mode: ' +
+              prev + ' → <strong style="color:' + (tagColors[tag]) + '">' + mode + '</strong>' +
+              (reason ? ' (' + reason + ')' : '') +
+            '</span>';
+          logEl.appendChild(line);
+          while (logEl.children.length > 120) logEl.removeChild(logEl.firstChild);
+          logEl.scrollTop = logEl.scrollHeight;
+        }
+
+        /* 4. Persist mode so settings.html status widgets can read it */
+        if (window.ORP_SYNC) {
+          window.ORP_SYNC.save('coordinator_mode', mode);
+        }
+
+        console.log('[NESS Sync] Control Plane mode: ' + prev + ' → ' + mode +
+          (reason ? ' (' + reason + ')' : ''));
+      });
+
+      /* On boot: hydrate from any previously persisted coordinator mode */
+      if (window.ORP_SYNC) {
+        var savedMode = window.ORP_SYNC.load('coordinator_mode', null);
+        if (savedMode && typeof window.updateSigilFromSHS === 'function') {
+          var mappedSHS = { NOMINAL: 'GREEN', DEGRADED: 'YELLOW', ISOLATED: 'ORANGE', LOCKDOWN: 'RED' };
+          window.updateSigilFromSHS(mappedSHS[savedMode] || 'GREEN');
+        }
+      }
+
     })();
   </script>
 
