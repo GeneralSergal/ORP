@@ -82,6 +82,8 @@
      rAF tick, so the compositor needs both hinted for a single layer budget. */
   will-change: filter, transform;
   transform: translateZ(0); /* force GPU layer promotion */
+  backface-visibility: hidden;         /* FF: prevent filter from forking an intermediate surface on each composited frame */
+  -webkit-backface-visibility: hidden;
 
   /* Drop shadow driven by SHS glow variable */
   filter: drop-shadow(0 0 var(--glow-core) var(--es-shs-glow));
@@ -191,11 +193,16 @@
 /* ── ANIMATION: Scanline pixel bleed ─────────────────────────
    Only becomes visible above drift ~0.4.
    Uses mix-blend-mode: screen for additive light effect.
+   FF note: mix-blend-mode creates an intermediate compositing surface.
+   Cost is bounded here because parent .entropia-sigil has isolation:isolate,
+   which confines the blend stacking context to the sigil layer only.
    ─────────────────────────────────────────────────────────── */
 .es-scanline {
   opacity: calc((var(--drift-intensity) - 0.4) * 1.5);
   transition: opacity 300ms ease;
   mix-blend-mode: screen;
+  /* contain: layout style keeps FF's blend surface from spanning beyond this element */
+  contain: layout style;
 }
 
 
@@ -328,11 +335,16 @@ z-index: -9999 !important;
 
 /* ── PLACEMENT: Terminal widget inline ───────────────────────
    Blend mode makes it layer naturally over dark terminal panels.
+   FF note: mix-blend-mode cost is bounded by the parent context;
+   ensure the terminal wrapper has isolation:isolate in your layout CSS.
    ─────────────────────────────────────────────────────────── */
 .entropia-sigil--terminal {
   filter: saturate(0.75) brightness(0.85)
           drop-shadow(0 0 6px rgba(221, 17, 17, 0.4));
   mix-blend-mode: screen;
+  /* FF: backface-visibility isolates filter + blend to a single compositor surface */
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 

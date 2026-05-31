@@ -303,6 +303,7 @@ a:hover { color: var(--accent-orange-bright); }
   mask-image: radial-gradient(circle at center, black 50%, transparent 90%);
   pointer-events: none;
   /* GPU: static background — own layer, never repainted */
+  will-change: transform;
   transform: translateZ(0);
   contain: strict;
 }
@@ -337,6 +338,7 @@ a:hover { color: var(--accent-orange-bright); }
   right: -250px; 
   z-index: -1; 
   pointer-events: none; 
+  will-change: transform;
   transform: translateZ(0); 
   contain: strict; /* Upgraded from layout style to strict since dimensions are static */
 }
@@ -383,6 +385,8 @@ nav {
   background: rgba(6, 8, 11, 0.90); /* Bumping opacity saves fill-rate calculations */
   backdrop-filter: blur(10px);       /* 10px is significantly cheaper to process than 20px */
   -webkit-backdrop-filter: blur(10px);
+  backface-visibility: hidden;       /* FF: prevents backdrop-filter from forking a new intermediate surface */
+  -webkit-backface-visibility: hidden;
   transition: background 300ms ease, transform 300ms ease;
   transform: translateZ(0);          /* Ensure hardware layer context remains absolute */
   will-change: transform;
@@ -486,18 +490,19 @@ nav.nav-hidden {
   content: ""; 
   position: absolute; 
   left: 50%; 
-  transform: translateX(-50%);
+  transform: translateX(-50%) scaleX(0);
+  transform-origin: center;
   bottom: -6px; 
-  width: 0; 
+  width: 16px;   /* always full width; visibility driven by scaleX */
   height: 3px; 
   border-radius: 99px;
   background: var(--primary); 
-  transition: width var(--transition);
+  transition: transform var(--transition); /* scaleX is GPU-compositable — no layout recalc */
 }
 .nav-links a:hover { color: var(--heading); }
-.nav-links a:hover::after { width: 16px; }
+.nav-links a:hover::after { transform: translateX(-50%) scaleX(1); }
 .nav-links a.active { color: var(--heading); }
-.nav-links a.active::after { width: 16px; }
+.nav-links a.active::after { transform: translateX(-50%) scaleX(1); }
 
 /* ── Hamburger Navigation (REPAIRED) ─────────────────────────────── */
 .hamburger-btn {
@@ -1039,6 +1044,8 @@ footer { padding: 80px 0 60px; border-top: 1px solid var(--border); background: 
   padding: 18px;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  backface-visibility: hidden;       /* FF: keeps backdrop-filter on its own compositor layer */
+  -webkit-backface-visibility: hidden;
   overflow: hidden;
   box-shadow: 0 8px 32px var(--shadow);
   transition: border-color var(--transition), box-shadow var(--transition);
