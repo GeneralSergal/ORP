@@ -2,14 +2,15 @@
 <html lang="en">
 
 <head>
+  <script src="assets/js/orp-sync.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <meta name="theme-color" content="#dd1111" />
 
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%230a0d10'/%3E%3Cg stroke='%23dd1111' stroke-width='8' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolygon points='50%2C20 82%2C75 18%2C75'/%3E%3Cpolygon points='50%2C35 69%2C68 31%2C68'/%3E%3Cpolygon points='50%2C50 56%2C60 44%2C60'/%3E%3C/g%3E%3C/svg%3E" />
-  <link rel="icon" type="image/webp" sizes="32x32" href="assets/img/favicon-32.webp" />
-  <link rel="icon" type="image/webp" sizes="16x16" href="assets/img/favicon-16.webp" />
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.webp" />
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png" />
   <link rel="manifest" href="assets/site.webmanifest" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -518,63 +519,18 @@
     /* Reveal animation hooks (matching main.js observer) */
     .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.5s ease, transform 0.5s ease; }
     .reveal.visible { opacity: 1; transform: none; }
+  
+    /* ── Logo-mark SVG size override ─────────────────────────── */
+    /* style.css constrains .logo-mark to 18×18px (CSS pseudo-element era).
+       The <use>-based SVG renders at its own width/height attrs;
+       prevent the wrapper from clipping it. */
+    .logo-mark {
+      width: 34px !important;
+      height: 34px !important;
+      overflow: visible;
+    }
   </style>
 
-  <!-- ── ORP v3.1 | GLOBAL SYNC LAYER ──────────────────────
-       Stub that matches orp-sync.js public API surface.
-       Replace this block with:
-         <script src="assets/js/orp-sync.js"></script>
-       once orp-sync.js is served as a static asset.
-       This stub provides all public methods so other scripts
-       on this page (runtime-overlay.js, entropia-sigil.js)
-       behave identically to every other ORP page.
-  ──────────────────────────────────────────────────────────── -->
-  <script>
-    (function(global) {
-      'use strict';
-      var DEFAULTS = {
-        sigil_drift: 0.5, shs_override: null, overlay_visible: true,
-        sigil_ease: 0.03, sigil_idle_ms: 3000, sigil_max_lean: 45, sigil_float: true,
-        ness_entropy: 0, ness_pressure: 'GREEN', ness_warden_active: false,
-      };
-      function _key(k) { return 'orp_' + k; }
-      function _broadcast(key, value) {
-        global.dispatchEvent(new CustomEvent('orp-settings-update', { detail: { key: key, value: value } }));
-      }
-      global.ORP_SYNC = {
-        save: function(key, value) {
-          try { localStorage.setItem(_key(key), JSON.stringify(value)); } catch(e) {}
-          _broadcast(key, value);
-        },
-        load: function(key, defaultValue) {
-          try {
-            var raw = localStorage.getItem(_key(key));
-            return raw !== null ? JSON.parse(raw) : defaultValue;
-          } catch(e) { return defaultValue; }
-        },
-        remove: function(key) {
-          try { localStorage.removeItem(_key(key)); } catch(e) {}
-          _broadcast(key, null);
-        },
-        resetAll: function() {
-          Object.keys(DEFAULTS).forEach(function(k) {
-            try { localStorage.removeItem(_key(k)); } catch(e) {}
-            _broadcast(k, DEFAULTS[k]);
-          });
-        },
-        default: function(key) {
-          return Object.prototype.hasOwnProperty.call(DEFAULTS, key) ? DEFAULTS[key] : undefined;
-        },
-        snapshot: function() {
-          var self = this;
-          return Object.keys(DEFAULTS).reduce(function(acc, k) {
-            acc[k] = self.load(k, DEFAULTS[k]);
-            return acc;
-          }, {});
-        },
-      };
-    }(window));
-  </script>
 </head>
 
 <body>
@@ -602,22 +558,8 @@
   <nav id="main-nav">
     <div class="container nav-inner">
       <a href="index.html" class="logo" style="color:inherit;text-decoration:none;">
-        <svg class="logo-mark" width="28" height="28" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <defs>
-            <filter id="logo-glow" x="-40%" y="-40%" width="180%" height="180%">
-              <feGaussianBlur stdDeviation="2.5" result="blur"/>
-              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-            </filter>
-          </defs>
-          <polygon points="50,8 92,80 8,80"
-            fill="none" stroke="#dd1111" stroke-width="6" stroke-linejoin="round"
-            filter="url(#logo-glow)"/>
-          <polygon points="50,26 78,72 22,72"
-            fill="none" stroke="#ff4400" stroke-width="5" stroke-linejoin="round"
-            filter="url(#logo-glow)"/>
-          <polygon points="50,44 65,65 35,65"
-            fill="none" stroke="#ff6600" stroke-width="4" stroke-linejoin="round"
-            filter="url(#logo-glow)"/>
+        <svg class="logo-mark" width="34" height="34" aria-hidden="true">
+          <use href="assets/icons.svg#logo-mark"/>
         </svg>
         <span>ORP Δ</span>
       </a>
