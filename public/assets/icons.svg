@@ -1,45 +1,17 @@
-<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
-
-  <!--
-    ORP Δ — Icon Sprite Sheet
-    Usage: <svg width="32" height="32"><use href="assets/icons.svg#logo-mark"/></svg>
-
-    Geometry: true equilateral triangles, each scaled 0.55× from the shared
-    centroid (50, 61.3) so they stack cleanly inside one another.
-    viewBox: 0 0 100 100
-  -->
-
-  <symbol id="logo-mark" viewBox="0 0 100 100">
-    <defs>
-      <filter id="lg" x="-50%" y="-50%" width="200%" height="200%">
-        <feGaussianBlur stdDeviation="2" result="blur"/>
-        <feMerge>
-          <feMergeNode in="blur"/>
-          <feMergeNode in="SourceGraphic"/>
-        </feMerge>
-      </filter>
-    </defs>
-    <!-- Outer — apex 8, base 88 -->
-    <polygon points="50,8 3.8,88 96.2,88"
-             fill="none" stroke="#dd1111" stroke-width="5.5" stroke-linejoin="round"
-             filter="url(#lg)"/>
-    <!-- Mid — scaled 0.55× from centroid (50, 61.33) -->
-    <polygon points="50,32 24.6,76 75.4,76"
-             fill="none" stroke="#ff4400" stroke-width="4.5" stroke-linejoin="round"
-             filter="url(#lg)"/>
-    <!-- Inner — scaled 0.55× again from same centroid -->
-    <polygon points="50,45.2 36,69.4 64,69.4"
-             fill="none" stroke="#ff6600" stroke-width="3.5" stroke-linejoin="round"
-             filter="url(#lg)"/>
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="icon-matrix-node" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M3 3h6v6H3V3zm12 0h6v6h-6V3zM3 15h6v6H3v-6zm12 0h6v6h-6v-6zM5 5v2h2V5H5zm12 0v2h2V5h-2zM5 17v2h2v-2H5zm12 0v2h2v-2h-2z"/>
   </symbol>
 
-  <!-- Favicon mark — same geometry, no glow, for embedding glyph alone -->
-  <symbol id="favicon-mark" viewBox="0 0 100 100">
-    <g fill="none" stroke-linecap="round" stroke-linejoin="round">
-      <polygon points="50,8 3.8,88 96.2,88"  stroke="#dd1111" stroke-width="7"/>
-      <polygon points="50,32 24.6,76 75.4,76" stroke="#ff4400" stroke-width="6"/>
-      <polygon points="50,45.2 36,69.4 64,69.4" stroke="#ff6600" stroke-width="5"/>
-    </g>
+  <symbol id="icon-clinical-core" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.8l7.2 3.6v7.2L12 19.2l-7.2-3.6V8.4L12 4.8zM12 7l-5 2.5v5L12 17l5-2.5v-5L12 7z"/>
   </symbol>
 
+  <symbol id="icon-visual-env" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M12 2s-6 7.2-6 10.8C6 16.5 8.7 19 12 19s6-2.5 6-6.2C18 9.2 12 2 12 2zm0 14.5c-1.9 0-3.5-1.3-3.5-3.2 0-1.8 1.8-4.2 3.5-6.2 1.7 2 3.5 4.4 3.5 6.2 0 1.9-1.6 3.2-3.5 3.2z"/>
+  </symbol>
+
+  <symbol id="icon-ui-profile" viewBox="0 0 24 24">
+    <path fill="currentColor" d="M19.4 13c0-.3.1-.6.1-.9s0-.6-.1-.9l2.1-1.7c.2-.2.2-.4.1-.6l-2-3.5c-.1-.2-.4-.3-.6-.2l-2.5 1c-.5-.4-1.1-.7-1.7-1l-.4-2.6c0-.2-.2-.4-.5-.4h-4c-.3 0-.5.2-.5.4l-.4 2.6c-.6.3-1.2.6-1.7 1l-2.5-1c-.2-.1-.5 0-.6.2l-2 3.5c-.1.2-.1.4.1.6l2.1 1.7c0 .3-.1.6-.1.9s0 .6.1.9l-2.1 1.7c-.2.2-.2.4-.1.6l2 3.5c.1.2.4.3.6.2l2.5-1c.5.4 1.1.7 1.7 1l.4 2.6c0 .2.2.4.5.4h4c.3 0 .5-.2.5-.4l.4-2.6c.6-.3 1.2-.6 1.7-1l2.5 1c.2.1.5 0 .6-.2l2-3.5c.1-.2.1-.4-.1-.6l-2.1-1.7zm-7.4 2.5c-1.9 0-3.5-1.6-3.5-3.5s1.6-3.5 3.5-3.5 3.5 1.6 3.5 3.5-1.6 3.5-3.5 3.5z"/>
+  </symbol>
 </svg>
