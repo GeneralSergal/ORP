@@ -1,4 +1,6 @@
-# **README.md — ORP Δ**  
+<p align="center">
+  <img src="Docs/banner.png" alt="ORP Δ Banner" width="100%">
+</p>
 <p align="center">
   <img src="https://img.shields.io/badge/ORP-Δ-blueviolet" alt="ORP Version">
   <img src="https://img.shields.io/badge/status-active-success" alt="Status">
