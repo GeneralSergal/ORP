@@ -1399,28 +1399,3 @@ h2, h3, .section-title {
   color: #b0b8c8;
   line-height: 1.7;
 }
-/* ============================================================
-   ORP Δ v3.2 | NATIVE SVG SPRITE ENFORCEMENT
-   ============================================================ */
-/* Core UI Icon Layout Block */
-.ui-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px; /* Hard-set size */
-  height: 18px;
-  flex-shrink: 0;
-  vertical-align: middle;
-}
-
-.ui-icon svg {
-  width: 100%;
-  height: 100%;
-}
-
-/* Automatic global color mapping synced to card headers */
-.status-green .ui-icon  { color: #3fb950; }
-.status-amber .ui-icon  { color: #ff8833; }
-.status-red .ui-icon    { color: #ff6666; }
-.status-cyan .ui-icon   { color: #00d4ff; }
-.status-blue .ui-icon   { color: #58a6ff; }
