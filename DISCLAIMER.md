@@ -1,4 +1,4 @@
- **USER CONTENT DISCLAIMER & LIMITATION OF LIABILITY**  
+# **USER CONTENT DISCLAIMER & LIMITATION OF LIABILITY**  
 
 ## **1. Software Provided “As‑Is”**  
 This project is distributed under the terms of the **GNU General Public License v3.0 (GPL‑3.0)**.  
