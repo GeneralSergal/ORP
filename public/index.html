@@ -38,14 +38,20 @@
   <meta name="twitter:description" content="Type-Safe Epistemic Governance Framework for provenance preservation, drift observability, and recoverable reasoning." />
   <meta name="twitter:image" content="https://raw.githubusercontent.com/GeneralSergal/ORP/refs/heads/main/public/Glyph.webp" />
   <style>
-    /* ── Logo-mark SVG size override ─────────────────────────── */
-    /* style.css constrains .logo-mark to 18×18px (CSS pseudo-element era).
-       The <use>-based SVG renders at its own width/height attrs;
-       prevent the wrapper from clipping it. */
-    .logo-mark {
+    /* ── Logo-mark container size override ───────────────────────
+       style.css constrains .logo-mark to 18×18 (CSS pseudo-element era).
+       JS injects a fresh <svg> inside this div; the container must be
+       large enough to show the full glyph with overflow:visible wings. */
+    nav .logo-mark {
       width: 34px !important;
       height: 34px !important;
-      overflow: visible;
+      overflow: visible !important;
+      /* Reset pseudo-element geometry — no longer needed with SVG injection */
+      background: transparent;
+    }
+    nav .logo-mark::before,
+    nav .logo-mark::after {
+      display: none !important;
     }
   </style>
 </head>
@@ -80,9 +86,7 @@
        class="logo"
        style="color:inherit;text-decoration:none;">
 
-      <svg class="logo-mark" width="34" height="34" aria-hidden="true">
-          <use href="assets/icons.svg#logo-mark"/>
-        </svg>
+      <div class="logo-mark" aria-hidden="true"></div>
 
       <span>ORP Δ</span>
     </a>
@@ -215,19 +219,19 @@
       <div class="data-metrics-panel">
         <div class="metric-line">
           <span class="label">[SHS]</span>
-          <span class="val text-success">GREEN</span>
+          <span class="val text-success" id="hud-shs-val">GREEN</span>
         </div>
         <div class="metric-line">
           <span class="label">[DRIFT]</span>
-          <span class="val text-red">LOW</span>
+          <span class="val text-red" id="hud-drift-val">LOW</span>
         </div>
         <div class="metric-line">
           <span class="label">[CRA]</span>
-          <span class="val text-success">VALID</span>
+          <span class="val text-success" id="hud-cra-val">VALID</span>
         </div>
         <div class="metric-line">
           <span class="label">[LAS]</span>
-          <span class="val text-orange">L3</span>
+          <span class="val text-orange" id="hud-las-val">L3</span>
         </div>
         
         <div class="panel-divider"></div>
