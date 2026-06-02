@@ -105,6 +105,8 @@
     env_glow_scale:     1.0,
     // env_perf_mode: suppress non-essential animations (resonance ring, glyphs)
     env_perf_mode:      false,
+   // env_potato_mode: suppress all gpu effects
+    env_potato_mode: false,
 
     /* ── UI Preferences ─────────────────────────────────── */
     // ui_overlay_side: 'left' | 'right' — which side the NESS HUD docks to
@@ -117,6 +119,7 @@
     ui_shs_speed:       300,
     // ui_reduced_motion: user-side motion kill-switch (layers on top of OS pref)
     ui_reduced_motion:  false,
+     
   };
 
   /* ── Prefix helper ───────────────────────────────────────── */
