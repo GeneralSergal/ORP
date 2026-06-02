@@ -736,4 +736,95 @@ document.addEventListener("DOMContentLoaded", () => {
      (we're already inside the DOMContentLoaded handler). */
   initLogoMark();
 
+  /* ── Global env_ settings hydration (all pages) ────────────
+     settings.html applies env_ values locally via inline JS, but
+     every other page never read them — so glyph opacity, grid
+     intensity, ember count, glow scale, and the three mode classes
+     were silently ignored on all non-settings pages.
+     This block runs on every page via main.js, which is the one
+     script included everywhere. It:
+       1. Reads current values from ORP_SYNC on boot.
+       2. Applies them to the DOM immediately.
+       3. Subscribes to orp-settings-update for live cross-tab sync.
+     ────────────────────────────────────────────────────────── */
+  (function _initEnvSettings() {
+    if (!window.ORP_SYNC) return;
+
+    function _applyEnv(key, value) {
+      var html = document.documentElement;
+      switch (key) {
+        case 'env_glyph_opacity': {
+          var gl = document.querySelector('.glyph-layer');
+          if (gl) gl.style.opacity = value != null ? value : '';
+          break;
+        }
+        case 'env_grid_opacity': {
+          var gr = document.querySelector('.grid-bg');
+          if (gr) gr.style.opacity = value != null ? Math.min(1, parseFloat(value)) : '';
+          break;
+        }
+        case 'env_ember_count': {
+          var count = value != null ? parseInt(value, 10) : 5;
+          for (var i = 1; i <= 5; i++) {
+            var em = document.querySelector('.ember-' + i);
+            if (em) em.style.display = i <= count ? '' : 'none';
+          }
+          break;
+        }
+        case 'env_glow_scale': {
+          /* Apply glow multiplier to all sigil --glow-core/--glow-outer vars.
+             Called once on boot (drift may be 0) and again whenever drift updates. */
+          var scale = value != null ? parseFloat(value) : 1;
+          document.querySelectorAll('.entropia-sigil').forEach(function (el) {
+            var di = parseFloat(el.style.getPropertyValue('--drift-intensity') || '0');
+            el.style.setProperty('--glow-core',  ((4  + di * 18) * scale).toFixed(1) + 'px');
+            el.style.setProperty('--glow-outer', ((8  + di * 32) * scale).toFixed(1) + 'px');
+          });
+          /* Store scale so the sigil drift listener below can reapply it */
+          window._orpGlowScale = scale;
+          break;
+        }
+        case 'env_perf_mode':
+          html.classList.toggle('orp-perf-mode',      !!value);
+          break;
+        case 'env_potato_mode':
+          html.classList.toggle('orp-potato-mode',    !!value);
+          break;
+        case 'ui_reduced_motion':
+          html.classList.toggle('orp-reduced-motion', !!value);
+          break;
+      }
+    }
+
+    /* Boot hydration — apply all current values immediately */
+    var _envKeys = [
+      'env_glyph_opacity', 'env_grid_opacity', 'env_ember_count',
+      'env_glow_scale', 'env_perf_mode', 'env_potato_mode', 'ui_reduced_motion',
+    ];
+    _envKeys.forEach(function (k) {
+      _applyEnv(k, ORP_SYNC.load(k, ORP_SYNC.default(k)));
+    });
+
+    /* Cross-tab / cross-page live sync */
+    window.addEventListener('orp-settings-update', function (e) {
+      if (!e.detail) return;
+      _applyEnv(e.detail.key, e.detail.value);
+    });
+
+    /* Re-apply glow scale whenever drift updates so the multiplier
+       stays correct as --glow-core recalculates. Sigil drift events
+       fire frequently; guard with a rAF to batch re-applies. */
+    var _glowRaf = null;
+    window.addEventListener('orp-settings-update', function (e) {
+      if (!e.detail || e.detail.key !== 'sigil_drift') return;
+      if (_glowRaf) return;
+      _glowRaf = requestAnimationFrame(function () {
+        _glowRaf = null;
+        var scale = window._orpGlowScale || 1;
+        _applyEnv('env_glow_scale', scale);
+      });
+    });
+
+  }()); /* end _initEnvSettings */
+
 });
