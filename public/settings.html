@@ -1594,71 +1594,8 @@
         });
       }
 
-      /* ── 5b. WARDEN TOGGLE ───────────────────────────────── */
-      /* Authority: ORP_SYNC.save('ness_warden_active', bool).
-         Was entirely unwired — never read on boot, never saved on change,
-         never reset. Fix: full round-trip through ORP_SYNC. */
-      var wardenToggle = document.getElementById('warden-toggle');
-      if (wardenToggle) {
-        wardenToggle.checked = _load('ness_warden_active');
-
-        wardenToggle.addEventListener('change', function () {
-          _save('ness_warden_active', this.checked);
-          flash('entropy-feedback');
-        });
-      }
-
-      /* ── 5c. COORDINATOR RESET BTN ───────────────────────── */
-      /* Was in the HTML but had no JS handler at all. */
-      var coordinatorResetBtn = document.getElementById('coordinator-reset-btn');
-      if (coordinatorResetBtn) {
-        coordinatorResetBtn.addEventListener('click', function () {
-          ORP_SYNC.save('coordinator_state', null);
-          ORP_SYNC.save('coordinator_run_id', null);
-          if (window.ORP_COORDINATOR && typeof window.ORP_COORDINATOR.reset === 'function') {
-            window.ORP_COORDINATOR.reset();
-          }
-          flash('entropy-feedback');
-          updateInspector();
-        });
-      }
-
       /* ── 6. VISUAL ENVIRONMENT ───────────────────────────── */
       (function () {
-        /* ── Glyph layer enabled toggle ─── */
-        /* Was in HTML but had zero JS wiring — never persisted, never restored.
-           No ORP_SYNC key exists for this toggle; it maps to env_glyph_opacity:
-           disabled → opacity 0 persisted; re-enabled → restores last opacity.
-           Use a dedicated boolean key env_glyph_enabled for clean semantics. */
-        var glyphEnabledToggle = document.getElementById('glyph-enabled-toggle');
-        if (glyphEnabledToggle) {
-          // Treat as opacity gate: disabled forces 0, enabled restores slider value
-          var _glyphEnabled = _load('env_glyph_opacity') > 0;
-          glyphEnabledToggle.checked = _glyphEnabled;
-
-          glyphEnabledToggle.addEventListener('change', function () {
-            var enabled = this.checked;
-            var targetOpacity = enabled ? parseFloat(glyphSlider ? glyphSlider.value : 0.05) : 0;
-            var saveOpacity   = enabled ? parseFloat(glyphSlider ? glyphSlider.value : 0.05) : 0;
-            var gl = document.querySelector('.glyph-layer');
-            if (gl) gl.style.opacity = targetOpacity;
-            if (!enabled) {
-              // Persist 0 so other pages also hide the layer
-              _save('env_glyph_opacity', 0);
-              if (glyphSlider)  glyphSlider.disabled = true;
-            } else {
-              // Restore to last slider value (or default if slider was at 0)
-              var restore = (glyphSlider && parseFloat(glyphSlider.value) > 0)
-                ? parseFloat(glyphSlider.value)
-                : ORP_SYNC.default('env_glyph_opacity');
-              _save('env_glyph_opacity', restore);
-              if (glyphSlider) { glyphSlider.disabled = false; glyphSlider.value = restore; }
-              if (typeof _updateGlyphUI === 'function') _updateGlyphUI(restore);
-            }
-            flash('atmos-feedback');
-          });
-        }
-
         /* ── Glyph layer opacity ─── */
         var glyphSlider  = document.getElementById('glyph-opacity-slider');
         var glyphDisplay = document.getElementById('glyph-opacity-display');
@@ -1785,44 +1722,6 @@
           });
         }
 
-        /* ── Resonance ring toggle ─── */
-        /* Was in HTML but had no JS wiring — never persisted, never restored, never reset. */
-        var resonanceToggle = document.getElementById('resonance-ring-toggle');
-        if (resonanceToggle) {
-          var _resonanceKey = 'env_resonance_ring';
-          resonanceToggle.checked = ORP_SYNC.load(_resonanceKey, true);
-          var resonanceEl = document.querySelector('.resonance-ring');
-          if (resonanceEl) resonanceEl.style.display = resonanceToggle.checked ? '' : 'none';
-
-          resonanceToggle.addEventListener('change', function () {
-            var v = this.checked;
-            ORP_SYNC.save(_resonanceKey, v);
-            var el = document.querySelector('.resonance-ring');
-            if (el) el.style.display = v ? '' : 'none';
-            flash('perf-feedback');
-            updateInspector();
-          });
-        }
-
-        /* ── Scroll progress toggle ─── */
-        /* Was in HTML but had no JS wiring — never persisted, never restored, never reset. */
-        var scrollProgressToggle = document.getElementById('scroll-progress-toggle');
-        if (scrollProgressToggle) {
-          var _scrollProgKey = 'env_scroll_progress';
-          scrollProgressToggle.checked = ORP_SYNC.load(_scrollProgKey, true);
-          var scrollProgEl = document.querySelector('.scroll-progress');
-          if (scrollProgEl) scrollProgEl.style.display = scrollProgressToggle.checked ? '' : 'none';
-
-          scrollProgressToggle.addEventListener('change', function () {
-            var v = this.checked;
-            ORP_SYNC.save(_scrollProgKey, v);
-            var el = document.querySelector('.scroll-progress');
-            if (el) el.style.display = v ? '' : 'none';
-            flash('perf-feedback');
-            updateInspector();
-          });
-        }
-
         /* Cross-tab: env changes from another tab */
         window.addEventListener('orp-settings-update', function (e) {
           if (!e.detail) return;
@@ -1832,22 +1731,6 @@
           if (k === 'env_glow_scale'    && glowSlider)  { glowSlider.value  = v; _updateGlowUI(v);  }
           if (k === 'env_ember_count'   && emberSlider) { emberSlider.value = v; _updateEmberUI(v); }
           if (k === 'env_perf_mode'     && perfToggle)  { perfToggle.checked = !!v; document.documentElement.classList.toggle('orp-perf-mode', !!v); }
-          if (k === 'env_resonance_ring') {
-            var rt = document.getElementById('resonance-ring-toggle');
-            if (rt) rt.checked = !!v;
-            var rel = document.querySelector('.resonance-ring');
-            if (rel) rel.style.display = v ? '' : 'none';
-          }
-          if (k === 'env_scroll_progress') {
-            var spt = document.getElementById('scroll-progress-toggle');
-            if (spt) spt.checked = !!v;
-            var spel = document.querySelector('.scroll-progress');
-            if (spel) spel.style.display = v ? '' : 'none';
-          }
-          if (k === 'ness_warden_active') {
-            var wt = document.getElementById('warden-toggle');
-            if (wt) wt.checked = !!v;
-          }
         });
 
       }());
@@ -2014,66 +1897,35 @@
       var resetAllBtn = document.getElementById('reset-all-btn');
       if (resetAllBtn) {
         resetAllBtn.addEventListener('click', function () {
-          var self = this;
-          self.classList.add('resetting');
-          setTimeout(function () { self.classList.remove('resetting'); }, 500);
-
+          /* ORP_SYNC.resetAll() broadcasts canonical defaults as events but
+             does NOT write them to localStorage — it only removes the keys.
+             The overlay's orp-settings-update listener now handles
+             'ness_pressure' and will reset window._orpSHSState.currentState
+             when it receives the GREEN broadcast from resetAll(). We also
+             explicitly save the NESS keys so they are correctly persisted
+             to localStorage (resetAll only clears, not re-writes). */
           ORP_SYNC.resetAll();
-
-          /* Re-sync all UI controls to canonical defaults.
-             resetAll() fires orp-settings-update for every key synchronously,
-             so inner-closure listeners handle slider display labels/tracks.
-             We still set .value directly here so the reset is instant and
-             doesn't depend on event-delivery ordering. */
+          ORP_SYNC.save('ness_pressure',      ORP_SYNC.default('ness_pressure'));
+          ORP_SYNC.save('ness_warden_active', ORP_SYNC.default('ness_warden_active'));
+          ORP_SYNC.save('ness_entropy',       ORP_SYNC.default('ness_entropy'));
+          /* Re-sync all UI controls to canonical defaults */
           var d = ORP_SYNC.default;
-
-          /* ── Drift ── */
-          driftSlider.value = d('sigil_drift');
-          _updateDriftUI(d('sigil_drift'));
-
-          /* ── SHS override ── */
+          driftSlider.value = d('sigil_drift'); _updateDriftUI(d('sigil_drift'));
           _activateSHSBtn('AUTO');
-
-          /* ── Overlay visibility ── */
           var ot = document.getElementById('overlay-toggle');
           if (ot) { ot.checked = d('overlay_visible'); _applyOverlayVisibility(d('overlay_visible')); }
-
-          /* ── Warden toggle (BUG-4 fix) ── */
-          var wt = document.getElementById('warden-toggle');
-          if (wt) wt.checked = d('ness_warden_active');
-
-          /* ── Motion dynamics (BUG-1 fix: must call setSigilMotion so live sigil resets) ── */
-          var easeEl = document.getElementById('ease-slider');
-          var idleEl = document.getElementById('idle-slider');
-          var leanEl = document.getElementById('lean-slider');
-          var mfEl   = document.getElementById('motion-float-toggle');
-          if (easeEl) easeEl.value = d('sigil_ease');
-          if (idleEl) idleEl.value = d('sigil_idle_ms');
-          if (leanEl) leanEl.value = d('sigil_max_lean');
-          /* Clear any active profile pill */
-          var profileGroup = document.getElementById('motion-profile-pills');
-          if (profileGroup) profileGroup.querySelectorAll('.cfg-profile-pill').forEach(function (p) { p.classList.remove('active'); });
-          /* Apply to live sigil — this was missing in the original handler (BUG-1) */
-          if (typeof window.setSigilMotion === 'function') {
-            window.setSigilMotion({
-              ease:    d('sigil_ease'),
-              idleMs:  d('sigil_idle_ms'),
-              maxLean: d('sigil_max_lean'),
-              float:   d('sigil_float'),
-            });
-          }
-          /* BUG-3 fix: float toggle was never reset */
-          if (mfEl) {
-            mfEl.checked = d('sigil_float');
-            if (typeof window._sigilSetFloat === 'function') window._sigilSetFloat(d('sigil_float'));
-          }
-
-          /* ── Env sliders — set .value; inner event listeners call _updateXUI ── */
+          /* motion sliders reset */
+          var es = document.getElementById('ease-slider');
+          if (es) { es.value = d('sigil_ease'); }
+          var is_ = document.getElementById('idle-slider');
+          if (is_) { is_.value = d('sigil_idle_ms'); }
+          var ls = document.getElementById('lean-slider');
+          if (ls) { ls.value = d('sigil_max_lean'); }
+          var mft = document.getElementById('motion-float-toggle');
+          if (mft) { mft.checked = d('sigil_float'); }
+          /* env sliders reset */
           var gs = document.getElementById('glyph-opacity-slider');
-          if (gs) { gs.value = d('env_glyph_opacity'); gs.disabled = false; }
-          /* BUG-5 fix: restore glyph-enabled-toggle to match default opacity */
-          var get = document.getElementById('glyph-enabled-toggle');
-          if (get) get.checked = d('env_glyph_opacity') > 0;
+          if (gs) gs.value = d('env_glyph_opacity');
           var gr = document.getElementById('grid-opacity-slider');
           if (gr) gr.value = d('env_grid_opacity');
           var gw = document.getElementById('glow-scale-slider');
@@ -2082,24 +1934,7 @@
           if (ec) ec.value = d('env_ember_count');
           var pm = document.getElementById('perf-mode-toggle');
           if (pm) { pm.checked = d('env_perf_mode'); document.documentElement.classList.toggle('orp-perf-mode', d('env_perf_mode')); }
-
-          /* BUG-6 fix: resonance ring + scroll progress toggles were never reset */
-          var rrt = document.getElementById('resonance-ring-toggle');
-          if (rrt) {
-            rrt.checked = true; /* default: visible */
-            ORP_SYNC.save('env_resonance_ring', true);
-            var rrEl = document.querySelector('.resonance-ring');
-            if (rrEl) rrEl.style.display = '';
-          }
-          var spt = document.getElementById('scroll-progress-toggle');
-          if (spt) {
-            spt.checked = true; /* default: visible */
-            ORP_SYNC.save('env_scroll_progress', true);
-            var spEl = document.querySelector('.scroll-progress');
-            if (spEl) spEl.style.display = '';
-          }
-
-          /* ── UI prefs — set .value; inner event listeners call _updateXUI ── */
+          /* ui prefs reset */
           var ll = document.getElementById('log-limit-slider');
           if (ll) ll.value = d('ui_log_limit');
           var ap = document.getElementById('ascii-panel-toggle');
@@ -2108,10 +1943,6 @@
           if (rm) { rm.checked = d('ui_reduced_motion'); document.documentElement.classList.toggle('orp-reduced-motion', d('ui_reduced_motion')); }
           var ss = document.getElementById('shs-speed-slider');
           if (ss) ss.value = d('ui_shs_speed');
-
-          /* BUG-2 fix: overlay dock side buttons were never reset visually */
-          _applySide(d('ui_overlay_side'));
-
           flash('reset-feedback');
           updateInspector();
         });
@@ -2121,9 +1952,7 @@
       if (clearStorageBtn) {
         clearStorageBtn.addEventListener('click', function () {
           /* Remove all orp_* localStorage keys directly, then resetAll
-             broadcasts the canonical defaults to all live tabs.
-             Then trigger the reset-all-btn click so all UI controls
-             are updated identically — avoids duplicating the reset logic. */
+             broadcasts the canonical defaults to all live tabs */
           try {
             var keysToRemove = [];
             for (var i = 0; i < localStorage.length; i++) {
@@ -2132,14 +1961,9 @@
             }
             keysToRemove.forEach(function (k) { localStorage.removeItem(k); });
           } catch (e) {}
-          /* Delegate to reset-all-btn so UI sync logic runs once, consistently */
-          var rab = document.getElementById('reset-all-btn');
-          if (rab) rab.click();
-          else {
-            ORP_SYNC.resetAll();
-            flash('reset-feedback');
-            updateInspector();
-          }
+          ORP_SYNC.resetAll();
+          flash('reset-feedback');
+          updateInspector();
         });
       }
 
@@ -2191,15 +2015,6 @@
 
         document.documentElement.classList.toggle('orp-perf-mode',      _load('env_perf_mode'));
         document.documentElement.classList.toggle('orp-reduced-motion', _load('ui_reduced_motion'));
-
-        /* Resonance ring and scroll progress — new keys, default true (visible) */
-        var rrBoot = ORP_SYNC.load('env_resonance_ring', true);
-        var rrBootEl = document.querySelector('.resonance-ring');
-        if (rrBootEl) rrBootEl.style.display = rrBoot ? '' : 'none';
-
-        var spBoot = ORP_SYNC.load('env_scroll_progress', true);
-        var spBootEl = document.querySelector('.scroll-progress');
-        if (spBootEl) spBootEl.style.display = spBoot ? '' : 'none';
 
         var overlay = document.getElementById('cc-overlay');
         if (overlay) {
