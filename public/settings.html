@@ -521,6 +521,44 @@
       color: var(--muted);
       margin-top: 2px;
     }
+
+    /* ── Glyph size picker ────────────────────────────────────── */
+    .cfg-glyph-size-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .cfg-size-pill {
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--panel-2);
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all var(--transition);
+      color: var(--muted);
+    }
+    .cfg-size-pill:hover { border-color: var(--border-strong); color: var(--heading); }
+    .cfg-size-pill.active {
+      border-color: rgba(0,212,255,0.5);
+      background: rgba(0,212,255,0.08);
+      color: var(--accent-cyan);
+    }
+
+    /* ── Reset confirm flash ──────────────────────────────────── */
+    @keyframes resetFlash {
+      0%   { box-shadow: 0 0 0 0 rgba(221,17,17,0.6); }
+      50%  { box-shadow: 0 0 0 8px rgba(221,17,17,0); }
+      100% { box-shadow: 0 0 0 0 rgba(221,17,17,0); }
+    }
+    .cfg-btn.danger.resetting {
+      animation: resetFlash 0.5s ease;
+    }
   </style>
 </head>
 <body>
@@ -826,7 +864,7 @@
         <!-- ── Overlay toggles ────────────────────────────────── -->
         <div class="cfg-card">
           <div class="cfg-card-title">OVERLAY CONTROLS</div>
-          <div class="cfg-card-subtitle">Manage NESS HUD visibility and session entropy state.</div>
+          <div class="cfg-card-subtitle">Manage NESS HUD visibility, Warden state, and session entropy.</div>
 
           <div class="cfg-toggle-row">
             <div class="cfg-toggle-text">
@@ -839,10 +877,22 @@
             </label>
           </div>
 
-          <div style="margin-top:20px;">
-            <button class="cfg-btn" id="entropy-reset-btn">[ RESET SESSION ENTROPY ]</button>
-            <div class="cfg-feedback" id="entropy-feedback">// SESSION ENTROPY CLEARED</div>
+          <div class="cfg-toggle-row" style="border-bottom:none;">
+            <div class="cfg-toggle-text">
+              <div class="cfg-toggle-name">WARDEN MANIFEST</div>
+              <div class="cfg-toggle-desc">Force ness_warden_active — locks coordinator to LOCKDOWN mode</div>
+            </div>
+            <label class="cfg-toggle" aria-label="Warden active state">
+              <input type="checkbox" id="warden-toggle" />
+              <div class="cfg-toggle-track"></div>
+            </label>
           </div>
+
+          <div style="margin-top:20px;display:flex;flex-wrap:wrap;gap:10px;">
+            <button class="cfg-btn" id="entropy-reset-btn">[ RESET SESSION ENTROPY ]</button>
+            <button class="cfg-btn" id="coordinator-reset-btn">[ RESET COORDINATOR ]</button>
+          </div>
+          <div class="cfg-feedback" id="entropy-feedback">// SESSION ENTROPY CLEARED</div>
         </div>
 
         <!-- ── Overlay module info ────────────────────────────── -->
@@ -888,15 +938,27 @@
 
       <div class="cfg-grid">
 
-        <!-- ── Glyph + Grid opacity ───────────────────────────── -->
+        <!-- ── Glyph Layer Controls ───────────────────────────── -->
         <div class="cfg-card">
-          <div class="cfg-card-title">ATMOSPHERE LAYERS</div>
-          <div class="cfg-card-subtitle">Opacity and visibility of ambient decorative elements.</div>
+          <div class="cfg-card-title">GLYPH LAYER</div>
+          <div class="cfg-card-subtitle">Toggle, opacity, and font-size of ambient glyph characters in the background.</div>
+
+          <!-- Glyph enabled toggle -->
+          <div class="cfg-toggle-row" style="margin-bottom:16px;">
+            <div class="cfg-toggle-text">
+              <div class="cfg-toggle-name">GLYPH LAYER ENABLED</div>
+              <div class="cfg-toggle-desc">Show/hide .glyph-layer entirely — no layout cost</div>
+            </div>
+            <label class="cfg-toggle" aria-label="Enable glyph layer">
+              <input type="checkbox" id="glyph-enabled-toggle" checked />
+              <div class="cfg-toggle-track"></div>
+            </label>
+          </div>
 
           <!-- Glyph opacity -->
           <div class="cfg-slider-wrap">
             <div class="cfg-slider-header">
-              <span class="cfg-slider-label">GLYPH LAYER OPACITY</span>
+              <span class="cfg-slider-label">GLYPH OPACITY</span>
               <span class="cfg-slider-value mid" id="glyph-opacity-display">0.05</span>
             </div>
             <input type="range" class="cfg-range" id="glyph-opacity-slider"
@@ -905,8 +967,20 @@
             <div class="cfg-range-track" id="glyph-opacity-track" style="transform:scaleX(0.167)"></div>
           </div>
 
+          <!-- Glyph size picker -->
+          <div style="margin-bottom:6px;">
+            <div class="cfg-slider-label" style="display:block;margin-bottom:10px;">GLYPH SIZE</div>
+            <div class="cfg-glyph-size-row" id="glyph-size-pills" role="group" aria-label="Glyph size selector">
+              <button class="cfg-size-pill" data-size="xs">XS</button>
+              <button class="cfg-size-pill active" data-size="sm">SM</button>
+              <button class="cfg-size-pill" data-size="md">MD</button>
+              <button class="cfg-size-pill" data-size="lg">LG</button>
+              <button class="cfg-size-pill" data-size="xl">XL</button>
+            </div>
+          </div>
+
           <!-- Grid opacity -->
-          <div class="cfg-slider-wrap">
+          <div class="cfg-slider-wrap" style="margin-top:4px;">
             <div class="cfg-slider-header">
               <span class="cfg-slider-label">GRID INTENSITY</span>
               <span class="cfg-slider-value mid" id="grid-opacity-display">1.0×</span>
@@ -952,10 +1026,32 @@
           <div class="cfg-feedback" id="glow-feedback">// GLOW + EMBER SETTINGS SAVED</div>
         </div>
 
-        <!-- ── Performance mode ───────────────────────────────── -->
+        <!-- ── Performance mode + ambient toggles ─────────────── -->
         <div class="cfg-card" style="grid-column:1/-1;">
-          <div class="cfg-card-title">PERFORMANCE MODE</div>
-          <div class="cfg-card-subtitle">Suppresses the resonance ring rotation, glyph drift, and ember animations. The sigil core breathe + orbit continue. Useful on lower-end devices or when minimising GPU load.</div>
+          <div class="cfg-card-title">AMBIENT ELEMENTS</div>
+          <div class="cfg-card-subtitle">Fine-grained control over individual decorative layers and performance budget.</div>
+
+          <div class="cfg-toggle-row">
+            <div class="cfg-toggle-text">
+              <div class="cfg-toggle-name">RESONANCE RING</div>
+              <div class="cfg-toggle-desc">The rotating orbit ring behind the sigil — hides .resonance-ring</div>
+            </div>
+            <label class="cfg-toggle" aria-label="Resonance ring visible">
+              <input type="checkbox" id="resonance-ring-toggle" checked />
+              <div class="cfg-toggle-track"></div>
+            </label>
+          </div>
+
+          <div class="cfg-toggle-row">
+            <div class="cfg-toggle-text">
+              <div class="cfg-toggle-name">SCROLL PROGRESS BAR</div>
+              <div class="cfg-toggle-desc">Top-of-page red progress indicator .scroll-progress</div>
+            </div>
+            <label class="cfg-toggle" aria-label="Scroll progress bar visible">
+              <input type="checkbox" id="scroll-progress-toggle" checked />
+              <div class="cfg-toggle-track"></div>
+            </label>
+          </div>
 
           <div class="cfg-toggle-row" style="border-bottom:none;">
             <div class="cfg-toggle-text">
@@ -967,7 +1063,7 @@
               <div class="cfg-toggle-track"></div>
             </label>
           </div>
-          <div class="cfg-feedback" id="perf-feedback">// PERFORMANCE MODE APPLIED</div>
+          <div class="cfg-feedback" id="perf-feedback">// AMBIENT SETTINGS APPLIED</div>
         </div>
 
       </div>
