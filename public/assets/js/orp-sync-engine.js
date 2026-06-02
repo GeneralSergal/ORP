@@ -1,13 +1,31 @@
-// orp-sync-engine.js  v2.1
+// orp-sync-engine.js  v2.2
 // ============================================================
 // Mirrors ORP_SYNC state into sessionStorage and synchronises
 // across tabs via BroadcastChannel.
 //
-// CHANGES vs v2.0:
-//   v2.1  — Removed ES module `export const SyncEngine` syntax.
-//           Now assigned to window.SyncEngine so the file loads
-//           as a plain <script> tag (no type="module" required).
-//           All logic identical to v2.0.
+// CHANGES vs v2.1:
+//   v2.2  — BUG FIXES:
+//     FIX-1  init() was never auto-called — sessionStorage never
+//            seeded on 7/8 pages (only coordinator.html called
+//            PageBootstrap.init() which calls SyncEngine.init()).
+//            Auto-init now runs synchronously at module load.
+//            ORP_SYNC is guaranteed present (orp-sync.js always
+//            loads first per documented load order).
+//     FIX-2  Double sessionStorage write in onmessage: the direct
+//            _writeSession() call was redundant because
+//            ORP_SYNC.save() fires orp-settings-update which
+//            the step-2 listener already handles. Removed the
+//            direct call.
+//     FIX-3  BroadcastChannel.onmessage was set inside init() —
+//            any cross-tab messages arriving before init() ran
+//            (coordinator.html inline script race window) were
+//            silently dropped. Handler now set at module load,
+//            before init() call.
+//     FIX-4  No idempotency guard — if init() was called more
+//            than once (e.g. PageBootstrap.init() after auto-
+//            init), orp-settings-update and storage listeners
+//            stacked, causing triple/quadruple sessionStorage
+//            writes per event. Guard added.
 //
 // DEPENDS ON: orp-sync.js loaded first (window.ORP_SYNC must exist).
 //
@@ -16,7 +34,7 @@
 //   <script src="assets/js/orp-sync-engine.js"></script> ← any time after
 //
 // USAGE:
-//   SyncEngine.init();                     // call once after page load
+//   SyncEngine is auto-initialised at load.
 //   SyncEngine.emit('sigil_drift', 0.7);   // persist + broadcast
 //   SyncEngine.session.get('sigil_drift'); // read session state
 // ============================================================
@@ -24,7 +42,8 @@
 (function (global) {
   'use strict';
 
-  var ORP_CHANNEL = new BroadcastChannel('orp_sync_bus');
+  var ORP_CHANNEL  = new BroadcastChannel('orp_sync_bus');
+  var _initialized = false;
 
   // ── Internal helpers ────────────────────────────────────────
 
@@ -54,6 +73,33 @@
     }
   }
 
+  // ── Cross-tab message handler — set at module load (FIX-3) ──
+  // Setting this here (outside init()) ensures no messages are
+  // dropped during the window between script execution and the
+  // init() call. ORP_SYNC.save() is the single authority for
+  // localStorage writes and fires the local orp-settings-update
+  // event; the step-2 listener in init() then mirrors to session.
+  // FIX-2: removed the redundant direct _writeSession() call that
+  // was here — the orp-settings-update listener handles it once.
+  ORP_CHANNEL.onmessage = function (event) {
+    if (!event || !event.data || event.data.type !== 'SYNC') return;
+    var key   = event.data.key;
+    var value = event.data.value;
+
+    // Push through ORP_SYNC so localStorage and the local event bus
+    // stay consistent. The orp-settings-update listener (registered
+    // in init()) mirrors the value to sessionStorage — no direct
+    // _writeSession() call needed here (FIX-2).
+    // If init() has not yet run, write directly as a fallback so no
+    // cross-tab value is lost during startup.
+    if (!_initialized) {
+      _writeSession(key, value);
+    }
+    if (global.ORP_SYNC) {
+      global.ORP_SYNC.save(key, value);
+    }
+  };
+
   // ── Public API ───────────────────────────────────────────────
 
   global.SyncEngine = {
@@ -79,9 +125,14 @@
 
     /**
      * Initialise cross-tab reactivity and seed sessionStorage.
-     * Call once, as early as possible after orp-sync.js is loaded.
+     * Idempotent — safe to call multiple times (FIX-4).
+     * Auto-called at module load; explicit call from PageBootstrap
+     * is a no-op on the second invocation.
      */
     init: function () {
+      if (_initialized) return;   // FIX-4: idempotency guard
+      _initialized = true;
+
       // ── 1. Seed sessionStorage from current ORP_SYNC snapshot ──
       if (global.ORP_SYNC) {
         var snapshot = global.ORP_SYNC.snapshot();
@@ -97,23 +148,7 @@
         _writeSession(e.detail.key, e.detail.value);
       });
 
-      // ── 3. Handle incoming cross-tab messages ───────────────
-      ORP_CHANNEL.onmessage = function (event) {
-        if (!event || !event.data || event.data.type !== 'SYNC') return;
-        var key   = event.data.key;
-        var value = event.data.value;
-
-        // Update sessionStorage for this tab.
-        _writeSession(key, value);
-
-        // Also push through ORP_SYNC so local listeners and
-        // localStorage stay consistent.
-        if (global.ORP_SYNC) {
-          global.ORP_SYNC.save(key, value);
-        }
-      };
-
-      // ── 4. Keep sessionStorage in sync with direct localStorage ──
+      // ── 3. Keep sessionStorage in sync with direct localStorage ──
       // Catches any external writes that bypass ORP_SYNC entirely.
       global.addEventListener('storage', function (e) {
         if (!e.key || e.key.indexOf('orp_') !== 0) return;
@@ -169,5 +204,10 @@
       },
     },
   };
+
+  // ── FIX-1: Auto-initialise at module load ────────────────────
+  // ORP_SYNC is guaranteed present (orp-sync.js always loads first).
+  // init() touches only storage APIs — safe before DOMContentLoaded.
+  global.SyncEngine.init();
 
 }(window));

@@ -1,8 +1,17 @@
-// orp-page-bootstrap.js  v1.0
+// orp-page-bootstrap.js  v1.1
 // ============================================================
 // Unified bootstrap for all ORP pages — ensures consistent
 // sync engine init, Warden integration, coordinator awareness,
 // and runtime-overlay readiness across all pages.
+//
+// CHANGES vs v1.0:
+//   v1.1  — FIX: PageBootstrap.init() was only called on
+//           coordinator.html via an explicit inline <script>.
+//           All other pages loaded this file but never called
+//           init(), leaving SyncEngine unseeded on those pages
+//           (redundant with the FIX-1 auto-init in
+//           orp-sync-engine.js v2.2) and Warden/Coordinator
+//           hooks silent. Auto-init now runs at end of file.
 //
 // LOAD ORDER:
 //   1. orp-sync.js                (in <head>)
@@ -205,4 +214,19 @@
   };
 
   global.PageBootstrap = PageBootstrap;
+
+  // ── Auto-init: run on every page without requiring an explicit
+  // call in HTML. Only coordinator.html had PageBootstrap.init()
+  // in its inline script; all other pages never called it, leaving
+  // Warden, Coordinator, and page-ready hooks silent.
+  // DOMContentLoaded guard: PageBootstrap.init() only logs and
+  // subscribes to events — safe before the DOM is fully parsed.
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function () {
+      PageBootstrap.init();
+    });
+  } else {
+    PageBootstrap.init();
+  }
+
 }(window));

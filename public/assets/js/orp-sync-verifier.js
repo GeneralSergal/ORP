@@ -1,10 +1,18 @@
-// orp-sync-verifier.js  v1.0
+// orp-sync-verifier.js  v1.1
 // ============================================================
 // Cross-page sync verification — ensures coordinator state,
 // runtime-overlay metrics, and Warden alerts remain consistent
 // across all ORP pages via ORP_SYNC and SyncEngine.
 //
 // LOAD AFTER: orp-sync.js, orp-sync-engine.js, orp-coordinator.js
+//
+// CHANGES vs v1.0:
+//   v1.1  — FIX: SyncVerifier.init() was registering its own
+//           orp-settings-update → sessionStorage listener even
+//           when SyncEngine was already active. This caused double
+//           (or triple with the onmessage path) sessionStorage
+//           writes per event. Listener is now only registered when
+//           SyncEngine is absent.
 //
 // PROVIDES:
 //   SyncVerifier.audit()         → { valid, issues }
@@ -315,17 +323,18 @@
 
       console.log('[SyncVerifier] Initializing...');
 
-      // Listen to ORP_SYNC updates
-      global.addEventListener('orp-settings-update', function (e) {
-        if (!e || !e.detail) return;
-        var key = e.detail.key;
-        var value = e.detail.value;
-
-        // Broadcast to session if SyncEngine exists
-        if (global.SyncEngine && global.SyncEngine.session) {
-          _setSession(key, value);
-        }
-      });
+      // Mirror ORP_SYNC updates to sessionStorage ONLY when SyncEngine
+      // is not active. When SyncEngine.init() has already run, it owns
+      // the orp-settings-update → sessionStorage mirror. Adding a second
+      // listener here would cause double (or triple) writes per event.
+      // FIX: guard so this listener is registered only when SyncEngine
+      // is absent.
+      if (!global.SyncEngine || typeof global.SyncEngine.init !== 'function') {
+        global.addEventListener('orp-settings-update', function (e) {
+          if (!e || !e.detail) return;
+          _setSession(e.detail.key, e.detail.value);
+        });
+      }
 
       // Optional: start continuous audit
       if (opts.continuous) {
