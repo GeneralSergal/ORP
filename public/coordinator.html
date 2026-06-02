@@ -493,15 +493,24 @@
   <script src="assets/js/orp-sync-engine.js"></script>
   <script src="assets/js/orp-sync-verifier.js"></script>
   <script src="assets/js/orp-page-bootstrap.js"></script>
-   <script>   // Initialize unified bootstrap system
+  <script>
+    // ── Bootstrap & SyncVerifier init  (coordinator.html inline) ──
+    // PATCH v1.1: closing braces for the SyncVerifier.on('drift', ...)
+    // callback and the surrounding if-block were missing — the </script>
+    // tag appeared inside the open function body, causing a SyntaxError
+    // that silently swallowed PageBootstrap.init(), SyncVerifier.init(),
+    // and the drift listener. All three are now correctly closed.
     if (typeof PageBootstrap !== 'undefined') {
       PageBootstrap.init();
       console.log('[ORP Coordinator] Bootstrap initialized — ORP_SYNC + Coordinator ready');
     }
     if (typeof SyncVerifier !== 'undefined') {
       SyncVerifier.init({ continuous: true });
-      SyncVerifier.on('drift', function(audit) {
-        console.warn('[ORP Coordinator] Sync drift detected:', audit.issues);</script>
+      SyncVerifier.on('drift', function (audit) {
+        console.warn('[ORP Coordinator] Sync drift detected:', audit.issues);
+      });
+    }
+  </script>
   <script>
     /* ============================================================
        coordinator.html — Page Controller v3.2
