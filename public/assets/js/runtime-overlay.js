@@ -151,6 +151,16 @@
   /* ── Cached DOM refs ────────────────────────────────────── */
   let _domCache = null;
 
+  /* ── ORP_SYNC write sentinels (prevent redundant saves) ── */
+  /* Only write to ORP_SYNC when these values actually change.
+     Calling ORP_SYNC.save() unconditionally on every update()
+     tick floods the orp-settings-update bus with no-op events,
+     which PageBootstrap logs every time — producing the visible
+     console loop. Initialised to sentinel values that will never
+     match a real state so the first update() always persists. */
+  let _lastSavedSHS    = null;   // tracks last persisted ness_pressure
+  let _lastSavedWarden = null;   // tracks last persisted ness_warden_active
+
   /* ── Cached sigil NodeList ──────────────────────────────── */
   let _sigilCache = null;
   function _getSigils() {
@@ -918,12 +928,23 @@
     _debouncedSave();
     if (d.sessionVal) d.sessionVal.textContent = fmt4(state.sessionEntropy);
 
-    /* NESS-SYNC: Persist SHS pressure + Warden flag cross-tab */
+    /* NESS-SYNC: Persist SHS pressure + Warden flag cross-tab.
+       Guard: only call ORP_SYNC.save() when the value has actually
+       changed. ORP_SYNC.save() always fires an orp-settings-update
+       event (which PageBootstrap logs), so calling it unconditionally
+       on every update() / decay() tick floods the console and the
+       event bus with redundant writes. */
     if (window.ORP_SYNC) {
-      const shsNow     = window._orpSHSState.currentState;
-      const wardenNow  = state.wardenState === 'MANIFEST';
-      ORP_SYNC.save('ness_pressure',      shsNow);
-      ORP_SYNC.save('ness_warden_active', wardenNow);
+      const shsNow    = window._orpSHSState.currentState;
+      const wardenNow = state.wardenState === 'MANIFEST';
+      if (shsNow !== _lastSavedSHS) {
+        _lastSavedSHS = shsNow;
+        ORP_SYNC.save('ness_pressure', shsNow);
+      }
+      if (wardenNow !== _lastSavedWarden) {
+        _lastSavedWarden = wardenNow;
+        ORP_SYNC.save('ness_warden_active', wardenNow);
+      }
     }
 
     if (d.pageLabel) {
@@ -1106,6 +1127,9 @@
           state.deltaS = 0;
           saveSessionEntropy(state.sessionEntropy * 0.5);
           state.sessionEntropy = loadSessionEntropy();
+          /* Reset sentinels so the next update() re-persists the new state */
+          _lastSavedSHS    = null;
+          _lastSavedWarden = null;
           addLog("ok", "CRA", "Chain restored — Warden deactivated");
           update();
         }, 1000);
@@ -1115,6 +1139,9 @@
         state.rho    = 100;
         state.warden = 0;
         state.deltaS = 0;
+        /* Reset sentinels so the next update() re-persists the new state */
+        _lastSavedSHS    = null;
+        _lastSavedWarden = null;
         addLog("ok", "OK", "Baseline reset — metrics nominal");
         update();
       }
@@ -1266,6 +1293,30 @@
       if (key === 'ness_entropy' && typeof value === 'number') {
         state.sessionEntropy = value;
         if (_dom().sessionVal) _dom().sessionVal.textContent = fmt4(value);
+      }
+
+      /* ness_pressure: reset/cross-tab SHS machine state change.
+         ORP_SYNC.resetAll() broadcasts ness_pressure='GREEN' but the
+         SHS machine state lives in window._orpSHSState.currentState —
+         a plain JS object that the event bus never touched before this
+         fix. Without this handler, clicking "Reset All" in settings.html
+         had no effect on the running machine, so the overlay kept showing
+         the old (e.g. BLACK) state and immediately re-saving it. */
+      if (key === 'ness_pressure' && value && SHS_STATES.includes(value)) {
+        const machine = window._orpSHSState;
+        if (machine.currentState !== value) {
+          machine.currentState     = value;
+          machine.stabilityCounter = 0;
+          machine.lastTransitionTs = performance.now();
+          /* Reset rho to a sensible baseline for the new state */
+          const shsToRho = { GREEN: 100, YELLOW: 80, ORANGE: 58, RED: 30, BLACK: 5 };
+          state.rho    = shsToRho[value] ?? 100;
+          state.shs    = value;
+          /* Reset sentinels so the next update() re-persists cleanly */
+          _lastSavedSHS    = null;
+          _lastSavedWarden = null;
+          update();
+        }
       }
 
       /* overlay_visible: show/hide from settings page */
