@@ -1957,3 +1957,266 @@ h2, h3, .section-title {
   }
 
 } /* end @-moz-document url-prefix() */
+
+
+/* ============================================================
+   ORP v3.3 — Settings-Driven Class Overrides
+   Appended to style.css.
+
+   AUDIT FIX: Three html-level classes were being toggled by
+   settings.html JS but had ZERO CSS rules responding to them:
+     .orp-perf-mode      (env_perf_mode toggle)
+     .orp-reduced-motion (ui_reduced_motion toggle)
+   Both are now fully implemented below.
+
+   NEW: .orp-potato-mode — kills ALL GPU effects in one class.
+   The class is controlled by env_potato_mode (ORP_SYNC key added
+   separately) and is a strict superset of both perf-mode and
+   reduced-motion. It targets every animated or composited element
+   across style.css and entropia-sigil.css in one block.
+
+   SCOPE NOTES:
+     • All rules are scoped to html.orp-* so they override any
+       element-level will-change/animation with a single specificity
+       bump. This avoids !important on every property.
+     • html.orp-potato-mode rules use !important only where a
+       child rule already uses !important (the FF patches) or
+       where animation-play-state needs to beat inline styles.
+     • Selectors mirror the exact element list from style.css and
+       entropia-sigil.css so nothing is missed.
+   ============================================================ */
+
+
+/* ─────────────────────────────────────────────────────────────
+   1. .orp-perf-mode
+   Intent: suppress non-critical background animations while
+   keeping the sigil and overlay fully functional.
+   Targets: embers, resonance ring, glyph drift, grid-bg pulse,
+            logo orbit/wing/glitch.
+   Does NOT touch: sigil animations, scroll progress bar, nav.
+   ──────────────────────────────────────────────────────────── */
+html.orp-perf-mode .ember {
+  animation: none;
+  opacity:   0;
+  will-change: auto;
+}
+
+html.orp-perf-mode .resonance-ring,
+html.orp-perf-mode .resonance-ring::before,
+html.orp-perf-mode .resonance-ring::after {
+  animation:   none;
+  will-change: auto;
+}
+
+html.orp-perf-mode .glyph {
+  animation:   none;
+  will-change: auto;
+}
+
+/* Logo-mark: pause orbit ring and glitch ticker (expensive at 0.12s steps).
+   Wing shimmer and core breathe are kept — they're cheap and keep the mark alive. */
+html.orp-perf-mode .logo-mark .orp-orbit-ring {
+  animation:   none;
+  will-change: auto;
+}
+html.orp-perf-mode .logo-mark .orp-glitch-layer {
+  animation-play-state: paused;
+  will-change:          auto;
+}
+
+/* Release permanent compositor layers on elements that never animate in perf-mode */
+html.orp-perf-mode .grid-bg,
+html.orp-perf-mode .glow {
+  will-change: auto;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   2. .orp-reduced-motion
+   Intent: user-side motion kill-switch that stacks on top of the
+   OS prefers-reduced-motion preference. Kills ALL ORP animations
+   site-wide — sigil, logo-mark, background atmosphere, overlays.
+   Mirrors exactly what @media (prefers-reduced-motion: reduce)
+   does in style.css and entropia-sigil.css.
+   ──────────────────────────────────────────────────────────── */
+
+/* Kill all animations and transitions globally within ORP pages */
+html.orp-reduced-motion *,
+html.orp-reduced-motion *::before,
+html.orp-reduced-motion *::after {
+  animation-duration:       0.01ms !important;
+  animation-iteration-count: 1     !important;
+  transition-duration:      0.01ms !important;
+}
+
+/* Specific will-change releases — freed compositor layers save VRAM */
+html.orp-reduced-motion .ember,
+html.orp-reduced-motion .resonance-ring,
+html.orp-reduced-motion .glyph,
+html.orp-reduced-motion .scroll-progress,
+html.orp-reduced-motion .es-core-group,
+html.orp-reduced-motion .es-orbit-ring,
+html.orp-reduced-motion .es-wing-l,
+html.orp-reduced-motion .es-wing-r,
+html.orp-reduced-motion .es-glitch-layer,
+html.orp-reduced-motion .logo-mark .orp-orbit-ring,
+html.orp-reduced-motion .logo-mark .orp-core-group,
+html.orp-reduced-motion .logo-mark .orp-wing-l,
+html.orp-reduced-motion .logo-mark .orp-wing-r,
+html.orp-reduced-motion .logo-mark .orp-glitch-layer {
+  will-change: auto;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   3. .orp-potato-mode  — TOTAL GPU SHUTDOWN
+   Kills every visual GPU effect on the page:
+     • All CSS animations and keyframes
+     • All backdrop-filter blurs (nav, overlay panels, telemetry)
+     • All drop-shadow/filter effects (sigil, logo-mark)
+     • All will-change compositor layer hints (frees all VRAM)
+     • All transition durations (instant state changes only)
+     • Embers, resonance ring, glyph layer, glow orb: hidden
+     • Sigil glow: zeroed out (--glow-core/--glow-outer = 0px)
+     • mix-blend-mode on scanlines: reverted to normal
+   The page remains fully readable and interactive.
+   ──────────────────────────────────────────────────────────── */
+
+/* Kill every animation and transition on the entire document */
+html.orp-potato-mode *,
+html.orp-potato-mode *::before,
+html.orp-potato-mode *::after {
+  animation:             none !important;
+  animation-play-state:  paused !important;
+  transition-duration:   0ms !important;
+  transition-delay:      0ms !important;
+  will-change:           auto !important;
+}
+
+/* Remove backdrop-filter blurs — the single most expensive GPU op.
+   Nav and panels get bumped opacity to remain readable without blur. */
+html.orp-potato-mode nav,
+html.orp-potato-mode nav.menu-open {
+  backdrop-filter:         none !important;
+  -webkit-backdrop-filter: none !important;
+  background:              rgba(6, 8, 11, 0.99) !important;
+}
+
+html.orp-potato-mode .orp-compact-scope .mini-telemetry-card {
+  backdrop-filter:         none !important;
+  -webkit-backdrop-filter: none !important;
+  background-color:        rgba(22, 26, 34, 0.99) !important;
+}
+
+html.orp-potato-mode #cc-overlay #cc-tab {
+  backdrop-filter:         none !important;
+  -webkit-backdrop-filter: none !important;
+  background:              rgba(15, 18, 23, 0.99) !important;
+}
+
+html.orp-potato-mode #cc-overlay #cc-panel .cc-panel-inner {
+  backdrop-filter:         none !important;
+  -webkit-backdrop-filter: none !important;
+  background:              rgba(15, 18, 23, 0.99) !important;
+}
+
+/* Kill the sigil drop-shadow filter entirely — the biggest per-frame GPU cost */
+html.orp-potato-mode .entropia-sigil {
+  filter:     none !important;
+  transition: none !important;
+}
+
+html.orp-potato-mode .entropia-sigil:hover {
+  filter: none !important;
+}
+
+html.orp-potato-mode .entropia-sigil::after {
+  display: none !important;
+}
+
+/* Logo-mark: remove drop-shadow filter */
+html.orp-potato-mode .logo-mark {
+  filter:     none !important;
+  transition: none !important;
+}
+
+html.orp-potato-mode .logo-mark--active,
+html.orp-potato-mode .logo-mark--pulse,
+html.orp-potato-mode .logo-mark--clicked {
+  filter: none !important;
+}
+
+html.orp-potato-mode .logo-mark::before,
+html.orp-potato-mode .logo-mark::after {
+  display: none !important;
+}
+
+/* Hide the purely decorative atmosphere elements entirely.
+   They contribute no information and cost compositor layers. */
+html.orp-potato-mode .ember,
+html.orp-potato-mode .resonance-ring {
+  display: none !important;
+}
+
+/* Glyph layer: hide (animated, no semantic value) */
+html.orp-potato-mode .glyph-layer {
+  display: none !important;
+}
+
+/* Glow orb: static radial gradient, promoted layer — remove the layer */
+html.orp-potato-mode .glow {
+  display: none !important;
+}
+
+/* Fracture shards and scanlines: remove blending/opacity effects */
+html.orp-potato-mode .es-fracture,
+html.orp-potato-mode .es-glitch-layer,
+html.orp-potato-mode .es-scanline {
+  display: none !important;
+}
+
+html.orp-potato-mode .logo-mark .orp-fracture,
+html.orp-potato-mode .logo-mark .orp-glitch-layer,
+html.orp-potato-mode .logo-mark .orp-scanline {
+  display: none !important;
+}
+
+/* Scanline mix-blend-mode — already hidden above, but belt-and-suspenders */
+html.orp-potato-mode .es-scanline,
+html.orp-potato-mode .logo-mark .orp-scanline {
+  mix-blend-mode: normal !important;
+}
+
+/* Hero-bg sigil: keep it visible (it's content) but strip will-change + filter.
+   The animation:none !important at the top already kills float/breathe. */
+html.orp-potato-mode .entropia-sigil--hero-bg {
+  transition: none !important;
+  opacity:    0.15 !important; /* slightly dimmed — no glow compensation needed */
+}
+
+/* badge pulse dot — remove the infinite scale animation */
+html.orp-potato-mode .pulse {
+  box-shadow: none !important;
+}
+
+/* Scroll progress bar — keep functional (scaleX JS still runs) but kill will-change */
+html.orp-potato-mode .scroll-progress {
+  transition: none !important;
+}
+
+/* Card hover transitions — flatten to instant (mouse still registers, just no animation) */
+html.orp-potato-mode .pipeline-card,
+html.orp-potato-mode .doc-card,
+html.orp-potato-mode .principle,
+html.orp-potato-mode .quick-access-card,
+html.orp-potato-mode .release-card {
+  transition: none !important;
+  box-shadow: none !important;
+}
+
+/* Reveal animation: set visible immediately — IntersectionObserver still fires
+   but the 650ms transition is already killed above */
+html.orp-potato-mode .reveal {
+  opacity:   1 !important;
+  transform: none !important;
+}

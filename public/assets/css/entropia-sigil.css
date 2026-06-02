@@ -569,3 +569,83 @@
   }
 
 } /* end @-moz-document url-prefix() */
+
+
+/* ============================================================
+   ORP v3.3 — Settings-driven class overrides for entropia-sigil
+   Appended to entropia-sigil.css.
+
+   AUDIT FIX: .orp-perf-mode and .orp-reduced-motion were
+   toggled on <html> by settings.html JS but had no CSS rules.
+
+   These rules handle the sigil-specific animations that live in
+   this file. The global style.css patch handles everything else.
+   ============================================================ */
+
+
+/* ─────────────────────────────────────────────────────────────
+   1. .orp-perf-mode — sigil children
+   Pause the glitch ticker (0.12s steps — most expensive).
+   Keep breathe, orbit, wings (they're cheap + aesthetically core).
+   ──────────────────────────────────────────────────────────── */
+html.orp-perf-mode .es-glitch-layer {
+  animation-play-state: paused;
+  will-change:          auto;
+}
+
+html.orp-perf-mode .es-orbit-ring {
+  /* Slow orbit to 12s in perf mode — still visible, half the compositor work */
+  animation-duration: 12s;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   2. .orp-reduced-motion — sigil animations
+   Mirrors @media (prefers-reduced-motion: reduce) exactly.
+   The global transition/animation kill in style.css catches
+   most of these, but explicit will-change releases are needed
+   for compositor budget recovery.
+   ──────────────────────────────────────────────────────────── */
+html.orp-reduced-motion .es-core-group,
+html.orp-reduced-motion .es-orbit-ring,
+html.orp-reduced-motion .es-wing-l,
+html.orp-reduced-motion .es-wing-r,
+html.orp-reduced-motion .es-glitch-layer {
+  animation:   none !important;
+  will-change: auto;
+}
+
+
+/* ─────────────────────────────────────────────────────────────
+   3. .orp-potato-mode — complete sigil shutdown
+   All sigil animations killed and compositor layers released.
+   Drop-shadow filter and the hover filter override are both
+   handled in style.css to keep this file's rules minimal.
+   ──────────────────────────────────────────────────────────── */
+html.orp-potato-mode .es-core-group,
+html.orp-potato-mode .es-orbit-ring,
+html.orp-potato-mode .es-wing-l,
+html.orp-potato-mode .es-wing-r,
+html.orp-potato-mode .es-glitch-layer,
+html.orp-potato-mode .es-fracture,
+html.orp-potato-mode .es-scanline {
+  animation:   none !important;
+  will-change: auto !important;
+  transition:  none !important;
+}
+
+/* Firefox-specific rules inside @-moz-document: these are not overridden
+   by the html.orp-potato-mode rules above because @-moz-document scopes
+   specificity differently in some FF builds. Belt-and-suspenders: */
+@-moz-document url-prefix() {
+  html.orp-potato-mode .es-glitch-layer,
+  html.orp-potato-mode .logo-mark .orp-glitch-layer {
+    animation-play-state: paused !important;
+  }
+
+  html.orp-potato-mode .entropia-sigil,
+  html.orp-potato-mode .entropia-sigil:hover {
+    will-change: auto !important;
+    filter:      none !important;
+  }
+}
