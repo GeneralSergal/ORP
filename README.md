@@ -162,3 +162,11 @@ To remain ORP‑aligned:
 ---
 
 <p align="center"><strong>Signal > Narrative</strong></p>
+
+---
+
+## Provenance & Authorship
+
+This repository includes a formal provenance declaration.  
+See **PROVENANCE.md** for authorship, licensing, and metadata details.
+
