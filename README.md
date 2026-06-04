@@ -148,7 +148,8 @@ To remain ORP‑aligned:
 **STATUS:** MASTER SYNCHRONIZED  
 **CHANGE_POLICY:** LOG_ONLY  
 
-**License:** GPL‑3.0  
+**License for all the code:** GPL‑3.0  
+**License for ALL the images asocicated with the ORP project:** CC-BY-SA
 **Maintained by:** The Project Maintainers  
 
 ---
