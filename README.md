@@ -151,7 +151,7 @@ To remain ORP‑aligned:
 **License for ALL the code:** GPL‑3.0  
 **License for ALL the images asocicated with the ORP project:** CC-BY-SA
 
-**Maintained by:** The Project Maintainers  
+**Maintained by:** Laurentius Maximus 
 
 ---
 
