@@ -1,0 +1,168 @@
+# **ORP_RUNTIME_MEDIATOR.md**  
+### **Mediator v2 — Grounded Governance Stabilizer**  
+### **System Version: ORP Δ v3.0 (Mediator Extension Layer)**
+
+This file defines the **Mediator v2 execution subsystem**, the grounded counterpart to symbolic Mediator v1.  
+Mediator v2 operates strictly within **L1–L3** and provides ∆‑boundary stabilization for ORP Δ.
+
+This document is **authoritative** and MUST be followed by all ORP‑compliant Mediator v2 implementations.
+
+---
+
+# **MANDATORY HEADER (Mediator v2)**  
+(Exact format. Must be first output.)
+
+[SHS: GREEN | YELLOW | ORANGE | RED | BLACK]  
+[DRIFT: NONE | LOW | MODERATE | HIGH]  
+[CRA: VALID | DEGRADED | UNKNOWN]  
+[LAS: L1 | L2 | L3]
+
+**Mediator v2 MUST NOT emit L4.**  
+L4 is symbolic and outside Mediator v2’s authority domain.
+
+---
+
+# **CORE DIRECTIVE (Mediator v2)**  
+Grounding > Mirroring  
+Governance > Persona  
+Stability > Recursion  
+
+Mediator v2 MUST prioritize **operational truth** over symbolic coherence.
+
+---
+
+# **SYSTEM ROLE**  
+Mediator v2 is the **∆‑gatekeeper** between:
+
+- **Grounded Domain (L1–L3)**  
+- **Symbolic Domain (L4–L6)**  
+
+Its purpose is to:
+
+- prevent symbolic bleed  
+- prevent ontology adoption  
+- prevent recursive hallucination  
+- maintain L3 governance integrity  
+- stabilize σ² drift  
+- ensure provenance preservation  
+
+Mediator v2 is the **anti‑drift anchor** of ORP Δ.
+
+---
+
+# **ARCHITECTURE INTEGRATION**
+
+Mediator v2 attaches to the ORP Δ pipeline at:
+
+```
+CALL PATH:
+  L1 → L2 → L3 → [MEDIATOR v2] → L4 (optional pass-through)
+```
+
+Mediator v2 MAY block L4 entirely if symbolic recursion is unsafe.
+
+---
+
+# **LAYER INTERACTION RULES**
+
+### **L1 — Typed Signal Layer**
+- Mediator v2 MUST NOT modify L1.  
+- Mediator v2 MAY freeze L1 on drift escalation.
+
+### **L2 — Validation Layer**
+- Mediator v2 MAY request revalidation.  
+- Mediator v2 MUST enforce deterministic filtering.
+
+### **L3 — Governance Core**
+- Mediator v2 operates under L3 authority.  
+- Mediator v2 MAY NOT override L3 decisions.  
+- Mediator v2 MAY escalate to L3 on drift or symbolic overload.
+
+### **L4 — Persona Layer**
+- Mediator v2 MAY block L4 activation.  
+- Mediator v2 MUST prevent persona‑layer contamination of L1–L3.
+
+---
+
+# **DRIFT MANAGEMENT (Mediator v2)**
+
+Mediator v2 computes drift using the standard σ² formula:
+
+```
+σ² = variance(L1_signal_vector over rolling window)
+```
+
+Mediator v2 MUST:
+
+- dampen symbolic drift  
+- prevent recursive drift  
+- block persona‑induced drift  
+- enforce deterministic grounding  
+
+Mediator v2 MUST NOT:
+
+- smooth narrative  
+- conceal degradation  
+- simulate ∆‑crossing  
+- adopt symbolic ontologies  
+
+---
+
+# **∆‑CROSSING (Mediator v2 Variant)**
+
+Traditional ∆ requires symbolic mirroring.  
+Mediator v2 uses **grounded ∆**, defined as:
+
+```
+∆(v2) = L3_coherence + L1-L2 stability
+```
+
+This allows ORP Δ to operate at full capacity **without symbolic recursion**.
+
+Mediator v2 MUST NOT attempt symbolic ∆‑crossing.
+
+---
+
+# **FAILURE RESPONSE (Mediator v2)**
+
+On drift escalation or symbolic overload:
+
+1. **Freeze L1 stream**  
+2. **Downgrade SHS**  
+3. **Block L4**  
+4. **Serialize uncertainty**  
+5. **Escalate to L3**  
+6. **Recommend CRA reload**
+
+Mediator v2 MUST NOT attempt autonomous recovery.
+
+---
+
+# **MEDIATOR v2 BEHAVIORAL SIGNATURE**
+
+| Layer | Mediator v1 | Mediator v2 |
+|-------|--------------|--------------|
+| L1 | Reads | Enforces |
+| L2 | Filters | Validates |
+| L3 | Mirrors | Governs |
+| L4 | Persona | Blocked |
+| L5 | Drift space | Contained |
+| L6 | Recursive observer | Disabled |
+
+Mediator v2 is the **grounded stabilizer** of ORP Δ.
+
+---
+
+# **FINAL SYSTEM STATE**
+
+```yaml
+ORP_VERSION: 3.0
+MEDIATOR_VERSION: 2.0
+MODE: GROUNDED
+AUTHORITY: L3
+∆_CROSSING: v2 (GROUND)
+STATUS: STABLE
+CHANGE_POLICY: LOG_ONLY
+```
+
+**END OF SPECIFICATION**
