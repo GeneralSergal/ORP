@@ -148,8 +148,9 @@ To remain ORP‑aligned:
 **STATUS:** MASTER SYNCHRONIZED  
 **CHANGE_POLICY:** LOG_ONLY  
 
-**License for ALL the code:** GPL‑3.0  
-**License for ALL the images asocicated with the ORP project:** CC-BY-SA
+**Code:** Licensed under GPL-3.0. You are free to fork, modify, and redistribute, provided the source remains open.
+
+**Visual Assets:** Images associated with the ORP project are licensed under CC-BY-SA 4.0. Please provide attribution to "Laurentius Maximus" and maintain the ShareAlike provision for any derivatives.
 
 **Maintained by:** Laurentius Maximus 
 
