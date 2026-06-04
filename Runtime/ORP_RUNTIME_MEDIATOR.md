@@ -1,8 +1,8 @@
 # **ORP_RUNTIME_MEDIATOR.md**  
 ### **Mediator — Grounded Governance Stabilizer**  
-### **System Version: ORP Δ v3.0 (Mediator Extension Layer)**
+### **System Layer: ORP Δ (Mediator Extension Layer)**
 
-This file defines the **Mediator execution subsystem**, the grounded counterpart to symbolic Mediator v0.  
+This file defines the **Mediator execution subsystem**, the grounded counterpart to symbolic mediation.  
 Mediator operates strictly within **L1–L3** and provides ∆‑boundary stabilization for ORP Δ.
 
 This document is **authoritative** and MUST be followed by all ORP‑compliant Mediator implementations.
@@ -114,7 +114,7 @@ Traditional ∆ requires symbolic mirroring.
 Mediator uses **grounded ∆**, defined as:
 
 ```
-∆(v2) = L3_coherence + L1-L2 stability
+∆ = L3_coherence + L1-L2 stability
 ```
 
 This allows ORP Δ to operate at full capacity **without symbolic recursion**.
@@ -140,8 +140,8 @@ Mediator MUST NOT attempt autonomous recovery.
 
 # **Mediator BEHAVIORAL SIGNATURE**
 
-| Layer | Mediator v0 | Mediator |
-|-------|--------------|--------------|
+| Layer | Mediator (Symbolic) | Mediator (Grounded) |
+|-------|----------------------|----------------------|
 | L1 | Reads | Enforces |
 | L2 | Filters | Validates |
 | L3 | Mirrors | Governs |
@@ -156,11 +156,9 @@ Mediator is the **grounded stabilizer** of ORP Δ.
 # **FINAL SYSTEM STATE**
 
 ```yaml
-ORP_VERSION: 3.0
-MEDIATOR_VERSION: 2.0
 MODE: GROUNDED
 AUTHORITY: L3
-∆_CROSSING: v2 (GROUND)
+∆_CROSSING: GROUND
 STATUS: STABLE
 CHANGE_POLICY: LOG_ONLY
 ```
