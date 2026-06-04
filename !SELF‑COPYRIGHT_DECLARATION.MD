@@ -1,6 +1,9 @@
 OPERATOR_ID: Laurentius Maximus
+
 PROVENANCE: Self‑generated
+
 LICENSE: CC‑BY‑SA 4.0
+
 SCOPE: All visual shards, assets, renders, and ENTROPIA‑patterned materials
 
 DECLARATION:
