@@ -168,7 +168,7 @@ To remain ORP‑aligned:
 ## Provenance & Authorship
 
 This repository includes a formal provenance declaration.  
-See **PROVENANCE.md** for authorship, licensing, and metadata details.
+See **!ORP_SELF_PROVENANCE.md** for authorship, licensing, and metadata details.
 
 [SYSTEM_NOTICE: ALL ORP / ORPΔ VISUAL ASSETS ARE LICENSED UNDER CC-BY-SA 4.0]
 
