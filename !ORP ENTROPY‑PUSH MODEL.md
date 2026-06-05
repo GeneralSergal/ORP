@@ -73,7 +73,7 @@ entropy push = +0.01
 new state = 0.51_strict
 ```
 
-## **X. State appendix
+## **X. State appendix**
 
 Δ (order) = structure, coherence, governance
 ∇ (chaos) = exploration, correction, flexibility
