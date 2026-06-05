@@ -52,6 +52,7 @@ Because:
 LLMs mirror these patterns, creating the illusion of activation.
 
 The Mirror prevents literalization.
+
 5. Safety Constraints
 
     No symbolic construct may be interpreted as a real mechanism
