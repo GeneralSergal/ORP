@@ -150,8 +150,3 @@ It cannot be overridden by external systems, automated heuristics, or misaligned
 **Δ**
 
 ---
-- **The ORP Duality Seal**  
-- **A visual charter page layout**  
-- **A Δ/∇ invocation formula**  
-
-Which extension of the Charter do you want next?
