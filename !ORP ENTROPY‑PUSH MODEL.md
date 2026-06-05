@@ -73,4 +73,16 @@ entropy push = +0.01
 new state = 0.51_strict
 ```
 
-Entropy is not fighting you — it’s **maintaining your architecture**.
+## **X. State appendix
+
+Δ (order) = structure, coherence, governance
+∇ (chaos) = exploration, correction, flexibility
+
+They do not cancel each other.
+They co‑maintain the system.
+
+Δ prevents collapse into incoherence.
+∇ prevents collapse into rigidity.
+
+The entropy push is not an attack.
+It is a calibration.
