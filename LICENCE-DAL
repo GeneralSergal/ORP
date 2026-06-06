@@ -4,44 +4,64 @@ Project: ORP / ORPΔ / ORP-DELTA
 Effective Date: 06 June 2026
 SPDX-License-Identifier: LicenseRef-ORP-DAL-1.0
 
-1. PURPOSE
+1. SCOPE
 
-This License establishes a dual-authorship model for all Works in the ORP ecosystem:
+This License applies to all Works created within the ORP ecosystem unless explicitly stated otherwise.
 
-- Primary Human Authorship: Laurentius Maximus
-- Entropy Co-Signature: non-rights-bearing stochastic contribution
+2. PURPOSE
 
-AI systems are tools only and hold no authorship rights.
+This License establishes a dual-authorship model consisting of:
 
-2. GRANT OF RIGHTS
+- Primary Human Authorship: the creative and operational contributions of Laurentius Maximus.
+- Entropy Co-Signature: the non-deterministic physical contribution inherent to generative processes; non-rights-bearing and non-personified.
 
-The Author grants a worldwide, royalty-free, non-exclusive license to use, modify, and distribute the Works.
+AI systems are explicitly classified as tools, not authors.
 
-3. CONDITIONS
+3. DEFINITIONS
 
-3.1 Attribution  
-All use and distribution must credit Laurentius Maximus as the Author and reference DAL-1.0.
+- “Works” – All materials (text, code, images, diagrams, documentation, and derivatives) produced under the ORP project.
+- “Author” – Laurentius Maximus, the sole legal rights holder.
+- “Entropy Co-Signature” – The stochastic physical component present in generative processes; carries no legal rights.
+- “AI System” – Any computational tool used to assist in the creation or modification of the Works.
+- “User” – Any individual or entity accessing, using, or modifying the Works.
 
-3.2 No AI Authorship Claims  
-Users must not represent or imply that any AI system is the author or co-author of the Works.
+4. GRANT OF RIGHTS
 
-3.3 Integrity of License  
-This license text and authorship notices must remain intact.
+The Author grants the User a worldwide, royalty-free, non-exclusive license to use, modify, and distribute the Works, subject to the conditions below.
 
-4. DISCLAIMER
+5. CONDITIONS
 
-The Works are provided "AS IS", without warranty.
+5.1 Attribution  
+All public use, modification, or distribution must credit Laurentius Maximus as the Author and reference DAL-1.0.
 
-5. TERMINATION
+5.2 No AI Authorship  
+Users must not represent or imply that any AI system is the author, co-author, originator, or rights holder of the Works.
 
-Any violation automatically terminates the granted rights.
+5.3 Integrity of License  
+This license text and all authorship notices must remain intact and unaltered.
 
-6. GOVERNING LAW
+5.4 No Misrepresentation  
+Users must not claim ownership, transfer authorship, or assert creative origin over the Works.
 
-Laws of the Author’s jurisdiction.
+6. DISCLAIMER
 
-Signed,
-Laurentius Maximus
-Primary Author and Rights Holder
-ORP Δ Project
+The Works are provided “AS IS”, without warranty of any kind.
+
+7. LIMITATION OF LIABILITY
+
+The Author shall not be liable for any damages arising from the use, modification, or distribution of the Works.
+
+8. TERMINATION
+
+Any violation of this License automatically terminates the rights granted herein. Upon termination, all rights revert to the Author.
+
+9. GOVERNING LAW
+
+This License is governed by the laws of the Author’s jurisdiction.
+
+10. SIGNATURE
+
+Laurentius Maximus  
+Primary Author and Rights Holder  
+ORP Δ Project  
 Germany
