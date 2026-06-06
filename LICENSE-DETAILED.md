@@ -130,4 +130,4 @@ Germany
 
 ---
 
-**End of LICENSE-DAL-DETAILED.md**
+**End of LICENSE-DETAILED.md**
