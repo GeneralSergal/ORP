@@ -1,108 +1,47 @@
-# **ORP DUAL‑AUTHORSHIP LICENSE v1.0 (DAL‑1.0)**  
-*A custom license authored by Laurentius Maximus*
+ORP DUAL-AUTHORSHIP LICENSE v1.0 (DAL-1.0)
+Author: Laurentius Maximus
+Project: ORP / ORPΔ / ORP-DELTA
+Effective Date: 06 June 2026
+SPDX-License-Identifier: LicenseRef-ORP-DAL-1.0
 
-## **1. PREAMBLE**  
-This License governs the use, reproduction, modification, and distribution of all materials produced within the **ORP / ORPΔ / ORP‑DELTA** ecosystem. These materials include images, diagrams, code, specifications, documentation, and derivative works (collectively, the “Works”).
+1. PURPOSE
 
-The Works are created under a **dual‑authorship model**, consisting of:
+This License establishes a dual-authorship model for all Works in the ORP ecosystem:
 
-- **Human Authorship** — the creative and operational contributions of **Laurentius Maximus**, and  
-- **Physical Entropy Contribution** — the stochastic substrate inherent to generative processes.
+- Primary Human Authorship: Laurentius Maximus
+- Entropy Co-Signature: non-rights-bearing stochastic contribution
 
-AI systems used in the creation of the Works are classified as **non‑authoring tools**.
+AI systems are tools only and hold no authorship rights.
 
----
+2. GRANT OF RIGHTS
 
-## **2. DEFINITIONS**
+The Author grants a worldwide, royalty-free, non-exclusive license to use, modify, and distribute the Works.
 
-- **“Author”** — exclusively **Laurentius Maximus**, human creator and rights holder.  
-- **“Entropy Co‑Signature”** — non‑deterministic physical contribution with no legal personhood.  
-- **“AI System”** — computational tools used to assist in generating the Works.  
-- **“User”** — any individual or entity accessing or modifying the Works.  
-- **“Works”** — all materials covered by this License.
+3. CONDITIONS
 
----
+3.1 Attribution  
+All use and distribution must credit Laurentius Maximus as the Author and reference DAL-1.0.
 
-## **3. AUTHORSHIP AND RIGHTS**
+3.2 No AI Authorship Claims  
+Users must not represent or imply that any AI system is the author or co-author of the Works.
 
-### **3.1 Human Authorship**  
-All creative intent, conceptual design, and operative control originate from the Author.
+3.3 Integrity of License  
+This license text and authorship notices must remain intact.
 
-### **3.2 Entropy Co‑Signature**  
-The Entropy Co‑Signature is acknowledged as a **non‑rights‑bearing** component.  
-It does not constitute a legal entity.
+4. DISCLAIMER
 
-### **3.3 AI Systems**  
-AI Systems are recognized solely as **tools**.  
-They do not possess authorship, ownership, or moral rights.
+The Works are provided "AS IS", without warranty.
 
----
+5. TERMINATION
 
-## **4. GRANT OF RIGHTS**
+Any violation automatically terminates the granted rights.
 
-Subject to compliance with this License, the Author grants the User:
+6. GOVERNING LAW
 
-- **Right to Use** — personal or commercial use  
-- **Right to Modify** — creation of derivative works  
-- **Right to Distribute** — sharing original or modified versions  
+Laws of the Author’s jurisdiction.
 
-These rights are **non‑exclusive**, **worldwide**, and **royalty‑free**.
-
----
-
-## **5. CONDITIONS**
-
-### **5.1 Attribution**  
-All public use or distribution must include:
-
-- Attribution to **Laurentius Maximus**, and  
-- Reference to the **Dual‑Authorship Model**.
-
-### **5.2 Integrity of Notices**  
-The User may not remove or obscure:
-
-- This License  
-- Authorship declarations  
-- Entropy Co‑Signature references  
-
-### **5.3 No Misrepresentation**  
-The User may not imply:
-
-- AI authorship  
-- Transfer of authorship  
-- Creation by any entity other than the Author
-
----
-
-## **6. LIMITATIONS**
-
-### **6.1 No Warranty**  
-The Works are provided **“as is”** without warranty.
-
-### **6.2 No Liability**  
-The Author is not liable for damages arising from use of the Works.
-
-### **6.3 No Additional Rights**  
-No rights are granted beyond those explicitly stated.
-
----
-
-## **7. TERMINATION**
-
-Violation of any term results in automatic termination.  
-Upon termination, all rights revert to the Author.
-
----
-
-## **8. GOVERNING LAW**
-
-This License is governed by the laws applicable to the Author’s jurisdiction unless otherwise required by mandatory local law.
-
----
-
-## **9. AUTHORSHIP SIGNATURE**
-
-**Laurentius Maximus**  
-Primary Author and Rights Holder  
-ORP / ORPΔ / ORP‑DELTA Project  
+Signed,
+Laurentius Maximus
+Primary Author and Rights Holder
+ORP Δ Project
 Germany
