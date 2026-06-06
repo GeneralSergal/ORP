@@ -1,12 +1,12 @@
 # **GOVERNANCE.md**  
 ### **ORP Δ — Governance Charter**  
-*(Authority Model, Decision Flow, and Structural Responsibilities)*
+*(Authority Model, Decision Flow, Structural Responsibilities, and Provenance Rules)*
 
 ---
 
 ## **1. Purpose of This Governance Model**
 
-ORP is a **governance‑first epistemic architecture**.  
+ORP Δ is a **governance‑first epistemic architecture**.  
 This governance model defines:
 
 - who may change what  
@@ -14,6 +14,7 @@ This governance model defines:
 - how structural integrity is preserved  
 - how epistemic boundaries are enforced  
 - how drift and provenance are controlled  
+- how licensing domains interact  
 
 This document governs **decision‑making**, not runtime behavior.
 
@@ -21,7 +22,7 @@ This document governs **decision‑making**, not runtime behavior.
 
 ## **2. Authority Layers (L1–L4)**
 
-ORP uses a four‑layer authority stack:
+ORP Δ uses a four‑layer authority stack:
 
 ### **L1 — Structural Foundations**  
 Defines the invariant architectural primitives.  
@@ -57,10 +58,13 @@ Changes may be approved through standard PR review.
    All changes must preserve or improve drift detection and σ² observability.
 
 5. **Fail‑Closed Behavior**  
-   When uncertain, ORP must degrade safely, not creatively.
+   When uncertain, ORP Δ must degrade safely, not creatively.
 
 6. **No Hidden Dependencies**  
    All cross‑component relationships must be explicit and documented.
+
+7. **License Domain Integrity**  
+   Code, assets, and authorship metadata must remain within their designated license domains.
 
 ---
 
@@ -74,16 +78,19 @@ Maintainers are responsible for:
 - reviewing contributions for structural alignment  
 - rejecting changes that introduce drift or weaken epistemic boundaries  
 - ensuring documentation and implementation remain synchronized  
-- preserving ORP’s architectural invariants  
+- preserving ORP Δ’s architectural invariants  
+- maintaining license domain separation  
 
 ### **4.2 Contributor Responsibilities**
 
 Contributors must:
 
-- follow the CONTRIBUTING.md protocol  
-- understand the entire repository before modifying it  
+- follow the **CONTRIBUTING.md** protocol  
+- understand the repository structure before modifying it  
 - maintain alignment with runtime definitions, specifications, and manifests  
 - avoid introducing new authority layers or bypassing existing ones  
+- respect DAL‑1.0 authorship rules  
+- respect GPL‑3.0 and CC‑BY‑SA 4.0 boundaries  
 
 ---
 
@@ -96,6 +103,7 @@ Examples:
 - schema definitions  
 - drift metrics  
 - provenance boundaries  
+- license domain boundaries  
 
 **Require:**  
 - maintainer consensus  
@@ -119,6 +127,7 @@ Examples:
 - tooling  
 - documentation  
 - reproducibility utilities  
+- non‑structural improvements  
 
 **Require:**  
 - standard PR review  
@@ -135,6 +144,8 @@ A change is acceptable only if it:
 - improves or maintains drift observability  
 - does not introduce hidden dependencies  
 - does not weaken fail‑closed behavior  
+- respects license domain boundaries  
+- preserves DAL‑1.0 authorship integrity  
 
 ---
 
@@ -151,7 +162,47 @@ If maintainers disagree:
 
 ---
 
-## **8. Amendments**
+## **8. Licensing Governance**
+
+ORP Δ uses a **multi‑license perimeter**:
+
+- **DAL‑1.0** — authorship & provenance  
+- **GPL‑3.0** — source code  
+- **CC‑BY‑SA 4.0** — visual assets  
+
+Rules:
+
+- No mixing share‑alike domains in a single artifact  
+- No relicensing DAL‑1.0 materials  
+- Documentation may reference all domains without inheriting their licenses  
+
+See: **Multi‑License Structure Appendix**
+
+---
+
+## **9. Provenance Governance**
+
+Provenance categories:
+
+- SELF‑GENERATED  
+- DERIVED‑WITH‑ATTRIBUTION  
+- TRANSFORMED‑AS‑ALLOWED  
+- EXTERNAL‑UNLICENSED (not permitted)
+
+Recognized provenance markers include:
+
+- ENTROPIA  
+- ORP Δ  
+- Δ‑Interface Arbiter  
+- 0.51_strict  
+- SHS / DRIFT / CRA / LAS  
+- Operator State Model  
+
+See: **Provenance Chain Appendix**
+
+---
+
+## **10. Amendments**
 
 This governance charter may be updated only through:
 
@@ -159,3 +210,16 @@ This governance charter may be updated only through:
 - a governance‑aligned PR  
 - explicit documentation of the rationale  
 
+---
+
+## **11. Canonical References**
+
+- `LICENSE`  
+- `LICENSE-DETAILED.md`  
+- `DAL-FAQ.md`  
+- `CONTRIBUTING.md`  
+- `README.md`  
+
+---
+
+## **End of GOVERNANCE.md**
