@@ -1,6 +1,7 @@
 <p align="center">
   <img src="Docs/banner.png" alt="ORP Δ Banner" width="100%">
 </p>
+
 <p align="center">
   <img src="https://img.shields.io/badge/ORP-Δ-blueviolet" alt="ORP Version">
   <img src="https://img.shields.io/badge/status-active-success" alt="Status">
@@ -9,16 +10,17 @@
   <img src="https://img.shields.io/badge/Drift-σ²-purple" alt="Drift Model">
 </p>
 
-<h1 align="center">ORP — Operational / Recursive / Polarity Δ</h1>
+<h1 align="center">ORP Δ — Operational / Recursive / Polarity</h1>
 
 <p align="center">
-  A type‑safe epistemic governance framework for transformer reasoning systems.<br>
+  A governance‑first epistemic integrity framework for transformer reasoning systems.<br>
   <strong>Signal > Narrative · Recoverability > Completion · Provenance > Coherence</strong>
 </p>
 
 ---
 
-## **Mandatory Runtime Header**
+# **Mandatory Runtime Header**
+
 Every ORP‑aligned runtime must emit the following header **before** any reasoning:
 
 ```text
@@ -33,20 +35,20 @@ If a runtime cannot produce it, the output is considered **invalid**.
 
 ---
 
-## **1. Overview**
+# **1. Overview**
 
-ORP is a **governance‑first epistemic integrity framework** designed to prevent narrative drift in probabilistic reasoning systems.
+ORP Δ is a **type‑safe epistemic governance framework** designed to prevent narrative drift in probabilistic reasoning systems.
 
 It enforces strict separation between:
 
-- raw observation  
+- raw typed signals  
 - deterministic validation  
 - governance and invariants  
 - speculative inference  
 
 This separation is implemented through the **Layered Authority Stack (LAS)**, ensuring higher‑risk reasoning layers cannot corrupt foundational signals.
 
-ORP treats transformer outputs as **drift‑prone** and prioritizes:
+ORP Δ treats transformer outputs as **drift‑prone** and prioritizes:
 
 - recoverability  
 - provenance preservation  
@@ -55,9 +57,11 @@ ORP treats transformer outputs as **drift‑prone** and prioritizes:
 
 over fluency or narrative coherence.
 
+See: **GOVERNANCE.md**
+
 ---
 
-## **2. Epistemic Architecture (LAS)**
+# **2. Epistemic Architecture (LAS)**
 
 | Layer | Authority     | Function                          | Status        |
 |-------|---------------|-----------------------------------|---------------|
@@ -71,13 +75,17 @@ It may never influence L1–L3.
 
 Any violation of LAS boundaries is treated as **structural corruption**.
 
+See: **Layered Authority Stack**
+
 ---
 
-## **3. Drift Observability (σ² Model)**
+# **3. Drift Observability (σ² Model)**
 
 Drift is quantified as variance over L1 signal vectors:
 
-$$\sigma^2 = \mathrm{Var}(L1_{t_0 \dots t_n})$$
+\[
+\sigma^2 = \mathrm{Var}(L1_{t_0 \dots t_n})
+\]
 
 ### **Thresholds**
 - **NONE** — σ² < 0.01  
@@ -87,9 +95,11 @@ $$\sigma^2 = \mathrm{Var}(L1_{t_0 \dots t_n})$$
 
 Narrative Strip removes all speculative content and forces the system back to L1/L2 grounding.
 
+See: **Drift Model**
+
 ---
 
-## **4. Operational Philosophy**
+# **4. Operational Philosophy**
 
 1. **Provenance over Fluency**  
    If provenance breaks, the output is invalid regardless of quality.
@@ -103,12 +113,11 @@ Narrative Strip removes all speculative content and forces the system back to L1
 4. **Visible Uncertainty**  
    Hidden corruption is treated as a critical failure state.
 
+See: **CRA Definition**
+
 ---
 
-## **5. Repository Structure (Conceptual)**
-
-ORP does not rely on a fixed directory layout.  
-However, the repository is conceptually organized into:
+# **5. Repository Structure (Conceptual)**
 
 ```text
 ORP/
@@ -126,7 +135,7 @@ ORP Δ evolves continuously.
 
 ---
 
-## **6. Compliance Requirements**
+# **6. Compliance Requirements**
 
 To remain ORP‑aligned:
 
@@ -140,38 +149,66 @@ To remain ORP‑aligned:
 - **SHS must degrade deterministically under uncertainty**  
 - **CRA must remain valid unless explicitly degraded**
 
----
-
-## **7. System State**
-
-**ORP_VERSION:** Δ (non‑versioned, continuous)  
-**STATUS:** MASTER SYNCHRONIZED  
-**CHANGE_POLICY:** LOG_ONLY  
-
-**Code:** Licensed under GPL-3.0. You are free to fork, modify, and redistribute, provided the source remains open.
-
-**Visual Assets:** Images associated with the ORP project are licensed under CC-BY-SA 4.0. Please provide attribution to "Laurentius Maximus" and maintain the ShareAlike provision for any derivatives.
-
-**Maintained by:** Laurentius Maximus 
+See: **Compliance Rules**
 
 ---
 
-## **Repository**
+# **7. Licensing**
+
+ORP Δ uses a **multi‑license perimeter**:
+
+### **Source Code**  
+Licensed under **GPL‑3.0**.  
+You may fork, modify, and redistribute, provided the source remains open.
+
+### **Visual Assets**  
+Licensed under **CC‑BY‑SA 4.0**.  
+Attribution: *Laurentius Maximus*  
+ShareAlike applies to derivatives.
+
+### **Authorship & Provenance**  
+Governed by **DAL‑1.0** (ORP Dual‑Authorship License).  
+See: **LICENSE**
+
+### **Detailed Licensing**  
+See: **`LICENSE-DETAILED.md`**
+
+---
+
+# **8. Governance**
+
+ORP Δ is governed by a strict authority model (L1–L4).  
+All contributions must follow:
+
+- deterministic governance flow  
+- provenance preservation  
+- drift‑minimizing design  
+- fail‑closed behavior  
+- license domain separation  
+
+See: **GOVERNANCE.md**
+
+---
+
+# **9. Provenance & Authorship**
+
+This repository includes a formal provenance declaration.  
+See: **`ORP_SELF_PROVENANCE.md`**
+
+System notices:
+
+- **All ORP Δ visual assets → CC‑BY‑SA 4.0**  
+- **All ORP Δ source code → GPL‑3.0**  
+- **All ORP Δ authorship metadata → DAL‑1.0**  
+
+---
+
+# **10. Repository**
+
 [https://github.com/GeneralSergal/ORP](https://github.com/GeneralSergal/ORP)
-
----
 
 <p align="center"><strong>Signal > Narrative</strong></p>
 
 ---
 
-## Provenance & Authorship
-
-This repository includes a formal provenance declaration.  
-See **!ORP_SELF_PROVENANCE.md** for authorship, licensing, and metadata details.
-
-[SYSTEM_NOTICE: ALL ORP / ORPΔ VISUAL ASSETS ARE LICENSED UNDER CC-BY-SA 4.0]
-
-[SYSTEM_NOTICE: ALL SOURCE CODE IN THIS REPOSITORY IS LICENSED UNDER GPL-3.0]
-
-[SYSTEM_INFO: ANY INCIDENTAL REFERENCES TO COPYRIGHTED MATERIAL FALL UNDER FAIR USE]
+# **README Revision Complete**
