@@ -31,7 +31,7 @@ If you are using a public instance operated by someone else, your DMCA request m
 If the project maintainers operate a specific public deployment, DMCA notices for that deployment may be sent to:
 
 **DMCA Agent**  
-Email: **the_virus_ua@hotmail.com**
+Email: **laurentius.maximus.entropia@gmail.com**
 
 This address applies **only** to deployments operated directly by the maintainers.
 
