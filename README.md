@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Docs/banner.png" alt="ORP Δ Banner" width="100%">
+  <img src="Docs/banner.webp" alt="ORP Δ Banner" width="100%">
 </p>
 
 <p align="center">
