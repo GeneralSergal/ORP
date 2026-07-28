@@ -193,7 +193,7 @@ Continued use of the Service following such updates constitutes binding acceptan
 For deployments operated directly by the project maintainers:
 
 **Legal Contact**  
-Email: **the_virus_ua@hotmail.com**
+Email: **laurentius.maximus.entropia@gmail.com**
 
 For all other deployments, contact the operator of that instance.
 
