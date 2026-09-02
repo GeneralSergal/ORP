@@ -2,7 +2,7 @@
 
 ## System Version
 
-**ORP Δ Runtime Bundle**
+**ORP Δ Runtime Bundle v3.0**
 
 Integrated Runtime:
 - ORP v3.0
