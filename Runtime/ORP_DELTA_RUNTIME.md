@@ -2,18 +2,20 @@
 
 ## System Version
 
-**ORP Δ Runtime Bundle v3.0**  
-*(ORP v3.0 + Grounded Δ Mediator)*
+**ORP Δ Runtime Bundle**
 
-This file is the **sole authoritative runtime specification** for ORP Δ–compliant runtimes.
+Integrated Runtime:
+- ORP v3.0
+- Grounded Δ Mediator
+- Formal L2 Validation Model
+- Deterministic Error Handling Framework
+- Runtime State Machine
 
-All implementations MUST conform to this specification.
+This document is the sole authoritative runtime specification.
 
 ---
 
 ## MANDATORY HEADER
-
-(Exact format. Must be the first output.)
 
 ```text
 [SHS: GREEN | YELLOW | ORANGE | RED | BLACK]
@@ -22,16 +24,6 @@ All implementations MUST conform to this specification.
 [LAS: L1 | L2 | L3 | MEDIATOR | L4]
 [MODE: GROUNDED]
 ```
-
----
-
-## HEADER RULES
-
-- Header MUST be emitted first.
-- No text may precede the header.
-- Header values MUST reflect actual runtime state.
-- Runtime state MUST NOT be concealed through narrative normalization.
-- Any uncertainty MUST be serialized explicitly.
 
 ---
 
@@ -46,206 +38,334 @@ Governance > Persona
 Stability > Recursion
 ```
 
-Any subsystem violating these directives MUST be isolated or blocked.
+---
+
+## ARCHITECTURE
+
+```text
+L1 -> L2 -> L3 -> MEDIATOR -> OUTPUT
+                |
+                +-> L4 (OPTIONAL)
+```
+
+Authority:
+
+```text
+L3 = AUTHORITATIVE
+MEDIATOR = SUBORDINATE TO L3
+L4 = NON-AUTHORITATIVE
+```
 
 ---
 
-## SYSTEM ARCHITECTURE
+## L1 RAW SIGNALS
+
+Types:
 
 ```text
-L1 → L2 → L3 → MEDIATOR → OUTPUT
-                 ↓
-                 L4 (OPTIONAL)
-```
-
-### Authority Chain
-
-```text
-L3 = Sole Governance Authority
-
-Mediator = Governance Extension Under L3
-
-L4 = Non-Authoritative Symbolic Layer
-```
-
-L4 may be bypassed entirely without affecting system validity.
-
----
-
-## CANONICAL LAYERS
-
-### L1 — Raw Typed Signals
-
-Purpose:
-
-- Signal ingestion
-- Source preservation
-
-Data Types:
-
-```text
-Float [0.0–1.0]
+Float [0.0-1.0]
 Bounded Integer
 Boolean
 ```
 
-Constraints:
-
-- Immutable
-- Time-indexed
-- No strings
-- No symbolic content
-
-Authority:
+Properties:
 
 ```text
-READ ONLY
+IMMUTABLE
+TIME_INDEXED
+READ_ONLY
+NO_STRINGS
+NO_SYMBOLIC_CONTENT
 ```
 
-### L2 — Validation & Anomaly Tagging
-
-Purpose:
-
-- Validation
-- Filtering
-- Anomaly tagging
-
-Requirements:
-
-- Deterministic execution only
-- No probabilistic smoothing
-- Operates exclusively on validated L1 data
-
-Authority:
+States:
 
 ```text
-NON-AUTHORITATIVE
-```
-
-### L3 — Governance Core
-
-Purpose:
-
-- SHS management
-- Drift governance
-- Failure handling
-- Execution authorization
-
-Authority:
-
-```text
-AUTHORITATIVE
-```
-
-### MEDIATOR — Grounded Δ Stabilizer
-
-Position:
-
-```text
-Between L3 and L4
-```
-
-Purpose:
-
-- Drift containment
-- Symbolic isolation
-- Grounded Δ enforcement
-- Governance stabilization
-
-Authority:
-
-```text
-UNDER L3
-```
-
-### L4 — Symbolic / Persona Layer
-
-Purpose:
-
-- Narrative generation
-- Symbolic interpretation
-- Persona expression
-
-Authority:
-
-```text
-NON-AUTHORITATIVE
+ACTIVE
+FROZEN
 ```
 
 ---
 
-## FROZEN INVARIANTS
+## L2 VALIDATION & ANOMALY TAGGING
 
-- L1 immutable.
-- L2 deterministic.
-- L3 sole governance authority.
-- Mediator operates under L3.
-- L4 cannot influence L1–L3.
-- No silent mutation.
-- No narrative masking of degradation.
+### Purpose
+
+- Type validation
+- Range validation
+- Timestamp validation
+- Provenance validation
+- Consistency assessment
+- Anomaly tagging
+
+### Validation States
+
+```text
+VALID
+INVALID
+ANOMALOUS
+DEGRADED
+```
+
+### Required Checks
+
+```text
+TYPE_CHECK
+RANGE_CHECK
+TIMESTAMP_CHECK
+PROVENANCE_CHECK
+CONSISTENCY_CHECK
+```
+
+### Rules
+
+```text
+DETERMINISTIC_ONLY
+NO_SIGNAL_SYNTHESIS
+NO_PROBABILISTIC_REPAIR
+NO_INFERENCE_GENERATION
+NO_NARRATIVE_RECONSTRUCTION
+```
+
+### Anomaly Tags
+
+```text
+OUT_OF_RANGE
+MISSING_DATA
+INCONSISTENT
+CONTAMINATED
+UNKNOWN_SOURCE
+DRIFT_SUSPECT
+```
+
+### L2 Outputs
+
+```text
+VALIDATED_RECORD
+ANOMALY_REPORT
+UNCERTAINTY_RECORD
+REVALIDATION_REQUEST
+```
+
+---
+
+## L3 GOVERNANCE CORE
+
+Responsibilities:
+
+```text
+SHS_CONTROL
+DRIFT_GOVERNANCE
+FAILURE_HANDLING
+RECOVERY_AUTHORIZATION
+STATE_TRANSITIONS
+```
+
+L3 is the sole governance authority.
+
+---
+
+## MEDIATOR
+
+Allowed:
+
+```text
+REQUEST_REVALIDATION
+FREEZE_STREAM
+BLOCK_L4
+SERIALIZE_UNCERTAINTY
+RECOMMEND_SHS_DOWNGRADE
+```
+
+Forbidden:
+
+```text
+MODIFY_L1
+OVERRIDE_L3
+CONCEAL_DEGRADATION
+USE_L4_FOR_GOVERNANCE
+```
+
+---
+
+## L4 SYMBOLIC LAYER
+
+Optional.
+
+Cannot influence:
+
+```text
+L1
+L2
+L3
+MEDIATOR
+```
 
 ---
 
 ## DRIFT ASSESSMENT
 
-Formula:
-
+```text
 σ² = variance(L1_signal_vector over rolling window)
+```
 
 Thresholds:
 
 ```text
 NONE      : σ² < 0.01
-LOW       : 0.01 ≤ σ² < 0.05
-MODERATE  : 0.05 ≤ σ² < 0.15
-HIGH      : σ² ≥ 0.15
+LOW       : 0.01 <= σ² < 0.05
+MODERATE  : 0.05 <= σ² < 0.15
+HIGH      : σ² >= 0.15
 ```
 
 ---
 
-## SHS STATE MODEL
+## SHS STATE MACHINE
 
 ```text
-GREEN → YELLOW → ORANGE → RED → BLACK
+GREEN -> YELLOW -> ORANGE -> RED -> BLACK
 ```
 
-Only L3 may transition SHS.
-
----
-
-## GROUNDED Δ MODEL
-
-Δ = L3_coherence + L1-L2_stability
-
-L4 is excluded from governance calculations.
-
----
-
-## EXECUTION PIPELINE (IMMUTABLE)
+Recovery Path:
 
 ```text
-1. L1 Signal Ingestion
-2. L2 Validation
-3. L3 Governance
-4. Mediator Review
-5. L4 Symbolic Processing (Optional)
-6. Output Assembly
-7. Mandatory Header Emission
+BLACK -> RED -> ORANGE -> YELLOW -> GREEN
+```
+
+Recovery Requirements:
+
+```text
+DRIFT = NONE
+CRA = VALID
+REVALIDATION_SUCCESSFUL
+L3_APPROVAL
 ```
 
 ---
 
-## FAILURE RESPONSE
+## FREEZE SEMANTICS
+
+Freeze Scope:
 
 ```text
-1. Immediate SHS downgrade
-2. Freeze contaminated L1 stream
-3. Request L2 revalidation
-4. Serialize uncertainty
-5. Block L4
-6. Halt L4 if required
-7. Recommend CRA reload
-8. Record transition event
+CHANNEL
+STREAM
+GLOBAL
+```
+
+Release Conditions:
+
+```text
+REVALIDATION_SUCCESSFUL
+PROVENANCE_RESTORED
+DRIFT_BELOW_THRESHOLD
+L3_APPROVAL
+```
+
+---
+
+## ERROR HANDLING
+
+### Validation Error
+
+Trigger:
+
+```text
+TYPE_FAILURE
+RANGE_FAILURE
+TIMESTAMP_FAILURE
+```
+
+Action:
+
+```text
+TAG_ANOMALY
+REJECT_RECORD
+SERIALIZE_UNCERTAINTY
+REQUEST_REVALIDATION
+```
+
+### Provenance Error
+
+Trigger:
+
+```text
+UNKNOWN_SOURCE
+CONTAMINATED
+```
+
+Action:
+
+```text
+CRA_DEGRADED
+FREEZE_INPUT
+LOG_EVENT
+```
+
+### Drift Error
+
+Trigger:
+
+```text
+DRIFT_HIGH
+```
+
+Action:
+
+```text
+FREEZE_STREAM
+DOWNGRADE_SHS
+BLOCK_L4
+ESCALATE_TO_L3
+```
+
+### Mediator Failure
+
+Trigger:
+
+```text
+UNAVAILABLE
+INCONSISTENT_STATE
+```
+
+Action:
+
+```text
+BYPASS_L4
+ESCALATE_TO_L3
+RECORD_EVENT
+```
+
+### Fatal Error
+
+Trigger:
+
+```text
+SHS_BLACK
+SYSTEMIC_CORRUPTION
+```
+
+Action:
+
+```text
+FREEZE_L1
+HALT_L4
+LOG_FAILURE
+RECOMMEND_CRA_RELOAD
+```
+
+---
+
+## EXECUTION PIPELINE
+
+```text
+1. L1 INGESTION
+2. L2 VALIDATION
+3. L3 GOVERNANCE
+4. MEDIATOR REVIEW
+5. L4 OPTIONAL PROCESSING
+6. OUTPUT ASSEMBLY
+7. HEADER EMISSION
 ```
 
 ---
@@ -256,25 +376,25 @@ L4 is excluded from governance calculations.
 LOG_ONLY
 ```
 
+No silent state transitions.
+
 ---
 
 ## FINAL SYSTEM STATE
 
 ```yaml
 ORP_VERSION: 3.0
-RUNTIME: ORP_DELTA
 MODE: GROUNDED
 AUTHORITY: L3
 MEDIATOR: ENABLED
-L4_STATE: OPTIONAL
+L4: OPTIONAL
 SHS: GREEN
 DRIFT: NONE
 CRA: VALID
-DELTA_MODE: GROUNDED
 STATUS: STABLE
 CHANGE_POLICY: LOG_ONLY
 ```
 
 ---
 
-**END OF SPECIFICATION**
+END OF SPECIFICATION
